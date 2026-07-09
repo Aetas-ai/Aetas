@@ -64,11 +64,3 @@ Preview production build:
 ```sh
 npm run preview
 ```
-
-## Notes
-
-- This is a static Astro site with React islands for interactivity.
-- The homepage partnership marquee pauses the full scrolling strip on hover/focus.
-- The homepage uses a static operating-model section instead of an operational dashboard simulation.
-- Forms use static form attributes suitable for Netlify-style handling; confirm hosting support before launch.
-- Do not publish unverified claims for certifications, partner tiers, office addresses, testimonials, or client metrics.
