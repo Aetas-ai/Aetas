@@ -8,6 +8,8 @@ Astro marketing site for Aetas.ai, a unified company brand with three discipline
 
 For future coding assistants, read [HANDOFF.md](./HANDOFF.md) before making changes. It records the current site status, positioning rules, known gaps, and next improvement priorities.
 
+For clone/install/local-run instructions, read [COLLABORATION.md](./COLLABORATION.md).
+
 ## Project Structure
 
 ```text

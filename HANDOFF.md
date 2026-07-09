@@ -69,6 +69,7 @@ Completed in the latest improvement pass:
 - Added Netlify-style static forms for contact and AI early access.
 - Added `/contact/thanks`.
 - Replaced the old starter README with project-specific instructions.
+- Added `COLLABORATION.md` for clone, install, local setup, and collaboration workflow instructions.
 - Added basic Open Graph/Twitter metadata.
 - Added reduced-motion handling.
 - Removed the old `PRD.md` in favor of this handoff.
