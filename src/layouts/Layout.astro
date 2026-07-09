@@ -1,0 +1,314 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  activePillar?: 'ai' | 'security' | 'global' | 'none';
+}
+
+const {
+  title,
+  description = 'Aetas.ai - Human-led AI, enterprise-grade security, and always-on operations.',
+  activePillar = 'none',
+} = Astro.props;
+
+const pageTitle = `${title} | Aetas.ai`;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/aetaslogo.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/aetaslogo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <ClientRouter />
+  </head>
+  <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-white">
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/80 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" class="flex items-center hover:opacity-90" aria-label="Aetas.ai home">
+          <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium" aria-label="Primary navigation">
+          <a href="/ai" class={`hover:text-indigo-400 transition-colors ${activePillar === 'ai' ? 'text-indigo-400 font-semibold' : 'text-gray-300'}`}>Aetas AI</a>
+          <a href="/security" class={`hover:text-sky-400 transition-colors ${activePillar === 'security' ? 'text-sky-400 font-semibold' : 'text-gray-300'}`}>Security</a>
+          <a href="/global" class={`hover:text-amber-500 transition-colors ${activePillar === 'global' ? 'text-amber-500 font-semibold' : 'text-gray-300'}`}>Global</a>
+          <a href="/work" class="hover:text-white text-gray-300 transition-colors">Work</a>
+          <a href="/partners" class="hover:text-white text-gray-300 transition-colors">Partners</a>
+          <a href="/about" class="hover:text-white text-gray-300 transition-colors">About</a>
+          <a href="/resources" class="hover:text-white text-gray-300 transition-colors">Resources</a>
+        </nav>
+
+        <div class="hidden lg:flex items-center gap-4">
+          <a href="/contact" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-white/90 transition-all shadow-lg hover:shadow-white/10 active:scale-95">
+            Talk to Aetas
+          </a>
+        </div>
+
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-400 hover:text-white focus:outline-none" aria-label="Toggle menu" aria-controls="mobile-menu">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="mobile-menu-overlay" class="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[100] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto select-none">
+      <div>
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+          <a href="/" class="flex items-center" aria-label="Aetas.ai home">
+            <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-6 w-auto object-contain" />
+          </a>
+          <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all focus:outline-none" aria-label="Close menu">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
+          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2 px-3">Primary Pillars</span>
+          <a href="/ai" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-indigo-400 hover:translate-x-1 transition-all">
+            <span class="text-sm font-medium">Aetas AI</span>
+            <span class="text-[9px] font-bold text-indigo-400/80 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">Roadmap</span>
+          </a>
+          <a href="/security" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-sky-400 hover:translate-x-1 transition-all">
+            <span class="text-sm font-medium">Aetas Security</span>
+            <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MSSP</span>
+          </a>
+          <a href="/global" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-amber-500 hover:translate-x-1 transition-all">
+            <span class="text-sm font-medium">Aetas Global</span>
+            <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">MSP</span>
+          </a>
+
+          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Company & Resources</span>
+          <a href="/work" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Selected Work</a>
+          <a href="/partners" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Partners</a>
+          <a href="/about" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">About</a>
+          <a href="/resources" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Resources</a>
+        </nav>
+      </div>
+
+      <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-4">
+        <a href="mailto:info@aetasglobal.com" class="text-xs text-gray-400 hover:text-white transition-colors px-3">info@aetasglobal.com</a>
+        <a href="/contact" class="w-full py-3.5 rounded-xl font-bold bg-white text-black hover:bg-white/90 text-center block transition-all shrink-0 hover:scale-[1.02] active:scale-[0.98]">
+          Talk to Aetas
+        </a>
+      </div>
+    </div>
+
+    <main class="flex-grow pt-20">
+      <slot />
+    </main>
+
+    <footer class="border-t border-white/5 bg-black/40 py-16">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-12">
+        <div class="md:col-span-2">
+          <a href="/" class="inline-flex items-center mb-6 hover:opacity-90" aria-label="Aetas.ai home">
+            <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
+          </a>
+          <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
+            Human-led AI roadmap layered onto active security, managed IT, and BPO operations. One company, three disciplines.
+          </p>
+          <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas.ai. All rights reserved.</div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 font-display">Pillars</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/ai" class="hover:text-indigo-400 transition-colors">Aetas AI</a></li>
+            <li><a href="/security" class="hover:text-sky-400 transition-colors">Aetas Security</a></li>
+            <li><a href="/global" class="hover:text-amber-500 transition-colors">Aetas Global</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 font-display">Resources</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/work" class="hover:text-white transition-colors">Selected Work</a></li>
+            <li><a href="/partners" class="hover:text-white transition-colors">Technology Partners</a></li>
+            <li><a href="/resources" class="hover:text-white transition-colors">Insights & Intel</a></li>
+            <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 font-display">Legal</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/legal/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="/legal/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+            <li><a href="/contact" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <div id="sticky-cta" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+      <a href="/contact" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black shadow-xl shadow-black/25 hover:scale-105 active:scale-95 transition-all pointer-events-auto group">
+        <span>Talk to Aetas</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let lenis: Lenis | undefined;
+
+      const initLenis = () => {
+        if (reduceMotion) return;
+
+        lenis = new Lenis({
+          duration: 1.05,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          touchMultiplier: 2,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+          lenis?.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+      };
+
+      const initAnimations = () => {
+        const header = document.querySelector('header');
+        const stickyCta = document.getElementById('sticky-cta');
+
+        ScrollTrigger.create({
+          start: 'top -80px',
+          end: 'max',
+          onUpdate: (self) => {
+            if (self.scroll() > 100) {
+              header?.classList.add('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
+              header?.classList.remove('bg-brand-bg/80');
+              stickyCta?.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+              stickyCta?.classList.add('translate-y-0', 'opacity-100');
+            } else {
+              header?.classList.add('bg-brand-bg/80');
+              header?.classList.remove('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
+              stickyCta?.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+              stickyCta?.classList.remove('translate-y-0', 'opacity-100');
+            }
+          },
+        });
+
+        if (reduceMotion) return;
+
+        document.querySelectorAll('[data-reveal]').forEach((el) => {
+          gsap.fromTo(el, { opacity: 0, y: 36 }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+          });
+        });
+
+        document.querySelectorAll('[data-reveal-group]').forEach((group) => {
+          const children = group.children;
+          if (!children.length) return;
+          gsap.fromTo(children, { opacity: 0, y: 34, scale: 0.98 }, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: group, start: 'top 85%', toggleActions: 'play none none none' },
+          });
+        });
+
+        document.querySelectorAll('[data-reveal-left]').forEach((el) => {
+          gsap.fromTo(el, { opacity: 0, x: -44 }, {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+          });
+        });
+
+        document.querySelectorAll('[data-reveal-right]').forEach((el) => {
+          gsap.fromTo(el, { opacity: 0, x: 44 }, {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+          });
+        });
+      };
+
+      const initMobileMenu = () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        const menu = document.getElementById('mobile-menu');
+        const closeBtn = document.getElementById('mobile-menu-close');
+
+        const openMenu = () => {
+          menu?.classList.remove('translate-x-full');
+          menu?.classList.add('translate-x-0');
+          overlay?.classList.remove('opacity-0', 'pointer-events-none');
+          overlay?.classList.add('opacity-100', 'pointer-events-auto');
+          document.body.classList.add('overflow-hidden');
+        };
+
+        const closeMenu = () => {
+          menu?.classList.add('translate-x-full');
+          menu?.classList.remove('translate-x-0');
+          overlay?.classList.add('opacity-0', 'pointer-events-none');
+          overlay?.classList.remove('opacity-100', 'pointer-events-auto');
+          document.body.classList.remove('overflow-hidden');
+        };
+
+        btn?.addEventListener('click', openMenu);
+        closeBtn?.addEventListener('click', closeMenu);
+        overlay?.addEventListener('click', closeMenu);
+        menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+        document.addEventListener('astro:after-swap', () => {
+          document.body.classList.remove('overflow-hidden');
+        });
+      };
+
+      document.addEventListener('astro:page-load', () => {
+        initLenis();
+        initAnimations();
+        initMobileMenu();
+      });
+
+      document.addEventListener('astro:before-preparation', () => {
+        lenis?.destroy();
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      });
+    </script>
+  </body>
+</html>

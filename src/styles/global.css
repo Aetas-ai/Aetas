@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #050508;
+  --color-ai: #6366f1;
+  --color-security: #0ea5e9;
+  --color-global: #f59e0b;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-brand-bg);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+/* Custom Utilities & Animations */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Custom marquee styling */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.partnership-marquee:hover .animate-marquee,
+.partnership-marquee:focus-within .animate-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Glowing element accents */
+.glow-ai {
+  box-shadow: 0 0 40px -5px rgba(99, 102, 241, 0.15);
+}
+
+.glow-security {
+  box-shadow: 0 0 40px -5px rgba(14, 165, 233, 0.15);
+}
+
+.glow-global {
+  box-shadow: 0 0 40px -5px rgba(245, 158, 11, 0.15);
+}

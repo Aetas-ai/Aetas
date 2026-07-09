@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact Us — Intent-Routed Demo Request" description="Contact Aetas.ai. Request a security pentest scope, Managed IT helpdesk proposal, or apply for early access to our workflow automation roadmap.">
+  <section class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <!-- Contact Info -->
+      <div class="lg:col-span-5 flex flex-col gap-8">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Connect with Us</span>
+          <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight mt-2">Get in Touch</h1>
+          <p class="text-gray-400 text-sm leading-relaxed mt-4">
+            Route your request to the right Aetas team. Choose Security, Global operations, AI early access, or partner inquiries and we will follow up with the right next step.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          <div>
+            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Security & Managed Operations</h4>
+            <p class="text-gray-400 text-xs mt-1">SOC, MDR, penetration testing, helpdesk, identity, device, and BPO support requests.</p>
+          </div>
+
+          <div>
+            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">AI Early Access</h4>
+            <p class="text-gray-400 text-xs mt-1">For organizations interested in shaping future human-in-the-loop workflow automation pilots.</p>
+          </div>
+
+          <div>
+            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Direct Channels</h4>
+            <p class="text-gray-400 text-xs mt-1">General inquiries: info@aetasglobal.com</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="lg:col-span-7">
+        <div class="glass-panel p-8 rounded-2xl border-white/5 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
+          
+          <form class="space-y-6" name="aetas-contact" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thanks">
+            <input type="hidden" name="form-name" value="aetas-contact" />
+            <p class="hidden">
+              <label>Do not fill this out: <input name="bot-field" /></label>
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
+                <input name="first-name" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Last Name</label>
+                <input name="last-name" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Work Email</label>
+                <input name="email" type="email" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company Name</label>
+                <input name="company" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Operational Focus Area</label>
+              <select id="intent-select" name="intent" required class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+                <option value="security">Aetas Security (Pentest / SOC / compliance)</option>
+                <option value="global">Aetas Global (IT Helpdesk / BPO queues)</option>
+                <option value="ai">Aetas AI Roadmap (Apply for pilot program)</option>
+                <option value="general">General Inquiries</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Briefly describe your requirements</label>
+              <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-4 rounded-lg font-bold text-sm bg-white text-black hover:bg-white/90 transition-all shadow-lg active:scale-[0.98]">
+              Send Routed Request
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Read intent query parameter to auto-select operational area
+    document.addEventListener('astro:page-load', () => {
+      const select = document.getElementById('intent-select') as HTMLSelectElement;
+      if (select) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const intent = urlParams.get('intent');
+        if (intent && ['security', 'global', 'ai', 'general'].includes(intent)) {
+          select.value = intent;
+        }
+      }
+    });
+  </script>
+</Layout>

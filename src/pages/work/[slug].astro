@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { caseStudies } from '../../data/caseStudies';
+
+export function getStaticPaths() {
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+---
+
+<Layout title={study.title} description={study.summary}>
+  <section class="py-24 px-6 max-w-5xl mx-auto">
+    <a href="/work" class="text-xs font-bold text-gray-500 hover:text-white uppercase tracking-widest">&larr; Back to work</a>
+
+    <div class="mt-10 mb-14">
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">{study.capability}</span>
+      <h1 class="text-4xl sm:text-6xl font-display font-bold text-white tracking-tight mt-3">{study.title}</h1>
+      <p class="text-gray-400 text-base leading-relaxed mt-6 max-w-3xl">{study.summary}</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-14">
+      <div class="glass-panel rounded-2xl p-6">
+        <span class="block text-4xl font-display font-bold text-white">{study.metric}</span>
+        <span class="text-xs text-gray-400">{study.metricLabel}</span>
+      </div>
+      <div class="glass-panel rounded-2xl p-6 lg:col-span-2">
+        <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Technologies</span>
+        <div class="flex flex-wrap gap-2 mt-4">
+          {study.technologies.map((tech) => (
+            <span class="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-xs text-gray-300">{tech}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-reveal-group>
+      <section class="glass-panel rounded-2xl p-6">
+        <h2 class="text-lg font-display font-bold text-white mb-3">Challenge</h2>
+        <p class="text-sm text-gray-400 leading-relaxed">{study.challenge}</p>
+      </section>
+      <section class="glass-panel rounded-2xl p-6">
+        <h2 class="text-lg font-display font-bold text-white mb-3">Approach</h2>
+        <p class="text-sm text-gray-400 leading-relaxed">{study.approach}</p>
+      </section>
+      <section class="glass-panel rounded-2xl p-6">
+        <h2 class="text-lg font-display font-bold text-white mb-3">Outcome</h2>
+        <p class="text-sm text-gray-400 leading-relaxed">{study.outcome}</p>
+      </section>
+    </div>
+  </section>
+</Layout>

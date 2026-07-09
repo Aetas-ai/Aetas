@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { resources } from '../../data/resources';
+---
+
+<Layout title="Intel & Blog — Aetas Resources" description="Read the latest cyber threat intelligence, IT operations strategies, and AI workflow research from the Aetas engineering team.">
+  <section class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-4 items-center">
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Insights & Intel</span>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">The Aetas Intelligence Feed</h1>
+      <p class="text-gray-400 text-sm max-w-xl leading-relaxed">
+        Deep technical writeups covering offensive security tactics, IT operations orchestration, and our ongoing AI workflow experiments.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {resources.map((article) => (
+        <article class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between" data-reveal>
+          <div>
+            <span class="px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[9px] font-bold uppercase tracking-wider mb-4 inline-block">{article.category}</span>
+            <h2 class="text-xl font-display font-bold text-white mb-3 hover:text-indigo-300 transition-colors">
+              <a href={`/resources/${article.slug}`}>{article.title}</a>
+            </h2>
+            <p class="text-gray-400 text-xs leading-relaxed mb-6">{article.summary}</p>
+          </div>
+          <div class="border-t border-white/5 pt-4 flex justify-between items-center text-[10px] text-gray-500">
+            <span>By {article.author}</span>
+            <span>{article.date}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

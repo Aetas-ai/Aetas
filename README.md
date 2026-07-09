@@ -1,43 +1,74 @@
-# Astro Starter Kit: Minimal
+# Aetas.ai Company Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Astro marketing site for Aetas.ai, a unified company brand with three disciplines:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Aetas AI**: early-access roadmap for human-in-the-loop workflow automation.
+- **Aetas Security**: active MSSP services including SOC/MDR, pentesting, response planning, and security tooling.
+- **Aetas Global**: active MSP/BPO operations including helpdesk, identity, device, tenant, and support queue management.
 
-## 🚀 Project Structure
+For future coding assistants, read [HANDOFF.md](./HANDOFF.md) before making changes. It records the current site status, positioning rules, known gaps, and next improvement priorities.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+  components/        React islands for interactive widgets
+  data/              Shared case study and resource data
+  layouts/           Shared Astro layout, navigation, footer, scripts
+  pages/             Astro routes
+  styles/            Global Tailwind/CSS
+public/              Static images and icons
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Key routes:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `/` homepage
+- `/ai`, `/security`, `/global`
+- `/work` and `/work/[slug]`
+- `/resources` and `/resources/[slug]`
+- `/partners`, `/about`, `/careers`, `/contact`
 
-Any static assets, like images, can be placed in the `public/` directory.
+Current content note: `/about` is intentionally blank while the company story and leadership content are being planned.
 
-## 🧞 Commands
+## Commands
 
-All commands are run from the root of the project, from a terminal:
+Install dependencies:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+npm install
+```
 
-## 👀 Want to learn more?
+Start development server:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+npm run dev
+```
+
+Per repository agent instructions, use Astro background mode when starting a dev server manually:
+
+```sh
+astro dev --background
+astro dev status
+astro dev logs
+astro dev stop
+```
+
+Build production output:
+
+```sh
+npm run build
+```
+
+Preview production build:
+
+```sh
+npm run preview
+```
+
+## Notes
+
+- This is a static Astro site with React islands for interactivity.
+- The homepage partnership marquee pauses the full scrolling strip on hover/focus.
+- The homepage uses a static operating-model section instead of an operational dashboard simulation.
+- Forms use static form attributes suitable for Netlify-style handling; confirm hosting support before launch.
+- Do not publish unverified claims for certifications, partner tiers, office addresses, testimonials, or client metrics.

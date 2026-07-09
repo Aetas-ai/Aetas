@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { resources } from '../../data/resources';
+
+export function getStaticPaths() {
+  return resources.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+---
+
+<Layout title={article.title} description={article.summary}>
+  <article class="py-24 px-6 max-w-3xl mx-auto">
+    <a href="/resources" class="text-xs font-bold text-gray-500 hover:text-white uppercase tracking-widest">&larr; Back to resources</a>
+
+    <header class="mt-10 mb-12">
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">{article.category}</span>
+      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight mt-3">{article.title}</h1>
+      <p class="text-gray-400 text-base leading-relaxed mt-6">{article.summary}</p>
+      <div class="mt-6 text-xs text-gray-500 uppercase tracking-widest">
+        {article.author} / {article.date}
+      </div>
+    </header>
+
+    <div class="space-y-6 text-gray-300 text-sm leading-7">
+      {article.body.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </article>
+</Layout>
