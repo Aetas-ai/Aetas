@@ -2,7 +2,26 @@
 
 Use this guide when a developer or AI coding assistant needs to access, run, and collaborate on the Aetas.ai website locally.
 
-## 1. Clone the Repository
+## 1. Install Prerequisites
+
+Install these before cloning the project:
+
+- **Git**: required to clone the repository and manage source control.
+- **Node.js 22.12.0 or newer**: required to install dependencies and run Astro.
+- **npm**: included with Node.js and used for project scripts.
+- **A code editor**: Visual Studio Code is recommended, but any editor works.
+
+Verify the required command-line tools are available:
+
+```sh
+git --version
+node --version
+npm --version
+```
+
+If any command is missing, install or repair that tool before continuing.
+
+## 2. Clone the Repository
 
 ```sh
 git clone <repository-url> Aetas.AI
@@ -11,7 +30,7 @@ cd Aetas.AI
 
 Replace `<repository-url>` with the actual Git remote URL.
 
-## 2. Read the Project Context
+## 3. Read the Project Context
 
 Before making changes, read:
 
@@ -23,9 +42,7 @@ AGENTS.md
 
 `HANDOFF.md` explains what the company website is, current positioning rules, what is complete, and what should not be claimed publicly without verification.
 
-## 3. Install Requirements
-
-Use Node.js `22.12.0` or newer.
+## 4. Install Project Dependencies
 
 Install dependencies:
 
@@ -33,7 +50,7 @@ Install dependencies:
 npm install
 ```
 
-## 4. Start Local Development
+## 5. Start Local Development
 
 Standard local dev server:
 
@@ -62,7 +79,7 @@ If using the local dependency binary:
 npx astro dev --background
 ```
 
-## 5. Build and Preview
+## 6. Build and Preview
 
 Run a production build:
 
@@ -76,7 +93,7 @@ Preview the built site:
 npm run preview
 ```
 
-## 6. Collaboration Rules
+## 7. Collaboration Rules
 
 - Keep Aetas AI positioned as roadmap / early access unless the business confirms it is launched.
 - Do not invent certifications, partner tiers, client logos, office addresses, testimonials, or performance metrics.
@@ -84,7 +101,7 @@ npm run preview
 - Update `README.md` when setup, commands, or project structure changes.
 - Run `npm run build` before handing off work.
 
-## 7. Useful Routes
+## 8. Useful Routes
 
 - `/` homepage
 - `/ai`
