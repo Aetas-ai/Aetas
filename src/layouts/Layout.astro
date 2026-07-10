@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import BobAssistant from '../components/BobAssistant';
 import '../styles/global.css';
 
 interface Props {
@@ -15,6 +16,18 @@ const {
 } = Astro.props;
 
 const pageTitle = `${title} | Aetas.ai`;
+const currentPath = Astro.url.pathname;
+
+const navLinkBase = 'relative px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/7 hover:text-white hover:shadow-lg hover:shadow-black/10 focus:outline-none focus:ring-2 focus:ring-white/20';
+const isActivePath = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
+const routeLink = (href: string) =>
+  `${navLinkBase} ${isActivePath(href) ? 'bg-white/10 text-white ring-1 ring-white/15' : 'text-gray-300'}`;
+const pillarLink = (pillar: 'ai' | 'security' | 'global', activeClass: string) =>
+  `${navLinkBase} ${activePillar === pillar ? activeClass : 'text-gray-300'}`;
+const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-white/10') =>
+  `flex items-center justify-between px-3 py-3 rounded-xl border transition-all hover:bg-white/5 hover:translate-x-1 ${
+    isActivePath(href) ? activeClass : 'border-transparent text-gray-300 hover:text-white'
+  }`;
 ---
 
 <!doctype html>
@@ -41,29 +54,31 @@ const pageTitle = `${title} | Aetas.ai`;
     <ClientRouter />
   </head>
   <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-white">
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/80 backdrop-blur-md">
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center hover:opacity-90" aria-label="Aetas.ai home">
+        <a href="/" class="flex items-center gap-3 rounded-full pr-3 transition-all hover:bg-white/5 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Aetas.ai home">
           <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
+          <span class="hidden xl:inline text-xs font-bold uppercase tracking-widest text-gray-400">Aetas.ai</span>
         </a>
 
-        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium" aria-label="Primary navigation">
-          <a href="/ai" class={`hover:text-indigo-400 transition-colors ${activePillar === 'ai' ? 'text-indigo-400 font-semibold' : 'text-gray-300'}`}>Aetas AI</a>
-          <a href="/security" class={`hover:text-sky-400 transition-colors ${activePillar === 'security' ? 'text-sky-400 font-semibold' : 'text-gray-300'}`}>Security</a>
-          <a href="/global" class={`hover:text-amber-500 transition-colors ${activePillar === 'global' ? 'text-amber-500 font-semibold' : 'text-gray-300'}`}>Global</a>
-          <a href="/work" class="hover:text-white text-gray-300 transition-colors">Work</a>
-          <a href="/partners" class="hover:text-white text-gray-300 transition-colors">Partners</a>
-          <a href="/about" class="hover:text-white text-gray-300 transition-colors">About</a>
-          <a href="/resources" class="hover:text-white text-gray-300 transition-colors">Resources</a>
+        <nav class="hidden lg:flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.025] p-1 shadow-2xl shadow-black/20" aria-label="Primary navigation">
+          <a href="/" class={routeLink('/')}>Home</a>
+          <a href="/ai" class={pillarLink('ai', 'bg-indigo-500/12 text-indigo-300 ring-1 ring-indigo-400/25')}>Aetas AI</a>
+          <a href="/security" class={pillarLink('security', 'bg-sky-500/12 text-sky-300 ring-1 ring-sky-400/25')}>Security</a>
+          <a href="/global" class={pillarLink('global', 'bg-amber-500/12 text-amber-300 ring-1 ring-amber-400/25')}>Global</a>
+          <a href="/work" class={routeLink('/work')}>Work</a>
+          <a href="/partners" class={routeLink('/partners')}>Partners</a>
+          <a href="/about" class={routeLink('/about')}>About</a>
+          <a href="/resources" class={routeLink('/resources')}>Resources</a>
         </nav>
 
         <div class="hidden lg:flex items-center gap-4">
-          <a href="/contact" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-white/90 transition-all shadow-lg hover:shadow-white/10 active:scale-95">
+          <a href="/contact" class={`px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg active:scale-95 ${isActivePath('/contact') ? 'bg-indigo-500 text-white shadow-indigo-500/20' : 'bg-white text-black hover:bg-white/90 shadow-white/5 hover:shadow-white/15'}`}>
             Talk to Aetas
           </a>
         </div>
 
-        <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-400 hover:text-white focus:outline-none" aria-label="Toggle menu" aria-controls="mobile-menu">
+        <button id="mobile-menu-btn" class="lg:hidden rounded-xl border border-white/10 bg-white/[0.03] p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Toggle menu" aria-controls="mobile-menu">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16"></path>
           </svg>
@@ -87,31 +102,37 @@ const pageTitle = `${title} | Aetas.ai`;
         </div>
 
         <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
-          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2 px-3">Primary Pillars</span>
-          <a href="/ai" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-indigo-400 hover:translate-x-1 transition-all">
+          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2 px-3">Navigation</span>
+          <a href="/" class={mobileLink('/')}>
+            <span class="text-sm font-medium">Home</span>
+            <span class="text-[9px] font-bold text-gray-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md">Landing</span>
+          </a>
+
+          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Primary Pillars</span>
+          <a href="/ai" class={mobileLink('/ai', 'bg-indigo-500/10 text-indigo-300 border-indigo-400/20')}>
             <span class="text-sm font-medium">Aetas AI</span>
             <span class="text-[9px] font-bold text-indigo-400/80 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">AI Ops</span>
           </a>
-          <a href="/security" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-sky-400 hover:translate-x-1 transition-all">
+          <a href="/security" class={mobileLink('/security', 'bg-sky-500/10 text-sky-300 border-sky-400/20')}>
             <span class="text-sm font-medium">Aetas Security</span>
             <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MSSP</span>
           </a>
-          <a href="/global" class="flex items-center justify-between px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-amber-500 hover:translate-x-1 transition-all">
+          <a href="/global" class={mobileLink('/global', 'bg-amber-500/10 text-amber-300 border-amber-400/20')}>
             <span class="text-sm font-medium">Aetas Global</span>
             <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">MSP</span>
           </a>
 
           <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Company & Resources</span>
-          <a href="/work" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Selected Work</a>
-          <a href="/partners" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Partners</a>
-          <a href="/about" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">About</a>
-          <a href="/resources" class="px-3 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white hover:translate-x-1 transition-all">Resources</a>
+          <a href="/work" class={mobileLink('/work')}>Selected Work</a>
+          <a href="/partners" class={mobileLink('/partners')}>Partners</a>
+          <a href="/about" class={mobileLink('/about')}>About</a>
+          <a href="/resources" class={mobileLink('/resources')}>Resources</a>
         </nav>
       </div>
 
       <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-4">
         <a href="mailto:info@aetasglobal.com" class="text-xs text-gray-400 hover:text-white transition-colors px-3">info@aetasglobal.com</a>
-        <a href="/contact" class="w-full py-3.5 rounded-xl font-bold bg-white text-black hover:bg-white/90 text-center block transition-all shrink-0 hover:scale-[1.02] active:scale-[0.98]">
+        <a href="/contact" class={`w-full py-3.5 rounded-xl font-bold text-center block transition-all shrink-0 hover:scale-[1.02] active:scale-[0.98] ${isActivePath('/contact') ? 'bg-indigo-500 text-white' : 'bg-white text-black hover:bg-white/90'}`}>
           Talk to Aetas
         </a>
       </div>
@@ -171,6 +192,8 @@ const pageTitle = `${title} | Aetas.ai`;
         </svg>
       </a>
     </div>
+
+    <BobAssistant client:load />
 
     <script>
       import Lenis from 'lenis';
