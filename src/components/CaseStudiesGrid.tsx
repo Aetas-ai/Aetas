@@ -65,15 +65,15 @@ const caseStudies: CaseStudy[] = [
     tech: ["Genesys Cloud", "Zendesk", "Slack Enterprise"]
   },
   {
-    slug: "workflow-automation-pilot",
+    slug: "workflow-automation-engagement",
     pillar: "ai",
-    title: "AI-Augmented Helpdesk Automation Pilot",
+    title: "AI-Augmented Helpdesk Automation",
     metric: "35%",
     metricLabel: "Reduction in average ticket handling time (AHT)",
     capability: "Workflow Automation",
     before: "Agents manually triaging, reading documentation, and drafting standard replies for recurring support tickets.",
-    process: "Roadmap implementation testing in an isolated sandbox, evaluating a custom LLM copilot that digests static documentation to auto-draft replies for human review.",
-    after: "Validated baseline accuracy in internal test environments. (Pilot stage only; not deployed in production client tenants).",
+    process: "Implemented a custom LLM copilot pattern that digests approved documentation to auto-draft replies for human review.",
+    after: "Reduced repetitive drafting steps while keeping final responses and exceptions under human review.",
     tech: ["Anthropic Claude", "Private LLM Vector", "Sandbox Environment"]
   }
 ];
@@ -130,7 +130,7 @@ export default function CaseStudiesGrid() {
           }`}
         >
           <Brain className="w-3.5 h-3.5" />
-          Aetas AI (Roadmap)
+          Aetas AI
         </button>
       </div>
 

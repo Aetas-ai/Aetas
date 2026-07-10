@@ -1,0 +1,334 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+const lanes = [
+  ['AI', 'Model assist'],
+  ['SEC', 'Threat signals'],
+  ['IT', 'Tenant ops'],
+  ['BPO', 'Queue work'],
+];
+---
+
+<div class={`signal-field ${compact ? 'signal-field-compact' : ''}`} aria-label="Animated AI, cybersecurity, IT, and helpdesk workflow signals">
+  <div class="signal-grid" aria-hidden="true"></div>
+  <div class="signal-sweep signal-sweep-one" aria-hidden="true"></div>
+  <div class="signal-sweep signal-sweep-two" aria-hidden="true"></div>
+
+  <div class="signal-core">
+    <span class="signal-core-label">AETAS AI</span>
+    <span class="signal-core-title">Human-reviewed automation</span>
+  </div>
+
+  <div class="signal-nodes" aria-hidden="true">
+    {lanes.map(([code, label], index) => (
+      <div class={`signal-node signal-node-${index + 1}`}>
+        <span>{code}</span>
+        <small>{label}</small>
+      </div>
+    ))}
+  </div>
+
+  <div class="signal-packets" aria-hidden="true">
+    {Array.from({ length: 10 }).map((_, index) => (
+      <span class={`packet packet-${index + 1}`}></span>
+    ))}
+  </div>
+
+  <div class="signal-readout">
+    <div>
+      <span>Tickets</span>
+      <strong>Classify</strong>
+    </div>
+    <div>
+      <span>Alerts</span>
+      <strong>Escalate</strong>
+    </div>
+    <div>
+      <span>SOPs</span>
+      <strong>Assist</strong>
+    </div>
+  </div>
+</div>
+
+<style>
+  .signal-field {
+    position: relative;
+    min-height: 420px;
+    overflow: hidden;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      linear-gradient(135deg, rgba(14, 165, 233, 0.09), transparent 34%),
+      linear-gradient(225deg, rgba(245, 158, 11, 0.07), transparent 34%),
+      rgba(255, 255, 255, 0.025);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  }
+
+  .signal-field-compact {
+    min-height: 360px;
+  }
+
+  .signal-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 88%);
+  }
+
+  .signal-sweep {
+    position: absolute;
+    left: -20%;
+    width: 140%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.9), transparent);
+    opacity: 0.7;
+    transform: rotate(-18deg);
+    animation: sweep 8s linear infinite;
+  }
+
+  .signal-sweep-one {
+    top: 22%;
+  }
+
+  .signal-sweep-two {
+    top: 68%;
+    animation-delay: -3.5s;
+    background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.75), transparent);
+  }
+
+  .signal-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 190px;
+    height: 190px;
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    border: 1px solid rgba(129, 140, 248, 0.38);
+    background: rgba(5, 5, 8, 0.76);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: inset 0 0 42px rgba(99, 102, 241, 0.12), 0 0 45px rgba(14, 165, 233, 0.11);
+  }
+
+  .signal-core::before,
+  .signal-core::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    animation: pulse-ring 4.8s ease-in-out infinite;
+  }
+
+  .signal-core::before {
+    inset: -28px;
+  }
+
+  .signal-core::after {
+    inset: -58px;
+    animation-delay: -2s;
+  }
+
+  .signal-core-label {
+    color: rgb(129, 140, 248);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+  }
+
+  .signal-core-title {
+    margin-top: 8px;
+    max-width: 130px;
+    color: white;
+    font-size: 18px;
+    line-height: 1.15;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .signal-node {
+    position: absolute;
+    z-index: 2;
+    width: 126px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(5, 5, 8, 0.72);
+    animation: node-float 5.5s ease-in-out infinite;
+  }
+
+  .signal-node span {
+    display: block;
+    color: white;
+    font-size: 18px;
+    line-height: 1;
+    font-family: var(--font-display);
+    font-weight: 800;
+  }
+
+  .signal-node small {
+    display: block;
+    margin-top: 6px;
+    color: rgb(156, 163, 175);
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .signal-node-1 {
+    top: 13%;
+    left: 11%;
+    border-color: rgba(129, 140, 248, 0.26);
+  }
+
+  .signal-node-2 {
+    top: 18%;
+    right: 10%;
+    border-color: rgba(14, 165, 233, 0.26);
+    animation-delay: -1.4s;
+  }
+
+  .signal-node-3 {
+    bottom: 17%;
+    left: 9%;
+    border-color: rgba(245, 158, 11, 0.25);
+    animation-delay: -2.5s;
+  }
+
+  .signal-node-4 {
+    right: 9%;
+    bottom: 12%;
+    border-color: rgba(52, 211, 153, 0.25);
+    animation-delay: -3.2s;
+  }
+
+  .packet {
+    position: absolute;
+    z-index: 1;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgb(125, 211, 252);
+    box-shadow: 0 0 16px rgba(125, 211, 252, 0.8);
+    animation: packet-path 6s linear infinite;
+  }
+
+  .packet-1 { top: 20%; left: 8%; animation-delay: 0s; }
+  .packet-2 { top: 30%; left: 78%; animation-delay: -0.6s; background: rgb(129, 140, 248); }
+  .packet-3 { top: 72%; left: 14%; animation-delay: -1.2s; background: rgb(251, 191, 36); }
+  .packet-4 { top: 67%; left: 82%; animation-delay: -1.8s; background: rgb(52, 211, 153); }
+  .packet-5 { top: 48%; left: 4%; animation-delay: -2.4s; }
+  .packet-6 { top: 12%; left: 50%; animation-delay: -3s; background: rgb(129, 140, 248); }
+  .packet-7 { top: 86%; left: 50%; animation-delay: -3.6s; background: rgb(251, 191, 36); }
+  .packet-8 { top: 46%; left: 90%; animation-delay: -4.2s; background: rgb(52, 211, 153); }
+  .packet-9 { top: 34%; left: 28%; animation-delay: -4.8s; }
+  .packet-10 { top: 59%; left: 67%; animation-delay: -5.4s; background: rgb(129, 140, 248); }
+
+  .signal-readout {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .signal-readout div {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.035);
+    padding: 10px;
+  }
+
+  .signal-readout span,
+  .signal-readout strong {
+    display: block;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .signal-readout span {
+    color: rgb(156, 163, 175);
+  }
+
+  .signal-readout strong {
+    margin-top: 4px;
+    color: white;
+    font-family: var(--font-display);
+  }
+
+  @keyframes sweep {
+    0% { transform: translateY(-120px) rotate(-18deg); opacity: 0; }
+    20% { opacity: 0.75; }
+    100% { transform: translateY(320px) rotate(-18deg); opacity: 0; }
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(0.96); opacity: 0.34; }
+    50% { transform: scale(1.04); opacity: 0.75; }
+  }
+
+  @keyframes node-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes packet-path {
+    0% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0; }
+    16% { opacity: 1; }
+    54% { transform: translate3d(58px, 18px, 0) scale(1); opacity: 1; }
+    100% { transform: translate3d(110px, -24px, 0) scale(0.7); opacity: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .signal-field {
+      min-height: 390px;
+      border-radius: 18px;
+    }
+
+    .signal-core {
+      width: 150px;
+      height: 150px;
+    }
+
+    .signal-core-title {
+      font-size: 15px;
+    }
+
+    .signal-node {
+      width: 104px;
+      padding: 10px;
+    }
+
+    .signal-node span {
+      font-size: 15px;
+    }
+
+    .signal-readout {
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      gap: 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal-sweep,
+    .signal-core::before,
+    .signal-core::after,
+    .signal-node,
+    .packet {
+      animation: none;
+    }
+  }
+</style>

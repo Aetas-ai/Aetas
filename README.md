@@ -2,7 +2,7 @@
 
 Astro marketing site for Aetas.ai, a unified company brand with three disciplines:
 
-- **Aetas AI**: early-access roadmap for human-in-the-loop workflow automation.
+- **Aetas AI**: AI-augmented workflow automation for BPO, support, helpdesk, IT operations, and back-office teams.
 - **Aetas Security**: active MSSP services including SOC/MDR, pentesting, response planning, and security tooling.
 - **Aetas Global**: active MSP/BPO operations including helpdesk, identity, device, tenant, and support queue management.
 

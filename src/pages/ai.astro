@@ -1,93 +1,138 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import AiOpsSignalField from '../components/AiOpsSignalField.astro';
 ---
 
-<Layout title="Aetas AI — Human-Led Workflow Automation Roadmap" activePillar="ai" description="Explore our custom BPO automation workflows, LLM assistants, and agentic AI roadmap currently under active development. Join our early access pilots.">
-  <!-- Hero Section -->
+<Layout title="Aetas AI - AI-Augmented BPO Workflow Automation" activePillar="ai" description="Aetas AI designs AI-augmented workflows for BPO, support, IT operations, and back-office teams with human validation built into every step.">
   <section class="relative py-24 px-6 overflow-hidden">
-    <!-- Indigo ambient background glow -->
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0,transparent_60%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.10)_0,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(14,165,233,0.08)_0,transparent_45%)] pointer-events-none"></div>
 
-    <div class="max-w-4xl mx-auto text-center relative z-10 flex flex-col gap-6 items-center">
-      <!-- Coming Soon Badge -->
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300">
-        <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-ping"></span>
-        <span>Pillar In Development &bull; Join Early Access</span>
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <div class="lg:col-span-6 flex flex-col gap-6 text-center lg:text-left items-center lg:items-start">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-semibold text-indigo-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+          <span>AI services for BPO and operations teams</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-display font-bold leading-tight text-white tracking-tight">
+          AI-augmented workflows for<br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-400 to-amber-400">
+            BPO, support, and operations.
+          </span>
+        </h1>
+
+        <p class="text-gray-300 text-base sm:text-lg max-w-3xl leading-relaxed">
+          Aetas AI helps teams identify repetitive work, design automation paths, and deploy AI assistants that draft, classify, summarize, route, and recommend actions while keeping people responsible for final decisions.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
+          <a href="#contact-ai" class="px-8 py-4 rounded-xl font-bold bg-indigo-500 hover:bg-indigo-600 text-white shadow-xl shadow-indigo-500/20 active:scale-[0.98] transition-all text-center">
+            Discuss AI services
+          </a>
+          <a href="#services" class="px-8 py-4 rounded-xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all text-center">
+            View AI services
+          </a>
+        </div>
       </div>
 
-      <h1 class="text-4xl sm:text-6xl font-display font-bold leading-tight text-white tracking-tight">
-        Aetas AI: The Future of<br />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-          Human-Led Automation
-        </span>
-      </h1>
-
-      <p class="text-gray-300 text-base sm:text-lg max-w-2xl leading-relaxed">
-        We are building dedicated, agentic AI layers for future business process operations. While our custom AI workflows are under active development, we resell and support leading enterprise products that already include built-in AI capabilities to secure and optimize client systems today.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
-        <a href="#early-access" class="px-8 py-4 rounded-xl font-bold bg-indigo-500 hover:bg-indigo-600 text-white shadow-xl shadow-indigo-500/20 active:scale-[0.98] transition-all text-center">
-          Join Early Access List
-        </a>
-        <a href="#philosophy" class="px-8 py-4 rounded-xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all text-center">
-          Our AI Philosophy
-        </a>
+      <div class="lg:col-span-6" data-reveal-right>
+        <AiOpsSignalField />
       </div>
     </div>
   </section>
 
-  <!-- AI Philosophy Stance -->
+  <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-20">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Aetas AI Services</span>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Practical AI infusion for real operating teams.</h2>
+      <p class="text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
+        We focus on controlled AI augmentation for BPO companies, helpdesks, MSP teams, support operations, and back-office workflows where accuracy, escalation, and auditability matter.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-reveal-group>
+      <article class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all">
+        <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">Workflow Automation</span>
+        <h3 class="text-xl font-display font-bold text-white mb-4">Automate repetitive operational steps</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Map recurring intake, routing, data cleanup, ticket updates, report preparation, and follow-up tasks, then design AI-assisted workflows that reduce manual effort without removing human review.
+        </p>
+      </article>
+
+      <article class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all">
+        <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">BPO AI Augmentation</span>
+        <h3 class="text-xl font-display font-bold text-white mb-4">Infuse AI into BPO delivery teams</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Add AI support to quality checks, agent assistance, knowledge retrieval, customer response drafting, call or ticket summarization, and supervisor review workflows.
+        </p>
+      </article>
+
+      <article class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all">
+        <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">Private Knowledge Assistants</span>
+        <h3 class="text-xl font-display font-bold text-white mb-4">Turn SOPs into guided assistance</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Build secure assistants around approved SOPs, FAQs, policies, playbooks, and client-specific documentation so teams can find the right answer faster.
+        </p>
+      </article>
+
+      <article class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all">
+        <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">Human-in-the-Loop Governance</span>
+        <h3 class="text-xl font-display font-bold text-white mb-4">Keep approvals and accountability clear</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Design validation gates, escalation paths, audit trails, and exception handling so AI can assist the workflow without silently making high-impact decisions.
+        </p>
+      </article>
+    </div>
+  </section>
+
   <section id="philosophy" class="py-24 px-6 border-y border-white/5 bg-black/20 scroll-mt-20">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
-        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Our AI Philosophy</span>
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">How We Build</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold text-white leading-tight">
-          AI Raises the Bar for Expert Teams — It Doesn't Replace Them.
+          We start with the workflow before choosing the AI.
         </h2>
         <p class="text-gray-400 text-sm leading-relaxed">
-          The industry makes a naive assumption: that AI can fully automate complex IT and security operations without human governance. This results in hallucinated support answers and uncontained security exploits.
+          Many AI projects fail because they start with a model and then search for a use case. Aetas starts with the operating reality: queue volume, exception types, approval rules, customer expectations, and the systems already used by the team.
         </p>
         <p class="text-gray-400 text-sm leading-relaxed">
-          At Aetas, we take a disciplined stance. In our current operations, we do not use our own proprietary AI services; instead, we deploy and support partner products that contain built-in AI features (such as Defender XDR correlation or SentinelOne anomaly engines). In our roadmap, we are co-designing human-in-the-loop AI tools where our specialists validate every automated pilot suggestion.
+          Our approach is built around controlled implementation. We identify where AI can classify, draft, summarize, retrieve, or recommend, then put human validation around actions that affect customers, accounts, systems, or security.
         </p>
       </div>
 
       <div class="lg:col-span-7 flex justify-center" data-reveal>
-        <!-- Interactive node diagram -->
         <div class="w-full max-w-lg glass-panel rounded-2xl p-6 lg:p-8 flex flex-col gap-6 border-indigo-500/10 glow-ai relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl"></div>
-          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider border-b border-white/5 pb-3">Automated Loop Visualization</h4>
-          
+          <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider border-b border-white/5 pb-3">AI-Augmented Workflow Loop</h4>
+
           <div class="flex items-center gap-4 bg-white/2 border border-white/5 p-4 rounded-xl">
             <div class="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-xs font-bold shrink-0">1</div>
             <div>
-              <h5 class="text-xs font-bold text-white">Event / Ticket Ingest</h5>
-              <p class="text-[10px] text-gray-400 mt-0.5">Ingests logs from email, Slack, Zendesk or cloud services.</p>
+              <h5 class="text-xs font-bold text-white">Ingest the work</h5>
+              <p class="text-[10px] text-gray-400 mt-0.5">Tickets, forms, emails, chats, reports, alerts, and operational requests.</p>
             </div>
           </div>
-          
+
           <div class="flex items-center gap-4 bg-white/2 border border-white/5 p-4 rounded-xl">
-            <div class="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-xs font-bold shrink-0">2</div>
+            <div class="w-8 h-8 rounded-full bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 text-xs font-bold shrink-0">2</div>
             <div>
-              <h5 class="text-xs font-bold text-white">LLM Triaging & Draft Generation</h5>
-              <p class="text-[10px] text-gray-400 mt-0.5">AI extracts entities, references historical solutions, drafts reply.</p>
+              <h5 class="text-xs font-bold text-white">Assist the operator</h5>
+              <p class="text-[10px] text-gray-400 mt-0.5">Classify, summarize, retrieve context, draft responses, and suggest next steps.</p>
             </div>
           </div>
 
           <div class="flex items-center gap-4 bg-white/2 border border-white/5 p-4 rounded-xl">
             <div class="w-8 h-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 text-xs font-bold shrink-0">3</div>
             <div>
-              <h5 class="text-xs font-bold text-white">Human Validation Gate</h5>
-              <p class="text-[10px] text-gray-400 mt-0.5">Certified Aetas analyst confirms correctness, updates model logs.</p>
+              <h5 class="text-xs font-bold text-white">Validate the action</h5>
+              <p class="text-[10px] text-gray-400 mt-0.5">A trained person reviews outputs before customer, system, or policy impact.</p>
             </div>
           </div>
 
           <div class="flex items-center gap-4 bg-white/2 border border-white/5 p-4 rounded-xl">
             <div class="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-bold shrink-0">4</div>
             <div>
-              <h5 class="text-xs font-bold text-white">Action Execution & Reinforcement</h5>
-              <p class="text-[10px] text-gray-400 mt-0.5">SSO reset applied, IP blocked, or database query finalized.</p>
+              <h5 class="text-xs font-bold text-white">Improve the process</h5>
+              <p class="text-[10px] text-gray-400 mt-0.5">Use outcomes and exceptions to tune prompts, workflows, SOPs, and controls.</p>
             </div>
           </div>
         </div>
@@ -95,89 +140,52 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- Core Roadmap Offerings -->
   <section class="py-24 px-6 max-w-7xl mx-auto">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Our Development Scopes</span>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">What We're Building</h2>
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Use Cases</span>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Where AI can support BPO operations.</h2>
       <p class="text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
-        We are designing specialized AI agents built around existing manual operational pipelines. Discover our active development pillars.
+        Aetas AI is being shaped around practical operational use cases that can be measured, governed, and improved over time.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-reveal-group>
-      <!-- Offering 1 -->
-      <div class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">ROADMAP STEP 1</span>
-          <h3 class="text-xl font-display font-bold text-white mb-4">AI Automation Workflows</h3>
-          <p class="text-gray-400 text-xs leading-relaxed">
-            Mapping manual business operations (data entry, recurring ticket routing, reports collection) and introducing LLM-driven automation scripts that handle the administrative overhead, keeping humans focused on validation.
-          </p>
-        </div>
-        <span class="text-[10px] font-bold text-indigo-400 uppercase mt-6 tracking-widest">Targeting Alpha: Q3 2026</span>
-      </div>
-
-      <!-- Offering 2 -->
-      <div class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">ROADMAP STEP 2</span>
-          <h3 class="text-xl font-display font-bold text-white mb-4">"Personal AI" Setup for BPO</h3>
-          <p class="text-gray-400 text-xs leading-relaxed">
-            Deploying secure, isolated LLMs trained on client-specific procedures, FAQs, and proprietary documentation. This creates a dedicated assistant that understands the nuance of your business operations.
-          </p>
-        </div>
-        <span class="text-[10px] font-bold text-indigo-400 uppercase mt-6 tracking-widest">Targeting Alpha: Q4 2026</span>
-      </div>
-
-      <!-- Offering 3 -->
-      <div class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">ROADMAP STEP 3</span>
-          <h3 class="text-xl font-display font-bold text-white mb-4">AI Infusion in MSP Operations</h3>
-          <p class="text-gray-400 text-xs leading-relaxed">
-            Integrating suggestion models directly into our active Global helpdesk tools. The system recommends scripts, drafts email replies, and pre-checks active directories, speeding up human operator resolution times.
-          </p>
-        </div>
-        <span class="text-[10px] font-bold text-indigo-400 uppercase mt-6 tracking-widest">Targeting Beta: Q1 2027</span>
-      </div>
-
-      <!-- Offering 4 -->
-      <div class="glass-panel p-8 rounded-2xl border-white/5 hover:border-indigo-500/20 transition-all flex flex-col justify-between">
-        <div>
-          <span class="text-xs font-bold text-indigo-300 uppercase tracking-wider block mb-2">ROADMAP STEP 4</span>
-          <h3 class="text-xl font-display font-bold text-white mb-4">Agentic AI for Tool Execution</h3>
-          <p class="text-gray-400 text-xs leading-relaxed">
-            Building autonomous agents capable of interacting with SaaS API endpoints. Once approved by a human administrator, the agent triggers API calls to resolve tickets, manage devices, or update CRM records.
-          </p>
-        </div>
-        <span class="text-[10px] font-bold text-indigo-400 uppercase mt-6 tracking-widest">Targeting Research: Q2 2027</span>
-      </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-reveal-group>
+      {[
+        ['Ticket triage', 'Classify inbound requests, detect priority, and route work to the right queue.'],
+        ['Agent assist', 'Surface SOP steps, approved answers, and relevant customer context while agents work.'],
+        ['Quality review', 'Flag missing fields, policy gaps, tone issues, and handoff problems for supervisor review.'],
+        ['Back-office processing', 'Summarize documents, prepare structured records, and draft follow-up actions.'],
+        ['Knowledge management', 'Turn recurring resolutions and playbooks into searchable operational guidance.'],
+        ['Reporting support', 'Prepare summaries, trend notes, and operational highlights from queue activity.'],
+      ].map(([title, body]) => (
+        <article class="glass-panel rounded-2xl p-6">
+          <h3 class="text-lg font-display font-bold text-white mb-3">{title}</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">{body}</p>
+        </article>
+      ))}
     </div>
   </section>
 
-  <!-- Infrastructure Partner logos -->
-  <section class="py-16 border-t border-white/5 bg-black/20 text-center px-6">
+  <section class="py-16 border-y border-white/5 bg-black/20 text-center px-6">
     <div class="max-w-4xl mx-auto">
-      <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Our Infrastructure Alignment</h4>
-      <p class="text-gray-400 text-xs max-w-lg mx-auto mb-8 leading-relaxed">
-        We are building our automated workflows layered on top of secure, leading LLM models and enterprise cloud infrastructure providers.
+      <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Technology Direction</h4>
+      <p class="text-gray-400 text-xs max-w-2xl mx-auto mb-8 leading-relaxed">
+        Aetas AI can be designed around enterprise cloud, LLM, ticketing, documentation, CRM, identity, and support platforms already used by client operations.
       </p>
       <div class="flex flex-wrap gap-8 justify-center items-center text-sm text-gray-500 font-bold font-display select-none">
-        <span>ANTHROPIC CLAUDE</span>
-        <span>AMAZON WEB SERVICES</span>
-        <span>GOOGLE CLOUD</span>
-        <span>MICROSOFT AZURE</span>
+        <span>LLM WORKFLOWS</span>
+        <span>SOP KNOWLEDGE BASES</span>
+        <span>TICKETING SYSTEMS</span>
+        <span>BPO OPERATIONS</span>
       </div>
     </div>
   </section>
 
-  <!-- Early Access CTA Form -->
-  <section id="early-access" class="py-24 px-6 max-w-3xl mx-auto scroll-mt-20">
+  <section id="contact-ai" class="py-24 px-6 max-w-3xl mx-auto scroll-mt-20">
     <div class="glass-panel rounded-2xl p-8 lg:p-12 relative overflow-hidden border-indigo-500/10 glow-ai" data-reveal>
-      <h2 class="text-2xl sm:text-3xl font-display font-bold text-white text-center mb-4">Join our AI Early Access List</h2>
+      <h2 class="text-2xl sm:text-3xl font-display font-bold text-white text-center mb-4">Plan an AI workflow engagement</h2>
       <p class="text-gray-400 text-xs text-center leading-relaxed mb-8 max-w-lg mx-auto">
-        Apply to become an early pilot partner. Shape our workflow automation roadmap and test custom LLM integrations on your business processes.
+        Tell us which BPO, support, or operations workflow you want to improve. We will use it to scope an AI augmentation engagement.
       </p>
 
       <form class="space-y-4" name="ai-early-access" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thanks">
@@ -202,12 +210,12 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <div>
-          <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Primary Workflow Bottleneck</label>
-          <textarea name="workflow-bottleneck" rows="3" required placeholder="Describe the manual process you are hoping to automate..." class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
+          <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Workflow to Improve</label>
+          <textarea name="workflow-bottleneck" rows="3" required placeholder="Describe the repetitive BPO, support, or operations process you want to augment..." class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
         </div>
 
         <button type="submit" class="w-full py-4 rounded-lg font-bold text-sm bg-indigo-500 hover:bg-indigo-600 text-white transition-all shadow-lg shadow-indigo-500/10">
-          Submit Pilot Application
+          Submit AI Services Request
         </button>
       </form>
     </div>

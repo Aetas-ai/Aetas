@@ -19,8 +19,8 @@ export const resources: ResourceArticle[] = [
       'Why human validation remains essential when AI is used to assist enterprise support workflows.',
     body: [
       'Support automation works best when it removes repetitive steps without removing accountability. The highest-risk mistake is allowing a model to answer operational questions without review, context, or escalation boundaries.',
-      'Aetas AI is being designed around a human-in-the-loop model. The goal is to help operators classify requests, draft responses, and surface relevant knowledge while keeping the final decision with a trained specialist.',
-      'This roadmap reflects how real BPO and helpdesk environments work: accuracy, auditability, and clear escalation matter more than fully autonomous demos.',
+      'Aetas AI is designed around a human-in-the-loop model. The goal is to help operators classify requests, draft responses, and surface relevant knowledge while keeping the final decision with a trained specialist.',
+      'This service model reflects how real BPO and helpdesk environments work: accuracy, auditability, and clear escalation matter more than fully autonomous demos.',
     ],
   },
   {

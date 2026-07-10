@@ -65,9 +65,9 @@ const questions: Question[] = [
         description: "Leverage Aetas's live infrastructure and active delivery centers right away."
       },
       {
-        text: "Co-develop and pilot custom workflow automation tools",
-        value: "ai", // maps to AI development roadmap
-        description: "Collaborate with our team on early-access agentic workflows tailored to your needs."
+        text: "Deploy custom workflow automation tools",
+        value: "ai",
+        description: "Collaborate with our team on AI-augmented workflows tailored to your needs."
       }
     ]
   }
@@ -147,15 +147,15 @@ export default function AdvisorQuiz() {
             <h3 className="text-3xl font-display font-bold text-white mb-3">
               {result === 'security' && 'Aetas Security (MSSP)'}
               {result === 'global' && 'Aetas Global (MSP)'}
-              {result === 'ai' && 'Aetas AI (Early Access Roadmap)'}
+              {result === 'ai' && 'Aetas AI (Workflow Automation)'}
               {result === 'mixed' && 'Aetas Co-Managed Architecture'}
             </h3>
 
             <p className="text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed">
               {result === 'security' && 'Our active Managed Security Services Practice is best positioned to secure your company. We provide 24/7 SOC detection, endpoint response, pentesting, and license procurement.'}
               {result === 'global' && 'We recommend setting up a dedicated helpdesk/BPO queue with Aetas Global. Our mature MSP operations deliver full-lifecycle IT support, device management, and always-on business operations.'}
-              {result === 'ai' && 'Your goals fit our AI Integration Roadmap. While we are still in active development, you can join our early access pilots to build custom, human-in-the-loop LLM workflows.'}
-              {result === 'mixed' && 'Your needs bridge multiple disciplines. We suggest a unified consultation integrating our active security monitoring and IT support, layered with our experimental AI roadmap.'}
+              {result === 'ai' && 'Your goals fit Aetas AI workflow automation. We can help design AI-augmented triage, drafting, knowledge retrieval, and human-in-the-loop operations workflows.'}
+              {result === 'mixed' && 'Your needs bridge multiple disciplines. We suggest a unified consultation integrating security monitoring, IT support, and AI-augmented workflow automation.'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -163,7 +163,7 @@ export default function AdvisorQuiz() {
                 href={`/contact?intent=${result === 'mixed' ? 'general' : result}`}
                 className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-white/90 transition-all flex items-center justify-center gap-2"
               >
-                <span>{result === 'ai' ? 'Apply for Early Access' : 'Schedule Scoping Call'}</span>
+                <span>{result === 'ai' ? 'Discuss AI Services' : 'Schedule Scoping Call'}</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <button

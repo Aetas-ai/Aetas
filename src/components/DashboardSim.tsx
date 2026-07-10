@@ -42,7 +42,7 @@ export default function DashboardSim() {
       ? 'SECURITY ALERT: Microsoft Defender XDR flagged anomalous credential behavior.'
       : activeTab === 'helpdesk'
       ? 'TICKET INGEST: Support request received for user access lockout (routed to tenant system).'
-      : 'PILOT INGEST: Experimental BPO workflow data payload received for mapping.';
+      : 'AI INGEST: BPO workflow data payload received for mapping.';
     addLog(eventMsg, 'alert');
 
     // Step 2: Product built-in AI / Auto Correlation (1.5s later)
@@ -52,7 +52,7 @@ export default function DashboardSim() {
         ? 'Product Native AI: Defender XDR automated investigation correlated alerts. Suggested remediation steps.'
         : activeTab === 'helpdesk'
         ? 'System Triage: Active Directory / Identity check flagged consecutive failed validation checks.'
-        : 'Roadmap Pilot AI: Sandbox parse testing metadata extraction & route mapping drafts (AI Roadmap Pilot).';
+        : 'Aetas AI: Parsed workflow metadata and drafted route mapping suggestions.';
       addLog(triageMsg, 'ai');
     }, 1500);
 
@@ -63,7 +63,7 @@ export default function DashboardSim() {
         ? 'Human Validation: Aetas Security Analyst verified incident context and approved isolation protocol.'
         : activeTab === 'helpdesk'
         ? 'Human Validation: IT Support Specialist audited sign-in logs and confirmed user status.'
-        : 'Human Validation: Operations Lead reviews pilot automation schema suggestions.';
+        : 'Human Validation: Operations Lead reviews automation schema suggestions.';
       addLog(humanMsg, 'info');
     }, 3200);
 
@@ -74,7 +74,7 @@ export default function DashboardSim() {
         ? 'RESOLVED: Endpoint isolated via Defender XDR rules. Threat contained.'
         : activeTab === 'helpdesk'
         ? 'RESOLVED: Access restored and synchronization verified in client workspace.'
-        : 'RESOLVED: Sandbox data mapping completed. Pilot log logs updated.';
+        : 'RESOLVED: Workflow data mapping completed. Automation logs updated.';
       addLog(resolutionMsg, 'success');
       
       const addedTime = activeTab === 'security' ? 35 : activeTab === 'helpdesk' ? 15 : 45;
@@ -140,7 +140,7 @@ export default function DashboardSim() {
             >
               <Cpu className="w-4 h-4" />
               <div className="text-xs">
-                <p className="font-semibold">Aetas AI Agent (Roadmap)</p>
+                <p className="font-semibold">Aetas AI Agent</p>
                 <p className="opacity-80">Workflow automation model</p>
               </div>
             </button>

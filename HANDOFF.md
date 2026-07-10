@@ -1,6 +1,6 @@
 # Aetas.ai Website Handoff
 
-Last updated: July 9, 2026
+Last updated: July 11, 2026
 
 This file is the source of truth for future AI coding assistants and developers working on the Aetas.ai company website. Read this before changing the site.
 
@@ -8,7 +8,7 @@ This file is the source of truth for future AI coding assistants and developers 
 
 Aetas.ai is a unified company website for three related disciplines:
 
-- **Aetas AI**: in development / early access only. This is the strategic roadmap for human-in-the-loop AI workflow automation, especially for BPO, helpdesk, support, and operations workflows.
+- **Aetas AI**: active AI-augmented workflow automation services for BPO, helpdesk, support, IT operations, and back-office workflows. Position the service around practical automation, AI assistance, and human-reviewed execution.
 - **Aetas Security**: active MSSP business. Services include SOC/MDR support, penetration testing, incident response planning, vulnerability management, compliance support, and security tool procurement/co-management.
 - **Aetas Global**: active MSP/BPO operations business. Services include helpdesk operations, identity/access support, device management, tenant administration, outsourced support queues, and operational reporting.
 
@@ -18,10 +18,10 @@ Core message:
 
 ## Critical Copy Rules
 
-- Do not present Aetas AI as a fully launched service with production client results.
+- Do not invent AI production client results, metrics, or customer logos unless verified by the business.
 - Do not invent AI case studies, customer logos, certifications, partner tiers, addresses, testimonials, or performance metrics.
 - Security and Global can use present-tense service language because they are active pillars.
-- AI copy should use roadmap language: "in development", "early access", "what we are building", "pilot", "human-in-the-loop".
+- AI copy should present active services while keeping human validation and governance clear.
 - Partner and certification claims should be displayed only after business verification.
 
 ## Current Technical Stack
@@ -41,7 +41,7 @@ Important files:
 
 - `src/layouts/Layout.astro`: shared shell, navigation, footer, sticky CTA, GSAP/Lenis initialization.
 - `src/pages/index.astro`: homepage with service positioning, partner marquee, operating-model section, advisor quiz, selected work.
-- `src/pages/ai.astro`: AI roadmap and early-access page.
+- `src/pages/ai.astro`: AI workflow automation services page.
 - `src/pages/security.astro`: MSSP/SOC/security services page.
 - `src/pages/global.astro`: MSP/BPO/managed operations page.
 - `src/pages/work.astro`: case study index.
@@ -56,7 +56,7 @@ Important files:
 
 Completed in the latest improvement pass:
 
-- Rebuilt homepage positioning around Security, Global, and AI roadmap.
+- Rebuilt homepage positioning around AI workflow automation, Security, and Global operations.
 - Added missing `/work` and `/work/[slug]` routes.
 - Added missing `/resources/[slug]` route.
 - Replaced hardcoded resource cards with shared resource data.
@@ -66,7 +66,7 @@ Completed in the latest improvement pass:
 - Removed the homepage operational dashboard simulation and replaced it with a four-step operating model section.
 - Refactored the homepage partnership marquee so hovering or focusing anywhere on the marquee strip pauses the entire animation, not just one duplicated track.
 - Blanked the About page intentionally until final company story, leadership, and credibility content are defined.
-- Added Netlify-style static forms for contact and AI early access.
+- Added Netlify-style static forms for contact and AI workflow service inquiries.
 - Added `/contact/thanks`.
 - Replaced the old starter README with project-specific instructions.
 - Added `COLLABORATION.md` for clone, install, local setup, and collaboration workflow instructions.
