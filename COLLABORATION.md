@@ -1,6 +1,6 @@
 # Collaboration Setup Guide
 
-Use this guide when a developer or AI coding assistant needs to access, run, and collaborate on the Aetas.ai website locally.
+Use this guide when a developer or AI coding assistant needs to access, run, and collaborate on the Aetas Global Innovations website locally.
 
 ## 1. Install Prerequisites
 
@@ -95,7 +95,7 @@ npm run preview
 
 ## 7. Collaboration Rules
 
-- Keep Aetas AI positioned as roadmap / early access unless the business confirms it is launched.
+- Use Aetas Global Innovations as the company name. Aetas.ai is the domain and service-facing digital brand.
 - Do not invent certifications, partner tiers, client logos, office addresses, testimonials, or performance metrics.
 - Update `HANDOFF.md` whenever a change affects site positioning, major routes, known gaps, or future implementation context.
 - Update `README.md` when setup, commands, or project structure changes.

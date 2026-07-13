@@ -1,0 +1,153 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  accent?: 'ai' | 'security' | 'global' | 'neutral';
+  image?: string;
+  imageAlt?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  focusLabel?: string;
+  focusItems?: string[];
+  compact?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  accent = 'neutral',
+  image,
+  imageAlt = '',
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  focusLabel = 'Practice focus',
+  focusItems = [],
+  compact = false,
+} = Astro.props;
+
+const accentStyles = {
+  ai: {
+    eyebrow: 'text-indigo-200',
+    dot: 'bg-ai',
+    primary: 'bg-ai text-white hover:bg-indigo-500 focus-visible:ring-indigo-300',
+    line: 'bg-ai',
+    focus: 'text-indigo-300',
+    focusBorder: 'border-indigo-400/25',
+  },
+  security: {
+    eyebrow: 'text-sky-200',
+    dot: 'bg-security',
+    primary: 'bg-security text-white hover:bg-sky-500 focus-visible:ring-sky-300',
+    line: 'bg-security',
+    focus: 'text-sky-300',
+    focusBorder: 'border-sky-400/25',
+  },
+  global: {
+    eyebrow: 'text-amber-200',
+    dot: 'bg-global',
+    primary: 'bg-global text-black hover:bg-amber-400 focus-visible:ring-amber-300',
+    line: 'bg-global',
+    focus: 'text-amber-300',
+    focusBorder: 'border-amber-400/25',
+  },
+  neutral: {
+    eyebrow: 'text-gray-200',
+    dot: 'bg-white',
+    primary: 'bg-white text-black hover:bg-gray-100 focus-visible:ring-white',
+    line: 'bg-white/60',
+    focus: 'text-gray-300',
+    focusBorder: 'border-white/20',
+  },
+} as const;
+
+const styles = accentStyles[accent];
+const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+---
+
+<section
+  class:list={[
+    'page-hero relative isolate flex items-center overflow-hidden border-b border-white/5 px-6',
+    compact ? 'min-h-[360px] py-14 sm:min-h-[400px] sm:py-16' : 'min-h-[calc(100svh-8rem)] py-14 sm:py-16 lg:py-20',
+  ]}
+  aria-labelledby={heroId}
+>
+  {image ? (
+    <div class="absolute inset-0 -z-20">
+      <img src={image} alt={imageAlt} class="h-full w-full object-cover object-center brightness-[0.3] saturate-[0.72] scale-[1.01]" loading="eager" />
+    </div>
+  ) : null}
+
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.032)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.032)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_94%)]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(100deg,#050508_0%,rgba(5,5,8,0.97)_43%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.48)_100%)] max-xl:bg-[linear-gradient(180deg,rgba(5,5,8,0.82)_0%,#050508_96%)]" aria-hidden="true"></div>
+
+  <div class:list={['page-hero-shell mx-auto grid min-w-0 w-full max-w-7xl items-center gap-12', focusItems.length > 0 ? 'xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] xl:gap-16' : '']}>
+    <div class="flex min-w-0 max-w-3xl flex-col items-start gap-5 sm:gap-6" data-reveal-group>
+      <span class:list={['inline-flex min-h-6 items-center gap-3 text-xs font-bold uppercase', styles.eyebrow]}>
+        <span class:list={['h-2 w-2 shrink-0', styles.dot]} aria-hidden="true"></span>
+        {eyebrow}
+      </span>
+
+      <h1 id={heroId} class:list={['page-hero-title max-w-full font-display font-bold leading-[1.08] text-white [overflow-wrap:anywhere]', compact ? 'text-4xl sm:text-5xl lg:text-6xl' : 'text-4xl sm:text-5xl lg:text-6xl']}>
+        {title}
+      </h1>
+
+      <p class="max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
+        {description}
+      </p>
+
+      {(primaryLabel && primaryHref) || (secondaryLabel && secondaryHref) ? (
+        <div class="flex w-full flex-col gap-3 pt-2 sm:w-auto sm:flex-row sm:items-center">
+          {primaryLabel && primaryHref ? (
+            <a href={primaryHref} class:list={['inline-flex min-h-12 w-full items-center justify-center rounded-lg px-7 py-3 text-center text-sm font-bold shadow-xl shadow-black/20 transition-[background-color,transform,box-shadow] duration-200 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto', styles.primary]}>
+              {primaryLabel}
+            </a>
+          ) : null}
+          {secondaryLabel && secondaryHref ? (
+            <a href={secondaryHref} class="inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/15 bg-white/5 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/30 hover:bg-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
+              {secondaryLabel}
+            </a>
+          ) : null}
+        </div>
+      ) : null}
+
+      <slot />
+    </div>
+
+    {focusItems.length > 0 ? (
+      <div class="hidden xl:block" data-reveal-right aria-label={`${eyebrow} focus areas`}>
+        <div class:list={['border-l pl-8', styles.focusBorder]}>
+          <span class:list={['text-[10px] font-bold uppercase', styles.focus]}>{focusLabel}</span>
+          <ol class="mt-6 space-y-0">
+            {focusItems.map((item, index) => (
+              <li class="flex min-h-16 items-center gap-5 border-t border-white/10 py-4 last:border-b">
+                <span class:list={['font-display text-xs font-bold', styles.focus]}>0{index + 1}</span>
+                <span class="text-sm font-semibold text-white">{item}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    ) : null}
+  </div>
+
+  <div class:list={['pointer-events-none absolute inset-x-0 bottom-0 h-px', styles.line]} aria-hidden="true"></div>
+</section>
+
+<style>
+  @media (min-width: 1024px) and (max-height: 800px) {
+    .page-hero {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .page-hero-title {
+      font-size: 3rem;
+    }
+  }
+</style>

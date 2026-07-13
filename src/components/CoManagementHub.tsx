@@ -14,11 +14,11 @@ interface Scenario {
 const scenarios: Scenario[] = [
   {
     id: "security-escalation",
-    title: "24/7 SOC Threat Containment",
-    description: "How we coordinate incident response when Defender XDR flags a critical anomaly.",
-    clientStep: "Client SecOps receives automatic notification in Microsoft Defender portal.",
-    hubStep: "Threat feeds stream to Aetas SOC. Auto-correlation rules verify host telemetry.",
-    aetasStep: "Aetas analysts isolate host, execute containment scripts, and notify Client lead via dedicated Slack channel."
+    title: "Defender XDR Alert Workflow",
+    description: "How a Defender XDR alert becomes a visible ticket for human review.",
+    clientStep: "Microsoft Defender XDR generates the security alert.",
+    hubStep: "The workflow sends an Outlook notification and creates a Jira ticket with the alert information.",
+    aetasStep: "An Aetas analyst reviews the Jira ticket, documents the event, and follows the agreed escalation process."
   },
   {
     id: "helpdesk-overflow",
@@ -50,9 +50,9 @@ export default function CoManagementHub() {
       {/* Header and Scenario Selector */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 border-b border-white/5 pb-8 mb-8">
         <div>
-          <h3 className="text-2xl font-display font-bold text-white mb-2">Unified Co-Management Hub</h3>
+          <h3 className="text-2xl font-display font-bold text-white mb-2">Co-Managed Workflow View</h3>
           <p className="text-gray-400 text-xs max-w-md">
-            We act as a seamless extension of your internal IT and security departments, sharing systems, logs, and channels.
+            See how client teams, integration channels, and Aetas specialists share ownership without combining distinct service practices.
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export default function CoManagementHub() {
           </div>
           <h4 className="font-display font-bold text-white text-sm mb-2">Integration Channels</h4>
           <p className="text-gray-400 text-xs max-w-xs mb-4">
-            Unified via API tokens, Microsoft Defender XDR incident feeds, and collaborative Slack/Teams bridges.
+            Workflow channels vary by service. The security example uses Microsoft Defender XDR, Outlook notifications, and Jira tickets.
           </p>
           
           <div className="w-full bg-black/40 border border-white/5 p-4 rounded-xl text-left font-mono text-[10px] text-gray-400 min-h-[90px]">
@@ -134,7 +134,7 @@ export default function CoManagementHub() {
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h4 className="font-display font-bold text-white text-sm">Aetas Specialists</h4>
-            <p className="text-[10px] text-gray-400 uppercase mt-1 tracking-wider">24/7 Extension Team</p>
+            <p className="text-[10px] text-gray-400 uppercase mt-1 tracking-wider">Human Review Team</p>
           </div>
           <div className="bg-black/20 border border-white/5 p-4 rounded-xl mt-4">
             <span className="text-[9px] font-bold text-indigo-400 uppercase block mb-1">Aetas Execution Step</span>

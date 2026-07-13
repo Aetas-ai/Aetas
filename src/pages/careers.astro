@@ -1,19 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="Careers — Join Aetas" description="Explore open roles in cybersecurity, IT managed services, and AI systems engineering at Aetas.ai.">
-  <section class="py-24 px-6 max-w-7xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-4 items-center">
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Join our Team</span>
-      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">Scale Modern Operations</h1>
-      <p class="text-gray-400 text-sm max-w-xl leading-relaxed">
-        Work with certified security specialists, IT technicians, and AI automation developers across our US and Philippines delivery hubs.
-      </p>
-    </div>
+<Layout title="Careers - Join Aetas Global Innovations" description="Explore open roles in cybersecurity, IT managed services, BPO operations, and AI systems engineering at Aetas Global Innovations.">
+  <PageHero
+    eyebrow="Careers at AGI"
+    title="Build the systems behind modern service delivery."
+    description="Explore roles across cybersecurity, managed IT, BPO operations, and human-reviewed AI workflow automation."
+    compact
+    primaryLabel="View open roles"
+    primaryHref="#open-roles"
+  />
 
-    <!-- Job list -->
-    <div class="max-w-4xl mx-auto space-y-6">
+  <section id="open-roles" class="scroll-mt-24 px-6 py-20 sm:py-24">
+    <div class="mx-auto max-w-4xl space-y-6">
       <div class="glass-panel p-6 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4" data-reveal>
         <div>
           <span class="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[8px] font-bold uppercase tracking-wider">Aetas Security</span>

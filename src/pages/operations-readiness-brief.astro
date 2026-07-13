@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout title="Download the AGI Operations Readiness Brief" description="Register to download the Aetas Global Innovations brief on AI-augmented BPO, cybersecurity, IT, and helpdesk operations.">
+  <PageHero
+    eyebrow="AGI operations readiness brief"
+    title="A practical starting point for your next operations decision."
+    description="Register for a concise guide to evaluating AI workflow automation, cybersecurity coverage, managed IT, helpdesk, and BPO operations as separate service needs."
+    accent="security"
+    image="/agi-operations-command.png"
+    imageAlt="AGI operations readiness visualization"
+    compact
+  />
+
+  <section class="px-6 py-20 sm:py-24">
+    <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:items-start">
+      <div class="lg:col-span-6">
+        <h2 class="text-3xl font-display font-bold text-white sm:text-4xl">What the brief helps you evaluate</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {[
+            'Identify automation-ready workflows',
+            'Evaluate human validation gates',
+            'Map security and IT operations signals',
+            'Prepare a practical AGI implementation conversation',
+          ].map((item) => (
+            <div class="rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-sm font-semibold text-gray-200">
+              {item}
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-8 rounded-3xl border border-white/10 bg-white p-5 shadow-2xl shadow-black/20">
+          <img src="/undraw-contract-signed.svg" alt="Download registration illustration" class="mx-auto aspect-[16/9] w-full max-w-md object-contain" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8">
+          <div class="mb-6">
+            <h2 class="text-2xl font-display font-bold text-white">Register to download</h2>
+            <p class="mt-2 text-sm leading-relaxed text-gray-400">
+              Share your details and we will route follow-up to the right AGI team if your organization wants to discuss implementation.
+            </p>
+          </div>
+
+          <form class="space-y-4" name="agi-readiness-brief" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/operations-readiness-brief/thanks">
+            <input type="hidden" name="form-name" value="agi-readiness-brief" />
+            <p class="hidden">
+              <label>Do not fill this out: <input name="bot-field" /></label>
+            </p>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">First Name</label>
+                <input name="first-name" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              </div>
+              <div>
+                <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Last Name</label>
+                <input name="last-name" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              </div>
+            </div>
+            <div>
+              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Work Email</label>
+              <input name="email" type="email" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+            </div>
+            <div>
+              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Company</label>
+              <input name="company" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+            </div>
+            <div>
+              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Primary Interest</label>
+              <select name="interest" required class="w-full rounded-xl border border-white/10 bg-brand-bg px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none">
+                <option value="ai">AI workflow automation</option>
+                <option value="security">Cybersecurity / SOC / MDR</option>
+                <option value="global">Managed IT / BPO / Helpdesk</option>
+                <option value="mixed">Multiple service areas</option>
+              </select>
+            </div>
+            <button type="submit" class="w-full rounded-xl bg-white px-5 py-4 text-sm font-bold text-black transition-all hover:bg-white/90 active:scale-[0.98]">
+              Get the brief
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -33,7 +33,7 @@ export const resources: ResourceArticle[] = [
       'A practical look at the containment steps that matter when suspicious endpoint behavior appears.',
     body: [
       'Ransomware response depends on prepared telemetry, clear ownership, and fast human review. Tools can surface the signal, but response quality depends on the process around them.',
-      'Aetas Security focuses on alert intake, severity review, endpoint context, isolation decisions, and documented communication with client stakeholders.',
+      'One workflow pattern Aetas Security can configure routes Microsoft Defender XDR alerts through Outlook notifications and Jira tickets before analyst review and escalation.',
       'The strongest programs rehearse these steps before an incident. That means defined escalation paths, known contacts, and evidence that containment actions are working.',
     ],
   },

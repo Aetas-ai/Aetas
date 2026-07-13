@@ -1,16 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="Partners & Alliances — Reseller Portfolio" description="Browse Aetas.ai technology partnerships, Cloud and AI platforms, security alliances, and reseller product portfolio.">
-  <section class="py-24 px-6 overflow-hidden">
-    <div class="max-w-4xl mx-auto text-center flex flex-col gap-6 items-center mb-16">
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Our Ecosystem</span>
-      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">Technology Alliances & Procurement</h1>
-      <p class="text-gray-400 text-sm max-w-2xl leading-relaxed">
-        We work across leading cloud, AI, and cybersecurity platforms. Partner tiers and certifications should be displayed only after they are verified for public use.
-      </p>
-    </div>
+<Layout title="Partners & Alliances - Reseller Portfolio" description="Browse Aetas Global Innovations technology partnerships, cloud and AI platforms, security alliances, and reseller product portfolio.">
+  <PageHero
+    eyebrow="Technology ecosystem"
+    title="Platforms, procurement, and implementation support."
+    description="Explore the cloud, AI, and cybersecurity technology categories Aetas can evaluate and support. Public partner tiers and certifications remain subject to verification."
+    compact
+    primaryLabel="Discuss a technology need"
+    primaryHref="/contact?intent=partners"
+  />
+
+  <section class="overflow-hidden px-6 py-20 sm:py-24">
 
     <!-- Category 1: Cloud & AI -->
     <div class="max-w-7xl mx-auto mb-20">
@@ -136,7 +139,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-indigo-500/5 blur-3xl"></div>
       <h3 class="text-2xl font-display font-bold text-white mb-4">Curated Cybersecurity Marketplace</h3>
       <p class="text-gray-400 text-xs max-w-xl mx-auto leading-relaxed mb-6">
-        Through our reseller channels, we procure and configure over 100+ best-of-breed security products. Achieve license consolidation, volume savings, and end-to-end management under a single monthly agreement.
+        Aetas can help evaluate, procure, and configure selected cybersecurity tools. Specific reseller status, pricing, savings, and partner tiers are confirmed during scoping before they are represented publicly.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <a href="/contact?intent=general" class="px-8 py-3.5 rounded-lg text-xs font-semibold bg-white text-black hover:bg-white/90 transition-all">

@@ -1,6 +1,6 @@
-# Aetas.ai Company Website
+# Aetas Global Innovations Company Website
 
-Astro marketing site for Aetas.ai, a unified company brand with three disciplines:
+Astro marketing site for Aetas Global Innovations, also branded through the Aetas.ai domain and service identity. AGI is the company acronym and intentionally connects the brand to AI-driven operating systems.
 
 - **Aetas AI**: AI-augmented workflow automation for BPO, support, helpdesk, IT operations, and back-office teams.
 - **Aetas Security**: active MSSP services including SOC/MDR, pentesting, response planning, and security tooling.
@@ -30,7 +30,7 @@ Key routes:
 - `/resources` and `/resources/[slug]`
 - `/partners`, `/about`, `/careers`, `/contact`
 
-Current content note: `/about` is intentionally blank while the company story and leadership content are being planned.
+Current content note: `/about` now introduces Aetas Global Innovations, the AGI name, operating principles, and the relationship between Aetas AI, Aetas Security, and Aetas Global.
 
 ## Commands
 
