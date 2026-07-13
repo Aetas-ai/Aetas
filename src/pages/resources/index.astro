@@ -1,22 +1,33 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
 import { resources } from '../../data/resources';
+
+const resourceIllustrations = [
+  '/undraw-motion-alert.svg',
+  '/undraw-data-transfer.svg',
+  '/undraw-growth-analytics.svg',
+];
 ---
 
 <Layout title="Intel & Blog — Aetas Resources" description="Read the latest cyber threat intelligence, IT operations strategies, and AI workflow research from the Aetas engineering team.">
-  <section class="py-24 px-6 max-w-7xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-16 flex flex-col gap-4 items-center">
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Insights & Intel</span>
-      <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight">The Aetas Intelligence Feed</h1>
-      <p class="text-gray-400 text-sm max-w-xl leading-relaxed">
-        Deep technical writeups covering offensive security tactics, IT operations orchestration, and our ongoing AI workflow experiments.
-      </p>
-    </div>
+  <PageHero
+    eyebrow="Insights and resources"
+    title="Practical thinking for modern operations."
+    description="Read technical perspectives on cybersecurity, managed IT and support operations, and human-reviewed AI workflow automation."
+    compact
+    primaryLabel="Download the AGI brief"
+    primaryHref="/operations-readiness-brief"
+  />
 
+  <section class="mx-auto max-w-7xl px-6 py-20 sm:py-24">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {resources.map((article) => (
+      {resources.map((article, index) => (
         <article class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between" data-reveal>
           <div>
+            <div class="mb-5 rounded-2xl bg-white p-4">
+              <img src={resourceIllustrations[index % resourceIllustrations.length]} alt={`${article.category} illustration`} class="aspect-[16/10] w-full object-contain" loading="lazy" />
+            </div>
             <span class="px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[9px] font-bold uppercase tracking-wider mb-4 inline-block">{article.category}</span>
             <h2 class="text-xl font-display font-bold text-white mb-3 hover:text-indigo-300 transition-colors">
               <a href={`/resources/${article.slug}`}>{article.title}</a>

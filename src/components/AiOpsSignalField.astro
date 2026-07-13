@@ -1,26 +1,34 @@
 ---
 interface Props {
   compact?: boolean;
+  hero?: boolean;
 }
 
-const { compact = false } = Astro.props;
+const { compact = false, hero = false } = Astro.props;
 
-const lanes = [
-  ['AI', 'Model assist'],
-  ['SEC', 'Threat signals'],
-  ['IT', 'Tenant ops'],
-  ['BPO', 'Queue work'],
-];
+const lanes = hero
+  ? [
+      ['AI', 'Workflow automation'],
+      ['SEC', 'Cybersecurity'],
+      ['GLOBAL', 'Managed IT'],
+      ['BPO', 'Outsourced operations'],
+    ]
+  : [
+      ['AI', 'Model assist'],
+      ['SEC', 'Threat signals'],
+      ['IT', 'Tenant ops'],
+      ['BPO', 'Queue work'],
+    ];
 ---
 
-<div class={`signal-field ${compact ? 'signal-field-compact' : ''}`} aria-label="Animated AI, cybersecurity, IT, and helpdesk workflow signals">
+<div class={`signal-field ${compact ? 'signal-field-compact' : ''} ${hero ? 'signal-field-hero' : ''}`} aria-label="Animated AI, cybersecurity, IT, and helpdesk workflow signals">
   <div class="signal-grid" aria-hidden="true"></div>
   <div class="signal-sweep signal-sweep-one" aria-hidden="true"></div>
   <div class="signal-sweep signal-sweep-two" aria-hidden="true"></div>
 
   <div class="signal-core">
-    <span class="signal-core-label">AETAS AI</span>
-    <span class="signal-core-title">Human-reviewed automation</span>
+    <span class="signal-core-label">{hero ? 'AGI' : 'AETAS AI'}</span>
+    <span class="signal-core-title">{hero ? 'Distinct service practices' : 'Human-reviewed automation'}</span>
   </div>
 
   <div class="signal-nodes" aria-hidden="true">
@@ -70,6 +78,26 @@ const lanes = [
 
   .signal-field-compact {
     min-height: 360px;
+  }
+
+  .signal-field-hero {
+    height: 100%;
+    min-height: 100%;
+    border: 0;
+    border-radius: 0;
+    background:
+      linear-gradient(135deg, rgba(99, 102, 241, 0.07), transparent 44%),
+      linear-gradient(225deg, rgba(14, 165, 233, 0.06), transparent 48%),
+      transparent;
+    box-shadow: none;
+  }
+
+  .signal-field-hero::after {
+    content: "";
+    position: absolute;
+    inset: 8% 5% 10%;
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    clip-path: polygon(0 0, 68% 0, 100% 32%, 100% 100%, 32% 100%, 0 68%);
   }
 
   .signal-grid {
@@ -319,6 +347,21 @@ const lanes = [
       right: 12px;
       bottom: 12px;
       gap: 6px;
+    }
+
+    .signal-field-hero {
+      min-height: 100%;
+      border-radius: 0;
+    }
+
+    .signal-field-hero .signal-core {
+      top: 72%;
+      left: 72%;
+    }
+
+    .signal-field-hero .signal-node,
+    .signal-field-hero .signal-readout {
+      display: none;
     }
   }
 

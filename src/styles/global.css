@@ -12,6 +12,25 @@
 @layer base {
   html {
     background-color: var(--color-brand-bg);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  main,
+  header,
+  footer {
+    min-width: 0;
+    max-width: 100%;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -100,4 +119,133 @@
 
 .glow-global {
   box-shadow: 0 0 40px -5px rgba(245, 158, 11, 0.15);
+}
+
+/* Bob assistant: global critical rules prevent Astro route transitions from resizing or moving the widget. */
+.bob-widget {
+  position: fixed !important;
+  right: max(2rem, calc(env(safe-area-inset-right) + 1rem)) !important;
+  bottom: max(1rem, env(safe-area-inset-bottom)) !important;
+  left: auto !important;
+  top: auto !important;
+  z-index: 120 !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none;
+  max-width: calc(100vw - 2rem) !important;
+  view-transition-name: none !important;
+}
+
+.bob-widget *,
+.bob-widget *::before,
+.bob-widget *::after {
+  box-sizing: border-box;
+  view-transition-name: none !important;
+}
+
+@media (max-width: 767px) {
+  #bob-chat-panel {
+    position: fixed !important;
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    top: 5.5rem !important;
+    bottom: 7rem !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    z-index: 121 !important;
+  }
+
+  .bob-prompt {
+    width: 168px !important;
+    min-width: 168px !important;
+    max-width: 168px !important;
+  }
+}
+
+.bob-launcher {
+  position: relative !important;
+  display: block !important;
+  width: 104px !important;
+  height: 84px !important;
+  min-width: 104px !important;
+  min-height: 84px !important;
+  max-width: 104px !important;
+  max-height: 84px !important;
+  flex: 0 0 auto !important;
+  padding: 0 !important;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.bob-launcher:hover {
+  transform: translateY(-4px);
+  filter: drop-shadow(0 18px 28px rgba(99, 102, 241, 0.28));
+}
+
+.bob-launcher:active {
+  transform: scale(0.95);
+}
+
+.bob-avatar {
+  position: relative !important;
+  width: 104px !important;
+  height: 84px !important;
+  min-width: 104px !important;
+  min-height: 84px !important;
+}
+
+.bob-avatar-image {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 168px !important;
+  height: 100px !important;
+  max-width: none !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.45));
+  transition: filter 500ms ease;
+}
+
+@media (min-width: 768px) {
+  .bob-widget {
+    right: max(3rem, calc(env(safe-area-inset-right) + 1.5rem)) !important;
+  }
+
+  #bob-chat-panel {
+    width: min(390px, calc(100vw - 2rem)) !important;
+    max-width: calc(100vw - 2rem) !important;
+  }
+
+  .bob-prompt {
+    width: 190px !important;
+    min-width: 190px !important;
+    max-width: 190px !important;
+  }
+
+  .bob-launcher {
+    width: 138px !important;
+    height: 116px !important;
+    min-width: 138px !important;
+    min-height: 116px !important;
+    max-width: 138px !important;
+    max-height: 116px !important;
+  }
+
+  .bob-avatar {
+    width: 138px !important;
+    height: 116px !important;
+    min-width: 138px !important;
+    min-height: 116px !important;
+  }
+
+  .bob-avatar-image {
+    width: 232px !important;
+    height: 138px !important;
+  }
 }

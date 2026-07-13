@@ -18,19 +18,19 @@ const questions: Question[] = [
     text: "What is your organization's primary challenge right now?",
     options: [
       {
-        text: "We need 24/7 security monitoring & pentesting",
+        text: "We need tracked security alerts or penetration testing",
         value: "security",
-        description: "Secure digital infrastructure, detect threats, and achieve SOC 2 or regulatory compliance."
+        description: "Route Defender XDR alerts through Outlook and Jira for analyst review, or scope security testing."
       },
       {
         text: "Our internal IT helpdesk & operations are overwhelmed",
         value: "global",
-        description: "Scale user provisioning, L1-L3 tech support, and manage global business operations."
+        description: "Define helpdesk, identity, device, tenant, or outsourced support responsibilities."
       },
       {
         text: "We want to automate manual workflows with custom AI",
         value: "ai",
-        description: "Integrate agentic AI, personal LLMs, and human-in-the-loop triage into existing systems."
+        description: "Design human-reviewed AI assistance around repetitive BPO and operational work."
       }
     ]
   },
@@ -39,35 +39,40 @@ const questions: Question[] = [
     text: "What is your primary operational bottleneck?",
     options: [
       {
-        text: "Offensive security risks & active threat exposure",
+        text: "Security testing, alerts, or exposure management",
         value: "security",
         description: "Vulnerability remediation, network exposure, and incident response readiness."
       },
       {
-        text: "Always-on IT user issues and software license control",
+        text: "Recurring IT requests and software administration",
         value: "global",
-        description: "Around-the-clock helpdesk, password resets, onboarding, and device management."
+        description: "Helpdesk queues, access requests, onboarding, device management, and tenant upkeep."
       },
       {
-        text: "Repetitive data entry and slow ticket routing times",
+        text: "Repetitive processing, drafting, or ticket routing",
         value: "ai",
-        description: "Manual operations checking processes that could be triaged by intelligent models."
+        description: "Identify steps where AI can assist while people retain review and approval."
       }
     ]
   },
   {
     id: 3,
-    text: "What is your implementation strategy?",
+    text: "Which engagement best matches the work you described?",
     options: [
       {
-        text: "Deploy a ready-to-run 24/7 SOC or Helpdesk immediately",
-        value: "security", // maps to active operational services
-        description: "Leverage Aetas's live infrastructure and active delivery centers right away."
+        text: "Establish a repeatable cybersecurity alert workflow",
+        value: "security",
+        description: "Create a tracked path from Defender XDR detection to notification, ticketing, review, and escalation."
       },
       {
         text: "Deploy custom workflow automation tools",
         value: "ai",
         description: "Collaborate with our team on AI-augmented workflows tailored to your needs."
+      },
+      {
+        text: "Assign recurring IT or support responsibilities",
+        value: "global",
+        description: "Define helpdesk, tenant, device, identity, or BPO queue ownership and escalation."
       }
     ]
   }
@@ -148,14 +153,14 @@ export default function AdvisorQuiz() {
               {result === 'security' && 'Aetas Security (MSSP)'}
               {result === 'global' && 'Aetas Global (MSP)'}
               {result === 'ai' && 'Aetas AI (Workflow Automation)'}
-              {result === 'mixed' && 'Aetas Co-Managed Architecture'}
+              {result === 'mixed' && 'Multiple Aetas Practices'}
             </h3>
 
             <p className="text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed">
-              {result === 'security' && 'Our active Managed Security Services Practice is best positioned to secure your company. We provide 24/7 SOC detection, endpoint response, pentesting, and license procurement.'}
-              {result === 'global' && 'We recommend setting up a dedicated helpdesk/BPO queue with Aetas Global. Our mature MSP operations deliver full-lifecycle IT support, device management, and always-on business operations.'}
+              {result === 'security' && 'Your needs fit Aetas Security. We can scope Defender XDR alert handling through Outlook and Jira, analyst review and escalation, penetration testing, response planning, and selected security tooling.'}
+              {result === 'global' && 'Your needs fit Aetas Global. We can scope helpdesk delivery, identity and device operations, tenant administration, or BPO support responsibilities with clear ownership and escalation.'}
               {result === 'ai' && 'Your goals fit Aetas AI workflow automation. We can help design AI-augmented triage, drafting, knowledge retrieval, and human-in-the-loop operations workflows.'}
-              {result === 'mixed' && 'Your needs bridge multiple disciplines. We suggest a unified consultation integrating security monitoring, IT support, and AI-augmented workflow automation.'}
+              {result === 'mixed' && 'Your needs span more than one Aetas practice. We suggest one scoping conversation that routes each requirement to the separate Security, Global, or AI service team responsible for it.'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -187,8 +192,8 @@ export default function AdvisorQuiz() {
               <div className="absolute inset-0 rounded-full border-4 border-white/5"></div>
               <div className="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"></div>
             </div>
-            <h4 className="text-xl font-display font-semibold text-white mb-2">Analyzing Operational Metrics</h4>
-            <p className="text-gray-400 text-sm">Synthesizing answers and aligning recommendations...</p>
+            <h4 className="text-xl font-display font-semibold text-white mb-2">Reviewing Your Answers</h4>
+            <p className="text-gray-400 text-sm">Matching the request to the appropriate Aetas practice...</p>
           </motion.div>
         ) : (
           <motion.div

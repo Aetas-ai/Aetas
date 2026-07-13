@@ -1,76 +1,129 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import AiOpsSignalField from '../components/AiOpsSignalField.astro';
 import AdvisorQuiz from '../components/AdvisorQuiz';
+import FeatureCarousel from '../components/ui/feature-carousel';
 import ManagedSystems from '../components/ManagedSystems';
-import { caseStudies } from '../data/caseStudies';
+import OperationsVisual from '../components/OperationsVisual';
 ---
 
-<Layout title="AI-Augmented Security, IT, and BPO Operations" description="Aetas.ai combines AI-augmented workflow automation, active security services, and managed IT/BPO operations for teams that need human-reviewed execution.">
-  <section class="relative min-h-[88vh] flex items-center overflow-hidden py-20 px-6">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(99,102,241,0.10)_0,transparent_48%),radial-gradient(circle_at_80%_60%,rgba(14,165,233,0.08)_0,transparent_42%)] pointer-events-none"></div>
+<Layout title="Aetas Global Innovations - AI Automation, Cybersecurity, and Managed Operations" description="Explore Aetas Global Innovations' specialized services for human-reviewed AI workflow automation, cybersecurity, managed IT, helpdesk, and BPO operations.">
+  <section class="relative isolate overflow-hidden border-b border-white/5" aria-labelledby="home-hero-title">
+    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,black_0%,rgba(0,0,0,0.7)_66%,transparent_100%)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,#050508_4%,rgba(5,5,8,0.98)_42%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.9)_100%)] max-lg:bg-[linear-gradient(180deg,#050508_0%,rgba(5,5,8,0.94)_70%,#050508_100%)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden="true"></div>
 
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-      <div class="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
-        <div class="inline-flex items-center gap-2 self-center lg:self-start px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-indigo-300">
-          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-          <span>AI, cybersecurity, IT, and helpdesk operations</span>
+    <div class="home-hero-shell relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] w-full max-w-7xl items-center gap-14 px-6 py-14 sm:py-16 lg:py-16 xl:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.88fr)] xl:gap-12 2xl:gap-20 2xl:py-20">
+      <div class="flex max-w-3xl flex-col items-start gap-5 sm:gap-6" data-reveal-group>
+        <div class="flex items-center gap-3 text-xs font-bold uppercase text-gray-300">
+          <span class="h-2 w-2 bg-ai" aria-hidden="true"></span>
+          <span>Aetas Global Innovations</span>
+          <span class="hidden text-gray-600 sm:inline" aria-hidden="true">/</span>
+          <span class="hidden font-medium text-gray-500 sm:inline">AI. Security. Global operations.</span>
         </div>
 
-        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-bold leading-tight text-white tracking-tight">
-          AI-augmented operations for<br />
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-indigo-400 to-amber-400">
-            BPO, Security & IT.
-          </span>
+        <h1 id="home-hero-title" class="home-hero-heading max-w-3xl font-display text-4xl font-bold leading-[1.08] text-white sm:text-5xl lg:text-6xl xl:text-[3.25rem] 2xl:text-6xl">
+          Better workflows.<br />
+          <span class="text-sky-300">Stronger security.</span><br />
+          Dependable IT operations.
         </h1>
 
-        <p class="text-gray-300 text-base sm:text-lg max-w-2xl leading-relaxed">
-          Aetas helps organizations automate workflows, augment BPO and helpdesk teams with AI, secure environments, and run managed IT operations with human review built into the process.
+        <p class="max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
+          Choose the specialized AGI practice your business needs: human-reviewed AI workflow automation for BPO teams, dedicated cybersecurity services, or managed IT, helpdesk, and outsourced operations.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center mt-4">
-          <a href="/contact" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-white text-black hover:bg-white/90 transition-all text-center shadow-xl shadow-white/5 hover:scale-[1.02] active:scale-[0.98]">
-            Talk to Aetas
+        <div class="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
+          <a href="/contact" class="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-white px-7 py-3 text-center text-sm font-bold text-black shadow-xl shadow-black/20 transition-[background-color,transform,box-shadow] duration-200 hover:bg-gray-100 hover:shadow-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
+            Discuss your operations
           </a>
-          <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all text-center">
-            Explore Services
+          <a href="#services" class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/30 hover:bg-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
+            Explore our services <span aria-hidden="true">&darr;</span>
           </a>
         </div>
+
+        <p class="max-w-2xl border-l-2 border-ai/70 pl-4 text-xs leading-relaxed text-gray-400 sm:text-sm">
+          AI recommendations stay subject to human review, defined approval paths, and accountable escalation.
+        </p>
       </div>
 
-      <div class="lg:col-span-5" data-reveal-right>
-        <AiOpsSignalField compact />
+      <div class="home-hero-map relative hidden min-h-[460px] xl:block 2xl:min-h-[520px]" data-reveal-right aria-hidden="true">
+        <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent"></div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 font-display text-[12rem] font-bold leading-none text-white/[0.025] xl:text-[15rem]">AGI</div>
+
+        <div class="absolute inset-0 flex flex-col justify-center gap-16 pl-10 xl:pl-16">
+          <div class="relative pr-4">
+            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-ai/80 via-ai/35 to-transparent"></div>
+            <div class="relative flex items-center gap-4">
+              <span class="flex h-11 w-11 items-center justify-center border border-ai/40 bg-brand-bg font-display text-xs font-bold text-indigo-300">01</span>
+              <div class="bg-brand-bg/90 pr-5">
+                <span class="block font-display text-lg font-bold text-white">Aetas AI</span>
+                <span class="block text-xs text-gray-400">Human-reviewed BPO workflow automation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative pr-4">
+            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-security/80 via-security/35 to-transparent"></div>
+            <div class="relative flex items-center gap-4">
+              <span class="flex h-11 w-11 items-center justify-center border border-security/40 bg-brand-bg font-display text-xs font-bold text-sky-300">02</span>
+              <div class="bg-brand-bg/90 pr-5">
+                <span class="block font-display text-lg font-bold text-white">Aetas Security</span>
+                <span class="block text-xs text-gray-400">Dedicated cybersecurity services</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative pr-4">
+            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-global/80 via-global/35 to-transparent"></div>
+            <div class="relative flex items-center gap-4">
+              <span class="flex h-11 w-11 items-center justify-center border border-global/40 bg-brand-bg font-display text-xs font-bold text-amber-300">03</span>
+              <div class="bg-brand-bg/90 pr-5">
+                <span class="block font-display text-lg font-bold text-white">Aetas Global</span>
+                <span class="block text-xs text-gray-400">Managed IT, helpdesk, and BPO operations</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 flex h-px" aria-hidden="true">
+      <span class="w-1/3 bg-ai/70"></span>
+      <span class="w-1/3 bg-security/70"></span>
+      <span class="w-1/3 bg-global/70"></span>
     </div>
   </section>
 
-  <section class="border-y border-white/5 py-10 bg-black/20 overflow-hidden">
-    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest text-center mb-5">
-      Technology ecosystem used across security, cloud, support, and automation workflows
-    </p>
-    <div class="partnership-marquee flex overflow-hidden relative w-full">
-      {Array.from({ length: 2 }).map(() => (
-        <div class="animate-marquee flex gap-16 items-center whitespace-nowrap text-lg text-gray-500 font-bold font-display select-none" aria-hidden="true">
-          <span>MICROSOFT CLOUD</span>
-          <span>AMAZON WEB SERVICES</span>
-          <span>GOOGLE CLOUD</span>
-          <span>ANTHROPIC CLAUDE</span>
-          <span>SENTINELONE</span>
-          <span>ZSCALER</span>
-          <span>ABNORMAL SECURITY</span>
-          <span>QUALYS</span>
-          <span>VULCAN CYBER</span>
-          <span>LIGHTSTREAM</span>
-        </div>
-      ))}
+  <nav class="border-b border-white/5 bg-black/30" aria-label="Aetas service practices">
+    <div class="mx-auto grid max-w-7xl sm:grid-cols-3">
+      <a href="/ai" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-ai/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ai sm:border-b-0 sm:border-r">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-indigo-400">01 / AI Services</span>
+          <span class="mt-1 block font-display text-sm font-bold text-white">BPO workflow automation</span>
+        </span>
+        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-indigo-300" aria-hidden="true">&rarr;</span>
+      </a>
+      <a href="/security" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-security/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-security sm:border-b-0 sm:border-r">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-sky-400">02 / Security Services</span>
+          <span class="mt-1 block font-display text-sm font-bold text-white">Cybersecurity services</span>
+        </span>
+        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-sky-300" aria-hidden="true">&rarr;</span>
+      </a>
+      <a href="/global" class="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-global/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-global">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-amber-400">03 / Global Services</span>
+          <span class="mt-1 block font-display text-sm font-bold text-white">Managed IT, helpdesk, and BPO</span>
+        </span>
+        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-amber-300" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
-  </section>
+  </nav>
 
   <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Three Disciplines. One Operating Model.</h2>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Three Specialized Practices. Clear Service Boundaries.</h2>
       <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
-        Aetas AI, Security, and Global work together around one delivery model: automate where it helps, keep skilled people in the approval path, and improve the workflow over time.
+        Engage the practice your business needs. Aetas AI, Aetas Security, and Aetas Global each have a distinct service scope, delivery focus, and path to engagement.
       </p>
     </div>
 
@@ -79,69 +132,103 @@ import { caseStudies } from '../data/caseStudies';
         <div>
           <span class="px-3 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">AI Services</span>
           <h3 class="text-2xl font-display font-bold text-white mb-4">Aetas AI</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">AI-augmented workflow automation for BPO, support, helpdesk, and operations teams. Built for assistance, routing, drafting, summarization, and human validation.</p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Human-reviewed workflow automation for BPO and operational teams, including intake, routing, drafting, summarization, knowledge retrieval, and quality review.</p>
         </div>
         <a href="/ai" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">Explore AI services &rarr;</a>
       </article>
 
       <article class="glass-panel glass-panel-hover rounded-2xl p-8 flex flex-col justify-between">
         <div>
-          <span class="px-3 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Active MSSP</span>
+          <span class="px-3 py-1 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Cybersecurity Services</span>
           <h3 class="text-2xl font-display font-bold text-white mb-4">Aetas Security</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">Managed detection, SOC support, penetration testing, incident response planning, compliance support, and security tooling.</p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">A dedicated cybersecurity practice for monitoring workflows, analyst triage, penetration testing, vulnerability management, incident readiness, and security tooling.</p>
         </div>
         <a href="/security" class="text-xs font-semibold text-sky-400 hover:text-sky-300">Explore security &rarr;</a>
       </article>
 
       <article class="glass-panel glass-panel-hover rounded-2xl p-8 flex flex-col justify-between">
         <div>
-          <span class="px-3 py-1 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Active MSP / BPO</span>
+          <span class="px-3 py-1 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Managed IT / BPO</span>
           <h3 class="text-2xl font-display font-bold text-white mb-4">Aetas Global</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">Always-on helpdesk, identity operations, device management, tenant administration, and outsourced support queues.</p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Managed helpdesk, identity and device operations, tenant administration, and outsourced support queues with defined ownership and escalation.</p>
         </div>
         <a href="/global" class="text-xs font-semibold text-amber-500 hover:text-amber-400">Explore operations &rarr;</a>
       </article>
     </div>
   </section>
 
-  <section class="bg-black/40 border-y border-white/5 py-12 px-6">
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 items-center text-center">
-      <div><span class="text-white font-display font-bold text-xl sm:text-2xl">SOC / MDR</span><span class="block text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Security Operations</span></div>
-      <div><span class="text-white font-display font-bold text-xl sm:text-2xl">24/7/365</span><span class="block text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Operational Coverage</span></div>
-      <div><span class="text-white font-display font-bold text-xl sm:text-2xl">100+</span><span class="block text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Security Products</span></div>
-      <div><span class="text-white font-display font-bold text-xl sm:text-2xl">AI Ops</span><span class="block text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider mt-1">Workflow Automation</span></div>
+  <section class="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Why Aetas Global Innovations</span>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Specialized teams for three different kinds of work.</h2>
+      <p class="text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
+        AGI gives organizations one clear place to start without presenting AI automation, cybersecurity, and managed operations as one bundled service. Each Aetas practice has a distinct purpose and accountable service scope.
+      </p>
+    </div>
+    <FeatureCarousel client:load />
+  </section>
+
+  <div class="border-y border-white/5 bg-black/20">
+    <OperationsVisual />
+  </div>
+
+  <section class="border-y border-white/5 bg-black/40 px-6 py-16" aria-labelledby="example-workflows-title">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl" data-reveal>
+        <span class="text-xs font-bold uppercase text-gray-500">Example workflows</span>
+        <h2 id="example-workflows-title" class="mt-3 text-3xl font-display font-bold text-white sm:text-4xl">Different work, routed through the right practice.</h2>
+        <p class="mt-4 text-sm leading-relaxed text-gray-400">These examples illustrate service scope. The exact workflow is defined around the client environment and agreed responsibilities.</p>
+      </div>
+
+      <div class="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-3" data-reveal-group>
+        <div class="bg-brand-bg p-6">
+          <span class="text-[10px] font-bold uppercase text-indigo-400">Aetas AI example</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-white">BPO work assistance</h3>
+          <p class="mt-4 text-sm leading-relaxed text-gray-400">Work intake &rarr; AI-assisted classification or drafting &rarr; human review &rarr; approved next step</p>
+        </div>
+        <div class="bg-brand-bg p-6">
+          <span class="text-[10px] font-bold uppercase text-sky-400">Aetas Security example</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-white">Tracked security alert</h3>
+          <p class="mt-4 text-sm leading-relaxed text-gray-400">Defender XDR alert &rarr; Outlook notification &rarr; Jira ticket &rarr; analyst review and escalation</p>
+        </div>
+        <div class="bg-brand-bg p-6">
+          <span class="text-[10px] font-bold uppercase text-amber-400">Aetas Global example</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-white">Managed support request</h3>
+          <p class="mt-4 text-sm leading-relaxed text-gray-400">User request &rarr; assigned support queue &rarr; specialist handling &rarr; documented resolution or escalation</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="py-24 px-6 max-w-7xl mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
-        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">How Aetas Works</span>
-        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white leading-tight">A steady operating layer for security, IT, and support.</h2>
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">How engagement starts</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white leading-tight">Start with one need and the team responsible for it.</h2>
         <p class="text-gray-400 text-sm leading-relaxed">
-          Aetas works with the real flow of enterprise operations: alerts, tickets, identity tasks, endpoint events, and support queues. The model is simple: define ownership, run the process, escalate clearly, and improve the workflow over time.
+          AGI routes each requirement to Aetas AI, Aetas Security, or Aetas Global. The assigned practice then defines scope, responsibilities, review points, and escalation before delivery begins.
         </p>
       </div>
       <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4" data-reveal-group>
         <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">1. Stabilize</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Map the current environment</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Document systems, queues, risk areas, owners, tooling, and escalation paths before changing the workflow.</p>
+          <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">1. Identify</span>
+          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Choose the service practice</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">Determine whether the requirement is AI workflow automation, cybersecurity, or managed IT and BPO operations.</p>
         </article>
         <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">2. Operate</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Run the recurring work</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Handle monitoring, helpdesk, identity, device, tenant, and support tasks with clear service boundaries.</p>
+          <span class="text-[10px] font-bold text-sky-400 uppercase tracking-widest">2. Scope</span>
+          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Define the work and boundaries</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">Document systems, responsibilities, dependencies, exclusions, and expected handoffs for the selected service.</p>
         </article>
         <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">3. Escalate</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Keep judgment with people</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Route incidents, exceptions, and high-impact changes to trained specialists before action is taken.</p>
+          <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">3. Assign</span>
+          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Set ownership and escalation</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">Establish who handles routine work, who reviews exceptions, and where high-impact decisions are escalated.</p>
         </article>
         <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">4. Improve</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Identify automation candidates</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Use operational patterns to find future AI-assisted workflows while keeping validation and accountability intact.</p>
+          <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">4. Review</span>
+          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Review delivery within scope</h3>
+          <p class="text-xs text-gray-400 leading-relaxed">Evaluate the agreed workflow, address recurring blockers, and define any changes through the responsible practice.</p>
         </article>
       </div>
     </div>
@@ -149,8 +236,8 @@ import { caseStudies } from '../data/caseStudies';
 
   <section id="systems-we-manage" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24 border-t border-white/5">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Systems We Manage & Configure</h2>
-      <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Explore the identity, device, security, and productivity tasks Aetas Global and Aetas Security can manage for client tenants.</p>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Technology responsibilities by practice.</h2>
+      <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Aetas Security and Aetas Global work in different areas of the client environment. The examples below clarify common responsibilities without combining the two services.</p>
     </div>
     <ManagedSystems client:load />
   </section>
@@ -159,7 +246,7 @@ import { caseStudies } from '../data/caseStudies';
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
         <h2 class="text-3xl sm:text-5xl font-display font-bold text-white leading-tight">Which Aetas team fits your need?</h2>
-        <p class="text-gray-400 text-sm leading-relaxed">Use the advisor to route your request toward Security, Global operations, or AI workflow services without guessing where to start.</p>
+        <p class="text-gray-400 text-sm leading-relaxed">Answer a few questions to identify whether your requirement belongs with Aetas AI, Aetas Security, or Aetas Global. This is service routing, not an automated assessment.</p>
       </div>
       <div class="lg:col-span-7" data-reveal>
         <AdvisorQuiz client:load />
@@ -167,36 +254,39 @@ import { caseStudies } from '../data/caseStudies';
     </div>
   </section>
 
-  <section class="py-24 px-6 max-w-7xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Selected Work</h2>
-      <p class="text-gray-400 text-sm leading-relaxed">Anonymized examples of how Aetas supports security monitoring, IT operations, helpdesk delivery, and workflow improvement.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-group>
-      {caseStudies.slice(0, 3).map((study) => (
-        <article class="glass-panel rounded-2xl p-6 flex flex-col justify-between">
-          <div>
-            <span class="text-3xl font-display font-bold text-white block mb-1">{study.metric}</span>
-            <span class="text-xs text-gray-500 block mb-5">{study.metricLabel}</span>
-            <h3 class="font-display font-bold text-white text-lg mb-3">{study.title}</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">{study.summary}</p>
-          </div>
-          <a href={`/work/${study.slug}`} class="mt-6 text-xs font-semibold text-indigo-300 hover:text-white transition-colors">Read case study &rarr;</a>
-        </article>
-      ))}
-    </div>
-  </section>
-
   <section class="py-24 px-6 border-t border-white/5">
     <div class="max-w-4xl mx-auto text-center flex flex-col gap-6 items-center" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">Build a more resilient operating layer.</h2>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">Start with the practice that matches your need.</h2>
       <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl">
-        Talk to Aetas about securing infrastructure, scaling managed support, or adding AI augmentation to BPO and operations workflows.
+        Tell us whether you are exploring BPO workflow automation, cybersecurity services, or managed IT and outsourced operations. We will route the conversation to the appropriate Aetas team.
       </p>
-      <a href="/contact" class="px-8 py-4 rounded-xl font-bold bg-white text-black hover:bg-white/90 transition-all shadow-xl shadow-white/5 hover:scale-[1.02] active:scale-[0.98]">
-        Start a conversation
-      </a>
+      <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <a href="/contact" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-white px-8 py-3 text-sm font-bold text-black transition-colors hover:bg-gray-100">
+          Talk to the right team
+        </a>
+        <a href="/operations-readiness-brief" class="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/15 bg-white/5 px-8 py-3 text-sm font-bold text-white transition-colors hover:bg-white/10">
+          Download the AGI brief
+        </a>
+      </div>
     </div>
   </section>
 </Layout>
+
+<style>
+  @media (min-width: 1024px) and (max-height: 800px) {
+    .home-hero-shell {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .home-hero-heading {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1280px) and (max-height: 800px) {
+    .home-hero-map {
+      min-height: 400px;
+    }
+  }
+</style>

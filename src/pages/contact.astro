@@ -1,23 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="Contact Us - Intent-Routed Demo Request" description="Contact Aetas.ai. Request a security pentest scope, managed IT helpdesk proposal, BPO support plan, or AI workflow automation consultation.">
-  <section class="py-24 px-6 max-w-7xl mx-auto">
+<Layout title="Contact Aetas Global Innovations" description="Contact Aetas Global Innovations. Request a security pentest scope, managed IT helpdesk proposal, BPO support plan, or AI workflow automation consultation.">
+  <PageHero
+    eyebrow="Contact AGI"
+    title="Start with the service team that fits your need."
+    description="Tell us whether you need AI workflow automation, cybersecurity services, managed IT and helpdesk, BPO operations, or technology procurement. We will route the request to the appropriate Aetas practice."
+    compact
+  />
+
+  <section class="mx-auto max-w-7xl px-6 py-20 sm:py-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
       <div class="lg:col-span-5 flex flex-col gap-8">
-        <div>
-          <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Connect with Us</span>
-          <h1 class="text-4xl sm:text-5xl font-display font-bold text-white tracking-tight mt-2">Get in Touch</h1>
-          <p class="text-gray-400 text-sm leading-relaxed mt-4">
-            Route your request to the right Aetas team. Choose Security, Global operations, AI workflow automation, or partner inquiries and we will follow up with the right next step.
-          </p>
+        <div class="rounded-3xl border border-white/10 bg-white p-5 shadow-2xl shadow-black/20">
+          <img src="/undraw-chatting.svg" alt="Support conversation illustration" class="mx-auto aspect-[16/10] w-full max-w-sm object-contain" loading="eager" />
         </div>
 
         <div class="space-y-6">
           <div>
-            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Security & Managed Operations</h4>
-            <p class="text-gray-400 text-xs mt-1">SOC, MDR, penetration testing, helpdesk, identity, device, and BPO support requests.</p>
+            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Aetas Security</h4>
+            <p class="text-gray-400 text-xs mt-1">Defender XDR alerts, Outlook notifications, Jira ticket tracking, analyst review, penetration testing, and response planning.</p>
+          </div>
+
+          <div>
+            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Aetas Global</h4>
+            <p class="text-gray-400 text-xs mt-1">Managed IT, helpdesk, identity, device, tenant administration, and BPO support requests.</p>
           </div>
 
           <div>
@@ -66,7 +75,7 @@ import Layout from '../layouts/Layout.astro';
             <div>
               <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Operational Focus Area</label>
               <select id="intent-select" name="intent" required class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
-                <option value="security">Aetas Security (Pentest / SOC / compliance)</option>
+                <option value="security">Aetas Security (Defender XDR alerts / Jira / pentesting)</option>
                 <option value="global">Aetas Global (IT Helpdesk / BPO queues)</option>
                 <option value="ai">Aetas AI (Workflow automation services)</option>
                 <option value="general">General Inquiries</option>

@@ -1,36 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 import ManagedSystems from '../components/ManagedSystems';
-import { caseStudies } from '../data/caseStudies';
-
-const globalStudies = caseStudies.filter((study) => study.pillar === 'global');
 ---
 
 <Layout title="Aetas Global - Managed IT, Helpdesk, and BPO Operations" activePillar="global" description="Aetas Global provides managed IT, helpdesk, identity operations, device management, tenant administration, and outsourced BPO support.">
-  <section class="relative py-28 px-6 overflow-hidden border-b border-white/5 min-h-[78vh] flex items-center">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.07)_0,transparent_58%)] pointer-events-none"></div>
-
-    <div class="max-w-5xl mx-auto text-center relative z-10 flex flex-col gap-6 items-center">
-      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-500">
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-        Aetas Global MSP / BPO
-      </span>
-
-      <h1 class="text-4xl sm:text-7xl font-display font-bold leading-tight text-white tracking-tight">
-        Managed operations for<br />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400">teams that cannot slow down.</span>
-      </h1>
-
-      <p class="text-gray-300 text-base sm:text-xl max-w-3xl leading-relaxed">
-        Aetas Global supports helpdesk queues, identity tasks, device management, tenant administration, and outsourced support operations for growing teams.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4 mt-6 w-full sm:w-auto">
-        <a href="#services" class="px-8 py-4 rounded-xl font-bold bg-amber-500 hover:bg-amber-600 text-black shadow-xl shadow-amber-500/20 active:scale-95 transition-all text-center">Explore Operations</a>
-        <a href="/contact?intent=global" class="px-8 py-4 rounded-xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 active:scale-95 transition-all text-center">Talk to Global</a>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Aetas Global / Managed IT, helpdesk, and BPO"
+    title="Keep IT support and outsourced operations moving."
+    description="Aetas Global runs helpdesk queues, identity and device tasks, tenant administration, and outsourced support operations through a dedicated managed-services practice with clear ownership and escalation."
+    accent="global"
+    image="/visual-global-ops.png"
+    imageAlt="Managed IT, helpdesk, and BPO operations visualization"
+    primaryLabel="Scope managed operations"
+    primaryHref="/contact?intent=global"
+    secondaryLabel="Explore managed services"
+    secondaryHref="#services"
+    focusLabel="Aetas Global focus"
+    focusItems={['Managed helpdesk delivery', 'Identity, device, and tenant operations', 'BPO support queues']}
+  />
 
   <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
@@ -64,7 +52,24 @@ const globalStudies = caseStudies.filter((study) => study.pillar === 'global');
         <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Systems We Operate</span>
         <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Common workflows Aetas can manage.</h2>
       </div>
-      <ManagedSystems client:load />
+      <ManagedSystems client:load scope="global" />
+    </div>
+  </section>
+
+  <section class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-5" data-reveal>
+        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Operations Visibility</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3 leading-tight">Support work should be easy to see and measure.</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mt-5">
+          These placeholder visuals give the site a stronger customer-facing view of queue health, SLA coverage, device operations, identity workflows, and BPO support performance.
+        </p>
+      </div>
+      <div class="lg:col-span-7" data-reveal-right>
+        <div class="overflow-hidden rounded-3xl border border-amber-400/15 bg-white/[0.025] shadow-2xl shadow-amber-950/20">
+          <img src="/visual-global-ops.png" alt="Managed IT and helpdesk operations visualization" class="aspect-video w-full object-cover" loading="lazy" />
+        </div>
+      </div>
     </div>
   </section>
 
@@ -84,27 +89,12 @@ const globalStudies = caseStudies.filter((study) => study.pillar === 'global');
     </div>
   </section>
 
-  <section class="py-24 px-6 border-t border-white/5">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10" data-reveal>
-        <div>
-          <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Selected Global Work</span>
-          <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Examples of operations support.</h2>
-        </div>
-        <a href="/work" class="text-sm font-semibold text-amber-400 hover:text-white">View all work &rarr;</a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-reveal-group>
-        {globalStudies.map((study) => (
-          <article class="glass-panel rounded-2xl p-7">
-            <span class="text-4xl font-display font-bold text-white">{study.metric}</span>
-            <p class="text-xs text-gray-500 mt-1 mb-5">{study.metricLabel}</p>
-            <h3 class="text-xl font-display font-bold text-white mb-3">{study.title}</h3>
-            <p class="text-sm text-gray-400 leading-relaxed">{study.summary}</p>
-            <a href={`/work/${study.slug}`} class="inline-flex mt-6 text-xs font-semibold text-amber-400 hover:text-white">Read case study &rarr;</a>
-          </article>
-        ))}
-      </div>
+  <section class="border-t border-white/5 px-6 py-20 sm:py-24">
+    <div class="mx-auto flex max-w-4xl flex-col items-center gap-5 text-center" data-reveal>
+      <span class="text-xs font-bold uppercase text-amber-400">Talk to Aetas Global</span>
+      <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Define the managed service your team needs.</h2>
+      <p class="max-w-2xl text-sm leading-relaxed text-gray-400">Discuss helpdesk delivery, identity and device operations, tenant administration, or BPO support queues with the Global practice.</p>
+      <a href="/contact?intent=global" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-global px-7 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400">Contact Aetas Global</a>
     </div>
   </section>
 </Layout>

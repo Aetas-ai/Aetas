@@ -11,11 +11,11 @@ interface Props {
 
 const {
   title,
-  description = 'Aetas.ai - Human-led AI, enterprise-grade security, and always-on operations.',
+  description = 'Aetas Global Innovations - AI-augmented operations, cybersecurity, managed IT, and BPO support.',
   activePillar = 'none',
 } = Astro.props;
 
-const pageTitle = `${title} | Aetas.ai`;
+const pageTitle = `${title} | Aetas Global Innovations`;
 const currentPath = Astro.url.pathname;
 
 const navLinkBase = 'relative px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/7 hover:text-white hover:shadow-lg hover:shadow-black/10 focus:outline-none focus:ring-2 focus:ring-white/20';
@@ -56,9 +56,9 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
   <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-white">
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 rounded-full pr-3 transition-all hover:bg-white/5 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Aetas.ai home">
+        <a href="/" class="flex items-center gap-3 rounded-full pr-3 transition-all hover:bg-white/5 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Aetas Global Innovations home">
           <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
-          <span class="hidden xl:inline text-xs font-bold uppercase tracking-widest text-gray-400">Aetas.ai</span>
+          <span class="hidden xl:inline text-xs font-bold uppercase tracking-widest text-gray-400">Aetas Global Innovations</span>
         </a>
 
         <nav class="hidden lg:flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.025] p-1 shadow-2xl shadow-black/20" aria-label="Primary navigation">
@@ -86,12 +86,12 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </header>
 
-    <div id="mobile-menu-overlay" class="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[90] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="mobile-menu-overlay" class="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-md z-[140] opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
-    <div id="mobile-menu" class="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[100] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-y-auto select-none">
+    <div id="mobile-menu" class="lg:hidden fixed inset-y-0 right-0 w-[min(20rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[150] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-x-hidden overflow-y-auto overscroll-contain select-none [view-transition-name:none]">
       <div>
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-          <a href="/" class="flex items-center" aria-label="Aetas.ai home">
+          <a href="/" class="flex items-center" aria-label="Aetas Global Innovations home">
             <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-6 w-auto object-contain" />
           </a>
           <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all focus:outline-none" aria-label="Close menu">
@@ -138,20 +138,20 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </div>
 
-    <main class="flex-grow pt-20">
+    <main class="min-w-0 w-full max-w-full flex-grow pt-20">
       <slot />
     </main>
 
     <footer class="border-t border-white/5 bg-black/40 py-16">
       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-12">
         <div class="md:col-span-2">
-          <a href="/" class="inline-flex items-center mb-6 hover:opacity-90" aria-label="Aetas.ai home">
+          <a href="/" class="inline-flex items-center mb-6 hover:opacity-90" aria-label="Aetas Global Innovations home">
             <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
           </a>
           <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
-            AI-augmented workflow automation layered onto security, managed IT, and BPO operations. One company, three disciplines.
+            Aetas Global Innovations provides three distinct service practices: Aetas AI for human-reviewed BPO workflow automation, Aetas Security for cybersecurity services, and Aetas Global for managed IT, helpdesk, and BPO operations.
           </p>
-          <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas.ai. All rights reserved.</div>
+          <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas Global Innovations. All rights reserved.</div>
         </div>
 
         <div>
@@ -169,6 +169,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             <li><a href="/work" class="hover:text-white transition-colors">Selected Work</a></li>
             <li><a href="/partners" class="hover:text-white transition-colors">Technology Partners</a></li>
             <li><a href="/resources" class="hover:text-white transition-colors">Insights & Intel</a></li>
+            <li><a href="/operations-readiness-brief" class="hover:text-white transition-colors">AGI Readiness Brief</a></li>
             <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
           </ul>
         </div>
@@ -184,16 +185,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </footer>
 
-    <div id="sticky-cta" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
-      <a href="/contact" class="flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black shadow-xl shadow-black/25 hover:scale-105 active:scale-95 transition-all pointer-events-auto group">
-        <span>Talk to Aetas</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    </div>
-
-    <BobAssistant client:load />
+    <BobAssistant client:load transition:persist />
 
     <script>
       import Lenis from 'lenis';
@@ -223,8 +215,6 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
       const initAnimations = () => {
         const header = document.querySelector('header');
-        const stickyCta = document.getElementById('sticky-cta');
-
         ScrollTrigger.create({
           start: 'top -80px',
           end: 'max',
@@ -232,13 +222,9 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             if (self.scroll() > 100) {
               header?.classList.add('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
               header?.classList.remove('bg-brand-bg/80');
-              stickyCta?.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
-              stickyCta?.classList.add('translate-y-0', 'opacity-100');
             } else {
               header?.classList.add('bg-brand-bg/80');
               header?.classList.remove('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
-              stickyCta?.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
-              stickyCta?.classList.remove('translate-y-0', 'opacity-100');
             }
           },
         });
