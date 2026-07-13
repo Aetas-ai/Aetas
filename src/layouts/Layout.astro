@@ -36,6 +36,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/aetaslogo.png" />
+    <link rel="preload" as="image" href="/bob.png" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{pageTitle}</title>
@@ -54,6 +55,125 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <ClientRouter />
   </head>
   <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-white">
+    <div id="site-loading-overlay" class="site-loading-overlay" hidden aria-hidden="true">
+      <div class="site-loading-content" role="status" aria-live="polite" aria-atomic="true">
+        <div class="site-loading-mark" aria-hidden="true">
+          <span class="site-loading-ring site-loading-ring-outer"></span>
+          <span class="site-loading-ring site-loading-ring-inner"></span>
+          <img
+            class="site-loading-bob"
+            src="/bob.png"
+            alt=""
+            width="693"
+            height="365"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <p>Loading Aetas</p>
+        <div class="site-loading-progress" aria-hidden="true">
+          <span class="site-loading-progress-fill"></span>
+        </div>
+        <span data-site-loading-message>Preparing the website</span>
+      </div>
+    </div>
+
+    <script is:inline>
+      (() => {
+        if (window.__agiSiteLoaderReady) return;
+        window.__agiSiteLoaderReady = true;
+
+        const showDelay = 220;
+        const minimumVisibleTime = 240;
+        const fadeDuration = 180;
+        let showTimer;
+        let hideTimer;
+        let concealTimer;
+        let shownAt = 0;
+        let initialPagePending = document.readyState !== 'complete';
+
+        const getOverlay = () => document.getElementById('site-loading-overlay');
+        const clearTimer = (timer) => {
+          if (timer) window.clearTimeout(timer);
+        };
+
+        const beginLoading = (message = 'Loading page') => {
+          clearTimer(showTimer);
+          clearTimer(hideTimer);
+          clearTimer(concealTimer);
+
+          showTimer = window.setTimeout(() => {
+            const overlay = getOverlay();
+            if (!overlay) return;
+
+            const messageElement = overlay.querySelector('[data-site-loading-message]');
+            if (messageElement) messageElement.textContent = message;
+
+            overlay.hidden = false;
+            overlay.classList.remove('is-completing');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.querySelector('main')?.setAttribute('aria-busy', 'true');
+            document.documentElement.dataset.siteLoading = 'true';
+            shownAt = performance.now();
+
+            window.requestAnimationFrame(() => overlay.classList.add('is-visible'));
+          }, showDelay);
+        };
+
+        const endLoading = () => {
+          clearTimer(showTimer);
+          clearTimer(hideTimer);
+
+          const overlay = getOverlay();
+          if (!overlay || overlay.hidden) {
+            document.querySelector('main')?.removeAttribute('aria-busy');
+            delete document.documentElement.dataset.siteLoading;
+            return;
+          }
+
+          const visibleFor = performance.now() - shownAt;
+          const remainingTime = Math.max(320, minimumVisibleTime - visibleFor);
+
+          overlay.classList.add('is-completing');
+
+          hideTimer = window.setTimeout(() => {
+            overlay.classList.remove('is-visible');
+            overlay.setAttribute('aria-hidden', 'true');
+            document.querySelector('main')?.removeAttribute('aria-busy');
+            delete document.documentElement.dataset.siteLoading;
+
+            concealTimer = window.setTimeout(() => {
+              if (!overlay.classList.contains('is-visible')) {
+                overlay.hidden = true;
+                overlay.classList.remove('is-completing');
+              }
+            }, fadeDuration);
+          }, remainingTime);
+        };
+
+        if (initialPagePending) {
+          beginLoading('Preparing the website');
+          window.addEventListener('load', () => {
+            initialPagePending = false;
+            endLoading();
+          }, { once: true });
+        }
+
+        document.addEventListener('astro:before-preparation', () => beginLoading());
+        document.addEventListener('astro:after-preparation', endLoading);
+        document.addEventListener('astro:page-load', () => {
+          if (!initialPagePending) endLoading();
+        });
+        window.addEventListener('pageshow', () => {
+          if (document.readyState === 'complete') {
+            initialPagePending = false;
+            endLoading();
+          }
+        });
+      })();
+    </script>
+
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="/" class="flex items-center gap-3 rounded-full pr-3 transition-all hover:bg-white/5 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Aetas Global Innovations home">

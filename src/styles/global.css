@@ -121,6 +121,186 @@
   box-shadow: 0 0 40px -5px rgba(245, 158, 11, 0.15);
 }
 
+/* Delayed global loading feedback for slow initial loads and page transitions. */
+.site-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+  overflow: hidden;
+  background: rgba(5, 5, 8, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 180ms ease;
+  isolation: isolate;
+  view-transition-name: none;
+}
+
+.site-loading-overlay[hidden] {
+  display: none;
+}
+
+.site-loading-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.site-loading-content {
+  display: flex;
+  width: min(100%, 22rem);
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+}
+
+.site-loading-mark {
+  position: relative;
+  width: clamp(10.75rem, 20vw, 13.5rem);
+  aspect-ratio: 1;
+  margin-bottom: 1.25rem;
+}
+
+.site-loading-ring {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+.site-loading-ring-outer {
+  inset: 0;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--color-ai);
+  border-right-color: var(--color-security);
+  animation: site-loading-spin 1.1s linear infinite;
+}
+
+.site-loading-ring-inner {
+  inset: 0.75rem;
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  border-bottom-color: var(--color-global);
+  animation: site-loading-spin 1.8s linear infinite reverse;
+}
+
+.site-loading-bob {
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  width: 215%;
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.42));
+}
+
+.site-loading-content p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.site-loading-content > span {
+  margin-top: 0.6rem;
+  color: rgb(156 163 175);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.site-loading-progress {
+  position: relative;
+  width: min(15rem, calc(100vw - 4rem));
+  height: 4px;
+  margin-top: 0.9rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.04), 0 0 18px rgba(14, 165, 233, 0.08);
+}
+
+.site-loading-progress-fill {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-ai) 0%, var(--color-security) 62%, var(--color-global) 100%);
+  box-shadow: 0 0 12px rgba(14, 165, 233, 0.55);
+  transform: scaleX(0.06);
+  transform-origin: left center;
+  transition: transform 8s cubic-bezier(0.12, 0.7, 0.18, 1);
+}
+
+.site-loading-progress-fill::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2.5rem;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9));
+  content: "";
+  animation: site-loading-scan 1.2s ease-in-out infinite;
+}
+
+.site-loading-overlay.is-visible .site-loading-progress-fill {
+  transform: scaleX(0.86);
+}
+
+.site-loading-overlay.is-completing .site-loading-progress-fill {
+  transform: scaleX(1);
+  transition-duration: 280ms;
+  transition-timing-function: ease-out;
+}
+
+@keyframes site-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes site-loading-scan {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 479px) {
+  .site-loading-mark {
+    width: 10.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loading-ring {
+    animation: none !important;
+  }
+
+  .site-loading-progress-fill::after {
+    animation: none !important;
+  }
+
+  .site-loading-ring-outer {
+    border-color: rgba(255, 255, 255, 0.16);
+    border-top-color: var(--color-ai);
+  }
+
+  .site-loading-ring-inner {
+    border-bottom-color: var(--color-global);
+  }
+}
+
 /* Bob assistant: global critical rules prevent Astro route transitions from resizing or moving the widget. */
 .bob-widget {
   position: fixed !important;
