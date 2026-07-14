@@ -23,7 +23,7 @@ const steps: FeatureStep[] = [
     icon: <Brain className="h-5 w-5" />,
     accent: 'from-indigo-400 to-violet-500',
     bullets: ['BPO workflow design', 'Agent assistance', 'Human approval paths'],
-    image: '/visual-ai-workflows.png',
+    image: '/visual-ai-workflows.webp',
     imageAlt: 'Conceptual visualization of an AI-assisted BPO workflow',
   },
   {
@@ -34,7 +34,7 @@ const steps: FeatureStep[] = [
     icon: <Shield className="h-5 w-5" />,
     accent: 'from-sky-400 to-cyan-500',
     bullets: ['Analyst-led triage', 'Security testing', 'Response readiness'],
-    image: '/visual-security-ops.png',
+    image: '/visual-security-ops.webp',
     imageAlt: 'Conceptual visualization of cybersecurity monitoring and response',
   },
   {
@@ -45,7 +45,7 @@ const steps: FeatureStep[] = [
     icon: <Headphones className="h-5 w-5" />,
     accent: 'from-amber-300 to-orange-500',
     bullets: ['Managed helpdesk', 'Tenant operations', 'BPO support queues'],
-    image: '/visual-global-ops.png',
+    image: '/visual-global-ops.webp',
     imageAlt: 'Conceptual visualization of managed IT and BPO operations',
   },
 ];
@@ -72,7 +72,7 @@ export default function FeatureCarousel() {
   const current = steps[active];
 
   return (
-    <div className="w-full" role="region" aria-label="Aetas Global Innovations service practices">
+    <div className="w-full" role="region" aria-label="Aetas Global Innovation service practices">
       <div className="grid gap-5 lg:grid-cols-[0.9fr_1.25fr] lg:items-stretch">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
           {steps.map((step, index) => {
@@ -120,6 +120,9 @@ export default function FeatureCarousel() {
             alt={current.imageAlt}
             className="absolute inset-0 h-full w-full object-cover opacity-45"
             loading="lazy"
+            decoding="async"
+            width="1440"
+            height="810"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/48 to-black/72"></div>
 

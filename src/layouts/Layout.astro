@@ -7,16 +7,76 @@ interface Props {
   title: string;
   description?: string;
   activePillar?: 'ai' | 'security' | 'global' | 'none';
+  noIndex?: boolean;
 }
 
 const {
   title,
-  description = 'Aetas Global Innovations - AI-augmented operations, cybersecurity, managed IT, and BPO support.',
+  description = 'Aetas Global Innovation - AI-augmented operations, cybersecurity, managed IT, and BPO support.',
   activePillar = 'none',
+  noIndex = false,
 } = Astro.props;
 
-const pageTitle = `${title} | Aetas Global Innovations`;
+const brandName = 'Aetas Global Innovation';
+const pageTitle = title.includes(brandName) ? title : `${title} | ${brandName}`;
 const currentPath = Astro.url.pathname;
+const siteUrl = Astro.site ?? Astro.url.origin;
+const canonicalUrl = new URL(currentPath, siteUrl);
+const organizationUrl = new URL('/', siteUrl);
+const logoUrl = new URL('/aetasIcon.webp', siteUrl);
+const socialImageUrl = new URL('/aetasBrand.webp', siteUrl);
+const robotsContent = noIndex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${organizationUrl}#organization`,
+      name: brandName,
+      alternateName: ['AGI', 'Aetas.ai', 'Aetas AI', 'Aetas Global'],
+      url: organizationUrl.toString(),
+      logo: {
+        '@type': 'ImageObject',
+        url: logoUrl.toString(),
+        width: 512,
+        height: 512,
+      },
+      email: 'info@aetasglobal.com',
+      description:
+        'Aetas Global Innovation provides AI workflow automation, cybersecurity services, managed IT, helpdesk, and BPO operations.',
+      knowsAbout: [
+        'AI workflow automation',
+        'BPO workflow automation',
+        'Cybersecurity services',
+        'Managed IT services',
+        'IT helpdesk services',
+        'BPO operations',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${organizationUrl}#website`,
+      url: organizationUrl.toString(),
+      name: brandName,
+      alternateName: 'Aetas.ai',
+      publisher: { '@id': `${organizationUrl}#organization` },
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonicalUrl}#webpage`,
+      url: canonicalUrl.toString(),
+      name: pageTitle,
+      description,
+      isPartOf: { '@id': `${organizationUrl}#website` },
+      about: { '@id': `${organizationUrl}#organization` },
+      inLanguage: 'en',
+    },
+  ],
+};
 
 const navLinkBase = 'relative px-3.5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:bg-white/7 hover:text-white hover:shadow-lg hover:shadow-black/10 focus:outline-none focus:ring-2 focus:ring-white/20';
 const isActivePath = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
@@ -35,18 +95,32 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/aetaslogo.png" />
-    <link rel="preload" as="image" href="/bob.png" />
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="128x128" />
+    <link rel="shortcut icon" href="/favicon-32x32.png" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{pageTitle}</title>
     <meta name="title" content={pageTitle} />
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brandName} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/aetaslogo.png" />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={brandName} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,10 +136,10 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
           <span class="site-loading-ring site-loading-ring-inner"></span>
           <img
             class="site-loading-bob"
-            src="/bob.png"
+            src="/bob.webp"
             alt=""
-            width="693"
-            height="365"
+            width="266"
+            height="300"
             loading="eager"
             decoding="async"
             fetchpriority="high"
@@ -84,9 +158,9 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
         if (window.__agiSiteLoaderReady) return;
         window.__agiSiteLoaderReady = true;
 
-        const showDelay = 220;
-        const minimumVisibleTime = 240;
-        const fadeDuration = 180;
+        const showDelay = 650;
+        const minimumVisibleTime = 220;
+        const fadeDuration = 160;
         let showTimer;
         let hideTimer;
         let concealTimer;
@@ -133,7 +207,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
           }
 
           const visibleFor = performance.now() - shownAt;
-          const remainingTime = Math.max(320, minimumVisibleTime - visibleFor);
+          const remainingTime = Math.max(160, minimumVisibleTime - visibleFor);
 
           overlay.classList.add('is-completing');
 
@@ -175,10 +249,10 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     </script>
 
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 rounded-full pr-3 transition-all hover:bg-white/5 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-white/20" aria-label="Aetas Global Innovations home">
-          <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
-          <span class="hidden xl:inline text-xs font-bold uppercase tracking-widest text-gray-400">Aetas Global Innovations</span>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+        <a href="/" class="flex h-12 w-14 shrink-0 items-center justify-center rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus:ring-2 focus:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
+          <img src="/aetasIcon.webp" alt="Aetas Global Innovation" width="512" height="512" class="h-full w-full object-contain sm:hidden" decoding="async" />
+          <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="hidden h-full w-full object-contain sm:block" decoding="async" />
         </a>
 
         <nav class="hidden lg:flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.025] p-1 shadow-2xl shadow-black/20" aria-label="Primary navigation">
@@ -211,8 +285,8 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <div id="mobile-menu" class="lg:hidden fixed inset-y-0 right-0 w-[min(20rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[150] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-x-hidden overflow-y-auto overscroll-contain select-none [view-transition-name:none]">
       <div>
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-          <a href="/" class="flex items-center" aria-label="Aetas Global Innovations home">
-            <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-6 w-auto object-contain" />
+          <a href="/" class="flex h-11 w-14 items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
+            <img src="/aetasIcon.webp" alt="Aetas Global Innovation" width="512" height="512" class="h-full w-full object-contain" decoding="async" />
           </a>
           <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all focus:outline-none" aria-label="Close menu">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -265,13 +339,13 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <footer class="border-t border-white/5 bg-black/40 py-16">
       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-12">
         <div class="md:col-span-2">
-          <a href="/" class="inline-flex items-center mb-6 hover:opacity-90" aria-label="Aetas Global Innovations home">
-            <img src="/aetaslogo.png" alt="Aetas.ai Logo" class="h-8 w-auto object-contain" />
+          <a href="/" class="mb-6 inline-flex h-16 w-52 items-center justify-center rounded-md transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
+            <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain" loading="lazy" decoding="async" />
           </a>
           <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
-            Aetas Global Innovations provides three distinct service practices: Aetas AI for human-reviewed BPO workflow automation, Aetas Security for cybersecurity services, and Aetas Global for managed IT, helpdesk, and BPO operations.
+            Aetas Global Innovation provides three distinct service practices: Aetas AI for human-reviewed BPO workflow automation, Aetas Security for cybersecurity services, and Aetas Global for managed IT, helpdesk, and BPO operations.
           </p>
-          <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas Global Innovations. All rights reserved.</div>
+          <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas Global Innovation. All rights reserved.</div>
         </div>
 
         <div>
@@ -305,7 +379,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </footer>
 
-    <BobAssistant client:load transition:persist />
+    <BobAssistant client:idle transition:persist />
 
     <script>
       import Lenis from 'lenis';
@@ -335,16 +409,21 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
       const initAnimations = () => {
         const header = document.querySelector('header');
+        let headerIsCompact = false;
         ScrollTrigger.create({
           start: 'top -80px',
           end: 'max',
           onUpdate: (self) => {
-            if (self.scroll() > 100) {
-              header?.classList.add('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
-              header?.classList.remove('bg-brand-bg/80');
+            const shouldCompact = self.scroll() > 100;
+            if (shouldCompact === headerIsCompact) return;
+            headerIsCompact = shouldCompact;
+
+            if (shouldCompact) {
+              header?.classList.add('bg-brand-bg/95', 'shadow-lg', 'shadow-black/25');
+              header?.classList.remove('bg-brand-bg/75');
             } else {
-              header?.classList.add('bg-brand-bg/80');
-              header?.classList.remove('bg-brand-bg/95', 'py-1', 'shadow-lg', 'shadow-black/25');
+              header?.classList.add('bg-brand-bg/75');
+              header?.classList.remove('bg-brand-bg/95', 'shadow-lg', 'shadow-black/25');
             }
           },
         });
@@ -352,46 +431,45 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
         if (reduceMotion) return;
 
         document.querySelectorAll('[data-reveal]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, y: 36 }, {
+          gsap.fromTo(el, { opacity: 0, y: 24 }, {
             opacity: 1,
             y: 0,
-            duration: 0.9,
+            duration: 0.65,
             ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
           });
         });
 
         document.querySelectorAll('[data-reveal-group]').forEach((group) => {
           const children = group.children;
           if (!children.length) return;
-          gsap.fromTo(children, { opacity: 0, y: 34, scale: 0.98 }, {
+          gsap.fromTo(children, { opacity: 0, y: 20 }, {
             opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 0.7,
-            stagger: 0.12,
+            duration: 0.55,
+            stagger: 0.07,
             ease: 'power3.out',
-            scrollTrigger: { trigger: group, start: 'top 85%', toggleActions: 'play none none none' },
+            scrollTrigger: { trigger: group, start: 'top 88%', once: true },
           });
         });
 
         document.querySelectorAll('[data-reveal-left]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, x: -44 }, {
+          gsap.fromTo(el, { opacity: 0, x: -28 }, {
             opacity: 1,
             x: 0,
-            duration: 0.9,
+            duration: 0.65,
             ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
           });
         });
 
         document.querySelectorAll('[data-reveal-right]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, x: 44 }, {
+          gsap.fromTo(el, { opacity: 0, x: 28 }, {
             opacity: 1,
             x: 0,
-            duration: 0.9,
+            duration: 0.65,
             ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
           });
         });
       };

@@ -3,14 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="About Aetas Global Innovations" description="Learn about Aetas Global Innovations and its three distinct practices for AI workflow automation, cybersecurity, and managed IT and BPO operations.">
+<Layout title="About Aetas Global Innovation" description="Learn about Aetas Global Innovation and its three distinct practices for AI workflow automation, cybersecurity, and managed IT and BPO operations.">
   <PageHero
-    eyebrow="About Aetas Global Innovations"
+    eyebrow="About Aetas Global Innovation"
     title="One company. Three distinct service practices."
     description="AGI is the company behind Aetas AI, Aetas Security, and Aetas Global. Each practice has a separate delivery scope across workflow automation, cybersecurity, and managed IT, helpdesk, and BPO operations."
     accent="neutral"
-    image="/visual-about-agi.png"
-    imageAlt="Aetas Global Innovations service network visualization"
+    image="/visual-about-agi.webp"
+    imageAlt="Aetas Global Innovation service network visualization"
     primaryLabel="Explore our services"
     primaryHref="/#services"
     secondaryLabel="Talk to AGI"
@@ -27,7 +27,7 @@ import PageHero from '../components/PageHero.astro';
       </div>
       <div class="space-y-5 text-sm leading-relaxed text-gray-400 lg:col-span-7">
         <p>
-          Aetas Global Innovations is the company name. AGI is the acronym, and the connection to artificial general intelligence is intentional: the company is focused on practical intelligence inside real business operations.
+          Aetas Global Innovation is the company name. AGI is the acronym, and the connection to artificial general intelligence is intentional: the company is focused on practical intelligence inside real business operations.
         </p>
         <p>
           Our work is not about replacing people with automation. It is about helping teams classify, route, draft, summarize, secure, escalate, and operate with better systems and clearer human accountability.
@@ -45,12 +45,12 @@ import PageHero from '../components/PageHero.astro';
 
       <div class="grid gap-6 md:grid-cols-3">
         {[
-          ['Aetas AI', 'AI-augmented workflow automation for BPO, support, helpdesk, and operations teams.', '/visual-ai-workflows.png'],
-          ['Aetas Security', 'Configurable alert workflows such as Defender XDR notifications through Outlook and Jira, plus analyst review, penetration testing, and response planning.', '/visual-security-ops.png'],
-          ['Aetas Global', 'Managed IT, identity operations, device management, tenant administration, and BPO support queues.', '/visual-global-ops.png'],
+          ['Aetas AI', 'AI-augmented workflow automation for BPO, support, helpdesk, and operations teams.', '/visual-ai-workflows.webp'],
+          ['Aetas Security', 'Configurable alert workflows such as Defender XDR notifications through Outlook and Jira, plus analyst review, penetration testing, and response planning.', '/visual-security-ops.webp'],
+          ['Aetas Global', 'Managed IT, identity operations, device management, tenant administration, and BPO support queues.', '/visual-global-ops.webp'],
         ].map(([title, body, image]) => (
           <article class="glass-panel overflow-hidden rounded-2xl">
-            <img src={image} alt={`${title} service visualization`} class="aspect-video w-full object-cover" loading="lazy" />
+            <img src={image} alt={`${title} service visualization`} width="1440" height="810" class="aspect-video w-full object-cover" loading="lazy" decoding="async" />
             <div class="p-7">
             <h3 class="text-xl font-display font-bold text-white">{title}</h3>
             <p class="mt-4 text-sm leading-relaxed text-gray-400">{body}</p>
@@ -81,7 +81,7 @@ import PageHero from '../components/PageHero.astro';
     <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
       <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Build with AGI.</h2>
       <p class="max-w-2xl text-sm leading-relaxed text-gray-400">
-        Aetas Global Innovations can support AI workflow automation, cybersecurity operations, managed IT, and BPO support.
+        Aetas Global Innovation can support AI workflow automation, cybersecurity operations, managed IT, and BPO support.
       </p>
       <a href="/contact" class="rounded-xl bg-white px-8 py-4 font-bold text-black transition-all hover:bg-white/90 active:scale-[0.98]">
         Contact AGI

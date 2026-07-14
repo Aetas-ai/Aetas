@@ -1,12 +1,12 @@
-# Aetas Global Innovations Website Handoff
+# Aetas Global Innovation Website Handoff
 
 Last updated: July 11, 2026
 
-This file is the source of truth for future AI coding assistants and developers working on the Aetas Global Innovations company website. Read this before changing the site.
+This file is the source of truth for future AI coding assistants and developers working on the Aetas Global Innovation company website. Read this before changing the site.
 
 ## Company Positioning
 
-Aetas Global Innovations is the company name. AGI is the acronym and is intentionally connected to AI/artificial general intelligence. Aetas.ai remains the domain and service-facing digital brand for three related disciplines:
+Aetas Global Innovation is the company name. AGI is the acronym and is intentionally connected to AI/artificial general intelligence. Aetas.ai remains the domain and service-facing digital brand for three related disciplines:
 
 - **Aetas AI**: active AI-augmented workflow automation services for BPO, helpdesk, support, IT operations, and back-office workflows. Position the service around practical automation, AI assistance, and human-reviewed execution.
 - **Aetas Security**: active MSSP business. Services include SOC/MDR support, penetration testing, incident response planning, vulnerability management, compliance support, and security tool procurement/co-management.
@@ -48,7 +48,7 @@ Important files:
 - `src/pages/work/[slug].astro`: case study detail route.
 - `src/pages/resources/index.astro`: resource index.
 - `src/pages/resources/[slug].astro`: resource article route.
-- `src/pages/about.astro`: company overview for Aetas Global Innovations, including AGI positioning, operating principles, and service pillars.
+- `src/pages/about.astro`: company overview for Aetas Global Innovation, including AGI positioning, operating principles, and service pillars.
 - `src/data/caseStudies.ts`: current anonymized case-study data.
 - `src/data/resources.ts`: current resource article data.
 
@@ -65,7 +65,7 @@ Completed in the latest improvement pass:
 - Wired `ManagedSystems`, `AdvisorQuiz`, and `CoManagementHub` into relevant pages.
 - Removed the homepage operational dashboard simulation and replaced it with a four-step operating model section.
 - Refactored the homepage partnership marquee so hovering or focusing anywhere on the marquee strip pauses the entire animation, not just one duplicated track.
-- Rebuilt the About page around Aetas Global Innovations, AGI positioning, service pillars, and operating principles.
+- Rebuilt the About page around Aetas Global Innovation, AGI positioning, service pillars, and operating principles.
 - Added Netlify-style static forms for contact and AI workflow service inquiries.
 - Added `/contact/thanks`.
 - Replaced the old starter README with project-specific instructions.
@@ -130,7 +130,7 @@ astro dev stop
 Use this after verifying the build:
 
 ```text
-Initial Aetas Global Innovations website build
+Initial Aetas Global Innovation website build
 ```
 
 Expanded body if needed:

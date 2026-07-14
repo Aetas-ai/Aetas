@@ -27,11 +27,11 @@ interface TopicOption {
 }
 
 const introMessage =
-  'Hi, I am Bob. I can help you understand Aetas Global Innovations, Aetas AI, Security, Global operations, and which service may fit your need.';
+  'Hi, I am Bob. I can help you understand Aetas Global Innovation, Aetas AI, Security, Global operations, and which service may fit your need.';
 
 const topicAnswers: Record<Topic, string> = {
   ai:
-    'Aetas AI is part of Aetas Global Innovations. It helps teams automate repetitive workflows and augment BPO, helpdesk, support, and operations work with human validation.',
+    'Aetas AI is part of Aetas Global Innovation. It helps teams automate repetitive workflows and augment BPO, helpdesk, support, and operations work with human validation.',
   security:
     'Aetas Security supports MDR, SOC operations, penetration testing, vulnerability management, incident response planning, compliance support, and security tool procurement or co-management.',
   global:
@@ -75,7 +75,7 @@ function getBobReply(input: string) {
     return topicAnswers.ai;
   }
 
-  return 'I can help with Aetas Global Innovations, Aetas AI, cybersecurity, IT operations, BPO support, and helpdesk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
+  return 'I can help with Aetas Global Innovation, Aetas AI, cybersecurity, IT operations, BPO support, and helpdesk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
 }
 
 function TypingDots() {
@@ -93,11 +93,13 @@ function BobAvatar({ isTyping }: { isTyping: boolean }) {
     <div className="bob-avatar" aria-hidden="true">
       <div className={`absolute inset-0 overflow-visible ${isTyping ? 'bob-thinking' : ''}`}>
         <img
-          src="/bob.png"
+          src="/bob.webp"
           alt=""
-          className={`bob-avatar-image ${
-            isTyping ? 'brightness-110 saturate-125' : 'brightness-100 saturate-100'
-          }`}
+          width="266"
+          height="300"
+          className="bob-avatar-image"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div className={`absolute bottom-0 left-1/2 h-2 w-14 -translate-x-1/2 rounded-full bg-black/45 blur-md ${isTyping ? 'animate-pulse' : ''}`}></div>
@@ -125,7 +127,7 @@ export default function BobAssistant() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setPromptIndex((current) => (current + 1) % promptWords.length);
-    }, 2600);
+    }, 3200);
 
     return () => window.clearInterval(interval);
   }, []);
@@ -396,7 +398,7 @@ export default function BobAssistant() {
 
       <style>{`
         .bob-prompt {
-          animation: bobFloat 4s ease-in-out infinite;
+          animation: bobFloat 5.5s ease-in-out infinite;
         }
 
         .bob-speech {
@@ -426,12 +428,12 @@ export default function BobAssistant() {
         }
 
         .bob-thinking {
-          animation: bobThink 0.9s ease-in-out infinite;
+          animation: bobThink 1.2s ease-in-out infinite;
         }
 
         @keyframes bobFloat {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-6px); }
+          50% { transform: translateY(-3px); }
         }
 
         @keyframes bobType {
@@ -445,8 +447,8 @@ export default function BobAssistant() {
         }
 
         @keyframes bobThink {
-          0%, 100% { filter: drop-shadow(0 0 0 rgba(34, 211, 238, 0)); }
-          50% { filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.45)); }
+          0%, 100% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(-2px); opacity: 0.92; }
         }
 
         @media (prefers-reduced-motion: reduce) {

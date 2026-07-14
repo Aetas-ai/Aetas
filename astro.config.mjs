@@ -2,11 +2,21 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()],
+  site: 'https://aetas.ai',
+
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/contact/thanks') &&
+        !page.includes('/operations-readiness-brief/thanks')
+    })
+  ],
 
   vite: {
     plugins: [tailwindcss()]
