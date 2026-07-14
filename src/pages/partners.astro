@@ -1,15 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+
+const enableBrandIntroAnimation = true;
+
+const securityPartners = [
+  { name: 'SentinelOne', src: '/sentinelone-logo.png', width: 500, height: 96, website: 'https://www.sentinelone.com/' },
+  { name: 'Zscaler', src: '/zscaler-logo.png', width: 300, height: 63, website: 'https://www.zscaler.com/' },
+  { name: 'Abnormal', src: '/abnormal-logo.png', width: 300, height: 52, website: 'https://abnormal.ai/' },
+  { name: 'Qualys', src: '/qualys-logo.png', width: 300, height: 94, website: 'https://www.qualys.com/' },
+  { name: 'Sublime Security', src: '/sublime-logo.svg', width: 130, height: 27, website: 'https://sublime.security/' },
+  { name: 'Proofpoint', src: '/proofpoint-logo.svg', width: 172, height: 33, website: 'https://www.proofpoint.com/' },
+  { name: 'CrowdStrike', src: '/crowdstrike-logo.svg', width: 164, height: 37, website: 'https://www.crowdstrike.com/' },
+];
 ---
 
-<Layout title="Partners & Alliances - Reseller Portfolio" description="Browse Aetas Global Innovation technology partnerships, cloud and AI platforms, security alliances, and reseller product portfolio.">
+<Layout title="Technology Partners | Aetas Global Innovation" description="Explore Aetas Global Innovation technology partners across cloud, AI, and cybersecurity supporting Aetas AI, Aetas Security, and Aetas Global engagements.">
   <PageHero
-    eyebrow="Technology ecosystem"
-    title="Platforms, procurement, and implementation support."
-    description="Explore the cloud, AI, and cybersecurity technology categories Aetas can evaluate and support. Public partner tiers and certifications remain subject to verification."
+    eyebrow="Aetas technology ecosystem"
+    title="The right technology for each specialized practice."
+    description="Our cloud, AI, and cybersecurity partnerships help Aetas AI, Aetas Security, and Aetas Global align technology with clearly scoped client requirements."
     compact
-    primaryLabel="Discuss a technology need"
+    primaryLabel="Discuss your requirements"
     primaryHref="/contact?intent=partners"
   />
 
@@ -18,133 +30,277 @@ import PageHero from '../components/PageHero.astro';
     <!-- Category 1: Cloud & AI -->
     <div class="max-w-7xl mx-auto mb-20">
       <div class="border-b border-white/5 pb-4 mb-8">
-        <h2 class="text-xl font-display font-bold text-white uppercase tracking-wider">Cloud & AI Platforms</h2>
-        <p class="text-gray-500 text-xs mt-1">Infrastructure frameworks powering our operational and automation layers.</p>
+        <h2 class="text-xl font-display font-bold text-white uppercase tracking-wider">Cloud & AI Partners</h2>
+        <p class="text-gray-500 text-xs mt-1">Cloud and AI providers that can support Human Led AI, Business Process AI Assimilation, and cloud requirements defined for each engagement.</p>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-8" data-reveal-group>
-        <div class="glass-panel p-8 rounded-xl text-center flex flex-col items-center justify-center min-h-[160px]">
+      <div
+        class="grid grid-cols-2 gap-x-10 gap-y-12 py-6 sm:grid-cols-4"
+        data-brand-reveal-group={enableBrandIntroAnimation ? '' : undefined}
+      >
+        <a
+          href="https://azure.microsoft.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cloud-partner-link"
+          data-brand-reveal-item
+          aria-label="Visit Microsoft Azure website (opens in a new tab)"
+        >
           <!-- Microsoft Azure Logo -->
-          <svg class="w-8 h-8 mb-4" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h11v11H0z" fill="#f25022"/>
-            <path d="M12 0h11v11H12z" fill="#7fba00"/>
-            <path d="M0 12h11v11H0z" fill="#00a4ef"/>
-            <path d="M12 12h11v11H12z" fill="#ffb900"/>
+          <svg class="h-11 w-11 sm:h-12 sm:w-12" viewBox="0 0 256 256" preserveAspectRatio="xMidYMid" role="img" aria-label="Microsoft Azure">
+            <path fill="#F1511B" d="M121.666 121.666H0V0h121.666z"/>
+            <path fill="#80CC28" d="M256 121.666H134.335V0H256z"/>
+            <path fill="#00ADEF" d="M121.663 256.002H0V134.336h121.663z"/>
+            <path fill="#FBBC09" d="M256 256.002H134.335V134.336H256z"/>
           </svg>
-          <span class="text-white font-display font-bold text-sm">Microsoft Azure</span>
-          <span class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mt-1">Cloud Platform</span>
-        </div>
+          <span class="font-display text-sm font-bold text-white">Microsoft Azure</span>
+        </a>
         
-        <div class="glass-panel p-8 rounded-xl text-center flex flex-col items-center justify-center min-h-[160px]">
+        <a
+          href="https://aws.amazon.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cloud-partner-link"
+          data-brand-reveal-item
+          aria-label="Visit Amazon Web Services website (opens in a new tab)"
+        >
           <!-- AWS Logo -->
-          <svg class="w-12 h-8 mb-4" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="13" fill="white" font-weight="bold" font-family="sans-serif" font-size="12">aws</text>
-            <path d="M2 15c4 3 16 3 20 0" stroke="#ff9900" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M18 14.5l2 1-1.5-2.5" stroke="#ff9900" stroke-width="1.5" stroke-linecap="round" />
+          <svg class="h-12 w-20 sm:h-14 sm:w-24" xml:space="preserve" viewBox="0 0 304 182" role="img" aria-label="Amazon Web Services">
+            <path fill="#ffffff" d="m86 66 2 9c0 3 1 5 3 8v2l-1 3-7 4-2 1-3-1-4-5-3-6c-8 9-18 14-29 14-9 0-16-3-20-8-5-4-8-11-8-19s3-15 9-20c6-6 14-8 25-8a79 79 0 0 1 22 3v-7c0-8-2-13-5-16-3-4-8-5-16-5l-11 1a80 80 0 0 0-14 5h-2c-1 0-2-1-2-3v-5l1-3c0-1 1-2 3-2l12-5 16-2c12 0 20 3 26 8 5 6 8 14 8 25v32zM46 82l10-2c4-1 7-4 10-7l3-6 1-9v-4a84 84 0 0 0-19-2c-6 0-11 1-15 4-3 2-4 6-4 11s1 8 3 11c3 2 6 4 11 4zm80 10-4-1-2-3-23-78-1-4 2-2h10l4 1 2 4 17 66 15-66 2-4 4-1h8l4 1 2 4 16 67 17-67 2-4 4-1h9c2 0 3 1 3 2v2l-1 2-24 78-2 4-4 1h-9l-4-1-1-4-16-65-15 64-2 4-4 1h-9zm129 3a66 66 0 0 1-27-6l-3-3-1-2v-5c0-2 1-3 2-3h2l3 1a54 54 0 0 0 23 5c6 0 11-2 14-4 4-2 5-5 5-9l-2-7-10-5-15-5c-7-2-13-6-16-10a24 24 0 0 1 5-34l10-5a44 44 0 0 1 20-2 110 110 0 0 1 12 3l4 2 3 2 1 4v4c0 3-1 4-2 4l-4-2c-6-2-12-3-19-3-6 0-11 0-14 2s-4 5-4 9c0 3 1 5 3 7s5 4 11 6l14 4c7 3 12 6 15 10s5 9 5 14l-3 12-7 8c-3 3-7 5-11 6l-14 2z"/>
+            <path d="M274 144A220 220 0 0 1 4 124c-4-3-1-6 2-4a300 300 0 0 0 263 16c5-2 10 4 5 8z" fill="#f90"/>
+            <path d="M287 128c-4-5-28-3-38-1-4 0-4-3-1-5 19-13 50-9 53-5 4 5-1 36-18 51-3 2-6 1-5-2 5-10 13-33 9-38z" fill="#f90"/>
           </svg>
-          <span class="text-white font-display font-bold text-sm">Amazon Web Services</span>
-          <span class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mt-1">Cloud Partner</span>
-        </div>
+          <span class="font-display text-sm font-bold text-white">Amazon Web Services</span>
+        </a>
 
-        <div class="glass-panel p-8 rounded-xl text-center flex flex-col items-center justify-center min-h-[160px]">
+        <a
+          href="https://cloud.google.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cloud-partner-link"
+          data-brand-reveal-item
+          aria-label="Visit Google Cloud website (opens in a new tab)"
+        >
           <!-- Google Cloud Logo -->
-          <svg class="w-8 h-8 mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" fill="#4285F4"/>
+          <svg class="h-11 w-14 sm:h-12 sm:w-16" preserveAspectRatio="xMidYMid" viewBox="0 -25 256 256" role="img" aria-label="Google Cloud">
+            <path fill="#EA4335" d="m170.252 56.819 22.253-22.253 1.483-9.37C153.437-11.677 88.976-7.496 52.42 33.92 42.267 45.423 34.734 59.764 30.717 74.573l7.97-1.123 44.505-7.34 3.436-3.513c19.797-21.742 53.27-24.667 76.128-6.168l7.496.39Z"/>
+            <path fill="#4285F4" d="M224.205 73.918a100.249 100.249 0 0 0-30.217-48.722l-31.232 31.232a55.515 55.515 0 0 1 20.379 44.037v5.544c15.35 0 27.797 12.445 27.797 27.796 0 15.352-12.446 27.485-27.797 27.485h-55.671l-5.466 5.934v33.34l5.466 5.231h55.67c39.93.311 72.553-31.494 72.864-71.424a72.303 72.303 0 0 0-31.793-60.453"/>
+            <path fill="#34A853" d="M71.87 205.796h55.593V161.29H71.87a27.275 27.275 0 0 1-11.399-2.498l-7.887 2.42-22.409 22.253-1.952 7.574c12.567 9.489 27.9 14.825 43.647 14.757"/>
+            <path fill="#FBBC05" d="M71.87 61.425C31.94 61.664-.237 94.228.001 134.159a72.301 72.301 0 0 0 28.222 56.88l32.248-32.246c-13.99-6.322-20.208-22.786-13.887-36.776 6.32-13.99 22.786-20.208 36.775-13.888a27.796 27.796 0 0 1 13.887 13.888l32.248-32.248A72.224 72.224 0 0 0 71.87 61.425"/>
           </svg>
-          <span class="text-white font-display font-bold text-sm">Google Cloud</span>
-          <span class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mt-1">Core Architect</span>
-        </div>
+          <span class="font-display text-sm font-bold text-white">Google Cloud</span>
+        </a>
 
-        <div class="glass-panel p-8 rounded-xl text-center flex flex-col items-center justify-center min-h-[160px]">
-          <!-- Anthropic Claude Logo -->
-          <svg class="w-8 h-8 mb-4 text-amber-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 22h4l2.5-5.5h7l2.5 5.5h4L12 2zm1 12H11l1-3 1 3z" fill="currentColor"/>
+        <a
+          href="https://www.anthropic.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cloud-partner-link"
+          data-brand-reveal-item
+          aria-label="Visit Anthropic website (opens in a new tab)"
+        >
+          <!-- Anthropic Logo -->
+          <svg class="h-11 w-11 text-white sm:h-12 sm:w-12" viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd" role="img" aria-label="Anthropic">
+            <path d="M13.827 3.52h3.603L24 20h-3.603l-6.57-16.48zm-7.258 0h3.767L16.906 20h-3.674l-1.343-3.461H5.017l-1.344 3.46H0L6.57 3.522zm4.132 9.959L8.453 7.687 6.205 13.48H10.7z"/>
           </svg>
-          <span class="text-white font-display font-bold text-sm">Anthropic Claude</span>
-          <span class="text-gray-500 text-[10px] uppercase font-bold tracking-widest mt-1">AI Workflow Support</span>
-        </div>
+          <span class="font-display text-sm font-bold text-white">Anthropic</span>
+        </a>
       </div>
     </div>
 
     <!-- Category 2: Security Platforms -->
     <div class="max-w-7xl mx-auto mb-20">
       <div class="border-b border-white/5 pb-4 mb-8">
-        <h2 class="text-xl font-display font-bold text-white uppercase tracking-wider">Security Alliances</h2>
-        <p class="text-gray-500 text-xs mt-1">Enterprise endpoint detection, access control, and vulnerability management.</p>
+        <h2 class="text-xl font-display font-bold text-white uppercase tracking-wider">Cybersecurity Partners</h2>
+        <p class="text-gray-500 text-xs mt-1">Security providers supporting email, endpoint, access, exposure, detection, and response requirements scoped through Aetas Security.</p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-6" data-reveal-group>
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- SentinelOne -->
-          <svg class="w-8 h-8 mb-3 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7v8c0 5.25 4.25 9.5 10 11 5.75-1.5 10-5.75 10-11V7L12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="3" fill="currentColor"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">SentinelOne</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Endpoint Security</span>
+      <div
+        class="security-marquee"
+        role="region"
+        aria-label="Aetas security alliance partners"
+      >
+        <div class="security-marquee__track">
+          {[0, 1].map((groupIndex) => (
+            <div
+              class="security-marquee__group"
+              role={groupIndex === 0 ? 'list' : undefined}
+              aria-hidden={groupIndex === 1 ? 'true' : undefined}
+            >
+              {securityPartners.map((partner) => (
+                <a
+                  href={partner.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="security-partner-logo"
+                  role={groupIndex === 0 ? 'listitem' : undefined}
+                  tabindex={groupIndex === 1 ? -1 : undefined}
+                  aria-label={groupIndex === 0 ? `Visit ${partner.name} website (opens in a new tab)` : undefined}
+                >
+                  <img
+                    src={partner.src}
+                    alt={groupIndex === 0 ? partner.name : ''}
+                    width={partner.width}
+                    height={partner.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              ))}
+            </div>
+          ))}
         </div>
-
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- Zscaler -->
-          <svg class="w-8 h-8 mb-3 text-sky-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm-2 11l4-4M10 9l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">Zscaler</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">ZTNA Partner</span>
-        </div>
-
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- Abnormal Security -->
-          <svg class="w-8 h-8 mb-3 text-red-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/>
-            <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">Abnormal</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Email Defense</span>
-        </div>
-
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- Qualys -->
-          <svg class="w-8 h-8 mb-3 text-red-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="11" r="6" stroke="currentColor" stroke-width="2.5"/>
-            <path d="M16 15l3 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">Qualys</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Vulnerability Core</span>
-        </div>
-
-        {[
-          ['Sublime', 'text-cyan-400'],
-          ['Proofpoint', 'text-rose-400'],
-          ['CrowdStrike', 'text-red-500'],
-        ].map(([partner, color]) => (
-          <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-            <svg class={`w-8 h-8 mb-3 ${color}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M12 2L4 6v5c0 5.25 3.4 9.4 8 11 4.6-1.6 8-5.75 8-11V6l-8-4z" stroke="currentColor" stroke-width="2"/>
-              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="text-white font-display font-bold text-sm">{partner}</span>
-            <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Security Partner</span>
-          </div>
-        ))}
       </div>
     </div>
 
-    <!-- Marketplace Callout -->
+    <!-- Technology Callout -->
     <div class="max-w-4xl mx-auto text-center bg-black/40 border border-white/5 rounded-2xl p-8 lg:p-12 relative overflow-hidden" data-reveal>
       <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-indigo-500/5 blur-3xl"></div>
-      <h3 class="text-2xl font-display font-bold text-white mb-4">Curated Cybersecurity Marketplace</h3>
+      <h3 class="text-2xl font-display font-bold text-white mb-4">Technology follows the service requirement.</h3>
       <p class="text-gray-400 text-xs max-w-xl mx-auto leading-relaxed mb-6">
-        Aetas can help evaluate, procure, and configure selected cybersecurity tools. Specific reseller status, pricing, savings, and partner tiers are confirmed during scoping before they are represented publicly.
+        Aetas starts with the client need, routes it to the responsible practice, and aligns suitable technology after scope, responsibilities, review points, and escalation paths are clear.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="/contact?intent=general" class="px-8 py-3.5 rounded-lg text-xs font-semibold bg-white text-black hover:bg-white/90 transition-all">
-          Request Vendor Catalog
+        <a href="/contact?intent=partners" class="px-8 py-3.5 rounded-lg text-xs font-semibold bg-white text-black hover:bg-white/90 transition-all">
+          Discuss a technology requirement
         </a>
-        <a href="/contact?intent=general" class="px-8 py-3.5 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 text-white transition-all border border-white/10">
-          Become a Partner
+        <a href="/#services" class="px-8 py-3.5 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 text-white transition-all border border-white/10">
+          Explore Aetas services
         </a>
       </div>
     </div>
   </section>
+
+  <style>
+    .cloud-partner-link {
+      display: flex;
+      min-height: 6rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      transition: transform 180ms ease, filter 180ms ease;
+    }
+
+    .cloud-partner-link:hover {
+      filter: brightness(1.08);
+      transform: scale(1.06);
+    }
+
+    .cloud-partner-link:focus-visible,
+    .security-partner-logo:focus-visible {
+      outline: 2px solid rgba(129, 140, 248, 0.9);
+      outline-offset: 6px;
+    }
+
+    .security-marquee {
+      width: 100%;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+    }
+
+    .security-marquee__track {
+      display: flex;
+      width: max-content;
+      animation: security-partner-scroll 34s linear infinite;
+      will-change: transform;
+    }
+
+    .security-marquee__group {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: clamp(2.5rem, 6vw, 5.5rem);
+      padding-right: clamp(2.5rem, 6vw, 5.5rem);
+    }
+
+    .security-partner-logo {
+      display: flex;
+      min-height: 4.5rem;
+      width: clamp(8rem, 14vw, 10rem);
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
+
+    .security-partner-logo img {
+      display: block;
+      width: 100%;
+      max-height: 3rem;
+      object-fit: contain;
+      transition: transform 180ms ease, filter 180ms ease;
+    }
+
+    .security-partner-logo:hover img {
+      filter: brightness(1.08);
+      transform: scale(1.06);
+    }
+
+    .security-marquee:hover .security-marquee__track,
+    .security-marquee:focus-within .security-marquee__track {
+      animation-play-state: paused;
+    }
+
+    @keyframes security-partner-scroll {
+      to {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    @media (max-width: 639px) {
+      .security-marquee {
+        -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+      }
+
+      .security-marquee__track {
+        animation-duration: 27s;
+      }
+
+      .security-marquee__group {
+        gap: 2.25rem;
+        padding-right: 2.25rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cloud-partner-link {
+        transition: none;
+      }
+
+      .cloud-partner-link:hover {
+        filter: none;
+        transform: none;
+      }
+
+      .security-marquee {
+        overflow-x: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scrollbar-width: thin;
+      }
+
+      .security-marquee__track {
+        animation: none;
+      }
+
+      .security-partner-logo img {
+        transition: none;
+      }
+
+      .security-partner-logo:hover img {
+        filter: none;
+        transform: none;
+      }
+
+      .security-marquee__group[aria-hidden='true'] {
+        display: none;
+      }
+    }
+  </style>
 </Layout>

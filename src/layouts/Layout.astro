@@ -249,7 +249,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex h-12 w-[8.75rem] shrink-0 items-center justify-start rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus:ring-2 focus:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
+        <a href="/" class="flex h-12 w-[8.75rem] shrink-0 items-center justify-start rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
           <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
         </a>
 
@@ -283,7 +283,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <div id="mobile-menu" class="lg:hidden fixed inset-y-0 right-0 w-[min(20rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[150] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-x-hidden overflow-y-auto overscroll-contain select-none [view-transition-name:none]">
       <div>
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-          <a href="/" class="flex h-11 w-36 items-center justify-start rounded-md focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
+          <a href="/" class="flex h-11 w-36 items-center justify-start rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30" aria-label="Aetas Global Innovation home">
             <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
           </a>
           <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all focus:outline-none" aria-label="Close menu">
@@ -337,7 +337,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <footer class="border-t border-white/5 bg-black/40 py-16">
       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-12">
         <div class="md:col-span-2">
-          <a href="/" class="mb-6 inline-flex h-16 w-52 items-center justify-center rounded-md transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
+          <a href="/" class="mb-6 inline-flex h-16 w-52 items-center justify-center rounded-md transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30" aria-label="Aetas Global Innovation home">
             <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain" loading="lazy" decoding="async" />
           </a>
           <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
@@ -448,6 +448,24 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             stagger: 0.07,
             ease: 'power3.out',
             scrollTrigger: { trigger: group, start: 'top 88%', once: true },
+          });
+        });
+
+        document.querySelectorAll('[data-brand-reveal-group]').forEach((group) => {
+          const items = group.querySelectorAll('[data-brand-reveal-item]');
+          if (!items.length) return;
+
+          group.classList.add('brand-reveal-pending');
+          gsap.fromTo(items, { opacity: 0, y: 18, scale: 0.72 }, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.62,
+            stagger: 0.09,
+            ease: 'back.out(1.7)',
+            clearProps: 'transform',
+            scrollTrigger: { trigger: group, start: 'top 86%', once: true },
+            onComplete: () => group.classList.remove('brand-reveal-pending'),
           });
         });
 
