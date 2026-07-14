@@ -17,36 +17,36 @@ interface FeatureStep {
 const steps: FeatureStep[] = [
   {
     eyebrow: 'Aetas AI',
-    title: 'Improve BPO workflows with human-reviewed AI',
+    title: 'Apply Human Led AI to Business Processes',
     description:
       'Aetas AI maps repetitive operational work and designs assistance for intake, routing, drafting, summarization, knowledge retrieval, and quality review.',
     icon: <Brain className="h-5 w-5" />,
     accent: 'from-indigo-400 to-violet-500',
-    bullets: ['BPO workflow design', 'Agent assistance', 'Human approval paths'],
+    bullets: ['Business Process AI Assimilation', 'Human Led AI', 'Expert in the Loop'],
     image: '/visual-ai-workflows.webp',
-    imageAlt: 'Conceptual visualization of an AI-assisted BPO workflow',
+    imageAlt: 'Conceptual visualization of an AI-assisted Business Processes workflow',
   },
   {
     eyebrow: 'Aetas Security',
     title: 'Address cybersecurity through a dedicated practice',
     description:
-      'Aetas Security focuses on monitoring workflows, analyst triage, penetration testing, vulnerability management, incident readiness, and security platform support.',
+      'Aetas Security provides Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
     icon: <Shield className="h-5 w-5" />,
     accent: 'from-sky-400 to-cyan-500',
-    bullets: ['Analyst-led triage', 'Security testing', 'Response readiness'],
+    bullets: ['MXDR', 'Network Security Testing', 'Application Security Testing'],
     image: '/visual-security-ops.webp',
     imageAlt: 'Conceptual visualization of cybersecurity monitoring and response',
   },
   {
     eyebrow: 'Aetas Global',
-    title: 'Run recurring IT, helpdesk, and BPO work',
+    title: 'Run recurring IT and Business Processes work',
     description:
-      'Aetas Global handles defined managed-service responsibilities across helpdesk, identity, devices, tenant administration, and outsourced support queues.',
+      'Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
     icon: <Headphones className="h-5 w-5" />,
     accent: 'from-amber-300 to-orange-500',
-    bullets: ['Managed helpdesk', 'Tenant operations', 'BPO support queues'],
+    bullets: ['Help Desk as a Service', 'Product Support as a Service', 'Business Processes operations'],
     image: '/visual-global-ops.webp',
-    imageAlt: 'Conceptual visualization of managed IT and BPO operations',
+    imageAlt: 'Conceptual visualization of managed IT and Business Processes operations',
   },
 ];
 

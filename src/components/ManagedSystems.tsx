@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Shield, UserCheck, Laptop, Inbox, Check } from 'lucide-react';
 
 interface SystemCategory {
@@ -17,23 +17,23 @@ const categories: SystemCategory[] = [
     name: "Identity & Access Management",
     practice: "global",
     icon: UserCheck,
-    description: "Configuring and maintaining secure access portals, directories, and user permissions across your organization.",
+    description: "Configuring and maintaining secure identities, directories, and user permissions across your organization.",
     tasks: [
-      "User provisioning and account deactivation in M365 and Google Workspace",
+      "Provisioning and deactivating user accounts",
       "Assigning product licenses and configuring cost-effective seat allocations",
-      "Managing identity groups, security parameters, and roles inside Microsoft Entra ID",
+      "Managing identity groups, security parameters, and access roles",
       "Troubleshooting access lockouts and auditing directory sign-in logs",
       "Deploying and verifying Multi-Factor Authentication (MFA) parameters"
     ]
   },
   {
     id: "device",
-    name: "Device Management & MDM",
+    name: "Device Management",
     practice: "global",
     icon: Laptop,
     description: "Registering, auditing, and maintaining employee endpoints to comply with corporate security standards.",
     tasks: [
-      "Enrolling corporate laptops and mobile devices in Microsoft Intune and JAMF MDM",
+      "Enrolling corporate laptops and mobile devices",
       "Configuring device compliance profiles and security baseline policies",
       "Executing remote device wipes and locking compromised endpoints",
       "Auditing active endpoint logs to verify operating system patches are current",
@@ -42,16 +42,16 @@ const categories: SystemCategory[] = [
   },
   {
     id: "security",
-    name: "Security Event Monitoring",
+    name: "Managed Extended Detection and Response",
     practice: "security",
     icon: Shield,
-    description: "Defending systems against modern threat vectors using built-in correlation and telemetry engines.",
+    description: "Supporting continuous security detection, investigation, response, and escalation through MXDR.",
     tasks: [
-      "Monitoring active incident feeds in Microsoft Defender XDR",
-      "Isolating compromised hosts and killing rogue processes via SentinelOne",
-      "Triaging malicious email attempts and quarantine blocks in Abnormal Security",
-      "Verifying secure edge access policies and network tunnels in Zscaler",
-      "Running routine internal scans and parsing endpoint telemetry"
+      "Monitoring and triaging active security detections",
+      "Investigating suspicious endpoint and identity activity",
+      "Reviewing potentially malicious communication activity",
+      "Following defined response and escalation procedures",
+      "Documenting investigation and response activity"
     ]
   },
   {
@@ -61,8 +61,8 @@ const categories: SystemCategory[] = [
     icon: Inbox,
     description: "Maintaining core communication tools, collaboration libraries, and cloud storage folders.",
     tasks: [
-      "Managing Exchange Online transport rules, mailbox settings, and mail flow",
-      "Configuring access permissions and document sharing limits in SharePoint & Google Drive",
+      "Managing communication settings and mail flow",
+      "Configuring collaboration permissions and document sharing limits",
       "Auditing tenant security configurations against recommended frameworks",
       "Running license pruning checks to identify and remove unused application seats",
       "Managing distribution lists and shared mailbox access profiles"
@@ -93,6 +93,7 @@ interface ManagedSystemsProps {
 
 export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
   const [activeTab, setActiveTab] = useState<string>("identity");
+  const [hasHydrated, setHasHydrated] = useState(false);
   const visibleCategories = scope === 'global'
     ? categories.filter((category) => category.practice === 'global')
     : categories;
@@ -100,6 +101,10 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
   const current = visibleCategories.find((c) => c.id === activeTab) || visibleCategories[0];
   const IconComponent = current.icon;
   const currentStyle = practiceStyles[current.practice];
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
 
   return (
     <div className="w-full glass-panel rounded-3xl p-6 lg:p-8 shadow-2xl relative overflow-hidden border-white/5">
@@ -134,15 +139,13 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
 
       {/* Details Section */}
       <div className="min-h-[260px] flex flex-col justify-between">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.25 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
-          >
+        <motion.div
+          key={activeTab}
+          initial={hasHydrated ? { opacity: 0, y: 12 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+        >
             {/* Description Column */}
             <div className="lg:col-span-5 flex flex-col gap-4">
               <div className={`flex items-center gap-3 ${currentStyle.text}`}>
@@ -168,8 +171,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
                 ))}
               </ul>
             </div>
-          </motion.div>
-        </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   );

@@ -3,8 +3,8 @@ import React from 'react';
 const practices = [
   {
     name: 'Aetas AI',
-    scope: 'BPO workflow automation',
-    description: 'Human-reviewed assistance for repetitive operational workflows.',
+    scope: 'Business Process AI Assimilation',
+    description: 'Human Led AI with Expert Human Oversight of AI (Expert in the Loop).',
     href: '/ai',
     image: '/visual-ai-workflows.webp',
     accent: 'text-indigo-300',
@@ -12,15 +12,15 @@ const practices = [
   {
     name: 'Aetas Security',
     scope: 'Cybersecurity services',
-    description: 'Monitoring workflows, testing, vulnerability management, and response readiness.',
+    description: 'MXDR, Network Security Testing, and Application Security Testing.',
     href: '/security',
     image: '/visual-security-ops.webp',
     accent: 'text-sky-300',
   },
   {
     name: 'Aetas Global',
-    scope: 'Managed IT, helpdesk, and BPO',
-    description: 'Defined ownership for recurring support and managed operations.',
+    scope: 'Managed IT and Business Processes',
+    description: 'Help Desk as a Service and Product Support as a Service.',
     href: '/global',
     image: '/visual-global-ops.webp',
     accent: 'text-amber-300',

@@ -3,11 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="About Aetas Global Innovation" description="Learn about Aetas Global Innovation and its three distinct practices for AI workflow automation, cybersecurity, and managed IT and BPO operations.">
+<Layout title="About Aetas Global Innovation" description="Learn about Aetas Global Innovation and its three distinct practices for AI workflow automation, cybersecurity, and managed IT and Business Processes operations.">
   <PageHero
     eyebrow="About Aetas Global Innovation"
     title="One company. Three distinct service practices."
-    description="AGI is the company behind Aetas AI, Aetas Security, and Aetas Global. Each practice has a separate delivery scope across workflow automation, cybersecurity, and managed IT, helpdesk, and BPO operations."
+    description="AGI is the company behind Aetas AI, Aetas Security, and Aetas Global. Each practice has a separate delivery scope across workflow automation, cybersecurity, and managed IT, helpdesk, and Business Processes operations."
     accent="neutral"
     image="/visual-about-agi.webp"
     imageAlt="Aetas Global Innovation service network visualization"
@@ -45,9 +45,9 @@ import PageHero from '../components/PageHero.astro';
 
       <div class="grid gap-6 md:grid-cols-3">
         {[
-          ['Aetas AI', 'AI-augmented workflow automation for BPO, support, helpdesk, and operations teams.', '/visual-ai-workflows.webp'],
-          ['Aetas Security', 'Configurable alert workflows such as Defender XDR notifications through Outlook and Jira, plus analyst review, penetration testing, and response planning.', '/visual-security-ops.webp'],
-          ['Aetas Global', 'Managed IT, identity operations, device management, tenant administration, and BPO support queues.', '/visual-global-ops.webp'],
+          ['Aetas AI', 'Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).', '/visual-ai-workflows.webp'],
+          ['Aetas Security', 'Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).', '/visual-security-ops.webp'],
+          ['Aetas Global', 'Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.', '/visual-global-ops.webp'],
         ].map(([title, body, image]) => (
           <article class="glass-panel overflow-hidden rounded-2xl">
             <img src={image} alt={`${title} service visualization`} width="1440" height="810" class="aspect-video w-full object-cover" loading="lazy" decoding="async" />
@@ -64,7 +64,7 @@ import PageHero from '../components/PageHero.astro';
   <section class="border-t border-white/5 px-6 py-24">
     <div class="mx-auto grid max-w-7xl gap-6 lg:grid-cols-4">
       {[
-        ['Human-reviewed', 'Automation should assist specialists, not silently make high-impact decisions.'],
+        ['Human Led AI', 'Expert Human Oversight of AI (Expert in the Loop) keeps high-impact decisions with specialists.'],
         ['Operationally grounded', 'We start with real queues, systems, risks, and support workflows.'],
         ['Security-aware', 'Identity, endpoint, access, and escalation controls are part of the operating model.'],
         ['Measurable', 'The work should improve response time, accuracy, routing, visibility, or support throughput.'],
@@ -81,7 +81,7 @@ import PageHero from '../components/PageHero.astro';
     <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 text-center">
       <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Build with AGI.</h2>
       <p class="max-w-2xl text-sm leading-relaxed text-gray-400">
-        Aetas Global Innovation can support AI workflow automation, cybersecurity operations, managed IT, and BPO support.
+        Aetas Global Innovation can support AI workflow automation, cybersecurity operations, managed IT, and Business Processes support.
       </p>
       <a href="/contact" class="rounded-xl bg-white px-8 py-4 font-bold text-black transition-all hover:bg-white/90 active:scale-[0.98]">
         Contact AGI

@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = 'Aetas Global Innovation - AI-augmented operations, cybersecurity, managed IT, and BPO support.',
+  description = 'Aetas Global Innovation - Human Led AI, MXDR, Offensive Security, managed IT, and Business Processes services.',
   activePillar = 'none',
   noIndex = false,
 } = Astro.props;
@@ -46,14 +46,15 @@ const structuredData = {
       },
       email: 'info@aetasglobal.com',
       description:
-        'Aetas Global Innovation provides AI workflow automation, cybersecurity services, managed IT, helpdesk, and BPO operations.',
+        'Aetas Global Innovation provides Business Process AI Assimilation, MXDR, Offensive Security, managed IT, Help Desk as a Service, and Product Support as a Service.',
       knowsAbout: [
         'AI workflow automation',
-        'BPO workflow automation',
-        'Cybersecurity services',
+        'Business Process AI Assimilation',
+        'Managed Extended Detection and Response',
+        'Offensive Security',
         'Managed IT services',
         'IT helpdesk services',
-        'BPO operations',
+        'Business Processes operations',
       ],
     },
     {
@@ -95,10 +96,8 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="128x128" />
-    <link rel="shortcut icon" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/webp" href="/aetasIcon.webp" sizes="512x512" />
+    <link rel="shortcut icon" type="image/webp" href="/aetasIcon.webp" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
@@ -250,9 +249,8 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex h-12 w-14 shrink-0 items-center justify-center rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus:ring-2 focus:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
-          <img src="/aetasIcon.webp" alt="Aetas Global Innovation" width="512" height="512" class="h-full w-full object-contain sm:hidden" decoding="async" />
-          <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="hidden h-full w-full object-contain sm:block" decoding="async" />
+        <a href="/" class="flex h-12 w-[8.75rem] shrink-0 items-center justify-start rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus:ring-2 focus:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
+          <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
         </a>
 
         <nav class="hidden lg:flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.025] p-1 shadow-2xl shadow-black/20" aria-label="Primary navigation">
@@ -285,8 +283,8 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <div id="mobile-menu" class="lg:hidden fixed inset-y-0 right-0 w-[min(20rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] bg-brand-bg/95 backdrop-blur-2xl border-l border-white/10 z-[150] p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl overflow-x-hidden overflow-y-auto overscroll-contain select-none [view-transition-name:none]">
       <div>
         <div class="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
-          <a href="/" class="flex h-11 w-14 items-center justify-center rounded-md focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
-            <img src="/aetasIcon.webp" alt="Aetas Global Innovation" width="512" height="512" class="h-full w-full object-contain" decoding="async" />
+          <a href="/" class="flex h-11 w-36 items-center justify-start rounded-md focus:outline-none focus:ring-2 focus:ring-white/30" aria-label="Aetas Global Innovation home">
+            <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
           </a>
           <button id="mobile-menu-close" class="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all focus:outline-none" aria-label="Close menu">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -309,11 +307,11 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
           </a>
           <a href="/security" class={mobileLink('/security', 'bg-sky-500/10 text-sky-300 border-sky-400/20')}>
             <span class="text-sm font-medium">Aetas Security</span>
-            <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MSSP</span>
+            <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MXDR</span>
           </a>
           <a href="/global" class={mobileLink('/global', 'bg-amber-500/10 text-amber-300 border-amber-400/20')}>
             <span class="text-sm font-medium">Aetas Global</span>
-            <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">MSP</span>
+            <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">Managed IT</span>
           </a>
 
           <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Company & Resources</span>
@@ -343,7 +341,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain" loading="lazy" decoding="async" />
           </a>
           <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
-            Aetas Global Innovation provides three distinct service practices: Aetas AI for human-reviewed BPO workflow automation, Aetas Security for cybersecurity services, and Aetas Global for managed IT, helpdesk, and BPO operations.
+            Aetas Global Innovation provides three distinct service practices: Aetas AI for Human Led AI and Business Process AI Assimilation, Aetas Security for MXDR and Offensive Security, and Aetas Global for managed IT and Business Processes operations.
           </p>
           <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas Global Innovation. All rights reserved.</div>
         </div>
@@ -379,7 +377,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </footer>
 
-    <BobAssistant client:idle transition:persist />
+    <BobAssistant client:idle={{ timeout: 1200 }} transition:persist />
 
     <script>
       import Lenis from 'lenis';

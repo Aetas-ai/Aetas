@@ -73,7 +73,7 @@ import PageHero from '../components/PageHero.astro';
         <p class="text-gray-500 text-xs mt-1">Enterprise endpoint detection, access control, and vulnerability management.</p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-6 gap-6" data-reveal-group>
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-6" data-reveal-group>
         <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
           <!-- SentinelOne -->
           <svg class="w-8 h-8 mb-3 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,24 +113,20 @@ import PageHero from '../components/PageHero.astro';
           <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Vulnerability Core</span>
         </div>
 
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- Vulcan Cyber -->
-          <svg class="w-8 h-8 mb-3 text-orange-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 6v10l10 6 10-6V6L12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
-            <path d="M8 8l4 5 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">Vulcan Cyber</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Remediation Link</span>
-        </div>
-
-        <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
-          <!-- Lightstream -->
-          <svg class="w-8 h-8 mb-3 text-sky-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor"/>
-          </svg>
-          <span class="text-white font-display font-bold text-sm">Lightstream</span>
-          <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Direct Reseller</span>
-        </div>
+        {[
+          ['Sublime', 'text-cyan-400'],
+          ['Proofpoint', 'text-rose-400'],
+          ['CrowdStrike', 'text-red-500'],
+        ].map(([partner, color]) => (
+          <div class="glass-panel p-6 rounded-xl text-center flex flex-col items-center justify-center">
+            <svg class={`w-8 h-8 mb-3 ${color}`} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2L4 6v5c0 5.25 3.4 9.4 8 11 4.6-1.6 8-5.75 8-11V6l-8-4z" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-white font-display font-bold text-sm">{partner}</span>
+            <span class="text-gray-500 text-[8px] uppercase tracking-wider mt-1">Security Partner</span>
+          </div>
+        ))}
       </div>
     </div>
 

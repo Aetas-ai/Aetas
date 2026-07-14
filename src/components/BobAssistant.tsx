@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Bot,
   Brain,
   Building2,
+  ChevronDown,
   Headphones,
   Mail,
   RotateCcw,
@@ -31,11 +31,11 @@ const introMessage =
 
 const topicAnswers: Record<Topic, string> = {
   ai:
-    'Aetas AI is part of Aetas Global Innovation. It helps teams automate repetitive workflows and augment BPO, helpdesk, support, and operations work with human validation.',
+    'Aetas AI provides Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).',
   security:
-    'Aetas Security supports MDR, SOC operations, penetration testing, vulnerability management, incident response planning, compliance support, and security tool procurement or co-management.',
+    'Aetas Security provides Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
   global:
-    'Aetas Global supports managed IT, BPO, and helpdesk operations including identity tasks, onboarding, device management, tenant administration, support queues, reporting, and defined escalation.',
+    'Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
   contact:
     'If you already know what you need, the contact page is the best next step. Choose Security, Global operations, AI workflow automation, or general inquiries so the request reaches the right AGI team.',
 };
@@ -43,15 +43,15 @@ const topicAnswers: Record<Topic, string> = {
 const topicOptions: TopicOption[] = [
   { id: 'ai', label: 'AI workflow automation', short: 'AI workflows', icon: <Brain className="h-4 w-4" /> },
   { id: 'security', label: 'Security services', short: 'Cybersecurity', icon: <Shield className="h-4 w-4" /> },
-  { id: 'global', label: 'IT, BPO, helpdesk', short: 'IT / Helpdesk', icon: <Headphones className="h-4 w-4" /> },
+  { id: 'global', label: 'IT and Business Processes', short: 'IT / Help Desk', icon: <Headphones className="h-4 w-4" /> },
   { id: 'contact', label: 'Contact Aetas', short: 'Contact', icon: <Mail className="h-4 w-4" /> },
 ];
 
 const suggestedQuestions = [
   'What does AGI do?',
-  'Can Aetas automate BPO workflows?',
-  'Do you provide SOC or MDR services?',
-  'Can you help with IT helpdesk?',
+  'Do you provide Business Process AI Assimilation?',
+  'Do you provide MXDR services?',
+  'Do you provide Help Desk as a Service?',
 ];
 
 const promptWords = ['Talk to Bob', 'Ask about AI', 'Need cybersecurity?', 'Automate workflows?', 'Helpdesk support?'];
@@ -59,11 +59,11 @@ const promptWords = ['Talk to Bob', 'Ask about AI', 'Need cybersecurity?', 'Auto
 function getBobReply(input: string) {
   const value = input.toLowerCase();
 
-  if (value.includes('security') || value.includes('soc') || value.includes('mdr') || value.includes('pentest') || value.includes('cyber')) {
+  if (value.includes('security') || value.includes('mxdr') || value.includes('pen testing') || value.includes('cyber')) {
     return topicAnswers.security;
   }
 
-  if (value.includes('helpdesk') || value.includes('bpo') || value.includes('msp') || value.includes('it ') || value.includes('identity') || value.includes('support')) {
+  if (value.includes('help desk') || value.includes('helpdesk') || value.includes('business process') || value.includes('it ') || value.includes('identity') || value.includes('support')) {
     return topicAnswers.global;
   }
 
@@ -75,7 +75,7 @@ function getBobReply(input: string) {
     return topicAnswers.ai;
   }
 
-  return 'I can help with Aetas Global Innovation, Aetas AI, cybersecurity, IT operations, BPO support, and helpdesk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
+  return 'I can help with Aetas Global Innovation, Aetas AI, cybersecurity, IT operations, Business Processes support, and helpdesk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
 }
 
 function TypingDots() {
@@ -85,6 +85,19 @@ function TypingDots() {
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-sky-300 [animation-delay:-0.12s]"></span>
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-amber-300"></span>
     </div>
+  );
+}
+
+function AetasChatMark({ pulse = false }: { pulse?: boolean }) {
+  return (
+    <img
+      src="/aetasIcon.webp"
+      alt=""
+      width="512"
+      height="512"
+      className={`h-5 w-5 object-contain ${pulse ? 'animate-pulse' : ''}`}
+      decoding="async"
+    />
   );
 }
 
@@ -111,6 +124,7 @@ export default function BobAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isQuickMenuOpen, setIsQuickMenuOpen] = useState(false);
   const [promptIndex, setPromptIndex] = useState(0);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -152,13 +166,21 @@ export default function BobAssistant() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsOpen(false);
+        if (isQuickMenuOpen) {
+          setIsQuickMenuOpen(false);
+        } else {
+          setIsOpen(false);
+        }
       }
     };
 
     const handleDocumentClick = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (panelRef.current?.contains(target) || launcherRef.current?.contains(target)) return;
+      const eventPath = event.composedPath();
+      if (
+        (panelRef.current && eventPath.includes(panelRef.current)) ||
+        (launcherRef.current && eventPath.includes(launcherRef.current))
+      ) return;
+      setIsQuickMenuOpen(false);
       setIsOpen(false);
     };
 
@@ -169,7 +191,7 @@ export default function BobAssistant() {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [isOpen]);
+  }, [isOpen, isQuickMenuOpen]);
 
   useEffect(() => {
     return () => {
@@ -214,6 +236,7 @@ export default function BobAssistant() {
     setIsTyping(false);
     setMessages([{ id: 1, role: 'bob', text: introMessage }]);
     setInput('');
+    setIsQuickMenuOpen(false);
   };
 
   return (
@@ -228,10 +251,13 @@ export default function BobAssistant() {
         aria-modal="false"
         aria-label="Talk to Bob assistant"
       >
-        <div className="relative shrink-0 border-b border-white/10 px-4 py-4 sm:px-5">
+        <div className="relative shrink-0 border-b border-white/10 px-3 py-3 sm:px-5 sm:py-4">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-indigo-500 via-sky-400 to-amber-300"></div>
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
+                <AetasChatMark />
+              </div>
               <div className="min-w-0">
                 <h2 className="font-display text-sm font-bold text-white">Bob</h2>
                 <p className="truncate text-[10px] font-semibold uppercase tracking-wider text-gray-500">AGI website assistant</p>
@@ -248,7 +274,10 @@ export default function BobAssistant() {
               </button>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsQuickMenuOpen(false);
+                  setIsOpen(false);
+                }}
                 className="flex min-h-11 min-w-11 items-center justify-center rounded-xl p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
                 aria-label="Close Bob chat"
               >
@@ -258,8 +287,105 @@ export default function BobAssistant() {
           </div>
         </div>
 
+        {isQuickMenuOpen && (
+          <div className="absolute inset-0 z-30 flex items-end md:hidden">
+            <button
+              type="button"
+              className="absolute inset-0 cursor-default bg-black/75 backdrop-blur-[2px]"
+              onClick={(event) => {
+                event.stopPropagation();
+                setIsQuickMenuOpen(false);
+              }}
+              aria-label="Close quick options"
+            />
+            <div
+              id="bob-quick-options"
+              className="relative z-10 flex max-h-[78%] w-full flex-col overflow-hidden rounded-t-2xl border-x border-t border-white/15 bg-[#111119] shadow-[0_-18px_50px_rgba(0,0,0,0.55)]"
+              role="dialog"
+              aria-label="Bob quick options"
+            >
+              <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3">
+                <div>
+                  <h3 className="text-sm font-bold text-white">Quick options</h3>
+                  <p className="mt-0.5 text-[11px] text-gray-400">Choose a topic or suggested question</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setIsQuickMenuOpen(false);
+                  }}
+                  className="flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-white/10 text-gray-300 transition-colors hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
+                  aria-label="Close quick options"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="min-h-0 overflow-y-auto overscroll-contain px-3 py-3">
+                <span className="mb-2 block px-1 text-[10px] font-bold uppercase tracking-wider text-indigo-300">Topics</span>
+                <div className="grid gap-2">
+                  {topicOptions.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setIsQuickMenuOpen(false);
+                        addTopicReply(option.id);
+                      }}
+                      disabled={isTyping}
+                      className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.045] px-3 py-2.5 text-left text-xs font-semibold text-white transition-colors hover:border-indigo-400/50 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-500/12 text-indigo-200 ring-1 ring-indigo-300/20">
+                          {option.icon}
+                        </span>
+                        <span className="truncate">{option.label}</span>
+                      </span>
+                      <span className="text-base text-gray-500" aria-hidden="true">&rarr;</span>
+                    </button>
+                  ))}
+                </div>
+
+                <span className="mb-2 mt-4 block px-1 text-[10px] font-bold uppercase tracking-wider text-sky-300">Suggested questions</span>
+                <div className="grid gap-2">
+                  {suggestedQuestions.slice(0, 2).map((question) => (
+                    <button
+                      key={question}
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setIsQuickMenuOpen(false);
+                        submitMessage(question);
+                      }}
+                      disabled={isTyping}
+                      className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left text-xs leading-relaxed text-gray-200 transition-colors hover:border-sky-400/40 hover:bg-sky-500/10 focus:outline-none focus:ring-2 focus:ring-sky-400/40 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <span>{question}</span>
+                      <span className="shrink-0 text-base text-gray-500" aria-hidden="true">&rarr;</span>
+                    </button>
+                  ))}
+                </div>
+
+                <a
+                  href="/contact"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setIsQuickMenuOpen(false);
+                  }}
+                  className="mt-3 flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-xs font-bold text-black transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white/60"
+                >
+                  <Building2 className="h-4 w-4" />
+                  Go to contact page
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div
-          className="min-h-0 min-w-0 flex-1 overscroll-contain overflow-x-hidden overflow-y-auto px-4 py-4 sm:px-5 [scrollbar-color:rgba(99,102,241,0.6)_rgba(255,255,255,0.06)] [scrollbar-width:thin]"
+          className="min-h-0 min-w-0 flex-1 overscroll-contain overflow-x-hidden overflow-y-auto px-3 py-3 sm:px-5 sm:py-4 [scrollbar-color:rgba(99,102,241,0.6)_rgba(255,255,255,0.06)] [scrollbar-width:thin]"
           onWheel={(event) => event.stopPropagation()}
           onTouchMove={(event) => event.stopPropagation()}
         >
@@ -268,7 +394,7 @@ export default function BobAssistant() {
               <div key={`${message.id}-${message.role}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {message.role === 'bob' && (
                   <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-indigo-200 ring-1 ring-indigo-300/20">
-                    <Bot className="h-3.5 w-3.5" />
+                    <AetasChatMark />
                   </div>
                 )}
                 <div
@@ -286,7 +412,7 @@ export default function BobAssistant() {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-500/10 text-indigo-200 ring-1 ring-indigo-300/20">
-                  <Bot className="h-3.5 w-3.5 animate-pulse" />
+                  <AetasChatMark pulse />
                 </div>
                 <div className="rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.045] px-4 py-3">
                   <TypingDots />
@@ -297,8 +423,24 @@ export default function BobAssistant() {
           </div>
         </div>
 
-        <div className="shrink-0 border-t border-white/10 bg-black/40 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 sm:px-5">
-          <div className="mb-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+        <div className="relative shrink-0 border-t border-white/10 bg-black/40 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 sm:px-5 md:pt-3">
+          <button
+            type="button"
+            onClick={() => setIsQuickMenuOpen(true)}
+            className="mb-2 flex min-h-12 w-full items-center justify-between rounded-xl border border-indigo-400/30 bg-indigo-500/10 px-3 py-2.5 text-xs font-bold text-white shadow-lg shadow-indigo-950/20 transition-colors hover:border-indigo-300/50 hover:bg-indigo-500/15 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 md:hidden"
+            aria-expanded={isQuickMenuOpen}
+            aria-controls="bob-quick-options"
+          >
+            <span className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-400/15 text-indigo-200">
+                <Brain className="h-4 w-4" />
+              </span>
+              Browse topics and questions
+            </span>
+            <ChevronDown className="h-4 w-4" />
+          </button>
+
+          <div className="mb-3 hidden gap-2 overflow-x-auto pb-1 [scrollbar-width:none] md:flex">
             {topicOptions.map((option) => (
               <button
                 key={option.id}
@@ -337,7 +479,7 @@ export default function BobAssistant() {
             </button>
           </form>
 
-          <div className="mt-3 grid grid-cols-1 gap-2">
+          <div className="mt-3 hidden grid-cols-1 gap-2 md:grid">
             {suggestedQuestions.slice(0, 2).map((question) => (
               <button
                 key={question}
@@ -353,7 +495,7 @@ export default function BobAssistant() {
 
           <a
             href="/contact"
-            className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-xs font-bold text-black transition-all hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 active:scale-[0.98]"
+            className="mt-3 hidden min-h-11 items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-xs font-bold text-black transition-all hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/50 active:scale-[0.98] md:flex"
           >
             <Building2 className="h-4 w-4" />
             Go to contact page
@@ -390,9 +532,6 @@ export default function BobAssistant() {
           aria-label="Talk to Bob"
         >
           <BobAvatar isTyping={isTyping} />
-          <span className="absolute right-1 top-1 flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-indigo-500 text-white shadow-lg shadow-indigo-500/30">
-            <Bot className="h-3.5 w-3.5" />
-          </span>
         </button>
       </div>
 
