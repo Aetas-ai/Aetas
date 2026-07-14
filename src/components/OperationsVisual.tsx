@@ -3,26 +3,26 @@ import React from 'react';
 const practices = [
   {
     name: 'Aetas AI',
-    scope: 'BPO workflow automation',
-    description: 'Human-reviewed assistance for repetitive operational workflows.',
+    scope: 'Business Process AI Assimilation',
+    description: 'Human Led AI with Expert Human Oversight of AI (Expert in the Loop).',
     href: '/ai',
-    image: '/visual-ai-workflows.png',
+    image: '/visual-ai-workflows.webp',
     accent: 'text-indigo-300',
   },
   {
     name: 'Aetas Security',
     scope: 'Cybersecurity services',
-    description: 'Monitoring workflows, testing, vulnerability management, and response readiness.',
+    description: 'MXDR, Network Security Testing, and Application Security Testing.',
     href: '/security',
-    image: '/visual-security-ops.png',
+    image: '/visual-security-ops.webp',
     accent: 'text-sky-300',
   },
   {
     name: 'Aetas Global',
-    scope: 'Managed IT, helpdesk, and BPO',
-    description: 'Defined ownership for recurring support and managed operations.',
+    scope: 'Managed IT and Business Processes',
+    description: 'Help Desk as a Service and Product Support as a Service.',
     href: '/global',
-    image: '/visual-global-ops.png',
+    image: '/visual-global-ops.webp',
     accent: 'text-amber-300',
   },
 ];
@@ -44,7 +44,7 @@ export default function OperationsVisual() {
         <div className="mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-3">
           {practices.map((practice) => (
             <a key={practice.name} href={practice.href} className="group bg-brand-bg transition-colors hover:bg-white/[0.035]">
-              <img src={practice.image} alt="" className="aspect-[16/10] w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" loading="lazy" />
+              <img src={practice.image} alt="" width="1440" height="810" className="aspect-[16/10] w-full object-cover opacity-80 transition-opacity group-hover:opacity-100" loading="lazy" decoding="async" />
               <div className="p-6">
                 <span className={`text-[10px] font-bold uppercase ${practice.accent}`}>{practice.name}</span>
                 <h3 className="mt-3 text-xl font-bold text-white">{practice.scope}</h3>

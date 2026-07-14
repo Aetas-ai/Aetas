@@ -16,25 +16,25 @@ export const resources: ResourceArticle[] = [
     date: 'June 24, 2026',
     author: 'AI Engineering Team',
     summary:
-      'Why human validation remains essential when AI is used to assist enterprise support workflows.',
+      'Why Expert Human Oversight of AI remains essential when AI is used to assist enterprise support workflows.',
     body: [
       'Support automation works best when it removes repetitive steps without removing accountability. The highest-risk mistake is allowing a model to answer operational questions without review, context, or escalation boundaries.',
-      'Aetas AI is designed around a human-in-the-loop model. The goal is to help operators classify requests, draft responses, and surface relevant knowledge while keeping the final decision with a trained specialist.',
-      'This service model reflects how real BPO and helpdesk environments work: accuracy, auditability, and clear escalation matter more than fully autonomous demos.',
+      'Aetas AI uses Human Led AI with Expert Human Oversight of AI (Expert in the Loop). The goal is to help operators classify requests, draft responses, and surface relevant knowledge while keeping the final decision with a trained specialist.',
+      'This service model reflects how real Business Processes and helpdesk environments work: accuracy, auditability, and clear escalation matter more than fully autonomous demos.',
     ],
   },
   {
     slug: 'ransomware-containment-workflow',
     category: 'Threat Intel',
-    title: 'Anatomy of a Ransomware Containment Workflow',
+    title: 'How MXDR Supports Detection and Response',
     date: 'May 18, 2026',
     author: 'Security Team',
     summary:
-      'A practical look at the containment steps that matter when suspicious endpoint behavior appears.',
+      'A practical look at Managed Extended Detection and Response when suspicious security activity appears.',
     body: [
-      'Ransomware response depends on prepared telemetry, clear ownership, and fast human review. Tools can surface the signal, but response quality depends on the process around them.',
-      'One workflow pattern Aetas Security can configure routes Microsoft Defender XDR alerts through Outlook notifications and Jira tickets before analyst review and escalation.',
-      'The strongest programs rehearse these steps before an incident. That means defined escalation paths, known contacts, and evidence that containment actions are working.',
+      'Managed Extended Detection and Response depends on clear ownership and timely expert review. Detection can surface a signal, but response quality depends on the process around it.',
+      'Aetas Security supports detection, investigation, response, documentation, and escalation through its MXDR service.',
+      'Defined review and escalation paths help security teams respond consistently when suspicious activity appears.',
     ],
   },
   {

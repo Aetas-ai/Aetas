@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Shield, Brain, Users, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
 
 interface Question {
@@ -18,9 +18,9 @@ const questions: Question[] = [
     text: "What is your organization's primary challenge right now?",
     options: [
       {
-        text: "We need tracked security alerts or penetration testing",
+        text: "We need managed detection or offensive security testing",
         value: "security",
-        description: "Route Defender XDR alerts through Outlook and Jira for analyst review, or scope security testing."
+        description: "Scope Managed Extended Detection and Response (MXDR), Network Security Testing, or Application Security Testing."
       },
       {
         text: "Our internal IT helpdesk & operations are overwhelmed",
@@ -30,7 +30,7 @@ const questions: Question[] = [
       {
         text: "We want to automate manual workflows with custom AI",
         value: "ai",
-        description: "Design human-reviewed AI assistance around repetitive BPO and operational work."
+        description: "Design Human Led AI around repetitive Business Processes with Expert Human Oversight of AI."
       }
     ]
   },
@@ -39,9 +39,9 @@ const questions: Question[] = [
     text: "What is your primary operational bottleneck?",
     options: [
       {
-        text: "Security testing, alerts, or exposure management",
+        text: "Managed detection or offensive security testing",
         value: "security",
-        description: "Vulnerability remediation, network exposure, and incident response readiness."
+        description: "MXDR, Network Security Testing, or Application Security Testing (Pen Testing)."
       },
       {
         text: "Recurring IT requests and software administration",
@@ -60,19 +60,19 @@ const questions: Question[] = [
     text: "Which engagement best matches the work you described?",
     options: [
       {
-        text: "Establish a repeatable cybersecurity alert workflow",
+        text: "Establish MXDR or Offensive Security coverage",
         value: "security",
-        description: "Create a tracked path from Defender XDR detection to notification, ticketing, review, and escalation."
+        description: "Select Managed Extended Detection and Response or a focused security testing engagement."
       },
       {
-        text: "Deploy custom workflow automation tools",
+        text: "Apply AI to Business Processes workflows",
         value: "ai",
-        description: "Collaborate with our team on AI-augmented workflows tailored to your needs."
+        description: "Collaborate with our team on Human Led AI and Business Process AI Assimilation."
       },
       {
         text: "Assign recurring IT or support responsibilities",
         value: "global",
-        description: "Define helpdesk, tenant, device, identity, or BPO queue ownership and escalation."
+        description: "Define helpdesk, tenant, device, identity, or Business Processes queue ownership and escalation."
       }
     ]
   }
@@ -83,6 +83,11 @@ export default function AdvisorQuiz() {
   const [answers, setAnswers] = useState<('ai' | 'security' | 'global')[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<'ai' | 'security' | 'global' | 'mixed' | null>(null);
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
 
   const handleSelect = (value: 'ai' | 'security' | 'global') => {
     const newAnswers = [...answers, value];
@@ -133,13 +138,12 @@ export default function AdvisorQuiz() {
       {/* Decorative gradient glowing lines */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-70"></div>
 
-      <AnimatePresence mode="wait">
-        {result ? (
+      {result ? (
           <motion.div
             key="result"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={hasHydrated ? { opacity: 0, scale: 0.97 } : false}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             className="text-center py-6"
           >
             <div className="inline-flex p-4 rounded-full bg-white/5 border border-white/10 mb-6">
@@ -150,16 +154,16 @@ export default function AdvisorQuiz() {
             </div>
 
             <h3 className="text-3xl font-display font-bold text-white mb-3">
-              {result === 'security' && 'Aetas Security (MSSP)'}
-              {result === 'global' && 'Aetas Global (MSP)'}
+              {result === 'security' && 'Aetas Security'}
+              {result === 'global' && 'Aetas Global'}
               {result === 'ai' && 'Aetas AI (Workflow Automation)'}
               {result === 'mixed' && 'Multiple Aetas Practices'}
             </h3>
 
             <p className="text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed">
-              {result === 'security' && 'Your needs fit Aetas Security. We can scope Defender XDR alert handling through Outlook and Jira, analyst review and escalation, penetration testing, response planning, and selected security tooling.'}
-              {result === 'global' && 'Your needs fit Aetas Global. We can scope helpdesk delivery, identity and device operations, tenant administration, or BPO support responsibilities with clear ownership and escalation.'}
-              {result === 'ai' && 'Your goals fit Aetas AI workflow automation. We can help design AI-augmented triage, drafting, knowledge retrieval, and human-in-the-loop operations workflows.'}
+              {result === 'security' && 'Your needs fit Aetas Security. We can scope Managed Extended Detection and Response (MXDR), Network Security Testing, or Application Security Testing (Pen Testing).'}
+              {result === 'global' && 'Your needs fit Aetas Global. We can scope Help Desk as a Service, Product Support as a Service, managed IT, or Business Processes responsibilities.'}
+              {result === 'ai' && 'Your goals fit Aetas AI. We can scope Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).'}
               {result === 'mixed' && 'Your needs span more than one Aetas practice. We suggest one scoping conversation that routes each requirement to the separate Security, Global, or AI service team responsible for it.'}
             </p>
 
@@ -183,9 +187,9 @@ export default function AdvisorQuiz() {
         ) : isAnalyzing ? (
           <motion.div
             key="analyzing"
-            initial={{ opacity: 0 }}
+            initial={hasHydrated ? { opacity: 0 } : false}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="flex flex-col items-center justify-center py-12"
           >
             <div className="relative w-20 h-20 mb-8">
@@ -198,10 +202,9 @@ export default function AdvisorQuiz() {
         ) : (
           <motion.div
             key={currentStep}
-            initial={{ opacity: 0, x: 20 }}
+            initial={hasHydrated ? { opacity: 0, x: 16 } : false}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
             <div className="flex justify-between items-center mb-6">
               <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
@@ -246,7 +249,6 @@ export default function AdvisorQuiz() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
     </div>
   );
 }

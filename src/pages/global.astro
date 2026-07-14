@@ -4,20 +4,20 @@ import PageHero from '../components/PageHero.astro';
 import ManagedSystems from '../components/ManagedSystems';
 ---
 
-<Layout title="Aetas Global - Managed IT, Helpdesk, and BPO Operations" activePillar="global" description="Aetas Global provides managed IT, helpdesk, identity operations, device management, tenant administration, and outsourced BPO support.">
+<Layout title="Aetas Global - Managed IT and Business Processes" activePillar="global" description="Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, identity operations, device management, and Business Processes support.">
   <PageHero
-    eyebrow="Aetas Global / Managed IT, helpdesk, and BPO"
+    eyebrow="Aetas Global / Managed IT and Business Processes"
     title="Keep IT support and outsourced operations moving."
-    description="Aetas Global runs helpdesk queues, identity and device tasks, tenant administration, and outsourced support operations through a dedicated managed-services practice with clear ownership and escalation."
+    description="Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations through a dedicated service practice with clear ownership and escalation."
     accent="global"
-    image="/visual-global-ops.png"
-    imageAlt="Managed IT, helpdesk, and BPO operations visualization"
+    image="/visual-global-ops.webp"
+    imageAlt="Managed IT and Business Processes operations visualization"
     primaryLabel="Scope managed operations"
     primaryHref="/contact?intent=global"
     secondaryLabel="Explore managed services"
     secondaryHref="#services"
     focusLabel="Aetas Global focus"
-    focusItems={['Managed helpdesk delivery', 'Identity, device, and tenant operations', 'BPO support queues']}
+    focusItems={['Help Desk as a Service', 'Product Support as a Service', 'Business Processes operations']}
   />
 
   <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
@@ -25,17 +25,17 @@ import ManagedSystems from '../components/ManagedSystems';
       <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Managed Operations</span>
       <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">The recurring work your team needs handled well.</h2>
       <p class="text-gray-400 text-sm leading-relaxed mt-4">
-        Global is focused on IT and BPO execution: queues, checklists, user support, tenant administration, and escalation discipline.
+        Global is focused on managed IT and Business Processes delivery with clear queue ownership, user support, administration, and escalation discipline.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-group>
       {[
-        ['Helpdesk Operations', 'L1-L3 ticket handling, user support, access issues, onboarding, and escalation management.'],
-        ['Identity & Access', 'Microsoft 365, Entra ID, Google Workspace, MFA, group membership, and license administration.'],
+        ['Help Desk as a Service', 'L1-L3 ticket handling, user support, access issues, onboarding, and escalation management.'],
+        ['Identity & Access', 'Account access, authentication, group membership, role, and license administration.'],
         ['Device Management', 'Endpoint enrollment, compliance profiles, remote lock/wipe support, and software deployment coordination.'],
-        ['Tenant Administration', 'Exchange, SharePoint, Google Drive, collaboration permissions, and recurring configuration upkeep.'],
-        ['BPO Support Queues', 'Customer support, product support, QA review, documentation, and operational reporting.'],
+        ['Tenant Administration', 'Communication, collaboration, permissions, and recurring tenant configuration upkeep.'],
+        ['Product Support as a Service', 'Customer and product support queues, quality review, documentation, and operational reporting.'],
         ['Operational Reporting', 'Queue health, response targets, recurring blockers, and improvement opportunities.'],
       ].map(([title, copy]) => (
         <article class="glass-panel p-8 rounded-2xl hover:border-amber-500/30 transition-all duration-300">
@@ -62,12 +62,12 @@ import ManagedSystems from '../components/ManagedSystems';
         <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Operations Visibility</span>
         <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3 leading-tight">Support work should be easy to see and measure.</h2>
         <p class="text-gray-400 text-sm leading-relaxed mt-5">
-          These placeholder visuals give the site a stronger customer-facing view of queue health, SLA coverage, device operations, identity workflows, and BPO support performance.
+          These placeholder visuals give the site a stronger customer-facing view of queue health, service coverage, device operations, identity workflows, and Business Processes support performance.
         </p>
       </div>
       <div class="lg:col-span-7" data-reveal-right>
         <div class="overflow-hidden rounded-3xl border border-amber-400/15 bg-white/[0.025] shadow-2xl shadow-amber-950/20">
-          <img src="/visual-global-ops.png" alt="Managed IT and helpdesk operations visualization" class="aspect-video w-full object-cover" loading="lazy" />
+          <img src="/visual-global-ops.webp" alt="Managed IT and helpdesk operations visualization" class="aspect-video w-full object-cover" loading="lazy" decoding="async" width="1672" height="941" />
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@ import ManagedSystems from '../components/ManagedSystems';
     <div class="mx-auto flex max-w-4xl flex-col items-center gap-5 text-center" data-reveal>
       <span class="text-xs font-bold uppercase text-amber-400">Talk to Aetas Global</span>
       <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Define the managed service your team needs.</h2>
-      <p class="max-w-2xl text-sm leading-relaxed text-gray-400">Discuss helpdesk delivery, identity and device operations, tenant administration, or BPO support queues with the Global practice.</p>
+      <p class="max-w-2xl text-sm leading-relaxed text-gray-400">Discuss Help Desk as a Service, Product Support as a Service, managed IT, or Business Processes operations with the Global practice.</p>
       <a href="/contact?intent=global" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-global px-7 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400">Contact Aetas Global</a>
     </div>
   </section>

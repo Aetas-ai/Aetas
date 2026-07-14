@@ -79,7 +79,7 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
 >
   {image ? (
     <div class="absolute inset-0 -z-20">
-      <img src={image} alt={imageAlt} class="h-full w-full object-cover object-center brightness-[0.3] saturate-[0.72] scale-[1.01]" loading="eager" />
+      <img src={image} alt={imageAlt} width="1440" height="810" class="h-full w-full object-cover object-center brightness-[0.3] saturate-[0.72] scale-[1.01]" loading="eager" decoding="async" fetchpriority="high" />
     </div>
   ) : null}
 

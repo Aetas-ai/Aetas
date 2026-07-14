@@ -192,8 +192,8 @@
   position: absolute;
   top: 51%;
   left: 50%;
-  width: 215%;
-  height: auto;
+  width: 78%;
+  height: 78%;
   max-width: none;
   transform: translate(-50%, -50%);
   object-fit: contain;
@@ -382,14 +382,13 @@
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
-  width: 168px !important;
-  height: 100px !important;
+  width: auto !important;
+  height: 96px !important;
   max-width: none !important;
   transform: translate(-50%, -50%) !important;
   object-fit: contain !important;
   object-position: center !important;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.45));
-  transition: filter 500ms ease;
 }
 
 @media (min-width: 768px) {
@@ -425,7 +424,7 @@
   }
 
   .bob-avatar-image {
-    width: 232px !important;
-    height: 138px !important;
+    width: auto !important;
+    height: 128px !important;
   }
 }
