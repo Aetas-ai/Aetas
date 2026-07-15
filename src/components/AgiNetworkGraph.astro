@@ -1,0 +1,414 @@
+---
+const nodes = [
+  {
+    key: 'ai',
+    number: '01',
+    name: 'Aetas AI',
+    scope: 'Business Process AI Assimilation',
+    href: '/ai',
+  },
+  {
+    key: 'security',
+    number: '02',
+    name: 'Aetas Security',
+    scope: 'MXDR + Offensive Security',
+    href: '/security',
+  },
+  {
+    key: 'global',
+    number: '03',
+    name: 'Aetas Global',
+    scope: 'Managed IT + Support',
+    href: '/global',
+  },
+] as const;
+---
+
+<div class="agi-network" aria-label="Aetas Global Innovation practice network">
+  <div class="agi-network-heading" aria-hidden="true">
+    <span>AGI practice network</span>
+    <span class="agi-network-status"><i></i> Coordinated routing</span>
+  </div>
+
+  <svg class="agi-network-map" viewBox="0 0 720 620" aria-hidden="true">
+    <g class="network-grid">
+      <path d="M44 94H676M44 204H676M44 314H676M44 424H676M44 534H676"></path>
+      <path d="M92 50V570M226 50V570M360 50V570M494 50V570M628 50V570"></path>
+    </g>
+
+    <g class="network-boundary">
+      <path d="M145 145L575 145L360 515Z"></path>
+      <path d="M145 145L360 305L575 145"></path>
+      <path d="M145 145L360 305L360 515"></path>
+      <path d="M575 145L360 305L360 515"></path>
+    </g>
+
+    <g class="network-signals">
+      <path class="signal-ai" pathLength="100" d="M145 145L360 305"></path>
+      <path class="signal-security" pathLength="100" d="M575 145L360 305"></path>
+      <path class="signal-global" pathLength="100" d="M360 515L360 305"></path>
+      <path class="signal-ai signal-delay" pathLength="100" d="M145 145L575 145"></path>
+      <path class="signal-security signal-delay" pathLength="100" d="M575 145L360 515"></path>
+      <path class="signal-global signal-delay" pathLength="100" d="M360 515L145 145"></path>
+    </g>
+
+    <g class="network-satellites">
+      <g class="satellite satellite-ai">
+        <path d="M145 145L82 211"></path>
+        <circle cx="82" cy="211" r="4"></circle>
+        <circle class="satellite-pulse" cx="82" cy="211" r="11"></circle>
+      </g>
+      <g class="satellite satellite-ai">
+        <path d="M145 145L206 79"></path>
+        <circle cx="206" cy="79" r="4"></circle>
+      </g>
+      <g class="satellite satellite-security">
+        <path d="M575 145L640 211"></path>
+        <circle cx="640" cy="211" r="4"></circle>
+        <circle class="satellite-pulse satellite-pulse-delay" cx="640" cy="211" r="11"></circle>
+      </g>
+      <g class="satellite satellite-security">
+        <path d="M575 145L514 79"></path>
+        <circle cx="514" cy="79" r="4"></circle>
+      </g>
+      <g class="satellite satellite-global">
+        <path d="M360 515L276 552"></path>
+        <circle cx="276" cy="552" r="4"></circle>
+      </g>
+      <g class="satellite satellite-global">
+        <path d="M360 515L444 552"></path>
+        <circle cx="444" cy="552" r="4"></circle>
+        <circle class="satellite-pulse" cx="444" cy="552" r="11"></circle>
+      </g>
+    </g>
+
+    <g class="network-core-rings" transform="translate(360 305)">
+      <circle class="core-ring core-ring-outer" r="75"></circle>
+      <circle class="core-ring core-ring-inner" r="58"></circle>
+      <path class="core-bracket" d="M-92-24V-44H-72M92-24V-44H72M-92 24V44H-72M92 24V44H72"></path>
+    </g>
+  </svg>
+
+  <div class="agi-network-core" aria-hidden="true">
+    <span class="agi-network-monogram">AGI</span>
+    <span class="agi-network-core-label">Three practices</span>
+  </div>
+
+  {nodes.map((node) => (
+    <a
+      href={node.href}
+      class:list={['agi-network-node', `agi-network-node-${node.key}`]}
+      aria-label={`Explore ${node.name}: ${node.scope}`}
+    >
+      <span class="agi-network-node-topline">
+        <span class="agi-network-node-number">{node.number}</span>
+        <span class="agi-network-node-signal" aria-hidden="true"></span>
+      </span>
+      <strong>{node.name}</strong>
+      <span class="agi-network-node-scope">{node.scope}</span>
+    </a>
+  ))}
+
+  <p class="agi-network-caption">Distinct practices. Clear ownership.</p>
+</div>
+
+<style>
+  .agi-network {
+    position: relative;
+    width: min(100%, 43rem);
+    aspect-ratio: 720 / 620;
+    margin-inline: auto;
+    isolation: isolate;
+  }
+
+  .agi-network::before {
+    position: absolute;
+    inset: 9% 8% 11%;
+    z-index: -1;
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    clip-path: polygon(50% 0, 100% 32%, 82% 100%, 18% 100%, 0 32%);
+    content: '';
+  }
+
+  .agi-network-heading {
+    position: absolute;
+    inset: 1.5% 3% auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(107 114 128);
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .agi-network-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .agi-network-status i {
+    width: 0.375rem;
+    height: 0.375rem;
+    background: var(--color-security);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.85);
+  }
+
+  .agi-network-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .network-grid path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.035);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .network-boundary path {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.13);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .network-signals path {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 1 12;
+    vector-effect: non-scaling-stroke;
+    animation: agi-signal-flow 4.8s linear infinite;
+  }
+
+  .network-signals .signal-ai { stroke: var(--color-ai); }
+  .network-signals .signal-security { stroke: var(--color-security); }
+  .network-signals .signal-global { stroke: var(--color-global); }
+  .network-signals .signal-delay { animation-delay: -2.4s; opacity: 0.58; }
+
+  .network-satellites path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: 3 5;
+    opacity: 0.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .network-satellites circle { fill: currentColor; }
+  .network-satellites .satellite-pulse {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: agi-node-pulse 2.8s ease-out infinite;
+  }
+  .network-satellites .satellite-pulse-delay { animation-delay: -1.4s; }
+  .satellite-ai { color: var(--color-ai); }
+  .satellite-security { color: var(--color-security); }
+  .satellite-global { color: var(--color-global); }
+
+  .core-ring,
+  .core-bracket {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+  .core-ring-outer {
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 1;
+    stroke-dasharray: 2 8;
+    transform-origin: center;
+    animation: agi-core-rotate 28s linear infinite;
+  }
+  .core-ring-inner {
+    stroke: rgba(125, 211, 252, 0.38);
+    stroke-width: 1;
+    stroke-dasharray: 18 7 3 7;
+    transform-origin: center;
+    animation: agi-core-rotate 18s linear infinite reverse;
+  }
+  .core-bracket {
+    stroke: rgba(255, 255, 255, 0.24);
+    stroke-width: 1;
+  }
+
+  .agi-network-core {
+    position: absolute;
+    top: 49.2%;
+    left: 50%;
+    display: grid;
+    width: clamp(5.25rem, 17%, 7.25rem);
+    aspect-ratio: 1;
+    place-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(5, 5, 8, 0.92);
+    box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.025), 0 0 38px rgba(14, 165, 233, 0.13);
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .agi-network-monogram {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 4vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1;
+    color: white;
+  }
+
+  .agi-network-monogram::after {
+    display: block;
+    width: 58%;
+    height: 2px;
+    margin: 0.5rem auto 0.4rem;
+    background: linear-gradient(90deg, var(--color-ai), var(--color-security), var(--color-global));
+    content: '';
+  }
+
+  .agi-network-core-label {
+    color: rgb(156 163 175);
+    font-size: clamp(0.45rem, 1.4vw, 0.625rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .agi-network-node {
+    --node-color: white;
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    width: clamp(7.25rem, 27%, 10.5rem);
+    min-height: 4.75rem;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-top: 2px solid var(--node-color);
+    background: rgba(5, 5, 8, 0.9);
+    padding: clamp(0.65rem, 2vw, 0.9rem);
+    color: white;
+    box-shadow: 0 15px 36px rgba(0, 0, 0, 0.26);
+    text-decoration: none;
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .agi-network-node:hover,
+  .agi-network-node:focus-visible {
+    border-color: color-mix(in srgb, var(--node-color) 68%, white 10%);
+    background: rgba(12, 12, 18, 0.98);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.35), 0 0 24px color-mix(in srgb, var(--node-color) 20%, transparent);
+    transform: translate(-50%, -50%) translateY(-3px);
+  }
+
+  .agi-network-node:focus-visible {
+    outline: 2px solid var(--node-color);
+    outline-offset: 4px;
+  }
+
+  .agi-network-node-ai {
+    --node-color: var(--color-ai);
+    top: 23.4%;
+    left: 20.1%;
+    transform: translate(-50%, -50%);
+  }
+  .agi-network-node-security {
+    --node-color: var(--color-security);
+    top: 23.4%;
+    left: 79.9%;
+    transform: translate(-50%, -50%);
+  }
+  .agi-network-node-global {
+    --node-color: var(--color-global);
+    top: 83.1%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .agi-network-node-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+  .agi-network-node-number {
+    color: var(--node-color);
+    font-family: var(--font-display);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .agi-network-node-signal {
+    width: 1.7rem;
+    height: 1px;
+    background: var(--node-color);
+    box-shadow: 0 0 7px var(--node-color);
+    opacity: 0.72;
+  }
+  .agi-network-node strong {
+    font-family: var(--font-display);
+    font-size: clamp(0.78rem, 2.1vw, 0.95rem);
+    line-height: 1.1;
+  }
+  .agi-network-node-scope {
+    margin-top: 0.32rem;
+    color: rgb(156 163 175);
+    font-size: clamp(0.56rem, 1.5vw, 0.6875rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .agi-network-caption {
+    position: absolute;
+    inset: auto 0 0;
+    margin: 0;
+    color: rgb(107 114 128);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @keyframes agi-signal-flow {
+    to { stroke-dashoffset: -100; }
+  }
+
+  @keyframes agi-node-pulse {
+    0% { opacity: 0.7; transform: scale(0.55); }
+    70%, 100% { opacity: 0; transform: scale(1.65); }
+  }
+
+  @keyframes agi-core-rotate {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 479px) {
+    .agi-network { aspect-ratio: 720 / 670; }
+    .agi-network-heading { inset-inline: 1%; }
+    .agi-network-status { display: none; }
+    .agi-network-node { width: 7.4rem; min-height: 4.5rem; }
+    .agi-network-node-ai { top: 22.4%; left: 20.1%; }
+    .agi-network-node-security { top: 22.4%; left: 79.9%; }
+    .agi-network-node-global { top: 78.7%; }
+    .agi-network-core { top: 45.6%; }
+    .agi-network-caption { bottom: 0.3rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .network-signals path,
+    .network-satellites .satellite-pulse,
+    .core-ring {
+      animation: none;
+    }
+  }
+</style>

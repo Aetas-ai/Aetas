@@ -1,70 +1,83 @@
 # Aetas Global Innovation Company Website
 
-Astro marketing site for Aetas Global Innovation, also branded through the Aetas.ai domain and service identity. AGI is the company acronym and intentionally connects the brand to AI-driven operating systems.
+Astro company website for **Aetas Global Innovation (AGI)**, operating through the `aetas.ai` domain. The website presents three distinct service practices without positioning them as one bundled service:
 
-- **Aetas AI**: AI-augmented workflow automation for BPO, support, helpdesk, IT operations, and back-office teams.
-- **Aetas Security**: active MSSP services including SOC/MDR, pentesting, response planning, and security tooling.
-- **Aetas Global**: active MSP/BPO operations including helpdesk, identity, device, tenant, and support queue management.
+- **Aetas AI**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
+- **Aetas Security**: Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
+- **Aetas Global**: Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
-For future coding assistants, read [HANDOFF.md](./HANDOFF.md) before making changes. It records the current site status, positioning rules, known gaps, and next improvement priorities.
+Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, and [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing.
 
-For clone/install/local-run instructions, read [COLLABORATION.md](./COLLABORATION.md).
+## Current Experience
 
-For production indexing, sitemap submission, and ongoing search maintenance, read [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md).
+- Responsive Astro pages for the company and all three practices
+- Custom AGI practice-network hero built with inline SVG and CSS
+- Interactive service responsibility selector and advisor quiz
+- Bob chat assistant loaded as a non-critical React island
+- Delayed loading feedback that appears only when a page is genuinely slow
+- Partner logo experiences for approved cloud, AI, and cybersecurity partners
+- AGI Operations Readiness Brief registration and download flow
+- Canonical metadata, structured data, robots instructions, and generated sitemap
+
+The homepage network is an original Aetas component. It does not use the Aceternity globe, Three.js, React Three Fiber, or a copied UI component.
+
+## Technical Stack
+
+- Astro 7 with static output
+- React 19 islands through `@astrojs/react`
+- Tailwind CSS 4
+- GSAP and ScrollTrigger for page reveals
+- Lenis for smooth scrolling
+- Framer Motion for React island transitions
+- Lucide React icons
 
 ## Project Structure
 
 ```text
 src/
-  components/        React islands for interactive widgets
-  data/              Shared case study and resource data
-  layouts/           Shared Astro layout, navigation, footer, scripts
+  components/        Astro components and interactive React islands
+  data/              Shared resource and approved case-study data
+  layouts/           Shared layout, navigation, metadata, and scripts
   pages/             Astro routes
-  styles/            Global Tailwind/CSS
-public/              Static images and icons
+  styles/            Global Tailwind theme and CSS
+public/              Optimized images, logos, icons, robots.txt
 ```
 
-Key routes:
+Important homepage files:
 
-- `/` homepage
+- `src/components/HomeHero.astro`: homepage hero structure and practice rail
+- `src/components/AgiNetworkGraph.astro`: custom animated AGI practice network
+- `src/pages/index.astro`: homepage sections and interactive islands
+- `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
+
+## Routes
+
+- `/`
 - `/ai`, `/security`, `/global`
-- `/work` and `/work/[slug]`
+- `/work`
 - `/resources` and `/resources/[slug]`
+- `/operations-readiness-brief`
 - `/partners`, `/about`, `/careers`, `/contact`
+- `/legal/privacy`, `/legal/terms`
 
-Current content note: `/about` now introduces Aetas Global Innovation, the AGI name, operating principles, and the relationship between Aetas AI, Aetas Security, and Aetas Global.
+The Work page intentionally contains no fabricated case studies or performance results. Publish case studies only after client and business approval.
 
 ## Commands
 
-Install dependencies:
-
 ```sh
 npm install
-```
-
-Start development server:
-
-```sh
 npm run dev
-```
-
-Per repository agent instructions, use Astro background mode when starting a dev server manually:
-
-```sh
-astro dev --background
-astro dev status
-astro dev logs
-astro dev stop
-```
-
-Build production output:
-
-```sh
 npm run build
-```
-
-Preview production build:
-
-```sh
 npm run preview
 ```
+
+When managing the Astro development server directly, follow the repository agent instructions:
+
+```sh
+npx astro dev --background
+npx astro dev status
+npx astro dev logs
+npx astro dev stop
+```
+
+Run `npm run build` before pushing or uploading a deployment package.

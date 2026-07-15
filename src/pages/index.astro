@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import HomeHero from '../components/HomeHero.astro';
 import AdvisorQuiz from '../components/AdvisorQuiz';
 import FeatureCarousel from '../components/ui/feature-carousel';
 import ManagedSystems from '../components/ManagedSystems';
@@ -7,117 +8,7 @@ import OperationsVisual from '../components/OperationsVisual';
 ---
 
 <Layout title="Aetas Global Innovation | AI, Cybersecurity & Managed IT" description="Aetas Global Innovation (AGI), operating at Aetas.ai, provides Aetas AI workflow automation, Aetas Security cybersecurity services, and Aetas Global managed IT, helpdesk, and Business Processes operations.">
-  <section class="relative isolate overflow-hidden border-b border-white/5" aria-labelledby="home-hero-title">
-    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,black_0%,rgba(0,0,0,0.7)_66%,transparent_100%)]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,#050508_4%,rgba(5,5,8,0.98)_42%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.9)_100%)] max-lg:bg-[linear-gradient(180deg,#050508_0%,rgba(5,5,8,0.94)_70%,#050508_100%)]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden="true"></div>
-
-    <div class="home-hero-shell relative z-10 mx-auto grid min-h-[calc(100svh-7rem)] w-full max-w-7xl items-center gap-14 px-6 py-14 sm:py-16 lg:py-16 xl:grid-cols-[minmax(0,1.12fr)_minmax(340px,0.88fr)] xl:gap-12 2xl:gap-20 2xl:py-20">
-      <div class="flex max-w-3xl flex-col items-start gap-5 sm:gap-6" data-reveal-group>
-        <div class="flex items-center gap-3 text-xs font-bold uppercase text-gray-300">
-          <span class="h-2 w-2 bg-ai" aria-hidden="true"></span>
-          <span>Aetas Global Innovation</span>
-          <span class="hidden text-gray-600 sm:inline" aria-hidden="true">/</span>
-          <span class="hidden font-medium text-gray-500 sm:inline">AI. Security. Global operations.</span>
-        </div>
-
-        <h1 id="home-hero-title" class="home-hero-heading max-w-3xl font-display text-4xl font-bold leading-[1.08] text-white sm:text-5xl lg:text-6xl xl:text-[3.25rem] 2xl:text-6xl">
-          Better workflows.<br />
-          <span class="text-sky-300">Stronger security.</span><br />
-          Dependable IT operations.
-        </h1>
-
-        <p class="max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
-          Choose the specialized AGI practice your business needs: Human Led AI for Business Processes teams, dedicated cybersecurity services, or managed IT, help desk, and outsourced operations.
-        </p>
-
-        <div class="flex w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
-          <a href="/contact" class="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-white px-7 py-3 text-center text-sm font-bold text-black shadow-xl shadow-black/20 transition-[background-color,transform,box-shadow] duration-200 hover:bg-gray-100 hover:shadow-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
-            Discuss your operations
-          </a>
-          <a href="#services" class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/30 hover:bg-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
-            Explore our services <span aria-hidden="true">&darr;</span>
-          </a>
-        </div>
-
-        <p class="max-w-2xl border-l-2 border-ai/70 pl-4 text-xs leading-relaxed text-gray-400 sm:text-sm">
-          Human Led AI stays subject to Expert Human Oversight of AI (Expert in the Loop), defined approval paths, and accountable escalation.
-        </p>
-      </div>
-
-      <div class="home-hero-map relative hidden min-h-[460px] xl:block 2xl:min-h-[520px]" data-reveal-right aria-hidden="true">
-        <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent"></div>
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 font-display text-[12rem] font-bold leading-none text-white/[0.025] xl:text-[15rem]">AGI</div>
-
-        <div class="absolute inset-0 flex flex-col justify-center gap-16 pl-10 xl:pl-16">
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-ai/80 via-ai/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-ai/40 bg-brand-bg font-display text-xs font-bold text-indigo-300">01</span>
-              <div class="bg-brand-bg/90 pr-5">
-                <span class="block font-display text-lg font-bold text-white">Aetas AI</span>
-                <span class="block text-xs text-gray-400">Business Process AI Assimilation</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-security/80 via-security/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-security/40 bg-brand-bg font-display text-xs font-bold text-sky-300">02</span>
-              <div class="bg-brand-bg/90 pr-5">
-                <span class="block font-display text-lg font-bold text-white">Aetas Security</span>
-                <span class="block text-xs text-gray-400">Dedicated cybersecurity services</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-global/80 via-global/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-global/40 bg-brand-bg font-display text-xs font-bold text-amber-300">03</span>
-              <div class="bg-brand-bg/90 pr-5">
-                <span class="block font-display text-lg font-bold text-white">Aetas Global</span>
-                <span class="block text-xs text-gray-400">Managed IT, helpdesk, and Business Processes operations</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 flex h-px" aria-hidden="true">
-      <span class="w-1/3 bg-ai/70"></span>
-      <span class="w-1/3 bg-security/70"></span>
-      <span class="w-1/3 bg-global/70"></span>
-    </div>
-  </section>
-
-  <nav class="border-b border-white/5 bg-black/30" aria-label="Aetas service practices">
-    <div class="mx-auto grid max-w-7xl sm:grid-cols-3">
-      <a href="/ai" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-ai/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ai sm:border-b-0 sm:border-r">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-indigo-400">01 / AI Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Business Process AI Assimilation</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-indigo-300" aria-hidden="true">&rarr;</span>
-      </a>
-      <a href="/security" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-security/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-security sm:border-b-0 sm:border-r">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-sky-400">02 / Security Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Cybersecurity services</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-sky-300" aria-hidden="true">&rarr;</span>
-      </a>
-      <a href="/global" class="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-global/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-global">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-amber-400">03 / Global Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Managed IT, helpdesk, and Business Processes</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-amber-300" aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </nav>
+  <HomeHero />
 
   <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
@@ -271,22 +162,3 @@ import OperationsVisual from '../components/OperationsVisual';
     </div>
   </section>
 </Layout>
-
-<style>
-  @media (min-width: 1024px) and (max-height: 800px) {
-    .home-hero-shell {
-      padding-top: 2.5rem;
-      padding-bottom: 2.5rem;
-    }
-
-    .home-hero-heading {
-      font-size: 3rem;
-    }
-  }
-
-  @media (min-width: 1280px) and (max-height: 800px) {
-    .home-hero-map {
-      min-height: 400px;
-    }
-  }
-</style>
