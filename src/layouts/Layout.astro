@@ -426,7 +426,82 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
           },
         });
 
+        document.querySelectorAll<HTMLElement>('[data-hero-practice-map]').forEach((map) => {
+          const practices = map.querySelectorAll<HTMLElement>('[data-hero-practice]');
+
+          practices.forEach((practice) => {
+            practice.addEventListener('pointerenter', () => {
+              map.dataset.activePractice = practice.dataset.heroPractice ?? '';
+            });
+
+            practice.addEventListener('pointerleave', () => {
+              if (map.dataset.activePractice === practice.dataset.heroPractice) {
+                delete map.dataset.activePractice;
+              }
+            });
+
+            practice.addEventListener('focus', () => {
+              map.dataset.activePractice = practice.dataset.heroPractice ?? '';
+            });
+
+            practice.addEventListener('blur', () => {
+              if (map.dataset.activePractice === practice.dataset.heroPractice) {
+                delete map.dataset.activePractice;
+              }
+            });
+          });
+
+          map.addEventListener('pointerleave', () => {
+            delete map.dataset.activePractice;
+          });
+        });
+
         if (reduceMotion) return;
+
+        document.querySelectorAll<HTMLElement>('[data-hero-router]').forEach((router) => {
+          const tracks = router.querySelectorAll('[data-router-track]');
+          const flows = router.querySelectorAll('[data-router-flow]');
+          const nodes = router.querySelectorAll('[data-router-node]');
+          const core = router.querySelector('[data-router-core]');
+
+          tracks.forEach((track) => {
+            const length = (track as SVGPathElement).getTotalLength();
+            gsap.set(track, { strokeDasharray: length, strokeDashoffset: length });
+          });
+
+          const routerIntro = gsap.timeline({ delay: 0.25 });
+          routerIntro
+            .fromTo(router, { opacity: 0 }, { opacity: 0.9, duration: 0.55, ease: 'power2.out' })
+            .to(tracks, {
+              strokeDashoffset: 0,
+              duration: 0.9,
+              stagger: 0.12,
+              ease: 'power2.inOut',
+              onComplete: () => gsap.set(tracks, { clearProps: 'strokeDasharray,strokeDashoffset' }),
+            }, '<0.1')
+            .fromTo(nodes, { opacity: 0, scale: 0.45 }, {
+              opacity: 1,
+              scale: 1,
+              duration: 0.4,
+              stagger: 0.08,
+              ease: 'back.out(1.8)',
+            }, '-=0.45')
+            .fromTo(core, { opacity: 0, scale: 0.72 }, {
+              opacity: 1,
+              scale: 1,
+              duration: 0.55,
+              ease: 'back.out(1.5)',
+            }, '-=0.35');
+
+          gsap.to(flows, {
+            strokeDashoffset: -156,
+            duration: 4.2,
+            stagger: 0.28,
+            repeat: -1,
+            ease: 'none',
+          });
+
+        });
 
         document.querySelectorAll('[data-reveal]').forEach((el) => {
           gsap.fromTo(el, { opacity: 0, y: 24 }, {
@@ -530,6 +605,9 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
       document.addEventListener('astro:before-preparation', () => {
         lenis?.destroy();
+        document.querySelectorAll('[data-hero-router], [data-hero-router] *').forEach((target) => {
+          gsap.killTweensOf(target);
+        });
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       });
     </script>

@@ -4,6 +4,7 @@ import AdvisorQuiz from '../components/AdvisorQuiz';
 import FeatureCarousel from '../components/ui/feature-carousel';
 import ManagedSystems from '../components/ManagedSystems';
 import OperationsVisual from '../components/OperationsVisual';
+import HeroServiceRouter from '../components/HeroServiceRouter.astro';
 ---
 
 <Layout title="Aetas Global Innovation | AI, Cybersecurity & Managed IT" description="Aetas Global Innovation (AGI), operating at Aetas.ai, provides Aetas AI workflow automation, Aetas Security cybersecurity services, and Aetas Global managed IT, helpdesk, and Business Processes operations.">
@@ -45,46 +46,64 @@ import OperationsVisual from '../components/OperationsVisual';
         </p>
       </div>
 
-      <div class="home-hero-map relative hidden min-h-[460px] xl:block 2xl:min-h-[520px]" data-reveal-right aria-hidden="true">
+      <div class="home-hero-map relative hidden min-h-[460px] xl:block 2xl:min-h-[520px]" data-reveal-right data-hero-practice-map>
         <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/15 to-transparent"></div>
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 font-display text-[12rem] font-bold leading-none text-white/[0.025] xl:text-[15rem]">AGI</div>
+        <HeroServiceRouter />
 
         <div class="absolute inset-0 flex flex-col justify-center gap-16 pl-10 xl:pl-16">
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-ai/80 via-ai/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-ai/40 bg-brand-bg font-display text-xs font-bold text-indigo-300">01</span>
-              <div class="bg-brand-bg/90 pr-5">
+          <a href="/ai" class="hero-practice hero-practice-ai relative cursor-pointer pr-4" data-hero-practice="ai">
+            <div class="hero-practice-content relative flex items-center gap-4">
+              <span class="hero-practice-number flex h-11 w-11 items-center justify-center border border-ai/40 bg-brand-bg font-display text-xs font-bold text-indigo-300">01</span>
+              <div class="hero-practice-label pr-5">
                 <span class="block font-display text-lg font-bold text-white">Aetas AI</span>
-                <span class="block text-xs text-gray-400">Business Process AI Assimilation</span>
+                <span class="hero-practice-description block text-xs text-gray-300">Business Process AI Assimilation</span>
               </div>
             </div>
-          </div>
+          </a>
 
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-security/80 via-security/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-security/40 bg-brand-bg font-display text-xs font-bold text-sky-300">02</span>
-              <div class="bg-brand-bg/90 pr-5">
+          <a href="/security" class="hero-practice hero-practice-security relative cursor-pointer pr-4" data-hero-practice="security">
+            <div class="hero-practice-content relative flex items-center gap-4">
+              <span class="hero-practice-number flex h-11 w-11 items-center justify-center border border-security/40 bg-brand-bg font-display text-xs font-bold text-sky-300">02</span>
+              <div class="hero-practice-label pr-5">
                 <span class="block font-display text-lg font-bold text-white">Aetas Security</span>
-                <span class="block text-xs text-gray-400">Dedicated cybersecurity services</span>
+                <span class="hero-practice-description block text-xs text-gray-300">Dedicated cybersecurity services</span>
               </div>
             </div>
-          </div>
+          </a>
 
-          <div class="relative pr-4">
-            <div class="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-global/80 via-global/35 to-transparent"></div>
-            <div class="relative flex items-center gap-4">
-              <span class="flex h-11 w-11 items-center justify-center border border-global/40 bg-brand-bg font-display text-xs font-bold text-amber-300">03</span>
-              <div class="bg-brand-bg/90 pr-5">
+          <a href="/global" class="hero-practice hero-practice-global relative cursor-pointer pr-4" data-hero-practice="global">
+            <div class="hero-practice-content relative flex items-center gap-4">
+              <span class="hero-practice-number flex h-11 w-11 items-center justify-center border border-global/40 bg-brand-bg font-display text-xs font-bold text-amber-300">03</span>
+              <div class="hero-practice-label pr-5">
                 <span class="block font-display text-lg font-bold text-white">Aetas Global</span>
-                <span class="block text-xs text-gray-400">Managed IT, helpdesk, and Business Processes operations</span>
+                <span class="hero-practice-description block text-xs text-gray-300">Managed IT, helpdesk, and Business Processes operations</span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
+
+    <nav class="relative z-10 mx-auto grid max-w-7xl border-t border-white/5 sm:grid-cols-3 xl:hidden" aria-label="Aetas service practices">
+      <a href="/ai" class="flex min-h-16 cursor-pointer items-center gap-3 border-b border-white/5 px-6 py-3 transition-colors hover:bg-ai/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ai sm:border-b-0 sm:border-r">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-indigo-400">01 / Aetas AI</span>
+          <span class="mt-1 block text-xs font-semibold text-white">Business Process AI Assimilation</span>
+        </span>
+      </a>
+      <a href="/security" class="flex min-h-16 cursor-pointer items-center gap-3 border-b border-white/5 px-6 py-3 transition-colors hover:bg-security/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-security sm:border-b-0 sm:border-r">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-sky-400">02 / Aetas Security</span>
+          <span class="mt-1 block text-xs font-semibold text-white">Dedicated cybersecurity services</span>
+        </span>
+      </a>
+      <a href="/global" class="flex min-h-16 cursor-pointer items-center gap-3 px-6 py-3 transition-colors hover:bg-global/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-global">
+        <span>
+          <span class="block text-[10px] font-bold uppercase text-amber-400">03 / Aetas Global</span>
+          <span class="mt-1 block text-xs font-semibold text-white">Managed IT and Business Processes</span>
+        </span>
+      </a>
+    </nav>
 
     <div class="pointer-events-none absolute inset-x-0 bottom-0 flex h-px" aria-hidden="true">
       <span class="w-1/3 bg-ai/70"></span>
@@ -92,32 +111,6 @@ import OperationsVisual from '../components/OperationsVisual';
       <span class="w-1/3 bg-global/70"></span>
     </div>
   </section>
-
-  <nav class="border-b border-white/5 bg-black/30" aria-label="Aetas service practices">
-    <div class="mx-auto grid max-w-7xl sm:grid-cols-3">
-      <a href="/ai" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-ai/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ai sm:border-b-0 sm:border-r">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-indigo-400">01 / AI Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Business Process AI Assimilation</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-indigo-300" aria-hidden="true">&rarr;</span>
-      </a>
-      <a href="/security" class="group flex min-h-20 items-center justify-between gap-4 border-b border-white/5 px-6 py-4 transition-colors hover:bg-security/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-security sm:border-b-0 sm:border-r">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-sky-400">02 / Security Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Cybersecurity services</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-sky-300" aria-hidden="true">&rarr;</span>
-      </a>
-      <a href="/global" class="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 transition-colors hover:bg-global/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-global">
-        <span>
-          <span class="block text-[10px] font-bold uppercase text-amber-400">03 / Global Services</span>
-          <span class="mt-1 block font-display text-sm font-bold text-white">Managed IT, helpdesk, and Business Processes</span>
-        </span>
-        <span class="text-gray-600 transition-[color,transform] group-hover:translate-x-1 group-hover:text-amber-300" aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </nav>
 
   <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
@@ -273,6 +266,54 @@ import OperationsVisual from '../components/OperationsVisual';
 </Layout>
 
 <style>
+  .hero-practice {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .hero-practice:focus-visible {
+    outline: none;
+  }
+
+  .hero-practice-content,
+  .hero-practice-number,
+  .hero-practice-label {
+    transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms ease, box-shadow 280ms ease;
+  }
+
+  .hero-practice-label {
+    text-shadow: 0 2px 12px rgb(0 0 0 / 0.95), 0 0 24px rgb(0 0 0 / 0.8);
+  }
+
+  .hero-practice:hover .hero-practice-content,
+  .hero-practice:focus-visible .hero-practice-content {
+    transform: translateX(8px);
+  }
+
+  .hero-practice:hover .hero-practice-number,
+  .hero-practice:focus-visible .hero-practice-number {
+    transform: scale(1.08);
+  }
+
+  .hero-practice-ai:hover .hero-practice-number,
+  .hero-practice-ai:focus-visible .hero-practice-number {
+    border-color: rgb(129 140 248 / 0.9);
+    box-shadow: 0 0 0 1px rgb(129 140 248 / 0.16), 0 0 24px rgb(129 140 248 / 0.25);
+  }
+
+  .hero-practice-security:hover .hero-practice-number,
+  .hero-practice-security:focus-visible .hero-practice-number {
+    border-color: rgb(56 189 248 / 0.9);
+    box-shadow: 0 0 0 1px rgb(56 189 248 / 0.16), 0 0 24px rgb(56 189 248 / 0.25);
+  }
+
+  .hero-practice-global:hover .hero-practice-number,
+  .hero-practice-global:focus-visible .hero-practice-number {
+    border-color: rgb(251 191 36 / 0.9);
+    box-shadow: 0 0 0 1px rgb(251 191 36 / 0.16), 0 0 24px rgb(251 191 36 / 0.22);
+  }
+
   @media (min-width: 1024px) and (max-height: 800px) {
     .home-hero-shell {
       padding-top: 2.5rem;
@@ -287,6 +328,14 @@ import OperationsVisual from '../components/OperationsVisual';
   @media (min-width: 1280px) and (max-height: 800px) {
     .home-hero-map {
       min-height: 400px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-practice-content,
+    .hero-practice-number,
+    .hero-practice-label {
+      transition: none;
     }
   }
 </style>

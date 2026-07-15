@@ -1,0 +1,227 @@
+<div class="hero-service-router" data-hero-router aria-hidden="true">
+  <svg viewBox="0 0 520 460" role="presentation">
+    <defs>
+      <linearGradient id="router-ai" x1="470" y1="230" x2="0" y2="122" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#818cf8" stop-opacity="0.85" />
+        <stop offset="1" stop-color="#818cf8" stop-opacity="0.12" />
+      </linearGradient>
+      <linearGradient id="router-security" x1="470" y1="230" x2="0" y2="230" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#38bdf8" stop-opacity="0.85" />
+        <stop offset="1" stop-color="#38bdf8" stop-opacity="0.12" />
+      </linearGradient>
+      <linearGradient id="router-global" x1="470" y1="230" x2="0" y2="338" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#fbbf24" stop-opacity="0.85" />
+        <stop offset="1" stop-color="#fbbf24" stop-opacity="0.12" />
+      </linearGradient>
+      <radialGradient id="router-core" cx="0" cy="0" r="1" gradientTransform="translate(464 230) rotate(90) scale(52)" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#ffffff" stop-opacity="0.2" />
+        <stop offset="0.38" stop-color="#818cf8" stop-opacity="0.15" />
+        <stop offset="1" stop-color="#050508" stop-opacity="0" />
+      </radialGradient>
+      <radialGradient id="router-icon-glow" cx="0" cy="0" r="1" gradientTransform="translate(464 230) rotate(90) scale(18)" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#ffffff" stop-opacity="0.32" />
+        <stop offset="0.45" stop-color="#a5b4fc" stop-opacity="0.18" />
+        <stop offset="1" stop-color="#818cf8" stop-opacity="0" />
+      </radialGradient>
+      <filter id="router-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="5" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <pattern id="router-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#ffffff" fill-opacity="0.07" />
+      </pattern>
+    </defs>
+
+    <rect width="520" height="460" fill="url(#router-grid)" opacity="0.42" />
+
+    <g class="router-radar">
+      <circle cx="464" cy="230" r="54" />
+      <circle cx="464" cy="230" r="92" />
+      <circle cx="464" cy="230" r="132" />
+      <path d="M464 70V390M304 230H520" />
+    </g>
+
+    <path
+      class="router-track router-track-ai"
+      data-router-track
+      d="M500 230H470C416 230 407 122 325 122H0"
+      stroke="url(#router-ai)"
+    />
+    <path
+      class="router-track router-track-security"
+      data-router-track
+      d="M500 230H0"
+      stroke="url(#router-security)"
+    />
+    <path
+      class="router-track router-track-global"
+      data-router-track
+      d="M500 230H470C416 230 407 338 325 338H0"
+      stroke="url(#router-global)"
+    />
+
+    <path
+      class="router-flow router-flow-ai"
+      data-router-flow
+      d="M500 230H470C416 230 407 122 325 122H0"
+      stroke="#a5b4fc"
+    />
+    <path
+      class="router-flow router-flow-security"
+      data-router-flow
+      d="M500 230H0"
+      stroke="#7dd3fc"
+    />
+    <path
+      class="router-flow router-flow-global"
+      data-router-flow
+      d="M500 230H470C416 230 407 338 325 338H0"
+      stroke="#fcd34d"
+    />
+
+    <g class="router-node router-node-ai" data-router-node>
+      <circle cx="325" cy="122" r="8" />
+      <circle cx="325" cy="122" r="2.5" />
+    </g>
+    <g class="router-node router-node-security" data-router-node>
+      <circle cx="325" cy="230" r="8" />
+      <circle cx="325" cy="230" r="2.5" />
+    </g>
+    <g class="router-node router-node-global" data-router-node>
+      <circle cx="325" cy="338" r="8" />
+      <circle cx="325" cy="338" r="2.5" />
+    </g>
+
+    <g class="router-core" data-router-core>
+      <circle cx="464" cy="230" r="58" fill="url(#router-core)" />
+      <circle class="router-core-ring" cx="464" cy="230" r="34" />
+      <circle class="router-core-ring router-core-ring-inner" cx="464" cy="230" r="19" />
+      <circle class="router-core-icon-glow" cx="464" cy="230" r="17" />
+      <path class="router-core-mark" d="M464 218L474.5 236H453.5L464 218Z" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .hero-service-router {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .hero-service-router svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .router-radar {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.055);
+    stroke-width: 1;
+  }
+
+  .router-track,
+  .router-flow {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .router-track {
+    stroke-width: 1.35;
+    transition: opacity 260ms ease, filter 260ms ease, stroke-width 260ms ease;
+  }
+
+  .router-flow {
+    stroke-width: 2;
+    stroke-dasharray: 8 18;
+    opacity: 0.34;
+    filter: url('#router-soft-glow');
+    transition: opacity 260ms ease, stroke-width 260ms ease;
+  }
+
+  .router-node {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 260ms ease, transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .router-node circle:first-child {
+    fill: #050508;
+    stroke-width: 1;
+  }
+
+  .router-node-ai circle:first-child { stroke: rgb(129 140 248 / 0.7); }
+  .router-node-ai circle:last-child { fill: #a5b4fc; }
+  .router-node-security circle:first-child { stroke: rgb(56 189 248 / 0.7); }
+  .router-node-security circle:last-child { fill: #7dd3fc; }
+  .router-node-global circle:first-child { stroke: rgb(251 191 36 / 0.7); }
+  .router-node-global circle:last-child { fill: #fcd34d; }
+
+  .router-core {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .router-core-ring {
+    fill: rgb(5 5 8 / 0.78);
+    stroke: rgb(255 255 255 / 0.16);
+    stroke-width: 1;
+  }
+
+  .router-core-ring-inner {
+    fill: rgb(129 140 248 / 0.08);
+    stroke: rgb(129 140 248 / 0.36);
+  }
+
+  .router-core-mark {
+    fill: rgb(255 255 255 / 0.08);
+    stroke: rgb(255 255 255 / 0.82);
+    stroke-width: 1.2;
+    filter: url('#router-soft-glow');
+  }
+
+  .router-core-icon-glow {
+    fill: url('#router-icon-glow');
+    filter: url('#router-soft-glow');
+  }
+
+  :global(.home-hero-map[data-active-practice='ai']) .router-track-ai,
+  :global(.home-hero-map[data-active-practice='security']) .router-track-security,
+  :global(.home-hero-map[data-active-practice='global']) .router-track-global {
+    opacity: 1;
+    stroke-width: 2.1;
+    filter: url('#router-soft-glow');
+  }
+
+  :global(.home-hero-map[data-active-practice='ai']) .router-flow-ai,
+  :global(.home-hero-map[data-active-practice='security']) .router-flow-security,
+  :global(.home-hero-map[data-active-practice='global']) .router-flow-global {
+    opacity: 0.9;
+    stroke-width: 2.8;
+  }
+
+  :global(.home-hero-map[data-active-practice='ai']) .router-node-ai,
+  :global(.home-hero-map[data-active-practice='security']) .router-node-security,
+  :global(.home-hero-map[data-active-practice='global']) .router-node-global {
+    transform: scale(1.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .router-track,
+    .router-flow,
+    .router-node {
+      transition: none;
+    }
+
+    .router-flow {
+      opacity: 0.2;
+    }
+  }
+</style>
