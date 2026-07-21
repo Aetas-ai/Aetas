@@ -1,12 +1,14 @@
 # Aetas Global Innovation Company Website
 
-Astro company website for **Aetas Global Innovation (AGI)**. `Aetas.ai` is the company's website and domain identity. The website presents one company with three specialized service areas:
+Astro company website for **Aetas Global Innovation (AGI)**. `Aetas.ai` is the company's website and domain identity. The website presents three specialized service areas offered directly by AGI:
 
 - **AI & Automation**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
 - **Cybersecurity**: MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
 - **Managed IT**: MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
 Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, and [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing.
+
+Current messaging anchors are maintained in `HANDOFF.md`. Public copy should present AGI naturally as the company and should not repeatedly explain the structure with phrases such as "one company" or "one accountable company."
 
 ## Current Experience
 
@@ -27,6 +29,7 @@ The homepage network is an original Aetas component. It does not use the Acetern
 - Astro 7 with static output
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4
+- Shadcn-compatible `src/components/ui` organization adapted for Astro rather than Next.js
 - Native scrolling and dependency-free Intersection Observer page reveals
 - Framer Motion for React island transitions
 - Lucide React icons

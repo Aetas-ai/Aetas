@@ -34,7 +34,7 @@ export default function OperationsVisual() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="text-xs font-bold uppercase text-gray-400">How AGI is structured</span>
           <h2 id="agi-structure-title" className="mt-4 text-3xl font-bold leading-tight text-white sm:text-5xl">
-            One company. Three specialized service areas.
+            Three specialized service areas. Coordinated delivery.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-400 sm:text-base">
             Start with the AGI service that matches your requirement. Our specialists define the right scope, ownership, review points, and engagement path with you.

@@ -83,8 +83,8 @@ Before handing off a change:
 - Use **Aetas Global Innovation** as the company name. Do not add an `s` to Innovation.
 - `Aetas.ai` is the website and domain identity for Aetas Global Innovation.
 - Always spell out **Business Processes**; do not introduce an abbreviation on the public website.
-- Present AGI as one company with three service areas: **AI & Automation**, **Cybersecurity**, and **Managed IT**.
-- Do not present these service areas as separate Aetas companies or brands.
+- Present **AI & Automation**, **Cybersecurity**, and **Managed IT** as services offered directly by AGI.
+- Do not present these service areas as separate Aetas companies or brands, and do not repeatedly explain the public structure with phrases such as "one company" or "one accountable company."
 - Use **Human Led AI** and **Expert Human Oversight of AI (Expert in the Loop)** for AI governance messaging.
 - Do not expose specific internal service-delivery platforms or tools.
 - Do not invent certifications, partner tiers, customers, office addresses, testimonials, results, or metrics.
