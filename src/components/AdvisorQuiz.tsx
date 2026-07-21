@@ -154,22 +154,22 @@ export default function AdvisorQuiz() {
             </div>
 
             <h3 className="text-3xl font-display font-bold text-white mb-3">
-              {result === 'security' && 'Aetas Security'}
-              {result === 'global' && 'Aetas Global'}
-              {result === 'ai' && 'Aetas AI (Workflow Automation)'}
-              {result === 'mixed' && 'Multiple Aetas Practices'}
+              {result === 'security' && 'AGI Cybersecurity'}
+              {result === 'global' && 'AGI Managed IT'}
+              {result === 'ai' && 'AGI AI & Automation'}
+              {result === 'mixed' && 'Multiple AGI Services'}
             </h3>
 
             <p className="text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed">
-              {result === 'security' && 'Your needs fit Aetas Security. We can scope Managed Extended Detection and Response (MXDR), Network Security Testing, or Application Security Testing (Pen Testing).'}
-              {result === 'global' && 'Your needs fit Aetas Global. We can scope Help Desk as a Service, Product Support as a Service, managed IT, or Business Processes responsibilities.'}
-              {result === 'ai' && 'Your goals fit Aetas AI. We can scope Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).'}
-              {result === 'mixed' && 'Your needs span more than one Aetas practice. We suggest one scoping conversation that routes each requirement to the separate Security, Global, or AI service team responsible for it.'}
+              {result === 'security' && 'Your needs fit AGI cybersecurity services. We can scope Managed Extended Detection and Response (MXDR), Network Security Testing, or Application Security Testing (Pen Testing).'}
+              {result === 'global' && 'Your needs fit AGI managed IT services. We can scope Help Desk as a Service, Product Support as a Service, managed IT, or Business Processes responsibilities.'}
+              {result === 'ai' && 'Your goals fit AGI AI and automation services. We can scope Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).'}
+              {result === 'mixed' && 'Your needs span more than one AGI service. We suggest one scoping conversation so the appropriate AI, cybersecurity, and managed IT specialists can define each requirement.'}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
-                href={`/contact?intent=${result === 'mixed' ? 'general' : result}`}
+                href={`/contact?intent=${result === 'mixed' ? 'general' : result === 'global' ? 'managed-it' : result}`}
                 className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-white/90 transition-all flex items-center justify-center gap-2"
               >
                 <span>{result === 'ai' ? 'Discuss AI Services' : 'Schedule Scoping Call'}</span>
@@ -197,7 +197,7 @@ export default function AdvisorQuiz() {
               <div className="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"></div>
             </div>
             <h4 className="text-xl font-display font-semibold text-white mb-2">Reviewing Your Answers</h4>
-            <p className="text-gray-400 text-sm">Matching the request to the appropriate Aetas practice...</p>
+            <p className="text-gray-400 text-sm">Matching the request to the appropriate AGI service...</p>
           </motion.div>
         ) : (
           <motion.div

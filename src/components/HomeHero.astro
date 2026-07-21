@@ -1,10 +1,10 @@
 ---
 import AgiNetworkGraph from './AgiNetworkGraph.astro';
 
-const practices = [
-  { number: '01', practice: 'Aetas AI', outcome: 'Better workflows', scope: 'Business Process AI Assimilation', href: '/ai', accent: 'ai' },
-  { number: '02', practice: 'Aetas Security', outcome: 'Stronger resilience', scope: 'MXDR and Offensive Security', href: '/security', accent: 'security' },
-  { number: '03', practice: 'Aetas Global', outcome: 'Dependable operations', scope: 'Managed IT, support, and Business Processes', href: '/global', accent: 'global' },
+const services = [
+  { number: '01', service: 'AI & Automation', outcome: 'Better workflows', scope: 'Human Led AI and Business Process AI Assimilation', href: '/ai', accent: 'ai' },
+  { number: '02', service: 'Cybersecurity', outcome: 'Stronger resilience', scope: 'MSSP, MXDR, and Offensive Security', href: '/security', accent: 'security' },
+  { number: '03', service: 'Managed IT', outcome: 'Dependable operations', scope: 'MSP, help desk, product support, and Business Processes', href: '/managed-it', accent: 'global' },
 ] as const;
 ---
 
@@ -16,53 +16,53 @@ const practices = [
     <div class="home-hero-divider pointer-events-none absolute inset-y-0 left-1/2 hidden w-px bg-white/[0.06] lg:block" aria-hidden="true"></div>
 
     <div class="home-hero-copy relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] items-center gap-8 px-6 py-12 sm:px-8 sm:py-14 lg:grid-cols-2 lg:gap-14 lg:px-10 lg:py-16 xl:px-12">
-      <div class="flex w-full min-w-0 max-w-xl flex-col items-start gap-5 sm:gap-6" data-reveal-group>
-        <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-gray-200">
+      <div class="flex w-full min-w-0 max-w-xl flex-col items-start gap-5 sm:gap-6">
+        <div class="home-hero-enter home-hero-enter-1 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-gray-200">
           <span class="h-2 w-2 bg-ai" aria-hidden="true"></span>
           <span>Aetas Global Innovation</span>
         </div>
 
-        <h1 id="home-hero-title" class="w-full max-w-2xl font-display text-[2.35rem] font-bold leading-[1.04] text-white [overflow-wrap:anywhere] sm:text-5xl lg:text-[4rem] xl:text-[4.6rem]">
+        <h1 id="home-hero-title" class="home-hero-enter home-hero-enter-2 w-full max-w-2xl font-display text-[2.35rem] font-bold leading-[1.04] text-white [overflow-wrap:anywhere] sm:text-5xl lg:text-[4rem] xl:text-[4.6rem]">
           Make complex operations <span class="text-sky-300">easier to run.</span>
         </h1>
 
-        <p class="w-full max-w-xl text-base leading-relaxed text-gray-200 [overflow-wrap:anywhere] sm:text-lg">
-          Aetas Global Innovation brings Human Led AI, dedicated cybersecurity, and dependable managed operations together through three distinct practices.
+        <p class="home-hero-enter home-hero-enter-3 w-full max-w-xl text-base leading-relaxed text-gray-200 [overflow-wrap:anywhere] sm:text-lg">
+          Aetas Global Innovation helps organizations apply Human Led AI, strengthen cyber defense, and run dependable IT and business operations through specialized teams coordinated around their needs.
         </p>
 
-        <div class="flex w-full min-w-0 max-w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
+        <div class="home-hero-enter home-hero-enter-4 flex w-full min-w-0 max-w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
           <a href="/contact" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg bg-white px-7 py-3 text-center text-sm font-bold text-black shadow-xl shadow-black/30 transition-[background-color,transform,box-shadow] duration-200 hover:bg-gray-100 hover:shadow-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
             Discuss your operations
           </a>
           <a href="#services" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg border border-white/20 bg-black/25 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/40 hover:bg-black/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
-            Explore our practices
+            Explore AGI services
           </a>
         </div>
 
-        <p class="w-full max-w-xl border-l border-white/20 pl-4 text-xs leading-relaxed text-gray-300 [overflow-wrap:anywhere] sm:text-sm">
-          Aetas AI engagements include Expert Human Oversight of AI through defined review and escalation paths.
+        <p class="home-hero-enter home-hero-enter-5 w-full max-w-xl border-l border-white/20 pl-4 text-xs leading-relaxed text-gray-300 [overflow-wrap:anywhere] sm:text-sm">
+          AGI AI and automation engagements include Expert Human Oversight of AI through defined review and escalation paths.
         </p>
       </div>
 
-      <div class="home-hero-network relative z-10 min-w-0" data-reveal-right>
+      <div class="home-hero-network home-hero-visual-enter relative z-10 min-w-0">
         <AgiNetworkGraph />
       </div>
     </div>
   </div>
 
-  <nav class="home-hero-practices bg-brand-bg/95" aria-label="Aetas service practices">
-    <div class="mx-auto grid max-w-[90rem] md:grid-cols-3" data-reveal-group>
-      {practices.map((item) => (
+  <nav class="home-hero-practices bg-brand-bg/95" aria-label="AGI service areas">
+    <div class="mx-auto grid max-w-[90rem] md:grid-cols-3">
+      {services.map((item) => (
         <a
           href={item.href}
           class:list={[
-            'hero-practice group relative flex min-h-28 items-center gap-4 border-b border-white/10 px-6 py-5 transition-colors duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset md:border-b-0 md:border-r md:last:border-r-0 lg:px-10 xl:px-12',
+            'hero-practice hero-practice-enter group relative flex min-h-28 items-center gap-4 border-b border-white/10 px-6 py-5 transition-colors duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset md:border-b-0 md:border-r md:last:border-r-0 lg:px-10 xl:px-12',
             `hero-practice-${item.accent}`,
           ]}
         >
           <span class="hero-practice-number self-start pt-1 font-display text-xs font-bold text-gray-600 transition-colors duration-200">{item.number}</span>
           <span class="min-w-0">
-            <span class="block text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">{item.practice}</span>
+            <span class="block text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">{item.service}</span>
             <span class="mt-1 block font-display text-base font-bold text-white sm:text-lg">{item.outcome}</span>
             <span class="mt-1 block text-xs leading-relaxed text-gray-500 transition-colors duration-200 group-hover:text-gray-300">{item.scope}</span>
           </span>
@@ -84,6 +84,37 @@ const practices = [
   .home-hero-copy { box-sizing: border-box; min-height: inherit; }
   .home-hero-network { min-height: 20rem; }
 
+  .home-hero-enter,
+  .home-hero-visual-enter,
+  .hero-practice-enter {
+    opacity: 0;
+  }
+
+  .home-hero-enter {
+    transform: translate3d(0, 1.15rem, 0);
+    animation: home-hero-content-in 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .home-hero-enter-1 { animation-delay: 80ms; }
+  .home-hero-enter-2 { animation-delay: 150ms; }
+  .home-hero-enter-3 { animation-delay: 230ms; }
+  .home-hero-enter-4 { animation-delay: 310ms; }
+  .home-hero-enter-5 { animation-delay: 390ms; }
+
+  .home-hero-visual-enter {
+    transform: translate3d(1.5rem, 0, 0) scale(0.975);
+    animation: home-hero-visual-in 820ms cubic-bezier(0.22, 1, 0.36, 1) 210ms forwards;
+  }
+
+  .hero-practice-enter {
+    transform: translate3d(0, 0.8rem, 0);
+    animation: home-hero-content-in 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hero-practice-enter:nth-child(1) { animation-delay: 500ms; }
+  .hero-practice-enter:nth-child(2) { animation-delay: 570ms; }
+  .hero-practice-enter:nth-child(3) { animation-delay: 640ms; }
+
   .home-hero-image-wash {
     background:
       radial-gradient(circle at 78% 45%, rgba(14, 165, 233, 0.09), transparent 32%),
@@ -99,6 +130,14 @@ const practices = [
   }
 
   .home-hero-divider { mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent); }
+
+  @keyframes home-hero-content-in {
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+
+  @keyframes home-hero-visual-in {
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
 
   .hero-practice::before {
     position: absolute;
@@ -136,6 +175,16 @@ const practices = [
   @media (max-width: 1023px) {
     .home-hero-image-wash {
       background: radial-gradient(circle at 50% 78%, rgba(14, 165, 233, 0.08), transparent 32%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-hero-enter,
+    .home-hero-visual-enter,
+    .hero-practice-enter {
+      opacity: 1;
+      transform: none;
+      animation: none;
     }
   }
 </style>

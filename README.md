@@ -1,17 +1,20 @@
 # Aetas Global Innovation Company Website
 
-Astro company website for **Aetas Global Innovation (AGI)**, operating through the `aetas.ai` domain. The website presents three distinct service practices without positioning them as one bundled service:
+Astro company website for **Aetas Global Innovation (AGI)**. `Aetas.ai` is the company's website and domain identity. The website presents three specialized service areas offered directly by AGI:
 
-- **Aetas AI**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
-- **Aetas Security**: Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
-- **Aetas Global**: Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
+- **AI & Automation**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
+- **Cybersecurity**: MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
+- **Managed IT**: MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
 Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, and [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing.
 
+Current messaging anchors are maintained in `HANDOFF.md`. Public copy should present AGI naturally as the company and should not repeatedly explain the structure with phrases such as "one company" or "one accountable company."
+
 ## Current Experience
 
-- Responsive Astro pages for the company and all three practices
-- Custom AGI practice-network hero built with inline SVG and CSS
+- Responsive Astro pages for the company and all three service areas
+- Hybrid enterprise visual system with dark technical sections, light editorial bands, and distinct service accents
+- Custom AGI service-network hero built with inline SVG and CSS
 - Interactive service responsibility selector and advisor quiz
 - Bob chat assistant loaded as a non-critical React island
 - Delayed loading feedback that appears only when a page is genuinely slow
@@ -26,8 +29,8 @@ The homepage network is an original Aetas component. It does not use the Acetern
 - Astro 7 with static output
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4
-- GSAP and ScrollTrigger for page reveals
-- Lenis for smooth scrolling
+- Shadcn-compatible `src/components/ui` organization adapted for Astro rather than Next.js
+- Native scrolling and dependency-free Intersection Observer page reveals
 - Framer Motion for React island transitions
 - Lucide React icons
 
@@ -45,15 +48,26 @@ public/              Optimized images, logos, icons, robots.txt
 
 Important homepage files:
 
-- `src/components/HomeHero.astro`: homepage hero structure and practice rail
-- `src/components/AgiNetworkGraph.astro`: custom animated AGI practice network
+- `src/components/HomeHero.astro`: homepage hero structure and service rail
+- `src/components/AgiNetworkGraph.astro`: custom animated AGI service network
+- `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
+
+## Visual System
+
+The site uses a hybrid enterprise contrast system instead of a single dark surface across every page:
+
+- Dark surfaces frame heroes, technical workflows, partner logos, and operational visuals.
+- Light and light-muted bands support service explanations, forms, resources, and conversion content.
+- AI & Automation uses violet, Cybersecurity uses cyan, Managed IT uses amber, and governance states use green.
+- Shared surface, card, button, media, and form treatments live in `src/styles/global.css`. Reuse those utilities before adding page-specific colors.
+- Motion remains restrained and must respect `prefers-reduced-motion`.
 
 ## Routes
 
 - `/`
-- `/ai`, `/security`, `/global`
+- `/ai`, `/security`, `/managed-it`
 - `/work`
 - `/resources` and `/resources/[slug]`
 - `/operations-readiness-brief`
@@ -61,6 +75,8 @@ Important homepage files:
 - `/legal/privacy`, `/legal/terms`
 
 The Work page intentionally contains no fabricated case studies or performance results. Publish case studies only after client and business approval.
+
+`/global` is a legacy redirect to `/managed-it` and is excluded from the sitemap.
 
 ## Commands
 

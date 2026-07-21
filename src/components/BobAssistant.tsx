@@ -27,24 +27,24 @@ interface TopicOption {
 }
 
 const introMessage =
-  'Hi, I am Bob. I can help you understand Aetas Global Innovation, Aetas AI, Security, Global operations, and which service may fit your need.';
+  'Hi, I am Bob. I can help you understand Aetas Global Innovation and its AI and automation, cybersecurity, and managed IT services.';
 
 const topicAnswers: Record<Topic, string> = {
   ai:
-    'Aetas AI provides Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).',
+    'AGI provides Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).',
   security:
-    'Aetas Security provides Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
+    'AGI provides MSSP expertise through Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
   global:
-    'Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
+    'AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
   contact:
-    'If you already know what you need, the contact page is the best next step. Choose Security, Global operations, AI workflow automation, or general inquiries so the request reaches the right AGI team.',
+    'If you already know what you need, the contact page is the best next step. Choose AI and automation, cybersecurity, managed IT, or general inquiries so AGI can connect you with the right specialists.',
 };
 
 const topicOptions: TopicOption[] = [
-  { id: 'ai', label: 'AI workflow automation', short: 'AI workflows', icon: <Brain className="h-4 w-4" /> },
-  { id: 'security', label: 'Security services', short: 'Cybersecurity', icon: <Shield className="h-4 w-4" /> },
-  { id: 'global', label: 'IT and Business Processes', short: 'IT / Help Desk', icon: <Headphones className="h-4 w-4" /> },
-  { id: 'contact', label: 'Contact Aetas', short: 'Contact', icon: <Mail className="h-4 w-4" /> },
+  { id: 'ai', label: 'AI & Automation', short: 'AI workflows', icon: <Brain className="h-4 w-4" /> },
+  { id: 'security', label: 'Cybersecurity', short: 'Cybersecurity', icon: <Shield className="h-4 w-4" /> },
+  { id: 'global', label: 'Managed IT', short: 'IT / Help Desk', icon: <Headphones className="h-4 w-4" /> },
+  { id: 'contact', label: 'Contact AGI', short: 'Contact', icon: <Mail className="h-4 w-4" /> },
 ];
 
 const suggestedQuestions = [
@@ -75,7 +75,7 @@ function getBobReply(input: string) {
     return topicAnswers.ai;
   }
 
-  return 'I can help with Aetas Global Innovation, Aetas AI, cybersecurity, IT operations, Business Processes support, and helpdesk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
+  return 'I can help with Aetas Global Innovation AI and automation, cybersecurity, managed IT, Business Processes support, and help desk services. Tell me what problem you are trying to solve, or choose one of the quick topics below.';
 }
 
 function TypingDots() {

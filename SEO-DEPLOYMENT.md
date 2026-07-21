@@ -22,6 +22,7 @@ The production build includes the following technical SEO features:
 - Responsive layouts and optimized WebP assets
 - A lightweight custom SVG/CSS homepage network with no 3D globe dependency
 - Delayed hydration for the non-critical Bob assistant
+- Dependency-free Intersection Observer reveal animations instead of a global smooth-scroll runtime
 
 Every production build generates:
 
@@ -86,11 +87,13 @@ After deploying the new build:
    ```text
    https://aetas.ai/ai/
    https://aetas.ai/security/
-   https://aetas.ai/global/
+   https://aetas.ai/managed-it/
    https://aetas.ai/about/
    ```
 
 8. Review the Pages, Sitemaps, Core Web Vitals, and Enhancements reports after Google begins crawling the site.
+
+`/global` is retained only as a legacy redirect to `/managed-it`. Do not submit or add `/global` to the sitemap.
 
 ## After Every Website Update
 
@@ -113,6 +116,7 @@ Technical SEO makes the site crawlable, but it does not guarantee first-place ra
 
 - Accurate, useful service-page content
 - Consistent use of the company name **Aetas Global Innovation**
+- Consistent presentation of AI & Automation, Cybersecurity, and Managed IT as AGI services rather than separate companies or brands
 - Official profiles that link to `https://aetas.ai`
 - Useful articles about Human Led AI, Business Process AI Assimilation, MXDR, Offensive Security, managed IT, help desk, product support, and Business Processes operations
 - Legitimate company mentions and backlinks
@@ -120,6 +124,8 @@ Technical SEO makes the site crawlable, but it does not guarantee first-place ra
 - Search Console review after major content or routing changes
 
 Always spell out **Business Processes** in public SEO copy, metadata, structured data, headings, and URLs.
+
+Present AGI naturally as the company in public search copy. Avoid structural slogans such as "one company" or "one accountable company" unless the team explicitly approves new wording.
 
 Do not add fabricated customers, results, certifications, addresses, testimonials, or partner levels for SEO purposes.
 

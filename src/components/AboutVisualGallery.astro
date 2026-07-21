@@ -3,7 +3,7 @@ const visuals = [
   { src: '/visual-ai-workflows.webp', label: 'Human Led AI workflows', accent: 'ai' },
   { src: '/visual-security-ops.webp', label: 'Cybersecurity services', accent: 'security' },
   { src: '/visual-global-ops.webp', label: 'Managed operations', accent: 'global' },
-  { src: '/visual-about-agi.webp', label: 'Three specialized practices', accent: 'neutral' },
+  { src: '/visual-about-agi.webp', label: 'Three specialized service areas', accent: 'neutral' },
   { src: '/agi-operations-command.webp', label: 'Defined ownership and review', accent: 'mixed' },
 ] as const;
 
@@ -13,10 +13,10 @@ const lanes = [
   [visuals[1], visuals[4], visuals[2], visuals[3], visuals[0]],
 ] as const;
 
-const practices = [
-  { name: 'Aetas AI', href: '/ai', detail: 'Human Led AI', accent: 'ai' },
-  { name: 'Aetas Security', href: '/security', detail: 'MXDR + Offensive Security', accent: 'security' },
-  { name: 'Aetas Global', href: '/global', detail: 'Managed IT + Support', accent: 'global' },
+const services = [
+  { name: 'AI & Automation', href: '/ai', detail: 'Human Led AI', accent: 'ai' },
+  { name: 'Cybersecurity', href: '/security', detail: 'MSSP / MXDR / Offensive Security', accent: 'security' },
+  { name: 'Managed IT', href: '/managed-it', detail: 'MSP / Help Desk / Product Support', accent: 'global' },
 ] as const;
 ---
 
@@ -25,18 +25,18 @@ const practices = [
     <div class="min-w-0 lg:col-span-4" data-reveal>
       <span class="text-xs font-bold uppercase tracking-widest text-sky-300">Across AGI</span>
       <h2 id="about-gallery-title" class="mt-3 max-w-xl font-display text-3xl font-bold leading-tight text-white sm:text-5xl">
-        Three practices, viewed through one operating perspective.
+        Specialized expertise across three service areas.
       </h2>
       <p class="mt-5 max-w-lg text-sm leading-relaxed text-gray-400">
-        Aetas AI, Aetas Security, and Aetas Global address different operational needs. Each practice keeps a distinct service scope, responsible team, and path to engagement.
+        AGI coordinates AI and automation, cybersecurity, and managed IT expertise around client needs. Each service area remains easy to understand, scope, and engage.
       </p>
 
-      <nav class="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10" aria-label="Explore Aetas practices">
-        {practices.map((practice) => (
-          <a href={practice.href} class:list={['gallery-practice', `gallery-practice-${practice.accent}`]}>
+      <nav class="mt-8 grid gap-px overflow-hidden border border-white/10 bg-white/10" aria-label="Explore AGI services">
+        {services.map((service) => (
+          <a href={service.href} class:list={['gallery-practice', `gallery-practice-${service.accent}`]}>
             <span>
-              <strong>{practice.name}</strong>
-              <small>{practice.detail}</small>
+              <strong>{service.name}</strong>
+              <small>{service.detail}</small>
             </span>
             <svg viewBox="0 0 20 20" aria-hidden="true">
               <path d="M4 10h11M11 6l4 4-4 4"></path>
@@ -73,7 +73,7 @@ const practices = [
         </div>
         <div class="gallery-axis gallery-axis-bottom">
           <i></i><i></i><i></i>
-          <span>Distinct scope / Clear ownership</span>
+          <span>Specialized services / One AGI</span>
         </div>
       </div>
     </div>

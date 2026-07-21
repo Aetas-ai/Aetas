@@ -3,31 +3,31 @@ const nodes = [
   {
     key: 'ai',
     number: '01',
-    name: 'Aetas AI',
+    name: 'AI & Automation',
     scope: 'Business Process AI Assimilation',
     href: '/ai',
   },
   {
     key: 'security',
     number: '02',
-    name: 'Aetas Security',
+    name: 'Cybersecurity',
     scope: 'MXDR + Offensive Security',
     href: '/security',
   },
   {
     key: 'global',
     number: '03',
-    name: 'Aetas Global',
+    name: 'Managed IT',
     scope: 'Managed IT + Support',
-    href: '/global',
+    href: '/managed-it',
   },
 ] as const;
 ---
 
-<div class="agi-network" aria-label="Aetas Global Innovation practice network">
+<div class="agi-network" aria-label="Aetas Global Innovation service network">
   <div class="agi-network-heading" aria-hidden="true">
-    <span>AGI practice network</span>
-    <span class="agi-network-status"><i></i> Coordinated routing</span>
+    <span>AGI service network</span>
+    <span class="agi-network-status"><i></i> Connected expertise</span>
   </div>
 
   <svg class="agi-network-map" viewBox="0 0 720 620" aria-hidden="true">
@@ -37,10 +37,10 @@ const nodes = [
     </g>
 
     <g class="network-boundary">
-      <path d="M145 145L575 145L360 515Z"></path>
-      <path d="M145 145L360 305L575 145"></path>
-      <path d="M145 145L360 305L360 515"></path>
-      <path d="M575 145L360 305L360 515"></path>
+      <path pathLength="1" d="M145 145L575 145L360 515Z"></path>
+      <path pathLength="1" d="M145 145L360 305L575 145"></path>
+      <path pathLength="1" d="M145 145L360 305L360 515"></path>
+      <path pathLength="1" d="M575 145L360 305L360 515"></path>
     </g>
 
     <g class="network-signals">
@@ -91,7 +91,7 @@ const nodes = [
 
   <div class="agi-network-core" aria-hidden="true">
     <span class="agi-network-monogram">AGI</span>
-    <span class="agi-network-core-label">Three practices</span>
+    <span class="agi-network-core-label">AGI services</span>
   </div>
 
   {nodes.map((node) => (
@@ -109,7 +109,7 @@ const nodes = [
     </a>
   ))}
 
-  <p class="agi-network-caption">Distinct practices. Clear ownership.</p>
+  <p class="agi-network-caption">Specialized expertise. Coordinated delivery.</p>
 </div>
 
 <style>
@@ -177,22 +177,38 @@ const nodes = [
     fill: none;
     stroke: rgba(255, 255, 255, 0.13);
     stroke-width: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
     vector-effect: non-scaling-stroke;
+    animation: agi-network-connect 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
+  .network-boundary path:nth-child(1) { animation-delay: 320ms; }
+  .network-boundary path:nth-child(2) { animation-delay: 460ms; }
+  .network-boundary path:nth-child(3) { animation-delay: 600ms; }
+  .network-boundary path:nth-child(4) { animation-delay: 740ms; }
+
   .network-signals path {
+    --signal-opacity: 0.86;
+    --signal-start: 980ms;
     fill: none;
+    opacity: 0;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-dasharray: 1 12;
     vector-effect: non-scaling-stroke;
-    animation: agi-signal-flow 4.8s linear infinite;
+    animation:
+      agi-signal-online 320ms ease-out var(--signal-start) forwards,
+      agi-signal-flow 4.8s linear var(--signal-start) infinite;
   }
 
   .network-signals .signal-ai { stroke: var(--color-ai); }
   .network-signals .signal-security { stroke: var(--color-security); }
   .network-signals .signal-global { stroke: var(--color-global); }
-  .network-signals .signal-delay { animation-delay: -2.4s; opacity: 0.58; }
+  .network-signals .signal-delay {
+    --signal-opacity: 0.58;
+    --signal-start: 1.18s;
+  }
 
   .network-satellites path {
     fill: none;
@@ -201,6 +217,11 @@ const nodes = [
     stroke-dasharray: 3 5;
     opacity: 0.5;
     vector-effect: non-scaling-stroke;
+  }
+
+  .network-satellites {
+    opacity: 0;
+    animation: agi-satellites-online 400ms ease-out 1.05s forwards;
   }
 
   .network-satellites circle { fill: currentColor; }
@@ -221,6 +242,11 @@ const nodes = [
   .core-bracket {
     fill: none;
     vector-effect: non-scaling-stroke;
+  }
+
+  .network-core-rings {
+    opacity: 0;
+    animation: agi-satellites-online 360ms ease-out 620ms forwards;
   }
   .core-ring-outer {
     stroke: rgba(255, 255, 255, 0.18);
@@ -254,6 +280,8 @@ const nodes = [
     box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.025), 0 0 38px rgba(14, 165, 233, 0.13);
     text-align: center;
     transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: agi-core-online 440ms cubic-bezier(0.22, 1, 0.36, 1) 660ms forwards;
   }
 
   .agi-network-monogram {
@@ -298,8 +326,10 @@ const nodes = [
     padding: clamp(0.65rem, 2vw, 0.9rem);
     color: white;
     box-shadow: 0 15px 36px rgba(0, 0, 0, 0.26);
+    opacity: 0;
     text-decoration: none;
     transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    animation: agi-service-node-online 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
   .agi-network-node:hover,
@@ -320,18 +350,21 @@ const nodes = [
     top: 23.4%;
     left: 20.1%;
     transform: translate(-50%, -50%);
+    animation-delay: 500ms;
   }
   .agi-network-node-security {
     --node-color: var(--color-security);
     top: 23.4%;
     left: 79.9%;
     transform: translate(-50%, -50%);
+    animation-delay: 660ms;
   }
   .agi-network-node-global {
     --node-color: var(--color-global);
     top: 83.1%;
     left: 50%;
     transform: translate(-50%, -50%);
+    animation-delay: 820ms;
   }
 
   .agi-network-node-topline {
@@ -383,6 +416,28 @@ const nodes = [
     to { stroke-dashoffset: -100; }
   }
 
+  @keyframes agi-network-connect {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes agi-signal-online {
+    to { opacity: var(--signal-opacity); }
+  }
+
+  @keyframes agi-core-online {
+    from { opacity: 0; filter: brightness(1.7); }
+    to { opacity: 1; filter: brightness(1); }
+  }
+
+  @keyframes agi-satellites-online {
+    to { opacity: 1; }
+  }
+
+  @keyframes agi-service-node-online {
+    from { opacity: 0; filter: brightness(1.8); }
+    to { opacity: 1; filter: brightness(1); }
+  }
+
   @keyframes agi-node-pulse {
     0% { opacity: 0.7; transform: scale(0.55); }
     70%, 100% { opacity: 0; transform: scale(1.65); }
@@ -405,9 +460,27 @@ const nodes = [
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .network-boundary path {
+      stroke-dashoffset: 0;
+    }
+
+    .network-signals path,
+    .network-satellites,
+    .network-core-rings,
+    .agi-network-core,
+    .agi-network-node {
+      opacity: 1;
+      filter: none;
+    }
+
     .network-signals path,
     .network-satellites .satellite-pulse,
-    .core-ring {
+    .network-boundary path,
+    .core-ring,
+    .network-satellites,
+    .network-core-rings,
+    .agi-network-core,
+    .agi-network-node {
       animation: none;
     }
   }

@@ -70,16 +70,16 @@ const categories: SystemCategory[] = [
   }
 ];
 
-const practiceStyles = {
+const serviceStyles = {
   security: {
-    label: 'Aetas Security',
+    label: 'Cybersecurity',
     active: 'bg-sky-500/10 border-sky-400/30 text-white shadow-lg',
     icon: 'bg-sky-500/10 text-sky-300',
     check: 'bg-sky-500/10 border-sky-500/20 text-sky-300',
     text: 'text-sky-300',
   },
   global: {
-    label: 'Aetas Global',
+    label: 'Managed IT',
     active: 'bg-amber-500/10 border-amber-400/30 text-white shadow-lg',
     icon: 'bg-amber-500/10 text-amber-300',
     check: 'bg-amber-500/10 border-amber-500/20 text-amber-300',
@@ -100,7 +100,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
 
   const current = visibleCategories.find((c) => c.id === activeTab) || visibleCategories[0];
   const IconComponent = current.icon;
-  const currentStyle = practiceStyles[current.practice];
+  const currentStyle = serviceStyles[current.practice];
 
   useEffect(() => {
     setHasHydrated(true);
@@ -114,7 +114,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
       <div className={`grid gap-3 border-b border-white/5 pb-6 mb-6 ${scope === 'global' ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
         {visibleCategories.map((cat) => {
           const CatIcon = cat.icon;
-          const catStyle = practiceStyles[cat.practice];
+          const catStyle = serviceStyles[cat.practice];
           return (
             <button
               key={cat.id}

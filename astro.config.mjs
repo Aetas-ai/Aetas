@@ -14,7 +14,8 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes('/contact/thanks') &&
-        !page.includes('/operations-readiness-brief/thanks')
+        !page.includes('/operations-readiness-brief/thanks') &&
+        !page.includes('/global')
     })
   ],
 

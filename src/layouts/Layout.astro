@@ -6,7 +6,7 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  activePillar?: 'ai' | 'security' | 'global' | 'none';
+  activePillar?: 'ai' | 'security' | 'managed-it' | 'none';
   noIndex?: boolean;
 }
 
@@ -36,7 +36,7 @@ const structuredData = {
       '@type': 'Organization',
       '@id': `${organizationUrl}#organization`,
       name: brandName,
-      alternateName: ['AGI', 'Aetas.ai', 'Aetas AI', 'Aetas Global'],
+      alternateName: ['AGI', 'Aetas.ai'],
       url: organizationUrl.toString(),
       logo: {
         '@type': 'ImageObject',
@@ -83,7 +83,7 @@ const navLinkBase = 'relative px-3.5 py-2 rounded-full text-sm font-semibold tra
 const isActivePath = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
 const routeLink = (href: string) =>
   `${navLinkBase} ${isActivePath(href) ? 'bg-white/10 text-white ring-1 ring-white/15' : 'text-gray-300'}`;
-const pillarLink = (pillar: 'ai' | 'security' | 'global', activeClass: string) =>
+const pillarLink = (pillar: 'ai' | 'security' | 'managed-it', activeClass: string) =>
   `${navLinkBase} ${activePillar === pillar ? activeClass : 'text-gray-300'}`;
 const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-white/10') =>
   `flex items-center justify-between px-3 py-3 rounded-xl border transition-all hover:bg-white/5 hover:translate-x-1 ${
@@ -141,10 +141,10 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             height="300"
             loading="eager"
             decoding="async"
-            fetchpriority="high"
+            fetchpriority="low"
           />
         </div>
-        <p>Loading Aetas</p>
+        <p>Loading AGI</p>
         <div class="site-loading-progress" aria-hidden="true">
           <span class="site-loading-progress-fill"></span>
         </div>
@@ -255,9 +255,9 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
         <nav class="hidden lg:flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.025] p-1 shadow-2xl shadow-black/20" aria-label="Primary navigation">
           <a href="/" class={routeLink('/')}>Home</a>
-          <a href="/ai" class={pillarLink('ai', 'bg-indigo-500/12 text-indigo-300 ring-1 ring-indigo-400/25')}>Aetas AI</a>
-          <a href="/security" class={pillarLink('security', 'bg-sky-500/12 text-sky-300 ring-1 ring-sky-400/25')}>Security</a>
-          <a href="/global" class={pillarLink('global', 'bg-amber-500/12 text-amber-300 ring-1 ring-amber-400/25')}>Global</a>
+          <a href="/ai" class={pillarLink('ai', 'bg-indigo-500/12 text-indigo-300 ring-1 ring-indigo-400/25')}>AI &amp; Automation</a>
+          <a href="/security" class={pillarLink('security', 'bg-sky-500/12 text-sky-300 ring-1 ring-sky-400/25')}>Cybersecurity</a>
+          <a href="/managed-it" class={pillarLink('managed-it', 'bg-amber-500/12 text-amber-300 ring-1 ring-amber-400/25')}>Managed IT</a>
           <a href="/work" class={routeLink('/work')}>Work</a>
           <a href="/partners" class={routeLink('/partners')}>Partners</a>
           <a href="/about" class={routeLink('/about')}>About</a>
@@ -266,7 +266,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
 
         <div class="hidden lg:flex items-center gap-4">
           <a href="/contact" class={`px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg active:scale-95 ${isActivePath('/contact') ? 'bg-indigo-500 text-white shadow-indigo-500/20' : 'bg-white text-black hover:bg-white/90 shadow-white/5 hover:shadow-white/15'}`}>
-            Talk to Aetas
+            Talk to AGI
           </a>
         </div>
 
@@ -300,18 +300,18 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             <span class="text-[9px] font-bold text-gray-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-md">Landing</span>
           </a>
 
-          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Primary Pillars</span>
+          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">AGI Services</span>
           <a href="/ai" class={mobileLink('/ai', 'bg-indigo-500/10 text-indigo-300 border-indigo-400/20')}>
-            <span class="text-sm font-medium">Aetas AI</span>
-            <span class="text-[9px] font-bold text-indigo-400/80 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">AI Ops</span>
+            <span class="text-sm font-medium">AI &amp; Automation</span>
+            <span class="text-[9px] font-bold text-indigo-400/80 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-md">Human Led AI</span>
           </a>
           <a href="/security" class={mobileLink('/security', 'bg-sky-500/10 text-sky-300 border-sky-400/20')}>
-            <span class="text-sm font-medium">Aetas Security</span>
-            <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MXDR</span>
+            <span class="text-sm font-medium">Cybersecurity</span>
+            <span class="text-[9px] font-bold text-sky-400/80 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-md">MSSP</span>
           </a>
-          <a href="/global" class={mobileLink('/global', 'bg-amber-500/10 text-amber-300 border-amber-400/20')}>
-            <span class="text-sm font-medium">Aetas Global</span>
-            <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">Managed IT</span>
+          <a href="/managed-it" class={mobileLink('/managed-it', 'bg-amber-500/10 text-amber-300 border-amber-400/20')}>
+            <span class="text-sm font-medium">Managed IT</span>
+            <span class="text-[9px] font-bold text-amber-500/80 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">MSP</span>
           </a>
 
           <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mt-6 mb-2 px-3">Company & Resources</span>
@@ -325,7 +325,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-4">
         <a href="mailto:info@aetasglobal.com" class="text-xs text-gray-400 hover:text-white transition-colors px-3">info@aetasglobal.com</a>
         <a href="/contact" class={`w-full py-3.5 rounded-xl font-bold text-center block transition-all shrink-0 hover:scale-[1.02] active:scale-[0.98] ${isActivePath('/contact') ? 'bg-indigo-500 text-white' : 'bg-white text-black hover:bg-white/90'}`}>
-          Talk to Aetas
+          Talk to AGI
         </a>
       </div>
     </div>
@@ -341,17 +341,17 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
             <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain" loading="lazy" decoding="async" />
           </a>
           <p class="text-gray-400 text-sm max-w-sm mb-6 leading-relaxed">
-            Aetas Global Innovation provides three distinct service practices: Aetas AI for Human Led AI and Business Process AI Assimilation, Aetas Security for MXDR and Offensive Security, and Aetas Global for managed IT and Business Processes operations.
+            Aetas.ai is the digital home of Aetas Global Innovation. AGI provides AI and automation, cybersecurity, and managed IT services for organizations that need practical expertise and accountable delivery.
           </p>
           <div class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} Aetas Global Innovation. All rights reserved.</div>
         </div>
 
         <div>
-          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 font-display">Pillars</h4>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4 font-display">Services</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="/ai" class="hover:text-indigo-400 transition-colors">Aetas AI</a></li>
-            <li><a href="/security" class="hover:text-sky-400 transition-colors">Aetas Security</a></li>
-            <li><a href="/global" class="hover:text-amber-500 transition-colors">Aetas Global</a></li>
+            <li><a href="/ai" class="hover:text-indigo-400 transition-colors">AI &amp; Automation</a></li>
+            <li><a href="/security" class="hover:text-sky-400 transition-colors">Cybersecurity</a></li>
+            <li><a href="/managed-it" class="hover:text-amber-500 transition-colors">Managed IT</a></li>
           </ul>
         </div>
 
@@ -380,114 +380,49 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <BobAssistant client:idle={{ timeout: 1200 }} transition:persist />
 
     <script>
-      import Lenis from 'lenis';
-      import { gsap } from 'gsap';
-      import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-      gsap.registerPlugin(ScrollTrigger);
-
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let lenis: Lenis | undefined;
+      let revealObserver: IntersectionObserver | undefined;
 
-      const initLenis = () => {
-        if (reduceMotion) return;
-
-        lenis = new Lenis({
-          duration: 1.05,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          touchMultiplier: 2,
-        });
-
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-          lenis?.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
+      const updateHeader = () => {
+        const header = document.querySelector('header');
+        const shouldCompact = window.scrollY > 100;
+        header?.classList.toggle('bg-brand-bg/95', shouldCompact);
+        header?.classList.toggle('shadow-lg', shouldCompact);
+        header?.classList.toggle('shadow-black/25', shouldCompact);
+        header?.classList.toggle('bg-brand-bg/75', !shouldCompact);
       };
 
       const initAnimations = () => {
-        const header = document.querySelector('header');
-        let headerIsCompact = false;
-        ScrollTrigger.create({
-          start: 'top -80px',
-          end: 'max',
-          onUpdate: (self) => {
-            const shouldCompact = self.scroll() > 100;
-            if (shouldCompact === headerIsCompact) return;
-            headerIsCompact = shouldCompact;
-
-            if (shouldCompact) {
-              header?.classList.add('bg-brand-bg/95', 'shadow-lg', 'shadow-black/25');
-              header?.classList.remove('bg-brand-bg/75');
-            } else {
-              header?.classList.add('bg-brand-bg/75');
-              header?.classList.remove('bg-brand-bg/95', 'shadow-lg', 'shadow-black/25');
-            }
-          },
-        });
-
+        revealObserver?.disconnect();
         if (reduceMotion) return;
 
-        document.querySelectorAll('[data-reveal]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, y: 24 }, {
-            opacity: 1,
-            y: 0,
-            duration: 0.65,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          });
-        });
+        const targets: Element[] = [];
+        const prepare = (element: Element, direction: string, delay = 0) => {
+          const htmlElement = element as HTMLElement;
+          htmlElement.classList.add('agi-reveal', `agi-reveal-${direction}`);
+          htmlElement.style.setProperty('--agi-reveal-delay', `${delay}ms`);
+          targets.push(element);
+        };
 
+        document.querySelectorAll('[data-reveal]').forEach((element) => prepare(element, 'up'));
+        document.querySelectorAll('[data-reveal-left]').forEach((element) => prepare(element, 'left'));
+        document.querySelectorAll('[data-reveal-right]').forEach((element) => prepare(element, 'right'));
         document.querySelectorAll('[data-reveal-group]').forEach((group) => {
-          const children = group.children;
-          if (!children.length) return;
-          gsap.fromTo(children, { opacity: 0, y: 20 }, {
-            opacity: 1,
-            y: 0,
-            duration: 0.55,
-            stagger: 0.07,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: group, start: 'top 88%', once: true },
-          });
+          Array.from(group.children).forEach((element, index) => prepare(element, 'up', index * 70));
         });
-
         document.querySelectorAll('[data-brand-reveal-group]').forEach((group) => {
-          const items = group.querySelectorAll('[data-brand-reveal-item]');
-          if (!items.length) return;
-
-          group.classList.add('brand-reveal-pending');
-          gsap.fromTo(items, { opacity: 0, y: 18, scale: 0.72 }, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.62,
-            stagger: 0.09,
-            ease: 'back.out(1.7)',
-            clearProps: 'transform',
-            scrollTrigger: { trigger: group, start: 'top 86%', once: true },
-            onComplete: () => group.classList.remove('brand-reveal-pending'),
-          });
+          group.querySelectorAll('[data-brand-reveal-item]').forEach((element, index) => prepare(element, 'pop', index * 90));
         });
 
-        document.querySelectorAll('[data-reveal-left]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, x: -28 }, {
-            opacity: 1,
-            x: 0,
-            duration: 0.65,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('agi-reveal-visible');
+            observer.unobserve(entry.target);
           });
-        });
+        }, { rootMargin: '0px 0px -12% 0px', threshold: 0.04 });
 
-        document.querySelectorAll('[data-reveal-right]').forEach((el) => {
-          gsap.fromTo(el, { opacity: 0, x: 28 }, {
-            opacity: 1,
-            x: 0,
-            duration: 0.65,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          });
-        });
+        targets.forEach((target) => revealObserver?.observe(target));
       };
 
       const initMobileMenu = () => {
@@ -512,26 +447,28 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
           document.body.classList.remove('overflow-hidden');
         };
 
-        btn?.addEventListener('click', openMenu);
-        closeBtn?.addEventListener('click', closeMenu);
-        overlay?.addEventListener('click', closeMenu);
-        menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-
-        document.addEventListener('astro:after-swap', () => {
-          document.body.classList.remove('overflow-hidden');
+        if (btn) btn.onclick = openMenu;
+        if (closeBtn) closeBtn.onclick = closeMenu;
+        if (overlay) (overlay as HTMLElement).onclick = closeMenu;
+        menu?.querySelectorAll('a').forEach((link) => {
+          (link as HTMLElement).onclick = closeMenu;
         });
       };
 
       document.addEventListener('astro:page-load', () => {
-        initLenis();
+        updateHeader();
         initAnimations();
         initMobileMenu();
       });
 
       document.addEventListener('astro:before-preparation', () => {
-        lenis?.destroy();
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        revealObserver?.disconnect();
       });
+
+      document.addEventListener('astro:after-swap', () => {
+        document.body.classList.remove('overflow-hidden');
+      });
+      window.addEventListener('scroll', updateHeader, { passive: true });
     </script>
   </body>
 </html>
