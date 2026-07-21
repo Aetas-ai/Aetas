@@ -22,6 +22,7 @@ The production build includes the following technical SEO features:
 - Responsive layouts and optimized WebP assets
 - A lightweight custom SVG/CSS homepage network with no 3D globe dependency
 - Delayed hydration for the non-critical Bob assistant
+- Dependency-free Intersection Observer reveal animations instead of a global smooth-scroll runtime
 
 Every production build generates:
 
@@ -86,11 +87,13 @@ After deploying the new build:
    ```text
    https://aetas.ai/ai/
    https://aetas.ai/security/
-   https://aetas.ai/global/
+   https://aetas.ai/managed-it/
    https://aetas.ai/about/
    ```
 
 8. Review the Pages, Sitemaps, Core Web Vitals, and Enhancements reports after Google begins crawling the site.
+
+`/global` is retained only as a legacy redirect to `/managed-it`. Do not submit or add `/global` to the sitemap.
 
 ## After Every Website Update
 

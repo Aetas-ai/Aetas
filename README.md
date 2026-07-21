@@ -1,17 +1,17 @@
 # Aetas Global Innovation Company Website
 
-Astro company website for **Aetas Global Innovation (AGI)**, operating through the `aetas.ai` domain. The website presents three distinct service practices without positioning them as one bundled service:
+Astro company website for **Aetas Global Innovation (AGI)**. `Aetas.ai` is the company's website and domain identity. The website presents one company with three specialized service areas:
 
-- **Aetas AI**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
-- **Aetas Security**: Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
-- **Aetas Global**: Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
+- **AI & Automation**: Human Led AI and Business Process AI Assimilation, with Expert Human Oversight of AI (Expert in the Loop).
+- **Cybersecurity**: MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
+- **Managed IT**: MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
 Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, and [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing.
 
 ## Current Experience
 
-- Responsive Astro pages for the company and all three practices
-- Custom AGI practice-network hero built with inline SVG and CSS
+- Responsive Astro pages for the company and all three service areas
+- Custom AGI service-network hero built with inline SVG and CSS
 - Interactive service responsibility selector and advisor quiz
 - Bob chat assistant loaded as a non-critical React island
 - Delayed loading feedback that appears only when a page is genuinely slow
@@ -26,8 +26,7 @@ The homepage network is an original Aetas component. It does not use the Acetern
 - Astro 7 with static output
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4
-- GSAP and ScrollTrigger for page reveals
-- Lenis for smooth scrolling
+- Native scrolling and dependency-free Intersection Observer page reveals
 - Framer Motion for React island transitions
 - Lucide React icons
 
@@ -45,15 +44,16 @@ public/              Optimized images, logos, icons, robots.txt
 
 Important homepage files:
 
-- `src/components/HomeHero.astro`: homepage hero structure and practice rail
-- `src/components/AgiNetworkGraph.astro`: custom animated AGI practice network
+- `src/components/HomeHero.astro`: homepage hero structure and service rail
+- `src/components/AgiNetworkGraph.astro`: custom animated AGI service network
+- `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
 
 ## Routes
 
 - `/`
-- `/ai`, `/security`, `/global`
+- `/ai`, `/security`, `/managed-it`
 - `/work`
 - `/resources` and `/resources/[slug]`
 - `/operations-readiness-brief`
@@ -61,6 +61,8 @@ Important homepage files:
 - `/legal/privacy`, `/legal/terms`
 
 The Work page intentionally contains no fabricated case studies or performance results. Publish case studies only after client and business approval.
+
+`/global` is a legacy redirect to `/managed-it` and is excluded from the sitemap.
 
 ## Commands
 

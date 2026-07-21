@@ -1,20 +1,20 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 16, 2026
+Last updated: July 22, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
 ## Company Positioning
 
-**Aetas Global Innovation** is the company name. **AGI** is the company acronym and intentionally connects the brand with artificial intelligence. `aetas.ai` is the production domain.
+**Aetas Global Innovation** is the company name. **AGI** is the company acronym and intentionally connects the brand with artificial intelligence. `Aetas.ai` is the website and domain identity.
 
-The website presents three distinct practices:
+The website presents AGI as one company with three specialized service areas:
 
-- **Aetas AI**: Human Led AI and Business Process AI Assimilation for operational workflows, with Expert Human Oversight of AI (Expert in the Loop).
-- **Aetas Security**: Managed Extended Detection and Response (MXDR) and Offensive Security. Offensive Security includes Network Security Testing and Application Security Testing (Pen Testing).
-- **Aetas Global**: Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
+- **AI & Automation**: Human Led AI and Business Process AI Assimilation for operational workflows, with Expert Human Oversight of AI (Expert in the Loop).
+- **Cybersecurity**: MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security. Offensive Security includes Network Security Testing and Application Security Testing (Pen Testing).
+- **Managed IT**: MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
-Do not imply that AI automation, cybersecurity, and managed operations are one combined service. AGI provides a common entry point, then routes work to the responsible practice.
+Do not present these service areas as separate Aetas companies or brands. Clients engage AGI, and AGI brings in the specialists appropriate to the requested service.
 
 ## Critical Copy Rules
 
@@ -23,7 +23,7 @@ Do not imply that AI automation, cybersecurity, and managed operations are one c
 - Use **Human Led AI** and **Expert Human Oversight of AI (Expert in the Loop)** where AI governance is relevant.
 - Do not imply fully autonomous AI execution. Describe defined review, approval, and escalation paths.
 - Do not name internal service-delivery platforms, ticketing systems, or operational tools.
-- Do not frame the security practice around one vendor-specific platform.
+- Do not frame cybersecurity services around one vendor-specific platform.
 - Do not invent customers, production results, metrics, case studies, certifications, partner tiers, addresses, or testimonials.
 - Publish partner claims and logos only after business approval.
 
@@ -32,8 +32,7 @@ Do not imply that AI automation, cybersecurity, and managed operations are one c
 - Astro 7 static output
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4 through `@tailwindcss/vite`
-- GSAP and ScrollTrigger for lightweight reveal animation
-- Lenis for smooth scrolling
+- Native scrolling and lightweight CSS/Intersection Observer reveal animation
 - Framer Motion for React island transitions
 - Lucide React icons
 - Astro sitemap integration
@@ -43,13 +42,15 @@ The homepage does not use Three.js, React Three Fiber, `three-globe`, or the Ace
 ## Important Files
 
 - `src/layouts/Layout.astro`: metadata, structured data, header, mobile navigation, footer, slow-load overlay, animation setup, and delayed Bob hydration.
-- `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and practice navigation rail.
-- `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three connected but distinct practices.
+- `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and service navigation rail.
+- `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three specialized service areas.
+- `src/components/AboutVisualGallery.astro`: lightweight animated About page visual gallery using current sample imagery.
 - `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
 - `src/components/ManagedSystems.tsx`: interactive responsibility selector.
 - `src/components/AdvisorQuiz.tsx`: three-step service-routing quiz.
 - `src/pages/index.astro`: homepage sections.
-- `src/pages/ai.astro`, `security.astro`, `global.astro`: practice pages.
+- `src/pages/ai.astro`, `security.astro`, `managed-it.astro`: service pages.
+- `src/pages/global.astro`: legacy redirect to `/managed-it`; excluded from the sitemap.
 - `src/pages/partners.astro`: approved partner displays and links.
 - `src/pages/operations-readiness-brief.astro`: registration page for the AGI Operations Readiness Brief.
 - `src/data/caseStudies.ts`: intentionally empty until verified case studies are approved.
@@ -57,7 +58,7 @@ The homepage does not use Three.js, React Three Fiber, `three-globe`, or the Ace
 
 ## Current Implementation
 
-- The homepage hero uses an original inline SVG and CSS AGI practice network. The three labeled nodes link to Aetas AI, Aetas Security, and Aetas Global.
+- The homepage hero uses an original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT.
 - Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
 - The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
 - The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
@@ -65,7 +66,8 @@ The homepage does not use Three.js, React Three Fiber, `three-globe`, or the Ace
 - The site loading overlay featuring Bob waits 650 ms before appearing and therefore only displays for genuinely slower loads or transitions.
 - Brand imagery uses optimized WebP assets: `aetasBrand.webp`, `aetasIcon.webp`, and `bob.webp`.
 - The header uses the full Aetas Global Innovation logo on desktop and mobile. The icon is used for favicon and assistant identity contexts.
-- The homepage responsibility selector and advisor quiz are interactive React islands.
+- The homepage responsibility selector and advisor quiz are interactive React islands hydrated with `client:visible`.
+- Site-wide page reveals use dependency-free Intersection Observer and CSS transitions; Lenis, GSAP, and ScrollTrigger are not globally bundled.
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.

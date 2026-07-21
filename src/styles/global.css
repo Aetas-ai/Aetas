@@ -58,6 +58,25 @@
 }
 
 /* Custom Utilities & Animations */
+.agi-reveal {
+  --agi-reveal-delay: 0ms;
+  opacity: 0;
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--agi-reveal-delay),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--agi-reveal-delay);
+  will-change: opacity, transform;
+}
+
+.agi-reveal-up { transform: translate3d(0, 1.25rem, 0); }
+.agi-reveal-left { transform: translate3d(-1.5rem, 0, 0); }
+.agi-reveal-right { transform: translate3d(1.5rem, 0, 0); }
+.agi-reveal-pop { transform: translate3d(0, 1rem, 0) scale(0.88); }
+
+.agi-reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 .glass-panel {
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(12px);
@@ -105,6 +124,11 @@
 
   .animate-marquee {
     animation: none;
+  }
+
+  .agi-reveal {
+    opacity: 1;
+    transform: none;
   }
 }
 

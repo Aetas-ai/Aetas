@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ManagedSystems from '../components/ManagedSystems';
+---
+
+<Layout title="Managed IT Services - MSP, Help Desk & Product Support" activePillar="managed-it" description="AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, identity operations, device management, and Business Processes support.">
+  <PageHero
+    eyebrow="AGI / Managed IT"
+    title="Keep IT support and outsourced operations moving."
+    description="AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations with clear ownership and escalation."
+    accent="global"
+    image="/visual-global-ops.webp"
+    imageAlt="Managed IT and Business Processes operations visualization"
+    primaryLabel="Scope managed operations"
+    primaryHref="/contact?intent=managed-it"
+    secondaryLabel="Explore managed services"
+    secondaryHref="#services"
+    focusLabel="Managed IT focus"
+    focusItems={['Help Desk as a Service', 'Product Support as a Service', 'Business Processes operations']}
+  />
+
+  <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+      <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Managed Operations</span>
+      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">The recurring work your team needs handled well.</h2>
+      <p class="text-gray-400 text-sm leading-relaxed mt-4">
+        AGI managed IT services support recurring technology and Business Processes work with clear queue ownership, user support, administration, and escalation discipline.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-group>
+      {[
+        ['Help Desk as a Service', 'L1-L3 ticket handling, user support, access issues, onboarding, and escalation management.'],
+        ['Identity & Access', 'Account access, authentication, group membership, role, and license administration.'],
+        ['Device Management', 'Endpoint enrollment, compliance profiles, remote lock/wipe support, and software deployment coordination.'],
+        ['Tenant Administration', 'Communication, collaboration, permissions, and recurring tenant configuration upkeep.'],
+        ['Product Support as a Service', 'Customer and product support queues, quality review, documentation, and operational reporting.'],
+        ['Operational Reporting', 'Queue health, response targets, recurring blockers, and improvement opportunities.'],
+      ].map(([title, copy]) => (
+        <article class="glass-panel p-8 rounded-2xl hover:border-amber-500/30 transition-all duration-300">
+          <h3 class="text-xl font-display font-bold text-white mb-4">{title}</h3>
+          <p class="text-gray-400 text-xs leading-relaxed">{copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-24 px-6 bg-black/20 border-y border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
+        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Systems We Operate</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Common workflows AGI can manage.</h2>
+      </div>
+      <ManagedSystems client:visible scope="global" />
+    </div>
+  </section>
+
+  <section class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-5" data-reveal>
+        <span class="text-xs font-bold text-amber-500 uppercase tracking-widest">Operations Visibility</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3 leading-tight">Support work should be easy to see and measure.</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mt-5">
+          These placeholder visuals give the site a stronger customer-facing view of queue health, service coverage, device operations, identity workflows, and Business Processes support performance.
+        </p>
+      </div>
+      <div class="lg:col-span-7" data-reveal-right>
+        <div class="overflow-hidden rounded-3xl border border-amber-400/15 bg-white/[0.025] shadow-2xl shadow-amber-950/20">
+          <img src="/visual-global-ops.webp" alt="Managed IT and helpdesk operations visualization" class="aspect-video w-full object-cover" loading="lazy" decoding="async" width="1672" height="941" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 px-6 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8" data-reveal-group>
+      {[
+        ['Stabilize', 'Document queues, roles, systems, support boundaries, and escalation rules.'],
+        ['Operate', 'Run recurring helpdesk, tenant, device, and support tasks against agreed workflows.'],
+        ['Improve', 'Report on blockers, repeat issues, automation candidates, and service quality trends.'],
+      ].map(([title, copy], index) => (
+        <article class="glass-panel rounded-2xl p-8">
+          <span class="text-amber-500 text-xs font-bold uppercase tracking-widest">Step {index + 1}</span>
+          <h3 class="text-2xl font-display font-bold text-white mt-3 mb-4">{title}</h3>
+          <p class="text-sm text-gray-400 leading-relaxed">{copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-t border-white/5 px-6 py-20 sm:py-24">
+    <div class="mx-auto flex max-w-4xl flex-col items-center gap-5 text-center" data-reveal>
+      <span class="text-xs font-bold uppercase text-amber-400">Talk to AGI</span>
+      <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Define the managed service your team needs.</h2>
+      <p class="max-w-2xl text-sm leading-relaxed text-gray-400">Discuss Help Desk as a Service, Product Support as a Service, managed IT, or Business Processes operations with AGI managed IT specialists.</p>
+      <a href="/contact?intent=managed-it" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-global px-7 py-3 text-sm font-bold text-black transition-colors hover:bg-amber-400">Contact AGI</a>
+    </div>
+  </section>
+</Layout>

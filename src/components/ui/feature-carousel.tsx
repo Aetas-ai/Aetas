@@ -16,10 +16,10 @@ interface FeatureStep {
 
 const steps: FeatureStep[] = [
   {
-    eyebrow: 'Aetas AI',
+    eyebrow: 'AI & Automation',
     title: 'Apply Human Led AI to Business Processes',
     description:
-      'Aetas AI maps repetitive operational work and designs assistance for intake, routing, drafting, summarization, knowledge retrieval, and quality review.',
+      'AGI maps repetitive operational work and designs Human Led AI assistance for intake, routing, drafting, summarization, knowledge retrieval, and quality review.',
     icon: <Brain className="h-5 w-5" />,
     accent: 'from-indigo-400 to-violet-500',
     bullets: ['Business Process AI Assimilation', 'Human Led AI', 'Expert in the Loop'],
@@ -27,10 +27,10 @@ const steps: FeatureStep[] = [
     imageAlt: 'Conceptual visualization of an AI-assisted Business Processes workflow',
   },
   {
-    eyebrow: 'Aetas Security',
-    title: 'Address cybersecurity through a dedicated practice',
+    eyebrow: 'Cybersecurity',
+    title: 'Strengthen security with managed expertise',
     description:
-      'Aetas Security provides Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
+      'AGI provides MSSP expertise through Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
     icon: <Shield className="h-5 w-5" />,
     accent: 'from-sky-400 to-cyan-500',
     bullets: ['MXDR', 'Network Security Testing', 'Application Security Testing'],
@@ -38,10 +38,10 @@ const steps: FeatureStep[] = [
     imageAlt: 'Conceptual visualization of cybersecurity monitoring and response',
   },
   {
-    eyebrow: 'Aetas Global',
+    eyebrow: 'Managed IT',
     title: 'Run recurring IT and Business Processes work',
     description:
-      'Aetas Global provides Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
+      'AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
     icon: <Headphones className="h-5 w-5" />,
     accent: 'from-amber-300 to-orange-500',
     bullets: ['Help Desk as a Service', 'Product Support as a Service', 'Business Processes operations'],
@@ -72,7 +72,7 @@ export default function FeatureCarousel() {
   const current = steps[active];
 
   return (
-    <div className="w-full" role="region" aria-label="Aetas Global Innovation service practices">
+    <div className="w-full" role="region" aria-label="Aetas Global Innovation services">
       <div className="grid gap-5 lg:grid-cols-[0.9fr_1.25fr] lg:items-stretch">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
           {steps.map((step, index) => {
@@ -138,7 +138,7 @@ export default function FeatureCarousel() {
               >
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-300">
                   <span className={cn('h-2 w-2 rounded-full bg-gradient-to-r', current.accent)}></span>
-                  Specialized service practice
+                  Specialized AGI service
                 </div>
                 <h3 className="mt-5 text-3xl font-bold leading-tight text-white sm:text-4xl">
                   {current.title}
