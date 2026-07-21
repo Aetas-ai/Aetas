@@ -11,10 +11,10 @@ import PageHero from '../components/PageHero.astro';
     compact
   />
 
-  <section class="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+  <section class="section-light mx-auto max-w-7xl px-6 py-20 sm:py-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
       <div class="lg:col-span-5 flex flex-col gap-8">
-        <div class="rounded-3xl border border-white/10 bg-white p-5 shadow-2xl shadow-black/20">
+        <div class="media-frame-light p-5">
           <img src="/undraw-chatting.svg" alt="Support conversation illustration" class="mx-auto aspect-[16/10] w-full max-w-sm object-contain" loading="eager" />
         </div>
 
@@ -42,10 +42,10 @@ import PageHero from '../components/PageHero.astro';
       </div>
 
       <div class="lg:col-span-7">
-        <div class="glass-panel p-8 rounded-2xl border-white/5 relative overflow-hidden">
+        <div class="glass-panel p-8 relative overflow-hidden">
           <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
 
-          <form class="space-y-6" name="aetas-contact" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thanks">
+          <form class="form-on-light space-y-6" name="aetas-contact" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thanks">
             <input type="hidden" name="form-name" value="aetas-contact" />
             <p class="hidden">
               <label>Do not fill this out: <input name="bot-field" /></label>
@@ -87,7 +87,7 @@ import PageHero from '../components/PageHero.astro';
               <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
             </div>
 
-            <button type="submit" class="w-full py-4 rounded-lg font-bold text-sm bg-white text-black hover:bg-white/90 transition-all shadow-lg active:scale-[0.98]">
+            <button type="submit" class="button-on-light-primary w-full py-4 rounded-lg font-bold text-sm transition-all shadow-lg active:scale-[0.98]">
               Send Request to AGI
             </button>
           </form>

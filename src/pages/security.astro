@@ -19,9 +19,9 @@ import PageHero from '../components/PageHero.astro';
     focusItems={['Managed Extended Detection and Response (MXDR)', 'Network Security Testing', 'Application Security Testing (Pen Testing)']}
   />
 
-  <section id="services" class="py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
+  <section id="services" class="section-light py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
     <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <span class="text-xs font-bold text-sky-400 uppercase tracking-widest">Security Services</span>
+      <span class="text-xs font-bold text-sky-700 uppercase tracking-widest">Security Services</span>
       <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Managed detection and offensive testing.</h2>
       <p class="text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
         AGI cybersecurity services are organized into Managed Extended Detection and Response (MXDR) and Offensive Security.
@@ -34,8 +34,8 @@ import PageHero from '../components/PageHero.astro';
         ['Offensive Security', 'Network Security Testing', 'Security testing focused on network exposure, configuration weaknesses, and potential attack paths.'],
         ['Offensive Security', 'Application Security Testing (Pen Testing)', 'Application security testing focused on identifying and documenting security weaknesses.'],
       ].map(([category, title, copy]) => (
-        <article class="glass-panel p-8 rounded-2xl hover:border-sky-500/30 transition-all duration-300">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-sky-300">{category}</span>
+        <article class="glass-panel service-card-security p-8 transition-all duration-300">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-sky-700">{category}</span>
           <h3 class="text-xl font-display font-bold text-white mb-4 mt-3">{title}</h3>
           <p class="text-gray-400 text-xs leading-relaxed">{copy}</p>
         </article>
@@ -43,7 +43,7 @@ import PageHero from '../components/PageHero.astro';
     </div>
   </section>
 
-  <section class="py-24 px-6 bg-black/20 border-y border-white/5">
+  <section class="section-dark-raised py-24 px-6 bg-black/20 border-y border-white/5">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
         <span class="text-xs font-bold text-sky-400 uppercase tracking-widest">AGI Cybersecurity</span>
@@ -61,12 +61,12 @@ import PageHero from '../components/PageHero.astro';
     </div>
   </section>
 
-  <section class="border-t border-white/5 px-6 py-20 sm:py-24">
+  <section class="section-light-muted border-t border-white/5 px-6 py-20 sm:py-24">
     <div class="mx-auto flex max-w-4xl flex-col items-center gap-5 text-center" data-reveal>
-      <span class="text-xs font-bold uppercase text-sky-400">Talk to AGI</span>
+      <span class="text-xs font-bold uppercase text-sky-700">Talk to AGI</span>
       <h2 class="text-3xl font-display font-bold text-white sm:text-5xl">Scope the security service your environment needs.</h2>
       <p class="max-w-2xl text-sm leading-relaxed text-gray-400">Discuss Managed Extended Detection and Response (MXDR), Network Security Testing, or Application Security Testing (Pen Testing) with AGI cybersecurity specialists.</p>
-      <a href="/contact?intent=security" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-security px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-sky-500">Contact AGI</a>
+      <a href="/contact?intent=security" class="inline-flex min-h-12 items-center justify-center rounded-lg bg-sky-700 px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-sky-800">Contact AGI</a>
     </div>
   </section>
 </Layout>

@@ -11,6 +11,7 @@ Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners,
 ## Current Experience
 
 - Responsive Astro pages for the company and all three service areas
+- Hybrid enterprise visual system with dark technical sections, light editorial bands, and distinct service accents
 - Custom AGI service-network hero built with inline SVG and CSS
 - Interactive service responsibility selector and advisor quiz
 - Bob chat assistant loaded as a non-critical React island
@@ -49,6 +50,16 @@ Important homepage files:
 - `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
+
+## Visual System
+
+The site uses a hybrid enterprise contrast system instead of a single dark surface across every page:
+
+- Dark surfaces frame heroes, technical workflows, partner logos, and operational visuals.
+- Light and light-muted bands support service explanations, forms, resources, and conversion content.
+- AI & Automation uses violet, Cybersecurity uses cyan, Managed IT uses amber, and governance states use green.
+- Shared surface, card, button, media, and form treatments live in `src/styles/global.css`. Reuse those utilities before adding page-specific colors.
+- Motion remains restrained and must respect `prefers-reduced-motion`.
 
 ## Routes
 

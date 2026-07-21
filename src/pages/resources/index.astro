@@ -20,21 +20,21 @@ const resourceIllustrations = [
     primaryHref="/operations-readiness-brief"
   />
 
-  <section class="mx-auto max-w-7xl px-6 py-20 sm:py-24">
+  <section class="section-light mx-auto max-w-7xl px-6 py-20 sm:py-24">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {resources.map((article, index) => (
-        <article class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between" data-reveal>
+        <article class="glass-panel glass-panel-hover p-6 flex flex-col justify-between" data-reveal>
           <div>
             <div class="mb-5 rounded-2xl bg-white p-4">
               <img src={resourceIllustrations[index % resourceIllustrations.length]} alt={`${article.category} illustration`} class="aspect-[16/10] w-full object-contain" loading="lazy" />
             </div>
-            <span class="px-2.5 py-1 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[9px] font-bold uppercase tracking-wider mb-4 inline-block">{article.category}</span>
-            <h2 class="text-xl font-display font-bold text-white mb-3 hover:text-indigo-300 transition-colors">
+            <span class="px-2.5 py-1 rounded bg-indigo-100 text-indigo-700 border border-indigo-200 text-[9px] font-bold uppercase tracking-wider mb-4 inline-block">{article.category}</span>
+            <h2 class="text-xl font-display font-bold text-white mb-3 hover:text-indigo-700 transition-colors">
               <a href={`/resources/${article.slug}`}>{article.title}</a>
             </h2>
             <p class="text-gray-400 text-xs leading-relaxed mb-6">{article.summary}</p>
           </div>
-          <div class="border-t border-white/5 pt-4 flex justify-between items-center text-[10px] text-gray-500">
+          <div class="border-t border-slate-200 pt-4 flex justify-between items-center text-[10px] text-slate-500">
             <span>By {article.author}</span>
             <span>{article.date}</span>
           </div>
