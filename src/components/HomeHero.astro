@@ -1,0 +1,141 @@
+---
+import AgiNetworkGraph from './AgiNetworkGraph.astro';
+
+const practices = [
+  { number: '01', practice: 'Aetas AI', outcome: 'Better workflows', scope: 'Business Process AI Assimilation', href: '/ai', accent: 'ai' },
+  { number: '02', practice: 'Aetas Security', outcome: 'Stronger resilience', scope: 'MXDR and Offensive Security', href: '/security', accent: 'security' },
+  { number: '03', practice: 'Aetas Global', outcome: 'Dependable operations', scope: 'Managed IT, support, and Business Processes', href: '/global', accent: 'global' },
+] as const;
+---
+
+<section class="home-hero relative isolate w-full max-w-full overflow-x-clip border-b border-white/5" aria-labelledby="home-hero-title">
+  <div class="home-hero-stage relative isolate overflow-hidden">
+    <div class="home-hero-image-wash pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <div class="home-hero-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden="true"></div>
+    <div class="home-hero-divider pointer-events-none absolute inset-y-0 left-1/2 hidden w-px bg-white/[0.06] lg:block" aria-hidden="true"></div>
+
+    <div class="home-hero-copy relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] items-center gap-8 px-6 py-12 sm:px-8 sm:py-14 lg:grid-cols-2 lg:gap-14 lg:px-10 lg:py-16 xl:px-12">
+      <div class="flex w-full min-w-0 max-w-xl flex-col items-start gap-5 sm:gap-6" data-reveal-group>
+        <div class="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-gray-200">
+          <span class="h-2 w-2 bg-ai" aria-hidden="true"></span>
+          <span>Aetas Global Innovation</span>
+        </div>
+
+        <h1 id="home-hero-title" class="w-full max-w-2xl font-display text-[2.35rem] font-bold leading-[1.04] text-white [overflow-wrap:anywhere] sm:text-5xl lg:text-[4rem] xl:text-[4.6rem]">
+          Make complex operations <span class="text-sky-300">easier to run.</span>
+        </h1>
+
+        <p class="w-full max-w-xl text-base leading-relaxed text-gray-200 [overflow-wrap:anywhere] sm:text-lg">
+          Aetas Global Innovation brings Human Led AI, dedicated cybersecurity, and dependable managed operations together through three distinct practices.
+        </p>
+
+        <div class="flex w-full min-w-0 max-w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
+          <a href="/contact" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg bg-white px-7 py-3 text-center text-sm font-bold text-black shadow-xl shadow-black/30 transition-[background-color,transform,box-shadow] duration-200 hover:bg-gray-100 hover:shadow-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
+            Discuss your operations
+          </a>
+          <a href="#services" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg border border-white/20 bg-black/25 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/40 hover:bg-black/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
+            Explore our practices
+          </a>
+        </div>
+
+        <p class="w-full max-w-xl border-l border-white/20 pl-4 text-xs leading-relaxed text-gray-300 [overflow-wrap:anywhere] sm:text-sm">
+          Aetas AI engagements include Expert Human Oversight of AI through defined review and escalation paths.
+        </p>
+      </div>
+
+      <div class="home-hero-network relative z-10 min-w-0" data-reveal-right>
+        <AgiNetworkGraph />
+      </div>
+    </div>
+  </div>
+
+  <nav class="home-hero-practices bg-brand-bg/95" aria-label="Aetas service practices">
+    <div class="mx-auto grid max-w-[90rem] md:grid-cols-3" data-reveal-group>
+      {practices.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'hero-practice group relative flex min-h-28 items-center gap-4 border-b border-white/10 px-6 py-5 transition-colors duration-200 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset md:border-b-0 md:border-r md:last:border-r-0 lg:px-10 xl:px-12',
+            `hero-practice-${item.accent}`,
+          ]}
+        >
+          <span class="hero-practice-number self-start pt-1 font-display text-xs font-bold text-gray-600 transition-colors duration-200">{item.number}</span>
+          <span class="min-w-0">
+            <span class="block text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">{item.practice}</span>
+            <span class="mt-1 block font-display text-base font-bold text-white sm:text-lg">{item.outcome}</span>
+            <span class="mt-1 block text-xs leading-relaxed text-gray-500 transition-colors duration-200 group-hover:text-gray-300">{item.scope}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex h-px" aria-hidden="true">
+    <span class="w-1/3 bg-ai/70"></span>
+    <span class="w-1/3 bg-security/70"></span>
+    <span class="w-1/3 bg-global/70"></span>
+  </div>
+</section>
+
+<style>
+  .home-hero { min-width: 0; background: #050508; }
+  .home-hero-stage { min-height: 52rem; }
+  .home-hero-copy { box-sizing: border-box; min-height: inherit; }
+  .home-hero-network { min-height: 20rem; }
+
+  .home-hero-image-wash {
+    background:
+      radial-gradient(circle at 78% 45%, rgba(14, 165, 233, 0.09), transparent 32%),
+      linear-gradient(90deg, rgba(5, 5, 8, 1) 0%, rgba(5, 5, 8, 0.96) 42%, rgba(5, 5, 8, 0.66) 72%, rgba(5, 5, 8, 0.2) 100%);
+  }
+
+  .home-hero-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 96px 96px;
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.5) 72%, transparent 100%);
+  }
+
+  .home-hero-divider { mask-image: linear-gradient(to bottom, transparent, black 22%, black 78%, transparent); }
+
+  .hero-practice::before {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    opacity: 0;
+    transform: scaleX(0.25);
+    transform-origin: left center;
+    transition: opacity 200ms ease, transform 240ms ease;
+    content: '';
+  }
+  .hero-practice:hover, .hero-practice:focus-visible { background: rgba(255, 255, 255, 0.035); }
+  .hero-practice:hover::before, .hero-practice:focus-visible::before { opacity: 1; transform: scaleX(1); }
+  .hero-practice-ai::before { background: var(--color-ai); }
+  .hero-practice-security::before { background: var(--color-security); }
+  .hero-practice-global::before { background: var(--color-global); }
+  .hero-practice-ai:focus-visible { --tw-ring-color: var(--color-ai); }
+  .hero-practice-security:focus-visible { --tw-ring-color: var(--color-security); }
+  .hero-practice-global:focus-visible { --tw-ring-color: var(--color-global); }
+  .hero-practice-ai:hover .hero-practice-number, .hero-practice-ai:focus-visible .hero-practice-number { color: #a5b4fc; }
+  .hero-practice-security:hover .hero-practice-number, .hero-practice-security:focus-visible .hero-practice-number { color: #7dd3fc; }
+  .hero-practice-global:hover .hero-practice-number, .hero-practice-global:focus-visible .hero-practice-number { color: #fcd34d; }
+
+  @media (min-width: 640px) { .home-hero-stage { min-height: 55rem; } }
+  @media (min-width: 1024px) {
+    .home-hero-stage { min-height: 39rem; }
+    .home-hero-network { min-height: 34rem; }
+  }
+  @media (min-width: 1280px) and (max-height: 800px) {
+    .home-hero-stage { min-height: 34rem; }
+    .home-hero-copy { padding-top: 2rem; padding-bottom: 2rem; }
+    .home-hero-network { min-height: 30rem; }
+    #home-hero-title { font-size: 3.5rem; }
+  }
+  @media (max-width: 1023px) {
+    .home-hero-image-wash {
+      background: radial-gradient(circle at 50% 78%, rgba(14, 165, 233, 0.08), transparent 32%);
+    }
+  }
+</style>

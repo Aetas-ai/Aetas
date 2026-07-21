@@ -1,111 +1,115 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 11, 2026
+Last updated: July 16, 2026
 
-This file is the source of truth for future AI coding assistants and developers working on the Aetas Global Innovation company website. Read this before changing the site.
+This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
 ## Company Positioning
 
-Aetas Global Innovation is the company name. AGI is the acronym and is intentionally connected to AI/artificial general intelligence. Aetas.ai remains the domain and service-facing digital brand for three related disciplines:
+**Aetas Global Innovation** is the company name. **AGI** is the company acronym and intentionally connects the brand with artificial intelligence. `aetas.ai` is the production domain.
 
-- **Aetas AI**: active AI-augmented workflow automation services for BPO, helpdesk, support, IT operations, and back-office workflows. Position the service around practical automation, AI assistance, and human-reviewed execution.
-- **Aetas Security**: active MSSP business. Services include SOC/MDR support, penetration testing, incident response planning, vulnerability management, compliance support, and security tool procurement/co-management.
-- **Aetas Global**: active MSP/BPO operations business. Services include helpdesk operations, identity/access support, device management, tenant administration, outsourced support queues, and operational reporting.
+The website presents three distinct practices:
 
-Core message:
+- **Aetas AI**: Human Led AI and Business Process AI Assimilation for operational workflows, with Expert Human Oversight of AI (Expert in the Loop).
+- **Aetas Security**: Managed Extended Detection and Response (MXDR) and Offensive Security. Offensive Security includes Network Security Testing and Application Security Testing (Pen Testing).
+- **Aetas Global**: Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
-> Human-led AI for security and operations, built on real service delivery.
+Do not imply that AI automation, cybersecurity, and managed operations are one combined service. AGI provides a common entry point, then routes work to the responsible practice.
 
 ## Critical Copy Rules
 
-- Do not invent AI production client results, metrics, or customer logos unless verified by the business.
-- Do not invent AI case studies, customer logos, certifications, partner tiers, addresses, testimonials, or performance metrics.
-- Security and Global can use present-tense service language because they are active pillars.
-- AI copy should present active services while keeping human validation and governance clear.
-- Partner and certification claims should be displayed only after business verification.
+- Use the exact company name **Aetas Global Innovation**.
+- Always spell out **Business Processes**; do not introduce an abbreviation on the public website.
+- Use **Human Led AI** and **Expert Human Oversight of AI (Expert in the Loop)** where AI governance is relevant.
+- Do not imply fully autonomous AI execution. Describe defined review, approval, and escalation paths.
+- Do not name internal service-delivery platforms, ticketing systems, or operational tools.
+- Do not frame the security practice around one vendor-specific platform.
+- Do not invent customers, production results, metrics, case studies, certifications, partner tiers, addresses, or testimonials.
+- Publish partner claims and logos only after business approval.
 
 ## Current Technical Stack
 
-- Astro 7
+- Astro 7 static output
 - React 19 islands through `@astrojs/react`
-- Tailwind CSS 4 via `@tailwindcss/vite`
-- GSAP + ScrollTrigger for scroll reveals
+- Tailwind CSS 4 through `@tailwindcss/vite`
+- GSAP and ScrollTrigger for lightweight reveal animation
 - Lenis for smooth scrolling
 - Framer Motion for React island transitions
-- Recharts is installed but the dashboard simulation is not currently used on the homepage.
 - Lucide React icons
+- Astro sitemap integration
 
-## Current Site Structure
+The homepage does not use Three.js, React Three Fiber, `three-globe`, or the Aceternity globe.
 
-Important files:
+## Important Files
 
-- `src/layouts/Layout.astro`: shared shell, navigation, footer, sticky CTA, GSAP/Lenis initialization.
-- `src/pages/index.astro`: homepage with service positioning, partner marquee, operating-model section, advisor quiz, selected work.
-- `src/pages/ai.astro`: AI workflow automation services page.
-- `src/pages/security.astro`: MSSP/SOC/security services page.
-- `src/pages/global.astro`: MSP/BPO/managed operations page.
-- `src/pages/work.astro`: case study index.
-- `src/pages/work/[slug].astro`: case study detail route.
-- `src/pages/resources/index.astro`: resource index.
-- `src/pages/resources/[slug].astro`: resource article route.
-- `src/pages/about.astro`: company overview for Aetas Global Innovation, including AGI positioning, operating principles, and service pillars.
-- `src/data/caseStudies.ts`: current anonymized case-study data.
-- `src/data/resources.ts`: current resource article data.
+- `src/layouts/Layout.astro`: metadata, structured data, header, mobile navigation, footer, slow-load overlay, animation setup, and delayed Bob hydration.
+- `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and practice navigation rail.
+- `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three connected but distinct practices.
+- `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
+- `src/components/ManagedSystems.tsx`: interactive responsibility selector.
+- `src/components/AdvisorQuiz.tsx`: three-step service-routing quiz.
+- `src/pages/index.astro`: homepage sections.
+- `src/pages/ai.astro`, `security.astro`, `global.astro`: practice pages.
+- `src/pages/partners.astro`: approved partner displays and links.
+- `src/pages/operations-readiness-brief.astro`: registration page for the AGI Operations Readiness Brief.
+- `src/data/caseStudies.ts`: intentionally empty until verified case studies are approved.
+- `src/data/resources.ts`: shared resource content.
 
-## Current Implementation Status
+## Current Implementation
 
-Completed in the latest improvement pass:
+- The homepage hero uses an original inline SVG and CSS AGI practice network. The three labeled nodes link to Aetas AI, Aetas Security, and Aetas Global.
+- Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
+- The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
+- The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
+- Bob loads with `client:idle` and a timeout so it does not block critical rendering.
+- The site loading overlay featuring Bob waits 650 ms before appearing and therefore only displays for genuinely slower loads or transitions.
+- Brand imagery uses optimized WebP assets: `aetasBrand.webp`, `aetasIcon.webp`, and `bob.webp`.
+- The header uses the full Aetas Global Innovation logo on desktop and mobile. The icon is used for favicon and assistant identity contexts.
+- The homepage responsibility selector and advisor quiz are interactive React islands.
+- The Work page contains no fabricated studies; `caseStudies` remains empty.
+- The site includes the AGI Operations Readiness Brief registration and confirmation flow.
+- SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.
 
-- Rebuilt homepage positioning around AI workflow automation, Security, and Global operations.
-- Added missing `/work` and `/work/[slug]` routes.
-- Added missing `/resources/[slug]` route.
-- Replaced hardcoded resource cards with shared resource data.
-- Rewrote Security page to avoid overclaiming AI-driven security services.
-- Rewrote Global page around managed IT, helpdesk, identity, device, tenant, and BPO operations.
-- Wired `ManagedSystems`, `AdvisorQuiz`, and `CoManagementHub` into relevant pages.
-- Removed the homepage operational dashboard simulation and replaced it with a four-step operating model section.
-- Refactored the homepage partnership marquee so hovering or focusing anywhere on the marquee strip pauses the entire animation, not just one duplicated track.
-- Rebuilt the About page around Aetas Global Innovation, AGI positioning, service pillars, and operating principles.
-- Added Netlify-style static forms for contact and AI workflow service inquiries.
-- Added `/contact/thanks`.
-- Replaced the old starter README with project-specific instructions.
-- Added `COLLABORATION.md` for clone, install, local setup, and collaboration workflow instructions.
-- Added basic Open Graph/Twitter metadata.
-- Added reduced-motion handling.
-- Removed the old `PRD.md` in favor of this handoff.
+## Partner Displays
 
-## Known Gaps and Next Priorities
+The current partner page contains business-approved displays for:
 
-1. Confirm real business facts:
-   - certifications
-   - partner tiers
-   - office locations
-   - testimonials
-   - customer metrics
-   - approved logos
+- Microsoft Azure
+- Amazon Web Services
+- Google Cloud
+- Anthropic
+- SentinelOne
+- Zscaler
+- Abnormal
+- Qualys
+- Sublime Security
+- Proofpoint
+- CrowdStrike
 
-2. Confirm form hosting:
-   - Current forms use static Netlify-style attributes.
-   - If hosting is Vercel, replace with API route, serverless function, or external form provider.
+Cloud and AI partners use a responsive grid with entrance animation. Cybersecurity partners use a continuous marquee that pauses for reduced motion. Partner links open official websites in a new tab.
 
-3. Add richer content:
-   - real case studies
-   - real blog/resource articles
-   - partner descriptions
-   - leadership/team content
-   - validated careers content
+## Hosting and Deployment
 
-4. Improve design assets:
-   - replace text-only partner marquee with approved logos
-   - add better service-specific imagery
-   - review mobile spacing and long text blocks
+Production is currently deployed as a Hostinger Web App through source ZIP upload. GitHub is the source of truth, but Hostinger is not currently connected directly to the repository.
 
-5. Technical improvements:
-   - add sitemap integration
-   - add robots.txt
-   - add analytics events for CTA and form submits
-   - add accessibility QA
-   - consider Astro Content Collections if content volume grows
+Current update flow:
+
+1. Merge approved changes into `main`.
+2. Download or prepare the latest source ZIP.
+3. Redeploy the Hostinger Web App with that ZIP.
+4. Allow Hostinger to install dependencies and run the Astro build.
+5. Verify the production domain and changed flows.
+
+Production secrets must be configured in Hostinger environment settings, not committed or included in deployment archives.
+
+## Known Gaps and Priorities
+
+1. Replace remaining placeholder imagery and draft copy with final approved assets and content.
+2. Add real case studies only after client and business approval.
+3. Confirm the production form-processing solution. Current forms use static Netlify-style attributes, which require validation on Hostinger or replacement with a compatible endpoint/provider.
+4. Add analytics and consent handling after the business selects an analytics platform and privacy requirements are confirmed.
+5. Continue accessibility, performance, and real-device QA after major UI changes.
+6. Connect Hostinger to GitHub or CI/CD later if account access permits; keep the documented ZIP workflow until then.
 
 ## Development Commands
 
@@ -116,27 +120,11 @@ npm run build
 npm run preview
 ```
 
-Repository agent instruction for dev servers:
+Repository background server commands:
 
 ```sh
-astro dev --background
-astro dev status
-astro dev logs
-astro dev stop
-```
-
-## First Commit Message Recommendation
-
-Use this after verifying the build:
-
-```text
-Initial Aetas Global Innovation website build
-```
-
-Expanded body if needed:
-
-```text
-- Build unified Astro site for Aetas AI, Security, and Global
-- Add service pages, work/resources routes, interactive React islands, and contact flows
-- Document current positioning and future handoff guidance
+npx astro dev --background
+npx astro dev status
+npx astro dev logs
+npx astro dev stop
 ```
