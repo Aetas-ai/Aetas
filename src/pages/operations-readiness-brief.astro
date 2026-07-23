@@ -45,37 +45,44 @@ import PageHero from '../components/PageHero.astro';
             </p>
           </div>
 
-          <form class="form-on-light space-y-4" name="agi-readiness-brief" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/operations-readiness-brief/thanks">
-            <input type="hidden" name="form-name" value="agi-readiness-brief" />
-            <p class="hidden">
-              <label>Do not fill this out: <input name="bot-field" /></label>
+          <form class="form-on-light space-y-4" name="agi-readiness-brief" method="post" action="/api/forms/readiness-brief" data-secure-form novalidate>
+            <input type="hidden" name="csrf-token" value="" />
+            <p class="form-honeypot" aria-hidden="true">
+              <label for="brief-website">Leave this field empty</label>
+              <input id="brief-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
+            <p class="form-status" data-form-status tabindex="-1" hidden></p>
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">First Name</label>
-                <input name="first-name" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <label for="brief-first-name" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">First Name</label>
+                <input id="brief-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="brief-first-name-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <p id="brief-first-name-error" class="form-field-error" data-field-error="first-name" hidden></p>
               </div>
               <div>
-                <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Last Name</label>
-                <input name="last-name" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <label for="brief-last-name" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Last Name</label>
+                <input id="brief-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="brief-last-name-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <p id="brief-last-name-error" class="form-field-error" data-field-error="last-name" hidden></p>
               </div>
             </div>
             <div>
-              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Work Email</label>
-              <input name="email" type="email" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <label for="brief-email" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Work Email</label>
+              <input id="brief-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="brief-email-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <p id="brief-email-error" class="form-field-error" data-field-error="email" hidden></p>
             </div>
             <div>
-              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Company</label>
-              <input name="company" required class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <label for="brief-company" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Company</label>
+              <input id="brief-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="brief-company-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <p id="brief-company-error" class="form-field-error" data-field-error="company" hidden></p>
             </div>
             <div>
-              <label class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Primary Interest</label>
-              <select name="interest" required class="w-full rounded-xl border border-white/10 bg-brand-bg px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none">
+              <label for="brief-interest" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Primary Interest</label>
+              <select id="brief-interest" name="interest" required aria-describedby="brief-interest-error" class="w-full rounded-xl border border-white/10 bg-brand-bg px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none">
                 <option value="ai">AI workflow automation</option>
                 <option value="security">MXDR / Offensive Security</option>
                 <option value="global">Managed IT / Business Processes / Help Desk</option>
                 <option value="mixed">Multiple service areas</option>
               </select>
+              <p id="brief-interest-error" class="form-field-error" data-field-error="interest" hidden></p>
             </div>
             <button type="submit" class="button-on-light-primary w-full rounded-lg px-5 py-4 text-sm font-bold transition-all active:scale-[0.98]">
               Get the brief

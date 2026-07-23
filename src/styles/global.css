@@ -262,6 +262,54 @@
   color: var(--color-ink);
 }
 
+.form-honeypot {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+.form-status {
+  border: 1px solid rgba(125, 211, 252, 0.3);
+  border-radius: 0.5rem;
+  background: rgba(14, 165, 233, 0.08);
+  padding: 0.75rem 1rem;
+  color: #bae6fd;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.form-status[data-kind="error"] {
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(127, 29, 29, 0.16);
+  color: #fecaca;
+}
+
+.form-on-light .form-status {
+  color: #075985;
+}
+
+.form-on-light .form-status[data-kind="error"] {
+  color: #991b1b;
+}
+
+.form-field-error {
+  margin-top: 0.375rem;
+  color: #fca5a5;
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.form-on-light .form-field-error {
+  color: #b91c1c;
+}
+
+form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
+  border-color: #f87171 !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.14);
+}
+
 /* Custom marquee styling */
 @keyframes marquee {
   0% {

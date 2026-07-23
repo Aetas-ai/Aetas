@@ -45,46 +45,54 @@ import PageHero from '../components/PageHero.astro';
         <div class="glass-panel p-8 relative overflow-hidden">
           <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
 
-          <form class="form-on-light space-y-6" name="aetas-contact" method="post" data-netlify="true" netlify-honeypot="bot-field" action="/contact/thanks">
-            <input type="hidden" name="form-name" value="aetas-contact" />
-            <p class="hidden">
-              <label>Do not fill this out: <input name="bot-field" /></label>
+          <form class="form-on-light space-y-6" name="aetas-contact" method="post" action="/api/forms/contact" data-secure-form novalidate>
+            <input type="hidden" name="csrf-token" value="" />
+            <p class="form-honeypot" aria-hidden="true">
+              <label for="contact-website">Leave this field empty</label>
+              <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
+            <p class="form-status" data-form-status tabindex="-1" hidden></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
-                <input name="first-name" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-first-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
+                <input id="contact-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="contact-first-name-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <p id="contact-first-name-error" class="form-field-error" data-field-error="first-name" hidden></p>
               </div>
               <div>
-                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Last Name</label>
-                <input name="last-name" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-last-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Last Name</label>
+                <input id="contact-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="contact-last-name-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <p id="contact-last-name-error" class="form-field-error" data-field-error="last-name" hidden></p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Work Email</label>
-                <input name="email" type="email" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-email" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Work Email</label>
+                <input id="contact-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="contact-email-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <p id="contact-email-error" class="form-field-error" data-field-error="email" hidden></p>
               </div>
               <div>
-                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company Name</label>
-                <input name="company" type="text" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-company" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company Name</label>
+                <input id="contact-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="contact-company-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <p id="contact-company-error" class="form-field-error" data-field-error="company" hidden></p>
               </div>
             </div>
 
             <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Operational Focus Area</label>
-              <select id="intent-select" name="intent" required class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+              <label for="intent-select" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Operational Focus Area</label>
+              <select id="intent-select" name="intent" required aria-describedby="contact-intent-error" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
                 <option value="security">Cybersecurity (MSSP / MXDR / Offensive Security)</option>
                 <option value="managed-it">Managed IT (MSP / Help Desk / Product Support)</option>
                 <option value="ai">AI &amp; Automation (Business Process AI Assimilation)</option>
                 <option value="general">General Inquiries</option>
               </select>
+              <p id="contact-intent-error" class="form-field-error" data-field-error="intent" hidden></p>
             </div>
 
             <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Briefly describe your requirements</label>
-              <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
+              <label for="contact-message" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Briefly describe your requirements</label>
+              <textarea id="contact-message" name="message" rows="4" required minlength="20" maxlength="3000" aria-describedby="contact-message-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
+              <p id="contact-message-error" class="form-field-error" data-field-error="message" hidden></p>
             </div>
 
             <button type="submit" class="button-on-light-primary w-full py-4 rounded-lg font-bold text-sm transition-all shadow-lg active:scale-[0.98]">

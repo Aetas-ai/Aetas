@@ -55,6 +55,15 @@ const suggestedQuestions = [
 ];
 
 const promptWords = ['Talk to Bob', 'Ask about AI', 'Need cybersecurity?', 'Automate workflows?', 'Helpdesk support?'];
+const maximumMessageLength = 300;
+
+function normalizeBobInput(value: string) {
+  return value
+    .normalize('NFKC')
+    .replace(/[\u0000-\u001F\u007F]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 function getBobReply(input: string) {
   const value = input.toLowerCase();
@@ -123,6 +132,7 @@ function BobAvatar({ isTyping }: { isTyping: boolean }) {
 export default function BobAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
+  const [inputError, setInputError] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isQuickMenuOpen, setIsQuickMenuOpen] = useState(false);
   const [promptIndex, setPromptIndex] = useState(0);
@@ -136,6 +146,7 @@ export default function BobAssistant() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const launcherRef = useRef<HTMLButtonElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const typingTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -155,6 +166,7 @@ export default function BobAssistant() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    window.requestAnimationFrame(() => inputRef.current?.focus());
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -170,6 +182,7 @@ export default function BobAssistant() {
           setIsQuickMenuOpen(false);
         } else {
           setIsOpen(false);
+          window.requestAnimationFrame(() => launcherRef.current?.focus());
         }
       }
     };
@@ -221,9 +234,20 @@ export default function BobAssistant() {
   };
 
   const submitMessage = (text: string) => {
-    const trimmed = text.trim();
-    if (!trimmed || isTyping) return;
+    const trimmed = normalizeBobInput(text);
+    if (isTyping) return;
+    if (!trimmed) {
+      setInputError('Enter a question for Bob.');
+      inputRef.current?.focus();
+      return;
+    }
+    if (trimmed.length > maximumMessageLength) {
+      setInputError(`Keep your question to ${maximumMessageLength} characters or fewer.`);
+      inputRef.current?.focus();
+      return;
+    }
 
+    setInputError('');
     setMessages((current) => [...current, { id: current.length + 1, role: 'user', text: trimmed }]);
     setInput('');
     queueBobReply(getBobReply(trimmed));
@@ -236,6 +260,7 @@ export default function BobAssistant() {
     setIsTyping(false);
     setMessages([{ id: 1, role: 'bob', text: introMessage }]);
     setInput('');
+    setInputError('');
     setIsQuickMenuOpen(false);
   };
 
@@ -250,6 +275,8 @@ export default function BobAssistant() {
         role="dialog"
         aria-modal="false"
         aria-label="Talk to Bob assistant"
+        aria-hidden={!isOpen}
+        inert={!isOpen}
       >
         <div className="relative shrink-0 border-b border-white/10 px-3 py-3 sm:px-5 sm:py-4">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-indigo-500 via-sky-400 to-amber-300"></div>
@@ -277,6 +304,7 @@ export default function BobAssistant() {
                 onClick={() => {
                   setIsQuickMenuOpen(false);
                   setIsOpen(false);
+                  window.requestAnimationFrame(() => launcherRef.current?.focus());
                 }}
                 className="flex min-h-11 min-w-11 items-center justify-center rounded-xl p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
                 aria-label="Close Bob chat"
@@ -456,17 +484,29 @@ export default function BobAssistant() {
           </div>
 
           <form
-            className="flex items-center gap-2"
+            className="flex flex-wrap items-center gap-2"
             onSubmit={(event) => {
               event.preventDefault();
               submitMessage(input);
             }}
           >
+            <label htmlFor="bob-message" className="sr-only">Ask Bob about AGI</label>
             <input
+              ref={inputRef}
+              id="bob-message"
+              name="bob-message"
+              type="text"
               value={input}
-              onChange={(event) => setInput(event.target.value)}
+              onChange={(event) => {
+                setInput(event.target.value);
+                if (inputError) setInputError('');
+              }}
               placeholder={isTyping ? 'Bob is typing...' : 'Ask Bob about AGI...'}
               disabled={isTyping}
+              maxLength={maximumMessageLength}
+              autoComplete="off"
+              aria-describedby="bob-message-error"
+              aria-invalid={inputError ? 'true' : undefined}
               className="min-h-12 min-w-0 flex-1 rounded-2xl border border-white/10 bg-black/50 px-4 py-3 text-base text-white placeholder:text-gray-600 focus:border-indigo-400 focus:outline-none sm:text-sm disabled:cursor-not-allowed disabled:opacity-60"
             />
             <button
@@ -477,6 +517,15 @@ export default function BobAssistant() {
             >
               <Send className="h-4 w-4" />
             </button>
+            <p
+              id="bob-message-error"
+              className="w-full px-1 text-xs text-red-300"
+              role="alert"
+              aria-live="polite"
+              hidden={!inputError}
+            >
+              {inputError}
+            </p>
           </form>
 
           <div className="mt-3 hidden grid-cols-1 gap-2 md:grid">

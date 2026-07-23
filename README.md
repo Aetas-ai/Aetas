@@ -20,13 +20,16 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Delayed loading feedback that appears only when a page is genuinely slow
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
+- Hardened server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials
 - Canonical metadata, structured data, robots instructions, and generated sitemap
+- Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
+- Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
 
 The homepage network is an original Aetas component. It does not use the Aceternity globe, Three.js, React Three Fiber, or a copied UI component.
 
 ## Technical Stack
 
-- Astro 7 with static output
+- Astro 7 with prerendered pages and standalone Node endpoints
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4
 - Shadcn-compatible `src/components/ui` organization adapted for Astro rather than Next.js
@@ -40,9 +43,11 @@ The homepage network is an original Aetas component. It does not use the Acetern
 src/
   components/        Astro components and interactive React islands
   data/              Shared resource and approved case-study data
+  lib/server/        Server-only form validation, abuse controls, and delivery handling
   layouts/           Shared layout, navigation, metadata, and scripts
   pages/             Astro routes
   styles/            Global Tailwind theme and CSS
+scripts/             Build integrations, including production security-header generation
 public/              Optimized images, logos, icons, robots.txt
 ```
 
@@ -53,6 +58,10 @@ Important homepage files:
 - `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
+- `scripts/security-headers-integration.mjs`: validates new-tab links, hashes final inline scripts and style blocks, and generates `dist/client/.htaccess`
+- `src/middleware.ts`: hardens on-demand API responses, trusted-origin handling, reserved non-indexed routes, and privacy-preserving error logs
+- `src/lib/server/forms.ts`: shared form schemas, safe delivery formatting, and endpoint handling
+- `src/lib/server/form-security.ts`: signed CSRF tokens and per-IP/per-endpoint rate limiting
 
 ## Visual System
 

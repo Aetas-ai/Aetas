@@ -380,6 +380,10 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     <BobAssistant client:idle={{ timeout: 1200 }} transition:persist />
 
     <script>
+      import '../scripts/secure-forms';
+    </script>
+
+    <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let revealObserver: IntersectionObserver | undefined;
 
