@@ -16,7 +16,28 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.*
+*.env
 !.env.example
+.envrc
+.direnv/
+
+# credentials and private keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+id_ecdsa*
+id_dsa*
+credentials*.json
+credentials*.yml
+credentials*.yaml
+service-account*.json
+.npmrc
+.netrc
 
 # macOS-specific files
 .DS_Store

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /cms-preview/
+Disallow: /preview/
 
 Sitemap: https://aetas.ai/sitemap-index.xml
