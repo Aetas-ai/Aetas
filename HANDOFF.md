@@ -1,6 +1,6 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 22, 2026
+Last updated: July 24, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
@@ -77,9 +77,10 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
 - `src/components/ManagedSystems.tsx`: interactive responsibility selector.
 - `src/components/AdvisorQuiz.tsx`: three-step service-routing quiz.
-- `scripts/security-headers-integration.mjs`: validates generated links, derives CSP hashes from final HTML, and writes Hostinger/LiteSpeed headers to the generated client output.
+- `scripts/security-headers-integration.mjs` and `scripts/security-policy.mjs`: validate generated links and artifacts, derive CSP hashes from final HTML, and generate matching Node and Hostinger/LiteSpeed security policies.
+- `scripts/start-server.mjs` and `scripts/server-runtime.mjs`: validate production secrets and generated headers, enforce the fixed canonical origin, apply security headers before serving requests, and start the hardened Node listener.
 - `src/middleware.ts`: enforces the production origin for on-demand routes, applies no-store and same-origin API policy, adds noindex protection for reserved preview/admin paths, and converts unexpected API failures into generic responses with non-PII request IDs.
-- `src/lib/server/forms.ts` and `src/lib/server/form-security.ts`: server-only form schemas, normalized delivery payloads, CSRF protection, bot controls, and per-IP/per-endpoint rate limiting.
+- `src/lib/server/forms.ts`, `src/lib/server/form-security.ts`, `src/lib/server/csrf.ts`, and `src/lib/server/rate-limit.ts`: server-only form schemas, normalized delivery payloads, CSRF protection, bot controls, and bounded per-IP/per-endpoint rate limiting.
 - `src/pages/api/forms/`: on-demand contact, AI consultation, readiness brief, and CSRF endpoints.
 - `src/pages/index.astro`: homepage sections.
 - `src/pages/ai.astro`, `security.astro`, `managed-it.astro`: service pages.
@@ -108,9 +109,9 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - Site-wide page reveals use dependency-free Intersection Observer and CSS transitions; Lenis, GSAP, and ScrollTrigger are not globally bundled.
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
-- Contact, AI consultation, and Operations Readiness Brief forms submit to server-only Astro endpoints. The endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
+- Contact, AI consultation, and Operations Readiness Brief forms have prepared server-only Astro endpoints, but public form processing is intentionally deferred. Until all three form environment variables are configured, the CSRF and submission endpoints fail closed with a generic unavailable response. Once activated, the endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint. The process-local limiter removes expired records and has a strict 10,000-record least-recently-used cap so rotating identifiers cannot grow server memory without bound. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.
-- Production builds generate `dist/client/.htaccess` with fixed-origin HTTPS/canonical redirects, directory-listing protection, safe cache rules, Hostinger/LiteSpeed security headers, and a SHA-256 hash-based Content Security Policy. The build fails if public source maps or common secret/log artifacts are emitted. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Framer Motion, Bob, and CSSOM-driven animation runtimes such as GSAP update element styles at runtime. Rive support uses the narrower `wasm-unsafe-eval` CSP capability and does not enable JavaScript `unsafe-eval`. This does not add GSAP or Rive to the site.
+- Production builds generate `dist/client/_headers.json` and `dist/client/.htaccess` from one shared SHA-256 hash-based Content Security Policy. The Node adapter consumes `_headers.json` for prerendered routes, and the production startup wrapper also applies the policy before serving any response, so security headers and fixed-origin redirects do not depend on manually merging build output into Hostinger's managed proxy file. The `.htaccess` remains an optional LiteSpeed defense-in-depth artifact. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Framer Motion and Bob update element styles at runtime. Unused WebAssembly, unpkg, and Webflow permissions are not allowed. The build fails if public source maps or common secret/log artifacts are emitted.
 - Astro accepts trusted forwarded host and client-IP headers only for the configured HTTPS `aetas.ai` origin. The form API does not permit cross-origin browser access, never caches responses, and logs only event names and random request IDs rather than submitted fields, email addresses, credentials, or provider response bodies.
 - The site has no authentication, admin UI, or CMS preview route. The only cookie is the short-lived CSRF cookie, which is `HttpOnly`, `Secure` in production, `SameSite=Strict`, host-only, and scoped to `/`. Reserved `/admin`, `/cms-preview`, and `/preview` paths receive noindex/no-store protection if introduced later.
 
@@ -154,9 +155,9 @@ Current update flow:
 2. Download or prepare the latest source ZIP.
 3. Redeploy the Hostinger Web App with that ZIP.
 4. Configure Hostinger to run `npm run build` and start the backend-supported Astro application with `npm start` (`dist/server/entry.mjs`). A frontend-only/static deployment will not run the form endpoints.
-5. Configure `FORM_CSRF_SECRET`, `FORM_DELIVERY_URL`, and `FORM_DELIVERY_BEARER_TOKEN` in Hostinger environment settings. The CSRF secret must be a high-entropy value of at least 32 characters; the delivery URL must be HTTPS.
-6. Hostinger keeps the managed Node proxy `.htaccess` in `public_html`, while this project generates its build-specific rules at `nodejs/dist/client/.htaccess`. Preserve Hostinger's proxy directives and merge the generated project block into `public_html/.htaccess` after each deployment; do not replace the managed routing file wholesale. If another edge proxy terminates requests first, apply the same redirects and response headers there.
-7. Verify the production domain, response headers, and changed flows.
+5. Form processing is currently deferred, so leave `FORM_CSRF_SECRET`, `FORM_DELIVERY_URL`, and `FORM_DELIVERY_BEARER_TOKEN` unset. Before activating forms, configure all three together in Hostinger environment settings. The CSRF secret must be a high-entropy value of at least 32 characters; the delivery URL must be HTTPS.
+6. Leave Hostinger's managed Node proxy `.htaccess` in `public_html` unchanged. `npm start` loads the build-generated `dist/client/_headers.json` and exits if the required policy is absent; the application applies canonical redirects and security headers itself.
+7. Run `npm test`, verify the production domain and response headers, and test the changed flows.
 
 Production secrets must be configured in Hostinger environment settings, not committed or included in deployment archives.
 
@@ -164,7 +165,7 @@ Production secrets must be configured in Hostinger environment settings, not com
 
 1. Replace remaining placeholder imagery and draft copy with final approved assets and content.
 2. Add real case studies only after client and business approval.
-3. Connect and verify the approved HTTPS form-delivery service through the documented Hostinger server-only environment variables.
+3. Activate the prepared form feature soon after the team selects an approved HTTPS delivery service: configure and verify all three documented Hostinger server-only environment variables, then test every public form.
 4. Add analytics and consent handling after the business selects an analytics platform and privacy requirements are confirmed.
 5. Continue accessibility, performance, and real-device QA after major UI changes.
 6. Connect Hostinger to GitHub or CI/CD later if account access permits; keep the documented ZIP workflow until then.
@@ -174,6 +175,7 @@ Production secrets must be configured in Hostinger environment settings, not com
 ```sh
 npm install
 npm run dev
+npm test
 npm run build
 npm run preview
 ```

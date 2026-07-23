@@ -20,9 +20,9 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Delayed loading feedback that appears only when a page is genuinely slow
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
-- Hardened server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials
+- Prepared server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials; public form processing remains deferred until its complete environment configuration is enabled
 - Canonical metadata, structured data, robots instructions, and generated sitemap
-- Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
+- Application-controlled Node and Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
 - Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
 
 The homepage network is an original Aetas component. It does not use the Aceternity globe, Three.js, React Three Fiber, or a copied UI component.
@@ -58,10 +58,11 @@ Important homepage files:
 - `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
-- `scripts/security-headers-integration.mjs`: validates new-tab links, hashes final inline scripts and style blocks, and generates `dist/client/.htaccess`
+- `scripts/security-headers-integration.mjs`: validates new-tab links and public artifacts, hashes final inline scripts and style blocks, and generates `dist/client/_headers.json` plus the optional LiteSpeed `.htaccess`
+- `scripts/start-server.mjs`: validates production configuration and starts the application-controlled secure Node listener
 - `src/middleware.ts`: hardens on-demand API responses, trusted-origin handling, reserved non-indexed routes, and privacy-preserving error logs
 - `src/lib/server/forms.ts`: shared form schemas, safe delivery formatting, and endpoint handling
-- `src/lib/server/form-security.ts`: signed CSRF tokens and per-IP/per-endpoint rate limiting
+- `src/lib/server/form-security.ts`: signed CSRF tokens and bounded per-IP/per-endpoint rate limiting
 
 ## Visual System
 
@@ -92,6 +93,7 @@ The Work page intentionally contains no fabricated case studies or performance r
 ```sh
 npm install
 npm run dev
+npm test
 npm run build
 npm run preview
 ```
@@ -105,4 +107,4 @@ npx astro dev logs
 npx astro dev stop
 ```
 
-Run `npm run build` before pushing or uploading a deployment package.
+Run `npm test` and `npm run build` before pushing or uploading a deployment package.

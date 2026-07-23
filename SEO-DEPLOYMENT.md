@@ -69,10 +69,10 @@ After deploying the new build:
 4. Choose one canonical domain format. This project uses `https://aetas.ai` without `www`.
 5. Configure `http://aetas.ai` and `https://www.aetas.ai` to redirect permanently to `https://aetas.ai` when Hostinger or Cloudflare access is available.
 6. Do not keep another public copy of the website on a temporary domain unless that copy is blocked from indexing.
-7. Confirm production responses include the generated Content Security Policy, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and clickjacking protection. Follow the Hostinger merge procedure below so the managed `public_html/.htaccess` applies the build-specific rules before proxying to Node.
+7. Confirm production responses include the generated Content Security Policy, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and clickjacking protection. The application loads the build-specific policy from `dist/client/_headers.json`; no manual merge into Hostinger's proxy file is required.
 8. Confirm `https://aetas.ai/.well-known/security.txt` returns the repository security contact and that its `Expires` date is renewed before it lapses.
 
-Hostinger backend Web Apps maintain their proxy `.htaccess` in `public_html`, separate from `nodejs/dist/client/.htaccess`. Preserve Hostinger's routing directives and merge the generated project block into the active `public_html/.htaccess` after each deployment. Reserved `/admin`, `/cms-preview`, and `/preview` paths are disallowed in `robots.txt` and receive `X-Robots-Tag: noindex` if served dynamically; none of those routes currently exists. Any future preview or authenticated route must also remain excluded from the sitemap and set the shared Layout `noIndex` property.
+Hostinger backend Web Apps maintain their proxy `.htaccess` in `public_html`. Leave that managed routing file unchanged. The production Node listener applies fixed-origin redirects and shared security headers, while Astro consumes `dist/client/_headers.json` for prerendered routes. The generated `dist/client/.htaccess` is optional defense in depth if a future LiteSpeed deployment serves the client output directly. Reserved `/admin`, `/cms-preview`, and `/preview` paths are disallowed in `robots.txt` and receive `X-Robots-Tag: noindex` if served dynamically; none of those routes currently exists. Any future preview or authenticated route must also remain excluded from the sitemap and set the shared Layout `noIndex` property.
 
 ## Google Search Console
 
@@ -107,14 +107,14 @@ For the current Hostinger file-upload workflow:
 1. Merge approved changes into the repository's main branch.
 2. Download or prepare the latest project files.
 3. Deploy the updated source package through the Hostinger Web App deployment.
-4. Allow Hostinger to install dependencies and run the Astro production build, then start the backend-supported application with `npm start`.
-5. Confirm `/api/forms/csrf` is available and that form-delivery secrets are configured only in Hostinger environment settings.
+4. Allow Hostinger to install dependencies, run `npm test` and the Astro production build, then start the backend-supported application with `npm start`.
+5. While form processing is deferred, confirm `/api/forms/csrf` fails closed with a generic 503. After forms are activated, confirm it returns a secure session and that all form-delivery secrets exist only in Hostinger environment settings.
 6. Confirm the deployment completed successfully.
 7. Test the changed pages and all form flows on the production domain.
 8. Recheck the sitemap when pages were added, renamed, or removed.
 9. Request indexing in Search Console only for important new or substantially updated pages. It is not necessary for every small UI change.
 
-Environment variables should be configured in Hostinger's application settings rather than committed to Git or included in uploaded ZIP files. Review this guide when the deployment workflow changes to Git-based deployment or CI/CD.
+The three form environment variables may remain entirely unset while form processing is deferred. Before activating forms, configure the complete group in Hostinger's application settings rather than committing values to Git or including them in uploaded ZIP files. Review this guide when form processing is activated or the deployment workflow changes to Git-based deployment or CI/CD.
 
 ## Ongoing SEO Work
 

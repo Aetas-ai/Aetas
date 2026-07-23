@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run test:security && astro build",
     "start": "node ./scripts/start-server.mjs",
     "preview": "astro preview",
+    "test": "node --experimental-strip-types --test \"tests/*.test.mjs\"",
+    "test:security": "node --experimental-strip-types --test \"tests/*.test.mjs\"",
     "astro": "astro"
   },
   "dependencies": {
