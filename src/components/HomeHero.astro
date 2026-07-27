@@ -79,9 +79,16 @@ const services = [
 </section>
 
 <style>
-  .home-hero { min-width: 0; background: #050508; }
-  .home-hero-stage { min-height: 52rem; }
-  .home-hero-copy { box-sizing: border-box; min-height: inherit; }
+  .home-hero {
+    display: flex;
+    min-width: 0;
+    min-height: calc(100vh - var(--site-header-height));
+    min-height: calc(100dvh - var(--site-header-height));
+    flex-direction: column;
+    background: var(--color-brand-bg);
+  }
+  .home-hero-stage { display: flex; min-height: 52rem; flex: 1 0 auto; }
+  .home-hero-copy { box-sizing: border-box; min-height: inherit; flex: 1; }
   .home-hero-network { min-height: 20rem; }
 
   .home-hero-enter,
@@ -139,27 +146,82 @@ const services = [
     to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
   }
 
+  .home-hero-practices {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(7, 9, 13, 0.98);
+  }
+
+  .hero-practice {
+    isolation: isolate;
+    transform: translateY(0);
+    transition:
+      background-color 200ms ease,
+      box-shadow 200ms ease,
+      transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-practice-ai { background: rgba(116, 119, 245, 0.045); }
+  .hero-practice-security { background: rgba(24, 185, 237, 0.04); }
+  .hero-practice-global { background: rgba(242, 184, 75, 0.045); }
+
   .hero-practice::before {
     position: absolute;
     inset: 0 0 auto;
     height: 2px;
-    opacity: 0;
-    transform: scaleX(0.25);
+    opacity: 0.72;
+    transform: scaleX(1);
     transform-origin: left center;
-    transition: opacity 200ms ease, transform 240ms ease;
+    transition: opacity 200ms ease;
     content: '';
   }
-  .hero-practice:hover, .hero-practice:focus-visible { background: rgba(255, 255, 255, 0.035); }
-  .hero-practice:hover::before, .hero-practice:focus-visible::before { opacity: 1; transform: scaleX(1); }
+
+  .hero-practice-number {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hero-practice-number::after {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 9999px;
+    content: '';
+  }
+
+  .hero-practice:hover::before,
+  .hero-practice:focus-visible::before { opacity: 1; }
   .hero-practice-ai::before { background: var(--color-ai); }
   .hero-practice-security::before { background: var(--color-security); }
   .hero-practice-global::before { background: var(--color-global); }
+  .hero-practice-ai .hero-practice-number { color: #a5b4fc; }
+  .hero-practice-security .hero-practice-number { color: #7dd3fc; }
+  .hero-practice-global .hero-practice-number { color: #fcd34d; }
+  .hero-practice-ai .hero-practice-number::after { background: var(--color-ai); }
+  .hero-practice-security .hero-practice-number::after { background: var(--color-security); }
+  .hero-practice-global .hero-practice-number::after { background: var(--color-global); }
+  .hero-practice-ai:hover,
+  .hero-practice-ai:focus-visible {
+    background: rgba(116, 119, 245, 0.075);
+    box-shadow: inset 0 0 0 1px rgba(116, 119, 245, 0.16);
+  }
+  .hero-practice-security:hover,
+  .hero-practice-security:focus-visible {
+    background: rgba(24, 185, 237, 0.07);
+    box-shadow: inset 0 0 0 1px rgba(24, 185, 237, 0.15);
+  }
+  .hero-practice-global:hover,
+  .hero-practice-global:focus-visible {
+    background: rgba(242, 184, 75, 0.075);
+    box-shadow: inset 0 0 0 1px rgba(242, 184, 75, 0.15);
+  }
+  .hero-practice:focus-visible { transform: translateY(-2px); }
   .hero-practice-ai:focus-visible { --tw-ring-color: var(--color-ai); }
   .hero-practice-security:focus-visible { --tw-ring-color: var(--color-security); }
   .hero-practice-global:focus-visible { --tw-ring-color: var(--color-global); }
-  .hero-practice-ai:hover .hero-practice-number, .hero-practice-ai:focus-visible .hero-practice-number { color: #a5b4fc; }
-  .hero-practice-security:hover .hero-practice-number, .hero-practice-security:focus-visible .hero-practice-number { color: #7dd3fc; }
-  .hero-practice-global:hover .hero-practice-number, .hero-practice-global:focus-visible .hero-practice-number { color: #fcd34d; }
+
+  @media (hover: hover) {
+    .hero-practice:hover { transform: translateY(-2px); }
+  }
 
   @media (min-width: 640px) { .home-hero-stage { min-height: 55rem; } }
   @media (min-width: 1024px) {
@@ -175,6 +237,14 @@ const services = [
   @media (max-width: 1023px) {
     .home-hero-image-wash {
       background: radial-gradient(circle at 50% 78%, rgba(14, 165, 233, 0.08), transparent 32%);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-practice::before {
+      inset: 0 auto 0 0;
+      width: 2px;
+      height: auto;
     }
   }
 

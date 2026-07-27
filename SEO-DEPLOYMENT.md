@@ -23,14 +23,16 @@ The production build includes the following technical SEO features:
 - Responsive layouts and optimized WebP assets
 - A lightweight custom SVG/CSS homepage network with no 3D globe dependency
 - Delayed hydration for the non-critical Bob assistant
+- Viewport-aware dark heroes and a dark root/view-transition background that prevent default light surfaces from appearing during navigation
+- A delayed loading overlay that does not appear during ordinary fast navigation
 - Dependency-free Intersection Observer reveal animations instead of a global smooth-scroll runtime
 
 Every production build generates:
 
 ```text
-dist/sitemap-index.xml
-dist/sitemap-0.xml
-dist/robots.txt
+dist/client/sitemap-index.xml
+dist/client/sitemap-0.xml
+dist/client/robots.txt
 ```
 
 The sitemap updates automatically when public Astro pages are added or removed. Routes that should not appear in search results must also be reviewed in `astro.config.mjs` and marked with the `noIndex` layout property.
@@ -47,10 +49,12 @@ The sitemap updates automatically when public Astro pages are added or removed. 
    ```
 
 4. Confirm the build completes without errors.
-5. Open `dist/sitemap-0.xml` and confirm that it contains only public pages.
+5. Open `dist/client/sitemap-0.xml` and confirm that it contains only public pages.
 6. Confirm private, duplicate, draft, and confirmation pages are not listed.
 7. Test the website on mobile, tablet, and desktop.
 8. Confirm the custom AGI network labels and service links work with keyboard and touch input.
+9. Confirm Astro navigation, back/forward history, reduced-motion mode, and direct refreshes do not leave content hidden or `aria-busy`.
+10. Confirm slow navigation can display and complete the loader, while ordinary fast navigation does not flash it.
 
 ## Production Domain Checklist
 
@@ -113,6 +117,7 @@ For the current Hostinger file-upload workflow:
 7. Test the changed pages and all form flows on the production domain.
 8. Recheck the sitemap when pages were added, renamed, or removed.
 9. Request indexing in Search Console only for important new or substantially updated pages. It is not necessary for every small UI change.
+10. After shared visual or transition changes, check for white flashes, horizontal overflow, focus regressions, and reduced-motion behavior on the production origin.
 
 Environment variables should be configured in Hostinger's application settings rather than committed to Git or included in uploaded ZIP files. Review this guide when the deployment workflow changes to Git-based deployment or CI/CD.
 

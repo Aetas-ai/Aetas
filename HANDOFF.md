@@ -1,6 +1,6 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 22, 2026
+Last updated: July 27, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
@@ -69,6 +69,7 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 - `src/layouts/Layout.astro`: metadata, structured data, header, mobile navigation, footer, slow-load overlay, animation setup, and delayed Bob hydration.
 - `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and service navigation rail.
+- `src/components/PageHero.astro`: shared dark page hero, service accents, calls to action, and fixed-header viewport sizing for full-height variants.
 - `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three specialized service areas.
 - `src/components/AboutVisualGallery.astro`: lightweight animated About page visual gallery using current sample imagery.
 - `src/components/ui/feature-carousel.tsx`: Astro-compatible React island used on the homepage and hydrated with `client:visible`.
@@ -85,6 +86,8 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - `src/pages/ai.astro`, `security.astro`, `managed-it.astro`: service pages.
 - `src/pages/global.astro`: legacy redirect to `/managed-it`; excluded from the sitemap.
 - `src/pages/partners.astro`: approved partner displays and links.
+- `src/pages/work.astro`: dark provisional case-study presentation with no fabricated client work.
+- `src/pages/resources/index.astro`: dark editorial resource index backed by the approved shared resource data.
 - `src/pages/operations-readiness-brief.astro`: registration page for the AGI Operations Readiness Brief.
 - `src/data/caseStudies.ts`: intentionally empty until verified case studies are approved.
 - `src/data/resources.ts`: shared resource content.
@@ -93,20 +96,28 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 - The visual system uses hybrid enterprise contrast: dark technical/immersive sections alternate with light editorial and conversion bands so the site is not dominated by one color family.
 - Service accents are intentionally scoped: violet for AI & Automation, cyan for Cybersecurity, amber for Managed IT, and green for governance or reviewed states. Do not recolor entire pages by service.
-- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `service-card-*`, `media-frame-light`, `button-on-light-*`, and `form-on-light`.
+- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `service-card-*`, `media-frame-light`, `button-on-light-*`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities.
 - Partner-logo displays remain on dark surfaces because several approved official logos are white. Their surrounding explanatory and conversion content can use the light editorial system.
 - Light-surface cards use restrained 8 px radii, low-contrast borders, and subtle elevation. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards or decorative color effects.
 - The homepage hero uses an original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT.
+- The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail has persistent low-opacity violet, cyan, and amber surfaces and accents so the three practices remain distinct before hover or keyboard focus.
 - Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
 - The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
 - The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
 - Bob loads with `client:idle` and a timeout so it does not block critical rendering.
-- The site loading overlay featuring Bob waits 650 ms before appearing and therefore only displays for genuinely slower loads or transitions.
+- The root `html`, `body`, `main`, and view-transition surfaces use the existing dark brand background. Full-height shared heroes subtract `--site-header-height` from viewport-height fallbacks so transparent or short content cannot expose a default white strip.
+- The original site loading overlay featuring Bob waits 650 ms before appearing and therefore only displays for genuinely slower loads or transitions. Bob remains centered inside two decorative rings while a CSS-driven progress fill advances independently below him.
+- The loader retains its singleton initialization guard, approximately 220 ms minimum visibility, 160 ms fade cleanup, initial-document support, Astro preparation/page-load hooks, `pageshow` safeguard, polite status region, and active-main `aria-busy` handling.
+- Reduced motion leaves the loader readable while disabling ring rotation and the decorative progress scan. The loader does not display a percentage, use phase-specific labels, move Bob horizontally, or animate whole-character gesture states.
+- The temporary development-only loader preview, query-string activation, simulated sequence, console message, and replay button have been removed.
 - Brand imagery uses optimized WebP assets: `aetasBrand.webp`, `aetasIcon.webp`, and `bob.webp`.
 - The header uses the full Aetas Global Innovation logo on desktop and mobile. The icon is used for favicon and assistant identity contexts.
 - The homepage responsibility selector and advisor quiz are interactive React islands hydrated with `client:visible`.
 - Site-wide page reveals use dependency-free Intersection Observer and CSS transitions; Lenis, GSAP, and ScrollTrigger are not globally bundled.
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
+- The Work page presents its three explicitly provisional practice areas as equal-height dark panels with persistent service accents and an honest “In preparation” status.
+- The Resources index uses dark graphite editorial cards, compact decorative thumbnails, existing titles/summaries/authors/dates, and scoped service-category accents. No resource metadata was invented.
+- Work and Resources use shared bottom clearance and a desktop content inset so the fixed Bob assistant does not obscure final links or card content. The assistant component and behavior are unchanged.
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
 - Contact, AI consultation, and Operations Readiness Brief forms submit to server-only Astro endpoints. The endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.

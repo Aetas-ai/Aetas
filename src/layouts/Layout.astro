@@ -248,7 +248,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
     </script>
 
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-brand-bg/75 backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <div class="max-w-7xl mx-auto flex h-[var(--site-header-height)] items-center justify-between px-4 sm:px-6">
         <a href="/" class="flex h-12 w-[8.75rem] shrink-0 items-center justify-start rounded-md transition-[opacity,filter] duration-200 hover:opacity-90 hover:drop-shadow-[0_8px_18px_rgba(255,255,255,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 sm:h-14 sm:w-[12rem]" aria-label="Aetas Global Innovation home">
           <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
         </a>
@@ -330,7 +330,7 @@ const mobileLink = (href: string, activeClass = 'bg-white/8 text-white border-wh
       </div>
     </div>
 
-    <main class="min-w-0 w-full max-w-full flex-grow pt-20">
+    <main class="min-w-0 w-full max-w-full flex-grow pt-[var(--site-header-height)]">
       <slot />
     </main>
 

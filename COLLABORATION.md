@@ -67,16 +67,22 @@ npx astro dev stop
 ## 5. Build and Verify
 
 ```sh
+npm run
 npm run build
-npm run preview
+git diff --check
 ```
+
+The repository currently has no `npm test` script. Run it only if a test script is added later. `npm run preview` remains available when a local production-server review is needed.
 
 Before handing off a change:
 
 1. Test the affected flow on mobile, tablet, and desktop.
-2. Run `npm run build`.
-3. Check `git status` and confirm that only intended files changed.
-4. Push the branch and open a pull request when team review is required.
+2. Test reduced-motion behavior when changing transitions, reveals, the loader, or animated diagrams.
+3. For navigation changes, check a direct load, repeated internal navigation, back/forward navigation, and the Astro body swap.
+4. For loader changes, verify fast loads do not flash the overlay, slow loads complete and fade cleanly, and no page remains `aria-busy`.
+5. Run `npm run build` and `git diff --check`.
+6. Check `git status` and confirm that only intended files changed.
+7. Push the branch and open a pull request only when explicitly requested and team review is required.
 
 ## 6. Content Rules
 
@@ -157,3 +163,4 @@ Do not enable Cloudflare Rocket Loader or any edge transformation that rewrites 
 - Update `HANDOFF.md` when positioning, service scope, routes, partners, shared components, deployment, or known gaps change.
 - Update `README.md` when setup, architecture, commands, or major features change.
 - Update `SEO-DEPLOYMENT.md` when routes, canonical domains, sitemap exclusions, or deployment steps change.
+- Keep `AGENTS.md` and `CLAUDE.md` aligned when shared repository safeguards or required verification commands change.
