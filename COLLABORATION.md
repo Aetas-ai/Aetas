@@ -72,7 +72,7 @@ npm run build
 git diff --check
 ```
 
-The repository currently has no `npm test` script. Run it only if a test script is added later. `npm run preview` remains available when a local production-server review is needed.
+`npm test` runs the security-focused test suite. `npm run build` runs that suite before the Astro production build. `npm run preview` remains available when a local production-server review is needed.
 
 Before handing off a change:
 
@@ -105,19 +105,19 @@ After approved changes are merged:
 1. Update the local `main` branch or download the newest repository ZIP from GitHub.
 2. If preparing locally, run `npm install` and `npm run build` to catch errors before deployment.
 3. In Hostinger, redeploy the Web App and upload the latest source ZIP.
-4. Deploy it as a backend-supported Astro application. Run `npm run build`, then start `dist/server/entry.mjs` with `npm start`; a frontend-only/static deployment will not serve `/api/forms/*`.
-5. Public form processing is currently deferred, so the form variables may remain entirely unset. Before activating forms, configure `FORM_CSRF_SECRET`, `FORM_DELIVERY_URL`, and `FORM_DELIVERY_BEARER_TOKEN` together in Hostinger's Web App environment settings. Never put their values in a source ZIP, a repository file, a public variable, or client code. The delivery URL must use HTTPS.
-6. Confirm the build generated `dist/client/_headers.json` and `dist/client/.htaccess`. Leave Hostinger's managed proxy `.htaccess` unchanged: `npm start` loads `_headers.json`, applies the security policy in the Node application, and exits if the required policy is missing. The generated `.htaccess` is available only as optional LiteSpeed defense in depth.
-7. Confirm deployment success, inspect the live response headers, test each form, and test `https://aetas.ai` on multiple screen sizes.
+4. Keep the current Hostinger settings: Astro, Node.js 22.x, npm, build command `npm run build`, and output directory `dist`. Public pages and assets build directly into that directory.
+5. Public form processing is currently deferred, so the form variables may remain entirely unset and `/api/forms/*` is not available from the frontend deployment. Before activating forms, switch the Hostinger Web App to a backend-supported Astro application, start it with `npm start`, and configure `FORM_CSRF_SECRET`, `FORM_DELIVERY_URL`, and `FORM_DELIVERY_BEARER_TOKEN` together in Hostinger's environment settings. Never put their values in a source ZIP, repository file, public variable, or client code. The delivery URL must use HTTPS.
+6. Confirm the build generated `dist/index.html`, `dist/_headers.json`, and `dist/.htaccess`. The generated `.htaccess` applies the matching LiteSpeed security policy in the current frontend deployment. When the backend deployment is activated later, leave Hostinger's managed proxy `.htaccess` unchanged; `npm start` loads `dist/_headers.json` and applies the same policy in the Node application.
+7. Confirm deployment success, inspect the live response headers, and test `https://aetas.ai` on multiple screen sizes.
 
 ### Hostinger production transport and domain setup
 
-1. In **Websites → Dashboard → Connect domain**, connect `aetas.ai` to the backend Node.js Web App and complete the requested DNS changes. Wait for Hostinger's automatic certificate installation to finish.
+1. In **Websites → Dashboard → Connect domain**, connect `aetas.ai` to the current Astro Web App and complete the requested DNS changes. Wait for Hostinger's automatic certificate installation to finish.
 2. Ensure the `www` DNS name also resolves to the Hostinger site and has a valid certificate before enabling its permanent redirect. Do not enable HSTS for a hostname that cannot complete TLS.
 3. In **Websites → Dashboard → SSL**, open the options menu for the domain and select **Force HTTPS**. Keep the repository redirect rules as defense in depth.
-4. Do not replace or manually merge into Hostinger's managed proxy `.htaccess`. The application startup wrapper enforces the fixed `https://aetas.ai` origin, preserves the path/query, and applies the generated response headers before Astro serves content.
+4. In the current frontend deployment, deploy the generated `dist/.htaccess` with the rest of the `dist` output. After switching to the backend Node deployment, do not replace or manually merge into Hostinger's managed proxy `.htaccess`; the application startup wrapper then enforces the fixed `https://aetas.ai` origin and response headers.
 5. Do not enable HSTS preload or `includeSubDomains` until every current and planned subdomain is confirmed to support HTTPS permanently. The repository safely starts with `max-age=31536000` for the responding host.
-6. Review **Website Dashboard → Runtime logs** after deployment. Application form logs must remain limited to event names and random request IDs. Do not paste unsanitized logs into tickets or third-party tools; Hostinger/runtime stack traces may contain filesystem details even though they are never returned to visitors.
+6. Review the deployment build log after every update. Once the backend Node deployment and forms are activated, also review **Website Dashboard → Runtime logs**. Application form logs must remain limited to event names and random request IDs. Do not paste unsanitized logs into tickets or third-party tools; runtime stack traces may contain filesystem details even though they are never returned to visitors.
 
 If Cloudflare is later placed in front of Hostinger, set SSL/TLS mode to **Full (strict)**, enable **Always Use HTTPS**, and create a Redirect Rule from `www.aetas.ai` to the fixed `https://aetas.ai` origin while preserving path and query. Do not duplicate or replace the build-generated CSP with stale hashes at Cloudflare. Vercel and Netlify configuration does not apply to the current deployment.
 
@@ -146,13 +146,13 @@ Environment variables must be configured in Hostinger's Web App settings. Never 
 
 `.env.example` lists the optional form activation group with blank values. `npm start` permits all three variables to be absent while forms are deferred. Once any one is configured, startup requires all three to be present and valid so a partial production configuration cannot be deployed.
 
-The Content Security Policy hashes are derived from the final generated HTML on every build. Deploy the complete current source and build output together; `npm start` validates and loads `dist/client/_headers.json` so stale or missing policy output fails closed.
+The Content Security Policy hashes are derived from the final generated HTML on every build. Deploy the complete current source and build output together; `npm start` validates and loads `dist/_headers.json` so stale or missing policy output fails closed.
 
 Production builds explicitly disable source maps and fail if a `.map`, log, environment, or common credential artifact appears in the public client output. Astro's standalone server gives content-hashed `/_astro/` assets immutable one-year caching; the generated LiteSpeed rules mirror that behavior and keep non-fingerprinted assets short-lived. All API/form responses are private and non-cacheable.
 
 When the form feature is activated, the delivery service must accept an authenticated JSON POST containing a plain-text body and an HTML-encoded body. Keep its endpoint and bearer token server-only. Form endpoints deliberately return a generic 503 until the complete configuration is enabled and reachable; do not replace this fail-closed behavior with client-side email or API credentials.
 
-The current rate limiter is process-local and matches the current single-process Hostinger Node deployment. It removes expired records and enforces a strict 10,000-record least-recently-used cap. If production is scaled to multiple Node processes or instances, add an equivalent Cloudflare rule or replace the store with a shared rate-limit service so limits remain global.
+The prepared backend rate limiter is process-local and is designed for a future single-process Hostinger Node deployment. It removes expired records and enforces a strict 10,000-record least-recently-used cap. If production is later scaled to multiple Node processes or instances, add an equivalent Cloudflare rule or replace the store with a shared rate-limit service so limits remain global.
 
 The current external CSP sources are limited to Google Fonts styles and font files. Scripts, images, API connections, workers, media, and frames are restricted to the exact capabilities currently used by the site; unused WebAssembly, unpkg, and Webflow access is not allowed. JavaScript libraries must be bundled and served from the site origin. Analytics is not currently configured; add only the exact origins required by the selected provider when analytics is approved.
 

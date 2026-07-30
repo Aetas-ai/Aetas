@@ -30,7 +30,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - The Work and Resources indexes use dark editorial surfaces. The approved Partners implementation, partner list, links, logo proportions, and marquee behavior must remain unchanged unless specifically scoped.
 - There is no development loader preview mode. Do not restore query-string preview controls or replay markup without an explicit temporary testing request.
 
-Before handoff, inspect `npm run`, run `npm run build`, and run `git diff --check`. The repository currently has no `npm test` script; do not claim tests ran unless that script is later added.
+Before handoff, inspect `npm run`, run `npm test`, run `npm run build`, and run `git diff --check`. Report test results accurately.
 
 ## Documentation
 

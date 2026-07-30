@@ -63,7 +63,7 @@ Important homepage files:
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
 - `src/pages/work.astro`: provisional, non-fabricated case-study presentation
 - `src/pages/resources/index.astro`: dark editorial resource index backed by `src/data/resources.ts`
-- `scripts/security-headers-integration.mjs`: validates new-tab links, hashes final inline scripts and style blocks, and generates `dist/client/.htaccess`
+- `scripts/security-headers-integration.mjs`: validates new-tab links, hashes final inline scripts and style blocks, and generates `dist/.htaccess`
 - `src/middleware.ts`: hardens on-demand API responses, trusted-origin handling, reserved non-indexed routes, and privacy-preserving error logs
 - `src/lib/server/forms.ts`: shared form schemas, safe delivery formatting, and endpoint handling
 - `src/lib/server/form-security.ts`: signed CSRF tokens and bounded per-IP/per-endpoint rate limiting
@@ -122,4 +122,4 @@ npx astro dev stop
 
 Run `npm run build` before pushing or uploading a deployment package.
 
-There is currently no `npm test` script. Use `npm run` to inspect available scripts and run `git diff --check` alongside the production build before handoff.
+`npm test` runs the security-focused test suite. `npm run build` runs the same security suite before the Astro production build. Use `npm run` to inspect available scripts and run `git diff --check` alongside the production build before handoff.

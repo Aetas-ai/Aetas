@@ -82,7 +82,7 @@ export function canonicalLocation(requestTarget = '/') {
 }
 
 export async function loadGeneratedSecurityHeaders(
-  headersPath = new URL('../dist/client/_headers.json', import.meta.url),
+  headersPath = new URL('../dist/_headers.json', import.meta.url),
 ) {
   const content = await readFile(headersPath, 'utf8');
   const entries = JSON.parse(content);

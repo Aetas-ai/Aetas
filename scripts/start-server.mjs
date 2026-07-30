@@ -25,7 +25,7 @@ try {
 }
 
 process.env.ASTRO_NODE_AUTOSTART = 'disabled';
-const { handler, options } = await import('../dist/server/entry.mjs');
+const { handler, options } = await import('../dist-server/entry.mjs');
 const port = process.env.PORT ? Number(process.env.PORT) : options.port;
 const configuredHost = process.env.HOST ?? options.host;
 const host = typeof configuredHost === 'boolean'

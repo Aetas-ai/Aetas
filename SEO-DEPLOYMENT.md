@@ -30,9 +30,9 @@ The production build includes the following technical SEO features:
 Every production build generates:
 
 ```text
-dist/client/sitemap-index.xml
-dist/client/sitemap-0.xml
-dist/client/robots.txt
+dist/sitemap-index.xml
+dist/sitemap-0.xml
+dist/robots.txt
 ```
 
 The sitemap updates automatically when public Astro pages are added or removed. Routes that should not appear in search results must also be reviewed in `astro.config.mjs` and marked with the `noIndex` layout property.
@@ -49,7 +49,7 @@ The sitemap updates automatically when public Astro pages are added or removed. 
    ```
 
 4. Confirm the build completes without errors.
-5. Open `dist/client/sitemap-0.xml` and confirm that it contains only public pages.
+5. Open `dist/sitemap-0.xml` and confirm that it contains only public pages.
 6. Confirm private, duplicate, draft, and confirmation pages are not listed.
 7. Test the website on mobile, tablet, and desktop.
 8. Confirm the custom AGI network labels and service links work with keyboard and touch input.
@@ -73,10 +73,10 @@ After deploying the new build:
 4. Choose one canonical domain format. This project uses `https://aetas.ai` without `www`.
 5. Configure `http://aetas.ai` and `https://www.aetas.ai` to redirect permanently to `https://aetas.ai` when Hostinger or Cloudflare access is available.
 6. Do not keep another public copy of the website on a temporary domain unless that copy is blocked from indexing.
-7. Confirm production responses include the generated Content Security Policy, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and clickjacking protection. The application loads the build-specific policy from `dist/client/_headers.json`; no manual merge into Hostinger's proxy file is required.
+7. Confirm production responses include the generated Content Security Policy, HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and clickjacking protection. The current frontend deployment receives these from `dist/.htaccess`; a future backend deployment loads the same build-specific policy from `dist/_headers.json` without manually merging into Hostinger's proxy file.
 8. Confirm `https://aetas.ai/.well-known/security.txt` returns the repository security contact and that its `Expires` date is renewed before it lapses.
 
-Hostinger backend Web Apps maintain their proxy `.htaccess` in `public_html`. Leave that managed routing file unchanged. The production Node listener applies fixed-origin redirects and shared security headers, while Astro consumes `dist/client/_headers.json` for prerendered routes. The generated `dist/client/.htaccess` is optional defense in depth if a future LiteSpeed deployment serves the client output directly. Reserved `/admin`, `/cms-preview`, and `/preview` paths are disallowed in `robots.txt` and receive `X-Robots-Tag: noindex` if served dynamically; none of those routes currently exists. Any future preview or authenticated route must also remain excluded from the sitemap and set the shared Layout `noIndex` property.
+Hostinger backend Web Apps maintain their proxy `.htaccess` in `public_html`. Leave that managed routing file unchanged when using the backend deployment. The production Node listener applies fixed-origin redirects and shared security headers, while Astro consumes `dist/_headers.json` for prerendered routes. Public files intentionally build directly into `dist` so the existing frontend deployment can retain its `dist` output setting while forms are deferred; `dist/.htaccess` supplies the corresponding LiteSpeed rules. Reserved `/admin`, `/cms-preview`, and `/preview` paths are disallowed in `robots.txt` and receive `X-Robots-Tag: noindex` if served dynamically; none of those routes currently exists. Any future preview or authenticated route must also remain excluded from the sitemap and set the shared Layout `noIndex` property.
 
 ## Google Search Console
 
@@ -111,8 +111,8 @@ For the current Hostinger file-upload workflow:
 1. Merge approved changes into the repository's main branch.
 2. Download or prepare the latest project files.
 3. Deploy the updated source package through the Hostinger Web App deployment.
-4. Allow Hostinger to install dependencies, run `npm test` and the Astro production build, then start the backend-supported application with `npm start`.
-5. While form processing is deferred, confirm `/api/forms/csrf` fails closed with a generic 503. After forms are activated, confirm it returns a secure session and that all form-delivery secrets exist only in Hostinger environment settings.
+4. Keep the Hostinger build settings at Astro, Node.js 22.x, npm, build command `npm run build`, and output directory `dist` while forms are deferred.
+5. Confirm public pages load and security headers are present. The frontend deployment does not serve `/api/forms/*`. After switching to the backend deployment and activating forms, confirm `/api/forms/csrf` returns a secure session and all form-delivery secrets exist only in Hostinger environment settings.
 6. Confirm the deployment completed successfully.
 7. Test the changed pages and all form flows on the production domain.
 8. Recheck the sitemap when pages were added, renamed, or removed.

@@ -27,6 +27,13 @@ export default defineConfig({
     bodySizeLimit: 64 * 1024
   }),
 
+  // Keep prerendered public files at dist/ for the existing Hostinger
+  // frontend deployment and keep the future Node bundle outside that public root.
+  build: {
+    client: '.',
+    server: '../dist-server'
+  },
+
   env: {
     schema: {
       FORM_CSRF_SECRET: envField.string({
