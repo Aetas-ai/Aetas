@@ -273,7 +273,7 @@
 .agi-practice-panel,
 .agi-resource-card {
   border: 1px solid rgba(255, 255, 255, 0.085);
-  border-radius: 0.625rem;
+  border-radius: 0.5rem;
   background: rgba(17, 24, 39, 0.78);
   box-shadow: 0 18px 44px -34px rgba(0, 0, 0, 0.85);
 }
@@ -433,12 +433,6 @@
 .agi-dark-button--secondary:hover {
   border-color: rgba(255, 255, 255, 0.28);
   background: rgba(255, 255, 255, 0.07);
-}
-
-@media (min-width: 1200px) {
-  .agi-bob-safe-content {
-    padding-inline-end: 9.5rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

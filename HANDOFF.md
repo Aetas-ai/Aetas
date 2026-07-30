@@ -1,6 +1,6 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 27, 2026
+Last updated: July 31, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
@@ -117,7 +117,8 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
 - The Work page presents its three explicitly provisional practice areas as equal-height dark panels with persistent service accents and an honest “In preparation” status.
 - The Resources index uses dark graphite editorial cards, compact decorative thumbnails, existing titles/summaries/authors/dates, and scoped service-category accents. No resource metadata was invented.
-- Work and Resources use shared bottom clearance and a desktop content inset so the fixed Bob assistant does not obscure final links or card content. The assistant component and behavior are unchanged.
+- Work and Resources keep their `max-w-7xl` content geometrically centered at every breakpoint. Shared bottom clearance prevents the fixed Bob assistant from obscuring final actions without applying a one-sided desktop inset that shifts the grids off center. Resource detail pages use a readable `max-w-3xl` editorial measure and the same bottom clearance. The assistant component and behavior are unchanged.
+- The homepage and Managed IT responsibility selector uses one tab column on phones, two on small tablets, and up to four on desktop so long service labels remain readable and tappable. The Advisor Quiz follows the same restrained 8 px card radius and responsive inner padding as the rest of the interface.
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
 - Contact, AI consultation, and Operations Readiness Brief forms submit to server-only Astro endpoints. The endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.

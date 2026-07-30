@@ -19,7 +19,7 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Interactive service responsibility selector and advisor quiz
 - Bob chat assistant loaded as a non-critical React island
 - Delayed loading feedback that appears only when a page is genuinely slow
-- Dark editorial Work and Resources indexes with scoped service accents and fixed-assistant clearance
+- Centered dark editorial Work and Resources indexes with scoped service accents, readable article detail pages, and fixed-assistant bottom clearance
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
 - Hardened server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials
