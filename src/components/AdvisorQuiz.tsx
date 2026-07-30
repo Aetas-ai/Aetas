@@ -134,7 +134,7 @@ export default function AdvisorQuiz() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto glass-panel rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+    <div className="relative mx-auto w-full max-w-2xl overflow-hidden rounded-lg p-5 shadow-2xl glass-panel sm:p-8">
       {/* Decorative gradient glowing lines */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-70"></div>
 
@@ -231,7 +231,7 @@ export default function AdvisorQuiz() {
                 <button
                   key={oIdx}
                   onClick={() => handleSelect(opt.value)}
-                  className="w-full text-left p-5 rounded-xl border border-white/5 bg-white/2 hover:bg-white/5 hover:border-white/20 transition-all flex items-start gap-4 group"
+                  className="group flex min-h-12 w-full items-start gap-4 rounded-lg border border-white/5 bg-white/2 p-4 text-left transition-all hover:border-white/20 hover:bg-white/5 sm:p-5"
                 >
                   <div className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center mt-0.5 group-hover:border-indigo-400 group-hover:bg-indigo-400/10 transition-all shrink-0">
                     <div className="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-indigo-400 transition-all" />

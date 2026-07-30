@@ -21,6 +21,17 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Current Shared Experience Safeguards
+
+- `src/layouts/Layout.astro` uses Astro `ClientRouter` and the original delayed loading overlay. Preserve its singleton guard, 650 ms delayed appearance, minimum visibility, fade cleanup, and `aria-busy` handling.
+- The original loader keeps Bob centered inside decorative rings and uses a CSS-driven progress fill. It does not move Bob with progress, display a percentage, or use phase-specific gesture states.
+- Bob remains the single raster asset at `public/bob.webp`; do not imply that individual body parts are independently animated.
+- Root document surfaces and view transitions use the existing dark brand token. Shared full-screen heroes account for `--site-header-height` and use viewport-height fallbacks.
+- The Work and Resources indexes use dark editorial surfaces. The approved Partners implementation, partner list, links, logo proportions, and marquee behavior must remain unchanged unless specifically scoped.
+- There is no development loader preview mode. Do not restore query-string preview controls or replay markup without an explicit temporary testing request.
+
+Before handoff, inspect `npm run`, run `npm run build`, and run `git diff --check`. The repository currently has no `npm test` script; do not claim tests ran unless that script is later added.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

@@ -107,19 +107,21 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
   }, []);
 
   return (
-    <div className="w-full glass-panel rounded-3xl p-6 lg:p-8 shadow-2xl relative overflow-hidden border-white/5">
+    <div className="relative w-full overflow-hidden rounded-lg border-white/5 p-4 shadow-2xl glass-panel sm:p-6 lg:p-8">
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
       
       {/* Category Tabs Grid - Responsive */}
-      <div className={`grid gap-3 border-b border-white/5 pb-6 mb-6 ${scope === 'global' ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 md:grid-cols-4'}`}>
+      <div className={`mb-6 grid gap-3 border-b border-white/5 pb-6 ${scope === 'global' ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'}`}>
         {visibleCategories.map((cat) => {
           const CatIcon = cat.icon;
           const catStyle = serviceStyles[cat.practice];
           return (
             <button
               key={cat.id}
+              type="button"
               onClick={() => setActiveTab(cat.id)}
-              className={`flex flex-col md:flex-row items-center gap-3 p-4 rounded-xl text-center md:text-left border transition-all ${
+              aria-pressed={activeTab === cat.id}
+              className={`flex min-h-20 items-center gap-3 rounded-lg border p-4 text-left transition-all ${
                 activeTab === cat.id
                   ? catStyle.active
                   : 'bg-black/20 border-white/5 text-gray-400 hover:border-white/10 hover:bg-black/10'
@@ -128,9 +130,9 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
               <div className={`p-2 rounded-lg ${activeTab === cat.id ? catStyle.icon : 'bg-white/5 text-gray-500'}`}>
                 <CatIcon className="w-5 h-5" />
               </div>
-              <span className="text-xs font-semibold tracking-wide mt-2 md:mt-0 leading-tight">
+              <span className="text-xs font-semibold leading-tight tracking-wide">
                 <span className="block">{cat.name}</span>
-                <span className={`mt-1 block text-[9px] uppercase ${activeTab === cat.id ? catStyle.text : 'text-gray-600'}`}>{catStyle.label}</span>
+                <span className={`mt-1 block text-[10px] uppercase ${activeTab === cat.id ? catStyle.text : 'text-gray-500'}`}>{catStyle.label}</span>
               </span>
             </button>
           );
@@ -158,7 +160,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
             </div>
 
             {/* Task Checklist Column */}
-            <div className="lg:col-span-7 bg-black/40 border border-white/5 p-5 rounded-2xl">
+            <div className="rounded-lg border border-white/5 bg-black/40 p-5 lg:col-span-7">
               <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-4">Example responsibilities</span>
               <ul className="space-y-3">
                 {current.tasks.map((task, idx) => (

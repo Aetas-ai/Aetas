@@ -72,8 +72,8 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
 
 <section
   class:list={[
-    'page-hero relative isolate flex items-center overflow-hidden border-b border-white/5 px-6',
-    compact ? 'min-h-[360px] py-14 sm:min-h-[400px] sm:py-16' : 'min-h-[calc(100svh-8rem)] py-14 sm:py-16 lg:py-20',
+    'page-hero relative isolate flex items-center overflow-hidden border-b border-white/5 bg-brand-bg px-6',
+    compact ? 'min-h-[360px] py-14 sm:min-h-[400px] sm:py-16' : 'page-hero-full py-14 sm:py-16 lg:py-20',
   ]}
   aria-labelledby={heroId}
 >
@@ -140,6 +140,11 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
 </section>
 
 <style>
+  .page-hero-full {
+    min-height: calc(100vh - var(--site-header-height));
+    min-height: calc(100dvh - var(--site-header-height));
+  }
+
   @media (min-width: 1024px) and (max-height: 800px) {
     .page-hero {
       padding-top: 2.5rem;

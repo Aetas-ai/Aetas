@@ -11,8 +11,8 @@ import PageHero from '../components/PageHero.astro';
     compact
   />
 
-  <section class="section-light mx-auto max-w-7xl px-6 py-20 sm:py-24">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+  <section class="section-light mx-auto max-w-7xl px-5 py-20 sm:px-6 sm:py-24">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
       <div class="lg:col-span-5 flex flex-col gap-8">
         <div class="media-frame-light p-5">
           <img src="/undraw-chatting.svg" alt="Support conversation illustration" class="mx-auto aspect-[16/10] w-full max-w-sm object-contain" loading="eager" />
@@ -42,7 +42,7 @@ import PageHero from '../components/PageHero.astro';
       </div>
 
       <div class="lg:col-span-7">
-        <div class="glass-panel p-8 relative overflow-hidden">
+        <div class="glass-panel relative overflow-hidden rounded-lg p-6 sm:p-8">
           <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
 
           <form class="form-on-light space-y-6" name="aetas-contact" method="post" action="/api/forms/contact" data-secure-form novalidate>

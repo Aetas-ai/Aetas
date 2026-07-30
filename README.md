@@ -15,9 +15,11 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Responsive Astro pages for the company and all three service areas
 - Hybrid enterprise visual system with dark technical sections, light editorial bands, and distinct service accents
 - Custom AGI service-network hero built with inline SVG and CSS
+- Viewport-aware dark heroes that account for the fixed header and retain the brand background during Astro transitions
 - Interactive service responsibility selector and advisor quiz
 - Bob chat assistant loaded as a non-critical React island
 - Delayed loading feedback that appears only when a page is genuinely slow
+- Centered dark editorial Work and Resources indexes with scoped service accents, readable article detail pages, and fixed-assistant bottom clearance
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
 - Prepared server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials; public form processing remains deferred until its complete environment configuration is enabled
@@ -54,12 +56,14 @@ public/              Optimized images, logos, icons, robots.txt
 Important homepage files:
 
 - `src/components/HomeHero.astro`: homepage hero structure and service rail
+- `src/components/PageHero.astro`: shared dark page hero, fixed-header viewport sizing, service accents, and optional calls to action
 - `src/components/AgiNetworkGraph.astro`: custom animated AGI service network
 - `src/components/AboutVisualGallery.astro`: lightweight About page visual gallery
 - `src/pages/index.astro`: homepage sections and interactive islands
 - `src/layouts/Layout.astro`: shared shell, SEO metadata, loader, navigation, and Bob assistant
-- `scripts/security-headers-integration.mjs`: validates new-tab links and public artifacts, hashes final inline scripts and style blocks, and generates `dist/client/_headers.json` plus the optional LiteSpeed `.htaccess`
-- `scripts/start-server.mjs`: validates production configuration and starts the application-controlled secure Node listener
+- `src/pages/work.astro`: provisional, non-fabricated case-study presentation
+- `src/pages/resources/index.astro`: dark editorial resource index backed by `src/data/resources.ts`
+- `scripts/security-headers-integration.mjs`: validates new-tab links, hashes final inline scripts and style blocks, and generates `dist/client/.htaccess`
 - `src/middleware.ts`: hardens on-demand API responses, trusted-origin handling, reserved non-indexed routes, and privacy-preserving error logs
 - `src/lib/server/forms.ts`: shared form schemas, safe delivery formatting, and endpoint handling
 - `src/lib/server/form-security.ts`: signed CSRF tokens and bounded per-IP/per-endpoint rate limiting
@@ -69,10 +73,19 @@ Important homepage files:
 The site uses a hybrid enterprise contrast system instead of a single dark surface across every page:
 
 - Dark surfaces frame heroes, technical workflows, partner logos, and operational visuals.
-- Light and light-muted bands support service explanations, forms, resources, and conversion content.
+- Light and light-muted bands support service explanations, forms, and selected conversion content. The Work and Resources indexes intentionally use dark graphite editorial sections.
 - AI & Automation uses violet, Cybersecurity uses cyan, Managed IT uses amber, and governance states use green.
 - Shared surface, card, button, media, and form treatments live in `src/styles/global.css`. Reuse those utilities before adding page-specific colors.
 - Motion remains restrained and must respect `prefers-reduced-motion`.
+
+## Navigation and Loading Behavior
+
+- Astro `ClientRouter` provides site navigation and transition lifecycle events.
+- A 650 ms threshold prevents the overlay from flashing during fast loads.
+- The original loading presentation keeps Bob centered inside two decorative rings and uses a CSS-driven progress fill.
+- The loader retains its polite status region, minimum visible duration, fade cleanup, and `aria-busy` behavior.
+- Reduced motion disables ring rotation and the decorative progress scan.
+- The former development-only loader preview and replay control are not present.
 
 ## Routes
 
@@ -107,4 +120,6 @@ npx astro dev logs
 npx astro dev stop
 ```
 
-Run `npm test` and `npm run build` before pushing or uploading a deployment package.
+Run `npm run build` before pushing or uploading a deployment package.
+
+There is currently no `npm test` script. Use `npm run` to inspect available scripts and run `git diff --check` alongside the production build before handoff.
