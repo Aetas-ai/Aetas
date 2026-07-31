@@ -6,7 +6,7 @@ Astro company website for **Aetas Global Innovation (AGI)**. `Aetas.ai` is the c
 - **Cybersecurity**: MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing).
 - **Managed IT**: MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.
 
-Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, and [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing.
+Read [HANDOFF.md](./HANDOFF.md) before changing positioning, services, partners, major routes, or shared functionality. Use [COLLABORATION.md](./COLLABORATION.md) for installation and team workflow instructions, [SEO-DEPLOYMENT.md](./SEO-DEPLOYMENT.md) for production deployment and search indexing, and [DEPENDENCY-SECURITY.md](./DEPENDENCY-SECURITY.md) when a dependency vulnerability is reported.
 
 Current messaging anchors are maintained in `HANDOFF.md`. Public copy should present AGI naturally as the company and should not repeatedly explain the structure with phrases such as "one company" or "one accountable company."
 
@@ -26,6 +26,7 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Canonical metadata, structured data, robots instructions, and generated sitemap
 - Application-controlled Node and Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
 - Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
+- A patched PostCSS transitive dependency enforced through npm overrides; hosted dependency alerts are provided by Hostinger rather than by website runtime code
 
 The homepage network is an original Aetas component. It does not use the Aceternity globe, Three.js, React Three Fiber, or a copied UI component.
 

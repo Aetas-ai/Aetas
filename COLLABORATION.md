@@ -2,6 +2,8 @@
 
 Use this guide to install, clone, run, update, and hand off the Aetas Global Innovation website.
 
+Use [DEPENDENCY-SECURITY.md](./DEPENDENCY-SECURITY.md) for the repository-specific process to investigate, patch, verify, and redeploy vulnerable dependencies.
+
 ## 1. Install Prerequisites
 
 Install these tools before cloning the repository:
