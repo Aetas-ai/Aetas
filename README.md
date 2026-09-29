@@ -26,7 +26,7 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Canonical metadata, structured data, robots instructions, and generated sitemap
 - Application-controlled Node and Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
 - Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
-- A patched PostCSS transitive dependency enforced through npm overrides; hosted dependency alerts are provided by Hostinger rather than by website runtime code
+- A patched dependency baseline (Astro 7.3.5) and PostCSS transitive dependency override; hosted dependency alerts are provided by Hostinger rather than by website runtime code
 
 The homepage network is an original Aetas component. It does not use the Aceternity globe, Three.js, React Three Fiber, or a copied UI component.
 

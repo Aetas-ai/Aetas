@@ -67,20 +67,40 @@ Confirm that the selected version is outside the advisory's affected range and c
 
 ## 5. Apply the Update
 
-For a direct dependency already listed in `package.json`:
+Choose the appropriate update path depending on how the package is brought into the project:
+
+### Path A: Astro Core Integration Upgrades
+When Astro core packages (`astro`, `@astrojs/node`, `@astrojs/react`, `@astrojs/sitemap`) need security or feature updates:
+
+```powershell
+npx @astrojs/upgrade
+```
+
+- When prompted about breaking changes in an integration (e.g., `@astrojs/react` upgrading major versions), review the integration's release notes. Check if the project uses the deprecated/removed feature (such as legacy Babel options). If the codebase uses only standard features, proceed.
+- If upgrading a specific integration without upgrading everything:
+  ```powershell
+  npm install astro@latest @astrojs/node@latest @astrojs/react@latest @astrojs/sitemap@latest
+  ```
+
+### Path B: Direct Dependencies in package.json
+For a direct dependency listed in `package.json`:
 
 ```powershell
 npm install PACKAGE_NAME@PATCHED_VERSION
 ```
 
-For a transitive dependency, first try:
+### Path C: Transitive (Sub-dependency) Updates
+For a vulnerability inside a sub-dependency, first attempt:
 
 ```powershell
 npm update PACKAGE_NAME
 npm ls PACKAGE_NAME --all
 ```
 
-If the parent dependency still resolves a vulnerable version, add or update an npm override in `package.json`:
+If the parent dependency has a compatible semver range, `npm update` will bump the sub-dependency in `package-lock.json`.
+
+### Path D: Transitive Dependency Pinning via Overrides
+If parent packages restrict the version range or do not release an immediate patch, enforce the patched version globally in `package.json`:
 
 ```json
 "overrides": {
@@ -88,23 +108,18 @@ If the parent dependency still resolves a vulnerable version, add or update an n
 }
 ```
 
-Then regenerate the installation and lockfile:
+Then regenerate the lockfile and verify:
 
 ```powershell
 npm install
+npm ls PACKAGE_NAME --all
 ```
 
-The current PostCSS remediation uses:
-
-```json
-"overrides": {
-  "postcss": "8.5.25"
-}
-```
-
-Review overrides whenever Astro, Vite, or another parent dependency is upgraded. Remove an override only after a clean install resolves a non-vulnerable compatible version without it.
+Review overrides periodically when parent packages release updates. Remove an override once parent packages natively pull safe versions.
 
 ## 6. Verify the Remediation
+
+Run the full verification battery locally before committing:
 
 ```powershell
 npm ls PACKAGE_NAME --all
@@ -116,11 +131,11 @@ git diff --check
 
 Confirm all of the following:
 
-- No affected package version remains in `npm ls`.
-- `npm audit` does not report the advisory.
-- All repository tests pass.
-- The production build completes.
-- `git diff --check` reports no whitespace errors.
+- No affected package version remains in `npm ls`. (If the package was eliminated by upstream changes, `npm ls PACKAGE_NAME` will report `(empty)`, confirming complete removal).
+- `npm audit` reports zero vulnerabilities.
+- All 16 repository security tests pass (`npm test`).
+- The production build completes without errors (`npm run build`).
+- `git diff --check` reports no trailing whitespace or merge marker issues.
 - `dist/index.html`, `dist/.htaccess`, and `dist/_headers.json` exist.
 - `dist-server/entry.mjs` exists outside the public `dist` directory.
 
@@ -131,11 +146,11 @@ git status
 git diff -- package.json package-lock.json
 ```
 
-Dependency remediation normally changes `package.json` and `package-lock.json`. Documentation may also change when a pin, override, deployment requirement, or maintenance rule is introduced.
+Dependency remediation changes `package.json` and `package-lock.json`. Documentation should also be updated when an upgrade, pin, or override is added or modified.
 
 ```powershell
-git add package.json package-lock.json
-git commit -m "fix: patch PACKAGE_NAME dependency vulnerability"
+git add package.json package-lock.json DEPENDENCY-SECURITY.md HANDOFF.md
+git commit -m "fix: remediate dependency vulnerabilities"
 git push -u origin fix/PACKAGE-vulnerability
 ```
 
@@ -169,19 +184,44 @@ Upload the new ZIP and redeploy. Hostinger will perform a clean dependency insta
 3. Confirm `https://aetas.ai` and the changed pages load correctly.
 4. Confirm the expected security response headers remain present.
 5. Allow Hostinger to rescan the deployment.
-6. Confirm the original vulnerability alert is resolved.
+6. Confirm the original vulnerability alerts are resolved.
 
 Hostinger may not clear an alert immediately because dependency scans can run on a schedule. If the alert remains after a rescan, confirm that the deployment used the latest ZIP and inspect the build log for the installed package version.
 
-## Current PostCSS Remediation
+---
 
-The July 2026 alert `GHSA-r28c-9q8g-f849` affects PostCSS through version 8.5.17. The project pins PostCSS to patched version 8.5.25 through npm overrides.
+## Remediation History
+
+### September 2026: Astro Core & Transitive Vulnerability Remediation
+Resolved multiple high- and moderate-severity advisories reported in the Astro ecosystem:
+
+| Package | Affected Versions | Resolved Version | Vulnerabilities / Advisories Addressed | Resolution Method |
+| :--- | :--- | :--- | :--- | :--- |
+| **astro** | 7.1.3 | **7.3.5** | GHSA-26w7-cxv4-gfx2 (RCE in AVIF image optimization), CVE-2026-84376 (base path bypass) | `npx @astrojs/upgrade` |
+| **sharp** | 0.35.3 | **0.35.5** | GHSA-rgj7-g3m4-5g8c (libheif RCE) | Transitive update via `astro@7.3.5` |
+| **js-yaml** | 4.3.1 | **4.3.2** | CVE-2026-84375 (CPU DoS via maxTotalMergeKeys) | Transitive update via `astro@7.3.5` & internal helpers |
+| **svgo** | 4.0.2 | **4.1.0** | CVE-2026-84370 & CVE-2026-84369 (SVG script/HTML bypass) | Transitive update via `astro@7.3.5` |
+| **devalue** | 5.8.1 | **5.9.4** | CVE-2026-81176 (DoS via malformed input) | Transitive update via `astro@7.3.5` & `@astrojs/react@7.0.0` |
+| **browserslist** | 4.28.4 | **Eliminated** | CVE-2026-73089 & CVE-2026-73088 (OOM cache growth & prototype crash) | Removed upstream with Babel removal in `@astrojs/react@7.0.0` |
+| **baseline-browser-mapping** | 2.10.41 | **Eliminated** | CVE-2026-45819 (process termination DoS) | Removed upstream with Babel removal in `@astrojs/react@7.0.0` |
+
+**Verification results:**
+- `npm ls` confirmed all patched sub-dependencies; `browserslist` and `baseline-browser-mapping` verified removed (`empty`).
+- `npm audit` returned 0 vulnerabilities.
+- All 16 repository security tests passed.
+- Production build succeeded (`npm run build`).
+
+### July 2026: PostCSS Transitive Remediation
+The alert `GHSA-r28c-9q8g-f849` affected PostCSS through version 8.5.17. The project pins PostCSS to patched version 8.5.25 through npm overrides:
+
+```json
+"overrides": {
+  "postcss": "8.5.25"
+}
+```
 
 Verification completed before handoff:
-
 - `npm ls postcss --all` resolved `postcss@8.5.25`.
 - `npm audit` reported zero vulnerabilities.
 - All 16 security tests passed.
-- The production build passed.
-
-The fix reaches Hostinger only after the updated source is committed, merged into `main`, and redeployed. Future advisories must be assessed independently; resolving one advisory does not guarantee that unrelated vulnerabilities will never be discovered.
+- Production build passed.
