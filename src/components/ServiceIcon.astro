@@ -1,0 +1,16 @@
+---
+/** Static (non-hydrated) service glyph shared by the navigation and footer. */
+import { Headset, ShieldCheck, Workflow } from 'lucide-react';
+import type { ServiceKey } from '../data/navigation';
+
+interface Props {
+  service: ServiceKey;
+  class?: string;
+}
+
+const { service, class: className } = Astro.props;
+const icons = { ai: Workflow, security: ShieldCheck, 'managed-it': Headset };
+const Icon = icons[service];
+---
+
+<Icon className={className} strokeWidth={1.75} aria-hidden="true" focusable="false" />

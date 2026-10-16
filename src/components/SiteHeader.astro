@@ -1,0 +1,114 @@
+---
+/**
+ * Fixed site header: logo, Services mega menu (disclosure pattern), primary
+ * links, and the contact CTA. Behaviour lives in src/scripts/site-nav.ts.
+ */
+import ServiceIcon from './ServiceIcon.astro';
+import {
+  activeService,
+  contactLink,
+  isActivePath,
+  primaryNav,
+  serviceFinderLink,
+  serviceNav,
+  type ServiceKey,
+} from '../data/navigation';
+
+interface Props {
+  currentPath: string;
+  activePillar: ServiceKey | 'none';
+}
+
+const { currentPath, activePillar } = Astro.props;
+const currentService = activeService(currentPath, activePillar);
+const contactActive = isActivePath(currentPath, contactLink.href);
+---
+
+<header class="site-header fixed inset-x-0 top-0 z-50">
+  <div class="site-header-row mx-auto flex h-[var(--site-header-height)] max-w-7xl items-center gap-6 px-4 sm:px-6">
+    <a href="/" class="site-header-logo" aria-label="Aetas Global Innovation home">
+      <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" />
+    </a>
+
+    <nav class="site-nav hidden flex-1 justify-center lg:flex" aria-label="Primary navigation">
+      <ul class="flex items-center gap-0.5">
+        <li class="nav-dropdown" data-nav-dropdown>
+          <button
+            type="button"
+            class="site-nav-link site-nav-trigger"
+            aria-expanded="false"
+            aria-controls="services-menu"
+            data-nav-trigger
+            data-active={currentService ? '' : undefined}
+          >
+            Services
+            <svg class="site-nav-chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+              <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div id="services-menu" class="nav-panel" data-nav-panel>
+            <div class="nav-panel-surface">
+              <ul class="nav-panel-grid">
+                {serviceNav.map((service) => (
+                  <li class:list={['nav-service', `accent-${service.accent}`]} data-nav-column data-current={currentService === service.key ? '' : undefined}>
+                    <a href={service.href} class="nav-service-head" aria-current={isActivePath(currentPath, service.href) ? 'page' : undefined}>
+                      <span class="nav-service-icon">
+                        <ServiceIcon service={service.key} class="h-[1.125rem] w-[1.125rem]" />
+                      </span>
+                      <span class="min-w-0">
+                        <span class="nav-service-title">{service.label}</span>
+                        <span class="nav-service-tag">{service.tag}</span>
+                      </span>
+                    </a>
+                    <p class="nav-service-blurb">{service.blurb}</p>
+                    <ul class="nav-service-list">
+                      {service.capabilities.map((capability) => (
+                        <li>
+                          <a href={capability.href} class="nav-capability">
+                            <span class="nav-capability-label">{capability.label}</span>
+                            {capability.hint && <span class="nav-capability-hint">{capability.hint}</span>}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+              <div class="nav-panel-foot" data-nav-column>
+                <p>Not sure which service fits your need?</p>
+                <a href={serviceFinderLink.href} class="nav-panel-foot-link">{serviceFinderLink.label}<span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        {primaryNav.map((link) => (
+          <li>
+            <a href={link.href} class="site-nav-link" aria-current={isActivePath(currentPath, link.href) ? 'page' : undefined}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2 lg:ml-0">
+      <a href={contactLink.href} class="site-header-cta hidden lg:inline-flex" aria-current={contactActive ? 'page' : undefined}>
+        {contactLink.label}
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="site-menu-button lg:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

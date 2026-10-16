@@ -50,7 +50,9 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
     <div class="absolute inset-0 -z-20">
       <Image src={image} alt={imageAlt} widths={[640, 960, 1440]} sizes="100vw" class="h-full w-full object-cover object-center brightness-[0.3] saturate-[0.72] scale-[1.01]" loading="eager" decoding="async" fetchpriority="high" />
     </div>
-  ) : null}
+  ) : (
+    <div class:list={['page-hero-light pointer-events-none absolute inset-0 -z-10', accentClass]} aria-hidden="true"></div>
+  )}
 
   <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.032)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.032)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_94%)]" aria-hidden="true"></div>
   <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(100deg,#050508_0%,rgba(5,5,8,0.97)_43%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.48)_100%)] max-xl:bg-[linear-gradient(180deg,rgba(5,5,8,0.82)_0%,#050508_96%)]" aria-hidden="true"></div>
@@ -102,6 +104,13 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
 </section>
 
 <style>
+  /* Heroes without a background image get restrained accent light instead. */
+  .page-hero-light {
+    background:
+      radial-gradient(44rem 28rem at 82% 30%, color-mix(in srgb, var(--accent, var(--color-ai)) 13%, transparent), transparent 70%),
+      radial-gradient(30rem 20rem at 8% 0%, color-mix(in srgb, var(--accent, var(--color-ai)) 6%, transparent), transparent 70%);
+  }
+
   .agi-hero-focus {
     animation: agi-hero-focus-in 720ms var(--ease-out-expo) 120ms both;
   }

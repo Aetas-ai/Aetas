@@ -2,88 +2,87 @@
 import Layout from '../layouts/Layout.astro';
 import HomeHero from '../components/HomeHero.astro';
 import AdvisorQuiz from '../components/AdvisorQuiz';
-import FeatureCarousel from '../components/ui/feature-carousel';
 import ManagedSystems from '../components/ManagedSystems';
-import OperationsVisual from '../components/OperationsVisual';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import { responsiveImage, visuals } from '../lib/visuals';
+import ServiceIcon from '../components/ServiceIcon.astro';
 
-const [carouselImages, operationsImages] = await Promise.all([
-  Promise.all([visuals.aiWorkflows, visuals.securityOps, visuals.globalOps].map((image) => responsiveImage(image))),
-  Promise.all([visuals.aiWorkflows, visuals.securityOps, visuals.globalOps].map((image) => responsiveImage(image, [480, 768]))),
-]);
-
-const services = [
+const showcase = [
   {
+    key: 'ai',
     accent: 'ai',
-    label: 'AI Services',
-    title: 'AI & Automation',
+    label: 'AI & Automation',
+    title: 'Put Human Led AI to work inside your Business Processes.',
     body: 'Human Led AI and Business Process AI Assimilation for operational teams, with Expert Human Oversight of AI (Expert in the Loop).',
+    points: ['AI classifies, retrieves approved SOPs, and drafts the next step', 'Experts approve, edit, or escalate before customer or system impact', 'Validation gates, escalation paths, and audit trails by design'],
     href: '/ai',
-    link: 'Explore AI services',
+    link: 'Explore AI & Automation',
   },
   {
+    key: 'security',
     accent: 'security',
-    label: 'Cybersecurity Services',
-    title: 'Cybersecurity',
+    label: 'Cybersecurity',
+    title: 'Detect threats. Test defenses. Strengthen resilience.',
     body: 'MSSP expertise for Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
+    points: ['Managed Extended Detection and Response (MXDR)', 'Network Security Testing', 'Application Security Testing (Pen Testing)'],
     href: '/security',
-    link: 'Explore security',
+    link: 'Explore Cybersecurity',
   },
   {
+    key: 'managed-it',
     accent: 'global',
-    label: 'Managed IT / Business Processes',
-    title: 'Managed IT',
+    label: 'Managed IT',
+    title: 'Keep IT support and outsourced operations moving.',
     body: 'MSP expertise for Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
+    points: ['Help Desk as a Service with L1-L3 escalation', 'Product Support as a Service', 'Business Processes operations and reporting'],
     href: '/managed-it',
-    link: 'Explore managed IT',
+    link: 'Explore Managed IT',
   },
-];
+] as const;
 
 const examples = [
   {
     accent: 'ai',
     label: 'AI & Automation example',
     title: 'Business Process AI Assimilation',
-    steps: ['Work intake', 'Human Led AI assistance', 'Expert Human Oversight of AI', 'approved next step'],
+    steps: ['Work intake', 'Human Led AI assistance', 'Expert Human Oversight of AI', 'Approved next step'],
   },
   {
     accent: 'security',
     label: 'Cybersecurity example',
     title: 'Managed Extended Detection and Response',
-    steps: ['Security detection', 'investigation', 'expert review', 'response and escalation'],
+    steps: ['Security detection', 'Investigation', 'Expert review', 'Response and escalation'],
   },
   {
     accent: 'global',
     label: 'Managed IT example',
     title: 'Managed support request',
-    steps: ['User request', 'assigned support queue', 'specialist handling', 'documented resolution or escalation'],
+    steps: ['User request', 'Assigned support queue', 'Specialist handling', 'Documented resolution or escalation'],
   },
 ];
 
 const engagement = [
   {
     accent: 'ai',
-    step: '1. Identify',
+    step: 'Identify',
     title: 'Identify the service area',
     body: 'Determine whether the requirement is AI workflow automation, cybersecurity, or managed IT and Business Processes operations.',
   },
   {
     accent: 'security',
-    step: '2. Scope',
+    step: 'Scope',
     title: 'Define the work and boundaries',
     body: 'Document systems, responsibilities, dependencies, exclusions, and expected handoffs for the selected service.',
   },
   {
     accent: 'global',
-    step: '3. Assign',
+    step: 'Assign',
     title: 'Set ownership and escalation',
     body: 'Establish who handles routine work, who reviews exceptions, and where high-impact decisions are escalated.',
   },
   {
     accent: 'governance',
-    step: '4. Review',
+    step: 'Review',
     title: 'Review delivery within scope',
     body: 'Evaluate the agreed workflow, address recurring blockers, and define any changes with the responsible AGI specialists.',
   },
@@ -93,46 +92,37 @@ const engagement = [
 <Layout title="Aetas Global Innovation | AI, Cybersecurity & Managed IT" description="Aetas.ai is the digital home of Aetas Global Innovation (AGI), providing AI and automation, cybersecurity, and managed IT services.">
   <HomeHero />
 
-  <section id="services" class="section-light section-spectrum agi-section scroll-mt-24">
+  <section id="services" class="agi-band agi-section">
+    <div class="agi-grid-mask" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl">
       <SectionHeading
         align="center"
+        eyebrow="AGI services"
         title="Specialized expertise. Coordinated around your business."
         lede="Engage AGI for the service your business needs: practical AI and automation, managed cybersecurity, or dependable managed IT and business operations."
       />
 
-      <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8" data-reveal-group>
-        {services.map((service) => (
-          <article class:list={['agi-card agi-card--light agi-card--accent agi-card--interactive flex flex-col', `accent-${service.accent}`]}>
-            <span class="agi-eyebrow">{service.label}</span>
-            <h3 class="mt-5 font-display text-h3 font-bold text-strong">{service.title}</h3>
-            <p class="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-muted">{service.body}</p>
-            <a href={service.href} class="agi-card-link mt-6">{service.link}</a>
+      <div class="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-3" data-reveal-group>
+        {showcase.map((service, index) => (
+          <article class:list={['agi-card agi-card--dark agi-card--accent agi-card--interactive home-service flex flex-col', `accent-${service.accent}`]}>
+            <div class="flex items-center justify-between">
+              <span class="nav-service-icon h-11 w-11 rounded-xl">
+                <ServiceIcon service={service.key} class="h-5 w-5" />
+              </span>
+              <span class="agi-mono text-gray-500">0{index + 1}</span>
+            </div>
+            <span class="agi-eyebrow mt-8">{service.label}</span>
+            <h3 class="mt-3 font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-white">{service.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{service.body}</p>
+            <ul class="agi-check-list mt-6 border-t border-white/[0.06] pt-6">{service.points.map((point) => <li class="text-sm">{point}</li>)}</ul>
+            <a href={service.href} class="agi-card-link agi-card-link--on-dark mt-auto pt-8">{service.link}</a>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section-dark-raised agi-section">
-    <div class="mx-auto max-w-7xl">
-      <SectionHeading
-        align="center"
-        accent="ai"
-        eyebrow="Why Aetas Global Innovation"
-        title="Specialized expertise for three critical areas of work."
-        lede="AGI gives organizations a clear place to start. Our AI and automation, cybersecurity, and managed IT services each have a defined purpose and are coordinated around your operational requirements."
-        class="mb-14"
-      />
-      <FeatureCarousel client:visible images={carouselImages} />
-    </div>
-  </section>
-
-  <div class="border-y border-white/5 bg-black/20">
-    <OperationsVisual images={operationsImages} />
-  </div>
-
-  <section class="agi-section border-y border-white/5 bg-black/40" aria-labelledby="example-workflows-title">
+  <section class="agi-section" aria-labelledby="example-workflows-title">
     <div class="mx-auto max-w-7xl">
       <SectionHeading
         id="example-workflows-title"
@@ -141,17 +131,16 @@ const engagement = [
         lede="These examples illustrate service scope. The exact workflow is defined around the client environment and agreed responsibilities."
       />
 
-      <div class="mt-12 grid gap-4 lg:grid-cols-3" data-reveal-group>
+      <div class="mt-14 grid grid-cols-1 gap-12" data-reveal-group>
         {examples.map((example) => (
-          <article class:list={['agi-card agi-card--dark agi-card--accent', `accent-${example.accent}`]}>
-            <span class="agi-eyebrow">{example.label}</span>
-            <h3 class="mt-4 font-display text-lg font-bold text-white">{example.title}</h3>
-            <ol class="mt-5 space-y-2.5">
-              {example.steps.map((step, index) => (
-                <li class="flex items-center gap-3 text-sm text-muted">
-                  <span class="agi-step-index h-6 w-6 text-[0.6875rem]">{index + 1}</span>
-                  <span>{step}</span>
-                </li>
+          <article class:list={['grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-12', `accent-${example.accent}`]}>
+            <div>
+              <span class="agi-eyebrow">{example.label}</span>
+              <h3 class="mt-3 font-display text-lg font-semibold text-white">{example.title}</h3>
+            </div>
+            <ol class="agi-steps" style="--steps: 4">
+              {example.steps.map((step) => (
+                <li class="agi-step text-[0.9375rem] font-medium text-gray-200">{step}</li>
               ))}
             </ol>
           </article>
@@ -161,30 +150,30 @@ const engagement = [
   </section>
 
   <section class="section-light-muted agi-section">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
+    <div class="mx-auto max-w-7xl">
       <SectionHeading
-        class="lg:col-span-5"
         accent="governance"
         eyebrow="How engagement starts"
         title="Start with one need. AGI will help define the right service."
         lede="AGI begins with your operational requirement, then brings in the appropriate AI, cybersecurity, or managed IT specialists to define scope, responsibilities, review points, and escalation before delivery begins."
       />
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7" data-reveal-group>
+      <ol class="agi-steps mt-14" style="--steps: 4" data-reveal-group>
         {engagement.map((item) => (
-          <article class:list={['agi-card agi-card--light', `accent-${item.accent}`]}>
+          <li class:list={['agi-step', `accent-${item.accent}`]}>
             <span class="agi-eyebrow">{item.step}</span>
-            <h3 class="mt-3 font-display text-xl font-bold text-strong">{item.title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-muted">{item.body}</p>
-          </article>
+            <h3 class="mt-2 font-display text-lg font-bold text-strong">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 
-  <section id="systems-we-manage" class="section-dark-raised agi-section scroll-mt-24">
+  <section id="systems-we-manage" class="agi-band agi-section">
     <div class="mx-auto max-w-7xl">
       <SectionHeading
         align="center"
+        eyebrow="Responsibilities"
         title="Technology responsibilities by service."
         lede="AGI cybersecurity and managed IT specialists support different responsibilities within a client environment. These examples help clarify the service that fits each need."
         class="mb-14"
@@ -193,10 +182,11 @@ const engagement = [
     </div>
   </section>
 
-  <section class="agi-section relative border-y border-white/5 bg-black/20">
+  <section id="service-finder" class="agi-section">
     <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
       <SectionHeading
         class="lg:col-span-5"
+        eyebrow="Service finder"
         title="Which AGI service fits your need?"
         lede="Answer a few questions to identify whether AI and automation, cybersecurity, or managed IT best matches your requirement. This is service guidance, not an automated assessment."
       />
@@ -206,15 +196,15 @@ const engagement = [
     </div>
   </section>
 
-  <section class="section-light section-spectrum agi-section">
+  <section class="agi-band agi-glow agi-section accent-ai">
     <SectionHeading
       align="center"
       title="Start with the AGI service that matches your need."
       lede="Tell us whether you are exploring Business Processes workflow automation, cybersecurity services, or managed IT and outsourced operations. AGI will connect you with the right specialists."
     >
       <div class="mt-4 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <Button href="/contact" tone="light" arrow stretch>Talk to AGI</Button>
-        <Button href="/operations-readiness-brief" tone="light" variant="secondary" stretch>Download the AGI brief</Button>
+        <Button href="/contact" arrow stretch>Talk to AGI</Button>
+        <Button href="/operations-readiness-brief" variant="secondary" stretch>Download the AGI brief</Button>
       </div>
     </SectionHeading>
   </section>

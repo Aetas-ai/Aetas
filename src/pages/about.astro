@@ -1,23 +1,87 @@
 ---
-import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import AboutVisualGallery from '../components/AboutVisualGallery.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import { visuals } from '../lib/visuals';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import PartnerLogo from '../components/PartnerLogo.astro';
+import { cloudAiPartners, securityPartners } from '../data/partner-logos';
 
-const services = [
-  { title: 'AI & Automation', accent: 'ai', image: visuals.aiWorkflows, body: 'Human Led AI and Business Process AI Assimilation for recurring workflows, with Expert Human Oversight of AI (Expert in the Loop).' },
-  { title: 'Cybersecurity', accent: 'security', image: visuals.securityOps, body: 'MSSP services including Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).' },
-  { title: 'Managed IT', accent: 'global', image: visuals.globalOps, body: 'MSP services including Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.' },
-];
+// Needs and scopes reuse the approved service-finder wording (AdvisorQuiz).
+const needs = [
+  {
+    need: 'Repetitive processing, drafting, or ticket routing',
+    service: 'AI & Automation',
+    key: 'ai',
+    accent: 'ai',
+    href: '/ai',
+    scope: 'Identify steps where AI can assist while people retain review and approval.',
+  },
+  {
+    need: 'Managed detection or offensive security testing',
+    service: 'Cybersecurity',
+    key: 'security',
+    accent: 'security',
+    href: '/security',
+    scope: 'MXDR, Network Security Testing, or Application Security Testing (Pen Testing).',
+  },
+  {
+    need: 'Recurring IT requests and software administration',
+    service: 'Managed IT',
+    key: 'managed-it',
+    accent: 'global',
+    href: '/managed-it',
+    scope: 'Helpdesk queues, access requests, onboarding, device management, and tenant upkeep.',
+  },
+] as const;
 
 const principles = [
   ['Clear service choices', 'AI and automation, cybersecurity, and managed IT are presented as specialized AGI services with clear scopes.'],
   ['Human accountability', 'Human Led AI includes Expert Human Oversight of AI for decisions that affect customers, accounts, systems, or security.'],
   ['Defined ownership', 'Each engagement identifies responsibilities, review points, handoffs, and escalation paths.'],
   ['Scope before delivery', 'Work begins by clarifying the client need, service boundaries, dependencies, and expected outcomes.'],
+];
+
+const partnerGroups = [
+  {
+    title: 'Cloud & AI partners',
+    accent: 'ai',
+    body: 'Cloud and AI providers that can support Human Led AI, Business Process AI Assimilation, and cloud requirements defined for each engagement.',
+    logos: cloudAiPartners,
+    named: true,
+  },
+  {
+    title: 'Cybersecurity partners',
+    accent: 'security',
+    body: 'Security providers supporting email, endpoint, access, exposure, detection, and response requirements across AGI cybersecurity services.',
+    logos: securityPartners,
+    named: false,
+  },
+];
+
+const faqs = [
+  {
+    question: 'What does AGI stand for?',
+    answer: 'AGI stands for Aetas Global Innovation, the company name. The connection to artificial general intelligence is intentional: it represents a practical focus on applying intelligence responsibly to real business work while keeping people accountable for high-impact decisions.',
+  },
+  {
+    question: 'What services does AGI provide?',
+    answer: 'AGI provides AI & Automation (Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI), Cybersecurity (MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security, including Network Security Testing and Application Security Testing (Pen Testing)), and Managed IT (MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations).',
+  },
+  {
+    question: 'Does AGI use fully autonomous AI?',
+    answer: 'No. AGI applies Human Led AI with Expert Human Oversight of AI (Expert in the Loop). AI can classify, draft, summarize, retrieve, or recommend, and experts review outputs through defined review and escalation paths before they affect customers, accounts, systems, or security.',
+  },
+  {
+    question: 'How does an engagement start?',
+    answer: 'AGI begins with your operational requirement. Together we identify the service area, define the work and boundaries, set ownership and escalation, and then review delivery within the agreed scope.',
+    link: { href: '/contact', label: 'Talk to AGI' },
+  },
+  {
+    question: 'Are AI & Automation, Cybersecurity, and Managed IT separate companies?',
+    answer: 'No. They are specialized service areas delivered directly by Aetas Global Innovation, each with its own scope and specialists.',
+  },
 ];
 ---
 
@@ -30,8 +94,6 @@ const principles = [
     title="Specialized expertise for intelligent, secure operations."
     description="AGI provides Human Led AI and automation, cybersecurity, and managed IT through dedicated service teams coordinated around client requirements."
     accent="neutral"
-    image={visuals.aboutAgi}
-    imageAlt="Aetas Global Innovation service network visualization"
     primaryLabel="Explore AGI services"
     primaryHref="/#services"
     secondaryLabel="Talk to AGI"
@@ -59,21 +121,38 @@ const principles = [
 
   <AboutVisualGallery />
 
-  <section class="section-light agi-section">
+  <section class="agi-band agi-section" aria-labelledby="about-needs-title">
     <div class="mx-auto max-w-7xl">
-      <SectionHeading accent="ai" eyebrow="AGI Services" title="Specialized expertise for different operational needs." class="mb-14" />
+      <SectionHeading
+        id="about-needs-title"
+        accent="ai"
+        eyebrow="AGI Services"
+        title="Specialized expertise for different operational needs."
+        lede="Start from the work that needs attention. Each need maps to the AGI service built for it."
+      />
 
-      <div class="grid gap-6 md:grid-cols-3" data-reveal-group>
-        {services.map((service) => (
-          <article class:list={['agi-card agi-card--light agi-card--accent agi-card--interactive overflow-hidden p-0', `accent-${service.accent}`]}>
-            <Image src={service.image} alt={`${service.title} service visualization`} widths={[480, 768]} sizes="(min-width: 768px) 30vw, 100vw" class="aspect-video w-full object-cover" loading="lazy" decoding="async" />
-            <div class="p-7">
-              <h3 class="font-display text-xl font-bold text-strong">{service.title}</h3>
-              <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{service.body}</p>
+      <ol class="mt-12 border-b border-white/[0.06]" data-reveal-group>
+        {needs.map((item) => (
+          <li class:list={['about-need', `accent-${item.accent}`]}>
+            <div>
+              <span class="agi-label">Operational need</span>
+              <h3 class="mt-2 font-display text-xl font-bold leading-snug text-white sm:text-2xl">{item.need}</h3>
             </div>
-          </article>
+            <svg class="about-need-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 12h15M14 7l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <a href={item.href} class="about-need-service">
+              <span class="nav-service-icon h-10 w-10 rounded-xl">
+                <ServiceIcon service={item.key} class="h-[1.125rem] w-[1.125rem]" />
+              </span>
+              <span class="min-w-0">
+                <span class="about-need-name">{item.service}</span>
+                <span class="mt-1 block text-sm leading-relaxed text-muted">{item.scope}</span>
+              </span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 
@@ -88,13 +167,237 @@ const principles = [
     </div>
   </section>
 
-  <section class="section-light agi-section">
+  <section class="agi-section" aria-labelledby="about-partners-title">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeading
+          id="about-partners-title"
+          eyebrow="Technology partners"
+          title="Technology aligned to each AGI service."
+          lede="Our cloud, AI, and cybersecurity partnerships help AGI align suitable technology with clearly scoped client requirements."
+        />
+        <a href="/partners" class="agi-card-link agi-card-link--on-dark flex-none" data-reveal>View all technology partners</a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2" data-reveal-group>
+        {partnerGroups.map((group) => (
+          <article class:list={['agi-card agi-card--dark agi-card--accent', `accent-${group.accent}`]}>
+            <h3 class="font-display text-lg font-bold text-white">{group.title}</h3>
+            <p class="mt-2 max-w-lg text-sm leading-relaxed text-muted">{group.body}</p>
+            <ul class:list={['about-logos mt-8', group.named ? 'about-logos--named' : 'about-logos--marks']}>
+              {group.logos.map((logo) => (
+                <li>
+                  <a
+                    href={logo.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="about-logo-link"
+                    aria-label={`Visit ${logo.name} website (opens in a new tab)`}
+                  >
+                    <PartnerLogo logo={logo} height={group.named ? '2rem' : '1.375rem'} />
+                    {group.named && <span class="text-xs font-semibold text-gray-300">{logo.name}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="agi-band agi-section" aria-labelledby="about-faq-title">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12">
+      <SectionHeading
+        id="about-faq-title"
+        class="lg:col-span-4"
+        eyebrow="FAQ"
+        title="Questions about AGI."
+      />
+      <div class="lg:col-span-8" data-reveal>
+        {faqs.map((faq) => (
+          <details class="about-faq">
+            <summary>
+              <span>{faq.question}</span>
+              <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </summary>
+            <div class="about-faq-answer">
+              <p>{faq.answer}</p>
+              {faq.link && <a href={faq.link.href} class="agi-card-link agi-card-link--on-dark mt-4">{faq.link.label}</a>}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="agi-band agi-glow agi-section accent-ai">
     <SectionHeading
       align="center"
       title="Start with the AGI service that matches your need."
       lede="Tell us whether your requirement involves Business Process AI Assimilation, cybersecurity, or managed IT and Business Processes operations. AGI will connect you with the specialists best suited to scope it."
     >
-      <Button href="/contact" tone="light" arrow class="mt-2">Talk to AGI</Button>
+      <Button href="/contact" arrow class="mt-2">Talk to AGI</Button>
     </SectionHeading>
   </section>
 </Layout>
+
+<style>
+  .about-need {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: center;
+    border-top: 1px solid var(--line-subtle);
+    padding-block: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .about-need {
+      grid-template-columns: minmax(0, 1.1fr) 2.5rem minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .about-need-arrow {
+    display: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--accent-text);
+  }
+
+  @media (min-width: 1024px) {
+    .about-need-arrow { display: block; }
+  }
+
+  .about-need-service {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 1px solid var(--line-subtle);
+    border-radius: var(--radius-card);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 80%), var(--surface-2);
+    padding: 1.125rem 1.25rem;
+    transition: border-color var(--duration-base) ease, transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .about-need-service:hover,
+  .about-need-service:focus-visible {
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .about-need-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+
+  .about-need-name::after {
+    color: var(--accent-text);
+    content: '→';
+    transition: transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .about-need-service:hover .about-need-name::after { transform: translateX(3px); }
+
+  .about-logos {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .about-logos--named { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-logos--marks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  @media (min-width: 640px) {
+    .about-logos--named { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .about-logos--marks { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .about-logo-link {
+    display: flex;
+    min-height: 5.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border: 1px solid var(--line-subtle);
+    border-radius: 0.625rem;
+    background: rgba(0, 0, 0, 0.22);
+    padding: 0.875rem;
+    text-align: center;
+    transition: border-color var(--duration-fast) ease, background-color var(--duration-fast) ease;
+  }
+
+  .about-logos--marks .about-logo-link { min-height: 4.25rem; }
+
+  .about-logo-link:hover {
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .about-logo-link :global(img),
+  .about-logo-link :global(svg) {
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .about-faq {
+    border-top: 1px solid var(--line-subtle);
+  }
+
+  .about-faq:last-child {
+    border-bottom: 1px solid var(--line-subtle);
+  }
+
+  .about-faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  .about-faq summary::-webkit-details-marker { display: none; }
+
+  .about-faq summary svg {
+    width: 0.875rem;
+    height: 0.875rem;
+    flex: none;
+    color: #9aa3b2;
+    transition: transform var(--duration-fast) ease;
+  }
+
+  .about-faq[open] summary svg { transform: rotate(180deg); }
+
+  .about-faq summary:hover { color: #e5e7eb; }
+
+  .about-faq summary:focus-visible {
+    border-radius: 0.375rem;
+    outline-offset: 2px;
+  }
+
+  .about-faq-answer {
+    max-width: 44rem;
+    padding-bottom: 1.5rem;
+    color: var(--surface-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-need-service:hover,
+    .about-need-service:focus-visible { transform: none; }
+  }
+</style>

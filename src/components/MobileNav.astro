@@ -1,0 +1,90 @@
+---
+/**
+ * Mobile navigation sheet (below lg). Rendered outside the header because the
+ * header's backdrop-filter would otherwise become the containing block for
+ * this fixed element. Behaviour lives in src/scripts/site-nav.ts.
+ */
+import ServiceIcon from './ServiceIcon.astro';
+import { activeService, contactLink, isActivePath, primaryNav, serviceFinderLink, serviceNav, type ServiceKey } from '../data/navigation';
+
+interface Props {
+  currentPath: string;
+  activePillar: ServiceKey | 'none';
+}
+
+const { currentPath, activePillar } = Astro.props;
+const currentService = activeService(currentPath, activePillar);
+---
+
+<div id="mobile-menu-overlay" class="mobile-nav-overlay lg:hidden" aria-hidden="true"></div>
+
+<div
+  id="mobile-menu"
+  class="mobile-nav lg:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site menu"
+>
+  <div class="flex items-center justify-between border-b border-white/[0.06] px-5 pb-4 pt-4">
+    <a href="/" class="flex h-10 w-32 items-center rounded-md" aria-label="Aetas Global Innovation home">
+      <img src="/aetasBrand.webp" alt="Aetas Global Innovation" width="720" height="238" class="h-full w-full object-contain object-left" decoding="async" loading="lazy" />
+    </a>
+    <button id="mobile-menu-close" type="button" class="site-menu-button" aria-label="Close menu">
+      <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M6 18 18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto overscroll-contain px-3 py-4" aria-label="Mobile navigation">
+    <button
+      type="button"
+      class="mobile-nav-accordion"
+      aria-expanded={currentService ? 'true' : 'false'}
+      aria-controls="mobile-services"
+      data-mobile-accordion
+    >
+      <span>Services</span>
+      <svg class="site-nav-chevron" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+        <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <ul id="mobile-services" class="mobile-nav-services" hidden={!currentService}>
+      {serviceNav.map((service) => (
+        <li class:list={['mobile-nav-service', `accent-${service.accent}`]} data-current={currentService === service.key ? '' : undefined}>
+          <a href={service.href} class="mobile-nav-service-head" aria-current={isActivePath(currentPath, service.href) ? 'page' : undefined}>
+            <span class="nav-service-icon">
+              <ServiceIcon service={service.key} class="h-4 w-4" />
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[0.9375rem] font-semibold text-white">{service.label}</span>
+              <span class="block text-xs text-gray-400">{service.tag}</span>
+            </span>
+          </a>
+          <ul class="mobile-nav-capabilities">
+            {service.capabilities.map((capability) => (
+              <li><a href={capability.href}>{capability.label}</a></li>
+            ))}
+          </ul>
+        </li>
+      ))}
+      <li>
+        <a href={serviceFinderLink.href} class="mobile-nav-finder">{serviceFinderLink.label}<span aria-hidden="true">→</span></a>
+      </li>
+    </ul>
+
+    <ul class="mt-2 border-t border-white/[0.06] pt-2">
+      {primaryNav.map((link) => (
+        <li>
+          <a href={link.href} class="mobile-nav-link" aria-current={isActivePath(currentPath, link.href) ? 'page' : undefined}>{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="flex flex-col gap-3 border-t border-white/[0.06] p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+    <a href={contactLink.href} class="agi-btn agi-btn--dark-primary w-full">{contactLink.label}<span class="agi-btn-arrow" aria-hidden="true">→</span></a>
+    <a href="mailto:info@aetas.ai" class="text-center text-xs text-gray-400 transition-colors hover:text-white">info@aetas.ai</a>
+  </div>
+</div>

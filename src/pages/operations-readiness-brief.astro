@@ -2,7 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import FormSubmitButton from '../components/FormSubmitButton.astro';
-import { visuals } from '../lib/visuals';
+
+// Topics come from the approved page description; no page counts or other claims.
+const briefTopics = [
+  { accent: 'ai', label: 'AI & Automation', title: 'Business Process AI Assimilation' },
+  { accent: 'governance', label: 'Oversight', title: 'Expert Human Oversight of AI' },
+  { accent: 'security', label: 'Cybersecurity', title: 'MXDR and Offensive Security' },
+  { accent: 'global', label: 'Managed IT', title: 'Managed IT and Business Processes operations' },
+];
 ---
 
 <Layout title="Download the AGI Operations Readiness Brief" description="Register to download the Aetas Global Innovation brief on Human Led AI, cybersecurity, managed IT, and Business Processes operations.">
@@ -11,8 +18,6 @@ import { visuals } from '../lib/visuals';
     title="A practical starting point for your next operations decision."
     description="Register for a concise guide to evaluating AGI services across Business Process AI Assimilation, MXDR, Offensive Security, managed IT, and Business Processes operations."
     accent="security"
-    image={visuals.operationsCommand}
-    imageAlt="AGI operations readiness visualization"
     compact
   />
 
@@ -34,9 +39,28 @@ import { visuals } from '../lib/visuals';
           ))}
         </ul>
 
-        <div class="media-frame-light mt-8 p-5">
-          <img src="/undraw-contract-signed.svg" alt="Download registration illustration" width="525" height="728" class="mx-auto aspect-[16/9] w-full max-w-md object-contain" loading="lazy" decoding="async" />
-        </div>
+        <figure class="brief-preview mt-10" data-reveal>
+          <div class="brief-sheet brief-sheet--back" aria-hidden="true"></div>
+          <div class="brief-sheet brief-sheet--mid" aria-hidden="true"></div>
+          <div class="brief-sheet brief-sheet--front">
+            <div class="brief-spectrum" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p class="brief-kicker">Aetas Global Innovation</p>
+            <p class="brief-title">AGI Operations Readiness Brief</p>
+            <p class="brief-subtitle">A practical starting point for your next operations decision.</p>
+            <ol class="brief-topics">
+              {briefTopics.map((topic, index) => (
+                <li class={`accent-${topic.accent}`}>
+                  <span class="brief-topic-index">0{index + 1}</span>
+                  <span>
+                    <span class="brief-topic-label">{topic.label}</span>
+                    <span class="brief-topic-title">{topic.title}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <figcaption class="sr-only">Preview of the topics covered in the AGI Operations Readiness Brief.</figcaption>
+        </figure>
       </div>
 
       <div class="lg:col-span-6">
@@ -94,3 +118,119 @@ import { visuals } from '../lib/visuals';
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Code-built preview of the brief: a stack of sheets listing its topics. */
+  .brief-preview {
+    position: relative;
+    max-width: 30rem;
+    margin-inline: auto;
+    padding: 0.75rem 1.25rem 1.5rem;
+  }
+
+  .brief-sheet {
+    border: 1px solid var(--color-line-light);
+    border-radius: 0.75rem;
+    background: #ffffff;
+    box-shadow: var(--shadow-card-light);
+  }
+
+  .brief-sheet--back,
+  .brief-sheet--mid {
+    position: absolute;
+    inset: 0.75rem 1.25rem 1.5rem;
+  }
+
+  .brief-sheet--back { transform: rotate(-4deg) translate(-0.5rem, 0.5rem); background: #eef2f6; }
+  .brief-sheet--mid { transform: rotate(2.5deg) translate(0.4rem, 0.25rem); background: #f6f8fa; }
+
+  .brief-sheet--front {
+    position: relative;
+    overflow: hidden;
+    padding: 1.75rem 1.75rem 1.5rem;
+  }
+
+  .brief-spectrum {
+    position: absolute;
+    inset: 0 0 auto;
+    display: flex;
+    height: 4px;
+  }
+
+  .brief-spectrum span { flex: 1; }
+  .brief-spectrum span:nth-child(1) { background: var(--color-ai); }
+  .brief-spectrum span:nth-child(2) { background: var(--color-security); }
+  .brief-spectrum span:nth-child(3) { background: var(--color-global); }
+
+  .brief-kicker {
+    color: var(--color-ink-muted);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .brief-title {
+    margin-top: 0.5rem;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .brief-subtitle {
+    margin-top: 0.5rem;
+    color: var(--color-ink-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .brief-topics {
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--color-line-light);
+    padding-top: 0.75rem;
+  }
+
+  .brief-topics li {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .brief-topic-index {
+    display: inline-grid;
+    width: 1.875rem;
+    height: 1.875rem;
+    flex: none;
+    place-items: center;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--accent) 14%, #ffffff);
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+
+  .brief-topic-label {
+    display: block;
+    color: var(--accent-ink);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .brief-topic-title {
+    display: block;
+    color: var(--color-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+</style>

@@ -1,32 +1,46 @@
 ---
-import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import FormSubmitButton from '../components/FormSubmitButton.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import { visuals } from '../lib/visuals';
+import ExpertReviewQueue from '../components/demos/ExpertReviewQueue';
+import { BookOpen, ClipboardCheck, FileSearch, Gauge, Route, Sparkles } from 'lucide-react';
+
+const assimilation = {
+  label: 'Business Process AI Assimilation',
+  title: 'Assimilate AI into Business Processes delivery teams',
+  body: 'Add AI support to the work your delivery teams already do, with supervisor review built into the workflow.',
+  areas: ['Quality checks', 'Agent assistance', 'Knowledge retrieval', 'Customer response drafting', 'Call or ticket summarization', 'Supervisor review workflows'],
+};
 
 const services = [
   ['Workflow Automation', 'Automate repetitive operational steps', 'Map recurring intake, routing, data cleanup, updates, report preparation, and follow-up tasks, then design Human Led AI workflows with Expert Human Oversight of AI.'],
-  ['Business Process AI Assimilation', 'Assimilate AI into Business Processes delivery teams', 'Add AI support to quality checks, agent assistance, knowledge retrieval, customer response drafting, call or ticket summarization, and supervisor review workflows.'],
   ['Private Knowledge Assistants', 'Turn SOPs into guided assistance', 'Build secure assistants around approved SOPs, FAQs, policies, playbooks, and client-specific documentation so teams can find the right answer faster.'],
-  ['Expert in the Loop', 'Expert Human Oversight of AI', 'Design validation gates, escalation paths, audit trails, and exception handling so AI can assist the workflow without silently making high-impact decisions.'],
 ];
+
+const oversight = {
+  label: 'Expert in the Loop',
+  title: 'Expert Human Oversight of AI',
+  body: 'Design validation gates, escalation paths, audit trails, and exception handling so AI can assist the workflow without silently making high-impact decisions.',
+  controls: ['Validation gates', 'Escalation paths', 'Audit trails', 'Exception handling'],
+};
 
 const workflow = [
   { accent: 'ai', title: 'Ingest the work', body: 'Tickets, forms, emails, chats, reports, alerts, and operational requests.' },
-  { accent: 'security', title: 'Assist the operator', body: 'Classify, summarize, retrieve context, draft responses, and suggest next steps.' },
-  { accent: 'global', title: 'Apply expert oversight', body: 'An expert reviews outputs before customer, system, or policy impact.' },
+  { accent: 'ai', title: 'Assist the operator', body: 'Classify, summarize, retrieve context, draft responses, and suggest next steps.' },
+  { accent: 'governance', title: 'Apply expert oversight', body: 'An expert reviews outputs before customer, system, or policy impact.' },
   { accent: 'governance', title: 'Improve the process', body: 'Use outcomes and exceptions to tune prompts, workflows, SOPs, and controls.' },
 ];
 
+const mapFirst = ['Queue volume', 'Exception types', 'Approval rules', 'Customer expectations', 'Systems already used by the team'];
+
 const useCases = [
-  ['Ticket triage', 'Classify inbound requests, detect priority, and route work to the right queue.'],
-  ['Agent assist', 'Surface SOP steps, approved answers, and relevant customer context while agents work.'],
-  ['Quality review', 'Flag missing fields, policy gaps, tone issues, and handoff problems for supervisor review.'],
-  ['Back-office processing', 'Summarize documents, prepare structured records, and draft follow-up actions.'],
-  ['Knowledge management', 'Turn recurring resolutions and playbooks into searchable operational guidance.'],
-  ['Reporting support', 'Prepare summaries, trend notes, and operational highlights from queue activity.'],
+  { icon: Route, title: 'Ticket triage', body: 'Classify inbound requests, detect priority, and route work to the right queue.' },
+  { icon: Sparkles, title: 'Agent assist', body: 'Surface SOP steps, approved answers, and relevant customer context while agents work.' },
+  { icon: ClipboardCheck, title: 'Quality review', body: 'Flag missing fields, policy gaps, tone issues, and handoff problems for supervisor review.' },
+  { icon: FileSearch, title: 'Back-office processing', body: 'Summarize documents, prepare structured records, and draft follow-up actions.' },
+  { icon: BookOpen, title: 'Knowledge management', body: 'Turn recurring resolutions and playbooks into searchable operational guidance.' },
+  { icon: Gauge, title: 'Reporting support', body: 'Prepare summaries, trend notes, and operational highlights from queue activity.' },
 ];
 ---
 
@@ -36,8 +50,6 @@ const useCases = [
     title="Put Human Led AI to work inside your Business Processes."
     description="AGI assimilates AI into intake, routing, drafting, summarization, knowledge retrieval, and quality review with Expert Human Oversight of AI (Expert in the Loop)."
     accent="ai"
-    image={visuals.aiWorkflows}
-    imageAlt="AI-assisted workflow automation visualization"
     primaryLabel="Plan an AI workflow"
     primaryHref="/contact?intent=ai"
     secondaryLabel="Explore AI capabilities"
@@ -46,7 +58,8 @@ const useCases = [
     focusItems={['Business Process AI Assimilation', 'Human Led AI', 'Expert Human Oversight of AI (Expert in the Loop)']}
   />
 
-  <section id="services" class="section-light agi-section scroll-mt-20">
+  <section id="services" class="agi-band agi-section">
+    <div class="agi-grid-mask" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl">
       <SectionHeading
         align="center"
@@ -56,71 +69,62 @@ const useCases = [
         lede="We focus on Human Led AI for Business Processes companies, help desks, support operations, and back-office workflows where accuracy, escalation, and auditability matter."
       />
 
-      <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8" data-reveal-group>
+      <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-12" data-reveal-group>
+        <article id="assimilation" class="agi-card agi-card--dark agi-card--accent accent-ai flex flex-col lg:col-span-7 lg:row-span-2">
+          <span class="agi-eyebrow">{assimilation.label}</span>
+          <h3 class="mt-4 max-w-md font-display text-[1.75rem] font-bold leading-tight tracking-[-0.02em] text-white">{assimilation.title}</h3>
+          <p class="mt-3 max-w-lg text-[0.9375rem] leading-relaxed text-muted">{assimilation.body}</p>
+          <ul class="mt-auto grid grid-cols-1 gap-2 pt-10 sm:grid-cols-2">
+            {assimilation.areas.map((area) => (
+              <li class="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-black/20 px-3.5 py-3 text-sm text-gray-200">
+                <span class="h-1.5 w-1.5 flex-none rounded-full bg-ai" aria-hidden="true"></span>
+                {area}
+              </li>
+            ))}
+          </ul>
+        </article>
         {services.map(([label, title, body]) => (
-          <article class="agi-card agi-card--light agi-card--accent agi-card--interactive accent-ai">
+          <article class="agi-card agi-card--dark agi-card--interactive accent-ai lg:col-span-5">
             <span class="agi-eyebrow">{label}</span>
-            <h3 class="mt-4 font-display text-h3 font-bold text-strong">{title}</h3>
-            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{body}</p>
+            <h3 class="mt-3 font-display text-xl font-bold text-white">{title}</h3>
+            <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{body}</p>
           </article>
         ))}
+        <article id="expert-in-the-loop" class="agi-card agi-card--dark agi-card--accent accent-governance grid grid-cols-1 gap-6 lg:col-span-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <span class="agi-eyebrow">{oversight.label}</span>
+            <h3 class="mt-3 font-display text-xl font-bold text-white">{oversight.title}</h3>
+            <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">{oversight.body}</p>
+          </div>
+          <ul class="grid grid-cols-2 gap-2">
+            {oversight.controls.map((control) => (
+              <li class="rounded-lg border border-[color-mix(in_srgb,var(--accent)_22%,transparent)] bg-[color-mix(in_srgb,var(--accent)_6%,transparent)] px-3.5 py-3 text-sm font-medium text-gray-100">{control}</li>
+            ))}
+          </ul>
+        </article>
       </div>
     </div>
   </section>
 
-  <section id="philosophy" class="section-dark-raised agi-section scroll-mt-20">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
+  <section id="philosophy" class="agi-section">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12">
       <SectionHeading
-        class="lg:col-span-5"
+        class="lg:col-span-6"
         accent="ai"
         eyebrow="How We Build"
         title="We start with the workflow before choosing the AI."
         lede="Many AI projects fail because they start with a model and then search for a use case. AGI starts with the operating reality: queue volume, exception types, approval rules, customer expectations, and the systems already used by the team."
-      >
-        <p>
+      />
+      <div class="lg:col-span-5 lg:col-start-8 lg:pt-10" data-reveal>
+        <p class="text-[0.9375rem] leading-relaxed text-muted">
           Our approach is built around controlled implementation. We identify where AI can classify, draft, summarize, retrieve, or recommend, then apply Expert Human Oversight of AI (Expert in the Loop) to actions that affect customers, accounts, systems, or security.
         </p>
-      </SectionHeading>
-
-      <div class="flex justify-center lg:col-span-7" data-reveal-right>
-        <div class="agi-card agi-card--dark accent-ai w-full max-w-2xl p-3 lg:p-4">
-          <Image src={visuals.aiWorkflows} alt="Workflow automation control layer" widths={[480, 768, 1080]} sizes="(min-width: 1024px) 42rem, 100vw" class="aspect-video w-full rounded-md object-cover" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-light-muted agi-section">
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
-      <SectionHeading
-        class="lg:col-span-5"
-        accent="ai"
-        eyebrow="Operating Model"
-        title="A visible AI control layer for service teams."
-        lede="This illustrative visual shows the kind of workflow visibility customers should expect: queues, approvals, exception routing, performance metrics, and human review checkpoints."
-      />
-      <div class="lg:col-span-7" data-reveal-right>
-        <div class="media-frame-light">
-          <Image src={visuals.aiWorkflows} alt="AI-assisted ticket routing and review visualization" widths={[480, 768, 1080]} sizes="(min-width: 1024px) 46rem, 100vw" class="aspect-video w-full object-cover" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="agi-section border-y border-white/5 bg-black/20">
-    <div class="mx-auto max-w-7xl">
-      <SectionHeading align="center" accent="ai" eyebrow="Workflow Loop" title="How AGI keeps AI accountable." class="mb-12" />
-
-      <div class="agi-card agi-card--dark mx-auto w-full max-w-xl" data-reveal>
-        <h3 class="border-b border-white/10 pb-4 font-display text-sm font-bold uppercase tracking-wider text-white">Human Led AI Workflow</h3>
-        <ol class="agi-workflow mt-6 flex flex-col gap-3">
-          {workflow.map((step, index) => (
-            <li class:list={['flex items-start gap-4 rounded-md border border-white/5 bg-white/[0.02] p-4', `accent-${step.accent}`]}>
-              <span class="agi-step-index">{index + 1}</span>
-              <div>
-                <h4 class="text-sm font-bold text-white">{step.title}</h4>
-                <p class="mt-1 text-sm leading-relaxed text-muted">{step.body}</p>
-              </div>
+        <p class="agi-label mt-8">What we map first</p>
+        <ol class="mt-3 divide-y divide-white/[0.06] border-y border-white/[0.06]">
+          {mapFirst.map((item, index) => (
+            <li class="flex items-center gap-4 py-3 text-[0.9375rem] text-gray-200">
+              <span class="agi-mono text-[var(--color-ai)]">0{index + 1}</span>
+              {item}
             </li>
           ))}
         </ol>
@@ -128,36 +132,69 @@ const useCases = [
     </div>
   </section>
 
+  <section class="agi-band agi-section">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading accent="ai" eyebrow="Workflow Loop" title="How AGI keeps AI accountable." />
+      <ol class="agi-steps mt-12" style="--steps: 4" data-reveal-group>
+        {workflow.map((step) => (
+          <li class:list={['agi-step', `accent-${step.accent}`]}>
+            <h3 class="font-display text-lg font-bold text-white">{step.title}</h3>
+            <p class="mt-2 max-w-xs text-sm leading-relaxed text-muted">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="agi-section">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-start gap-12 lg:grid-cols-12">
+      <SectionHeading
+        class="lg:sticky lg:top-28 lg:col-span-4"
+        accent="ai"
+        eyebrow="Operating Model"
+        title="A visible AI control layer for service teams."
+        lede="This illustrative visual shows the kind of workflow visibility customers should expect: queues, approvals, exception routing, performance metrics, and human review checkpoints."
+      />
+      <div class="lg:col-span-8" data-reveal>
+        <ExpertReviewQueue client:visible />
+      </div>
+    </div>
+  </section>
+
   <section class="section-light agi-section">
     <div class="mx-auto max-w-7xl">
       <SectionHeading
-        align="center"
         accent="ai"
         eyebrow="Use Cases"
         title="Where AI can support Business Processes operations."
         lede="AGI focuses its AI and automation services on practical operational use cases that can be measured, governed, and improved over time."
       />
 
-      <div class="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
-        {useCases.map(([title, body]) => (
-          <article class="agi-card agi-card--light agi-card--interactive">
-            <h3 class="font-display text-lg font-bold text-strong">{title}</h3>
-            <p class="mt-3 text-sm leading-relaxed text-muted">{body}</p>
-          </article>
+      <ul class="mt-14 grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+        {useCases.map(({ icon: Icon, title, body }) => (
+          <li class="flex gap-4 border-t border-surface pt-6">
+            <span class="inline-grid h-9 w-9 flex-none place-items-center rounded-lg bg-[#eef0ff] text-[#4338ca]" aria-hidden="true">
+              <Icon className="h-[1.125rem] w-[1.125rem]" strokeWidth={1.75} />
+            </span>
+            <div>
+              <h3 class="font-display text-lg font-bold text-strong">{title}</h3>
+              <p class="mt-1.5 text-sm leading-relaxed text-muted">{body}</p>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
-  <section class="section-dark-raised px-6 py-16 text-center">
+  <section class="agi-band px-6 py-16 text-center">
     <div class="mx-auto max-w-4xl" data-reveal>
-      <h2 class="agi-eyebrow justify-center">Technology Direction</h2>
+      <h2 class="agi-eyebrow accent-ai justify-center">Technology Direction</h2>
       <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted">
         AGI designs AI services around the workflows, knowledge, review points, and operating requirements already used by client teams.
       </p>
-      <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <ul class="mt-8 flex flex-wrap items-center justify-center gap-2">
         {['LLM WORKFLOWS', 'SOP KNOWLEDGE BASES', 'TICKETING SYSTEMS', 'Business Processes OPERATIONS'].map((item) => (
-          <li class="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 font-display text-xs font-bold tracking-wide text-gray-300">{item}</li>
+          <li class="rounded-md border border-white/10 bg-white/[0.03] px-3.5 py-2 font-mono text-[0.6875rem] font-semibold tracking-wide text-gray-300">{item}</li>
         ))}
       </ul>
     </div>

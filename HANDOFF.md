@@ -55,11 +55,11 @@ Public service names and routes:
 - Astro 7 with prerendered public pages and standalone Node output for on-demand form endpoints
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4 through `@tailwindcss/vite`
-- Shadcn-compatible organization through `src/components/ui` and `src/lib/utils.ts`; this is not a Next.js application or a full shadcn CLI scaffold
+- A lightweight `cn` helper in `src/lib/utils.ts` for composing class names; this is not a Next.js application or a shadcn CLI scaffold
 - Native scrolling and lightweight CSS/Intersection Observer reveal animation
 - CSS keyframes (`agi-swap-in`, `agi-fade-in`) for React island transitions; Framer Motion has been removed
 - Self-hosted Inter and Space Grotesk variable fonts (`@fontsource-variable`), preloaded in `Layout.astro`
-- `astro:assets` responsive images for content visuals in `src/assets/visuals/`
+- `astro:assets` available for any future real photography (no content rasters are currently used)
 - Lucide React icons
 - Astro sitemap integration
 
@@ -69,14 +69,17 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 ## Important Files
 
-- `src/layouts/Layout.astro`: metadata, structured data, header, mobile navigation, footer, slow-load overlay, animation setup, and delayed Bob hydration.
-- `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and service navigation rail.
-- `src/components/PageHero.astro`: shared dark page hero, service accents, calls to action, and fixed-header viewport sizing for full-height variants.
+- `src/layouts/Layout.astro`: metadata, structured data, slow-load overlay, animation setup, navigation script wiring, and delayed Bob hydration. It renders the header, mobile navigation, and footer components below.
+- `src/data/navigation.ts`: single source of truth for header, mobile, and footer links, including each service's capability deep links.
+- `src/components/SiteHeader.astro`, `MobileNav.astro`, `SiteFooter.astro`, and `ServiceIcon.astro`: header with the Services mega menu, the mobile navigation sheet, and the data-driven footer.
+- `src/scripts/site-nav.ts`: Services disclosure menu and mobile sheet behaviour, re-bound per page through one `AbortController`.
+- `src/components/HomeHero.astro`: homepage hero copy, calls to action, AGI network placement, and service navigation rail.
 - `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three specialized service areas.
-- `src/components/AboutVisualGallery.astro`: lightweight animated About page visual gallery using current sample imagery.
-- `src/components/ui/feature-carousel.tsx`: Astro-compatible React island used on the homepage and hydrated with `client:visible`.
+- `src/components/PageHero.astro`: shared dark page hero, service accents, calls to action, fixed-header viewport sizing, and restrained accent light when no background image is set.
+- `src/components/demos/`: the three code-rendered service demos, one per service page (see "Code-rendered demos" below). `src/data/demos.ts` holds their simulated data.
+- `src/components/AboutVisualGallery.astro`: About page scrolling gallery of code-built tiles showing approved content only: Expert in the Loop decisions, the approved workflow and engagement steps, MXDR stages, Offensive Security lines, Managed IT tiers and responsibilities, and approved partner logos. No generated imagery.
+- `src/data/partner-logos.ts` and `src/components/PartnerLogo.astro`: approved partner names, artwork, and official links for reuse outside `/partners` (About gallery and partners strip). Mirror `src/pages/partners.astro`, which stays the source of truth and is not modified.
 - `src/components/Button.astro` and `src/components/SectionHeading.astro`: shared call-to-action and section heading components used across pages.
-- `src/lib/visuals.ts`: imports the content visuals and `responsiveImage()`, which resolves `srcset` data for React islands that cannot call `getImage` themselves.
 - `src/lib/utils.ts`: lightweight `cn` class-name helper for shared UI components.
 - `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
 - `src/components/ManagedSystems.tsx`: interactive responsibility selector.
@@ -100,18 +103,18 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 ## Current Implementation
 
-- The visual system uses hybrid enterprise contrast: dark technical/immersive sections alternate with light editorial and conversion bands so the site is not dominated by one color family.
+- The visual system is dark-first: layered dark surfaces (`--surface-0` to `--surface-3`, `agi-band`, `section-dark-raised`) carry most pages so code-rendered product windows sit naturally on them. Light bands (`section-light`, `section-light-muted`) are reserved for forms, legal pages, and at most one deliberate editorial band per page.
 - Service accents are intentionally scoped: violet for AI & Automation, cyan for Cybersecurity, amber for Managed IT, and green for governance or reviewed states. Do not recolor entire pages by service.
 - Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `media-frame-light`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities. `button-on-light-*` and `editorial-card` remain for the approved Partners callout.
-- Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, and the 8 px `--radius-card`.
+- Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, the 12 px `--radius-card`, `--radius-control`, `--radius-window`, `--shadow-window`, the dark elevation surfaces, `--line-subtle` / `--line-strong`, and `--font-mono` (system monospace for demo data). Navigation, band, step-strip, window, and chip classes live in `src/styles/product-ui.css`, imported by `global.css`.
 - Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
 - Service accents come from `accent-ai`, `accent-security`, `accent-global`, and `accent-governance`, which set `--accent` (brand hue), `--accent-ink` (readable on light), and `--accent-text` (readable on dark).
 - Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes. Reuse them before adding page-specific styles.
 - Partner-logo displays remain on dark surfaces because several approved official logos are white. Their surrounding explanatory and conversion content can use the light editorial system.
-- Light-surface cards use restrained 8 px radii, low-contrast borders, and subtle elevation. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards or decorative color effects.
-- The homepage hero uses an original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT.
+- Cards use restrained 12 px radii, low-contrast borders, and subtle elevation. On dark surfaces the accent is a fading top hairline rather than a solid bar. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards, heavy glassmorphism, or decorative glow.
+- The homepage hero uses the original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT. Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
+- The homepage service section uses three data-free service panels (icon, approved heading, scope, capabilities, link). Do not put simulated interface windows in heroes or on the homepage.
 - The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail has persistent low-opacity violet, cyan, and amber surfaces and accents so the three practices remain distinct before hover or keyboard focus.
-- Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
 - The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
 - The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
 - Bob loads with `client:idle` and a timeout so it does not block critical rendering.
@@ -122,7 +125,43 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - The temporary development-only loader preview, query-string activation, simulated sequence, console message, and replay button have been removed.
 - Brand imagery uses optimized WebP assets: `aetasBrand.webp`, `aetasIcon.webp`, and `bob.webp`.
 - The header uses the full Aetas Global Innovation logo on desktop and mobile. The icon is used for favicon and assistant identity contexts.
-- The homepage responsibility selector and advisor quiz are interactive React islands hydrated with `client:visible`.
+
+## Navigation
+
+- The header is 4 rem (`--site-header-height`) and translucent, becoming more solid after scrolling. Desktop (lg and up) shows: logo, **Services ▾**, Work, Partners, Resources, About, and the "Talk to AGI" CTA. The logo links home, so there is no separate Home link.
+- **Services** follows the WAI-ARIA disclosure navigation pattern (a `<button aria-expanded aria-controls>`, not `role="menu"`). Its panel has one column per service (title link, tag, one-line blurb, capability deep links) and a "Take the service finder" link to `/#service-finder`.
+  - Opens on click, Enter/Space, ArrowDown (focuses the first link), or mouse hover intent.
+  - Closes on Escape (focus returns to the trigger), outside click, focus leaving the menu, link activation, or route change.
+  - Inside the panel, Up/Down move through links, Left/Right move between columns, and Home/End jump to the ends.
+- The Services trigger is marked active on any service page (`activePillar` or the URL).
+- Below lg, the hamburger (`aria-expanded`) opens a full-height `role="dialog" aria-modal="true"` sheet with a focus trap, Escape to close, body scroll lock, focus return, a Services accordion (expanded on service pages), the primary links, and the CTA.
+- Capability deep links: `/ai#services`, `/ai#assimilation`, `/ai#expert-in-the-loop`, `/security#mxdr`, `/security#network-testing`, `/security#application-testing`, `/managed-it#help-desk`, `/managed-it#product-support`, `/managed-it#operations`. Keep these IDs on the service pages. `html` sets `scroll-padding-top` so anchors land below the fixed header.
+- All links come from `src/data/navigation.ts`. Careers (`/careers`) remains unlinked, as before.
+
+## Code-rendered demos
+
+Each service page has exactly one interactive React interface demo, placed in a body section (never in a hero, and none on the homepage). Keep it that way: repeated simulated windows were reviewed and rejected as cluttered.
+
+| Demo | Where | What it shows |
+|---|---|---|
+| `ExpertReviewQueue` | `/ai`, "A visible AI control layer" | AI classifies, retrieves an approved SOP, drafts a reply, then waits for an expert to approve, edit, or escalate |
+| `MxdrConsole` | `/security`, "Focused coverage" | Detections by severity moving through detect, triage, investigate, analyst-approved containment, and client reporting |
+| `ServiceDeskQueue` | `/managed-it`, "Operations Visibility" | Help Desk and Product Support tickets moving L1 → L2 → L3, resolved and documented |
+
+Rules for every demo:
+
+- Each window shows a quiet "Simulated" label in its title bar and a caption stating it is an illustrative example with simulated data, not a live system. Never add "live" indicators.
+- Data lives only in `src/data/demos.ts` and uses reserved values: `*.example.com` hosts, documentation IP ranges (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24), generic roles, and relative times. No vendor, tool, or client names, and no figures that read as real AGI performance results.
+- AI demos always show a human decision before customer, system, or policy impact; security containment always shows analyst approval.
+- `DemoWindow` and `useSteps` (`demo-runtime.tsx`) only advance while the window is on screen and the tab is visible. Each window has a pause/play control. Under `prefers-reduced-motion` there is no autoplay, and Previous/Next step controls replace the timer.
+- Islands are server-rendered first (the HTML is the first frame) and hydrate with `client:visible`. Styling uses classes and inline `style` attributes only; never inject `<style>` at runtime (CSP).
+- Service page and About heroes are text-led (copy, CTAs, and on service pages the focus list) with accent light. The Operations Readiness Brief hero is text-led too, and its body shows a code-built preview of the brief (a stacked document listing the topics named in the approved page description). All former generated images and the brief's stock illustration were removed; the site uses no content rasters. Contact and Resources still use undraw illustrations from `public/`.
+
+## About page
+
+- Sections in order: text-led hero; "Why the name AGI" (the one light editorial band); the code-built gallery ("Specialized expertise across three service areas"); a need → service mapping ("Specialized expertise for different operational needs") whose needs and scopes reuse the service-finder wording; principles; a technology partners strip (approved Cloud & AI and Cybersecurity logos linking to official sites in a new tab, plus a link to `/partners`); an FAQ (`<details>` items written only from approved copy); and the closing CTA.
+- Leadership, team, company facts, and careers content are not shown; add them only with real, approved details.
+- The homepage responsibility selector and advisor quiz (section `#service-finder`) are interactive React islands hydrated with `client:visible`.
 - Site-wide page reveals use dependency-free Intersection Observer and CSS transitions; Lenis, GSAP, and ScrollTrigger are not globally bundled.
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
 - The Work page presents its three explicitly provisional practice areas as equal-height dark panels with persistent service accents and an honest “In preparation” status.

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./product-ui.css";
 
 @theme {
   --color-brand-bg: #050508;
@@ -15,21 +16,22 @@
   --color-line-light: #d6e0e9;
   --font-display: "Space Grotesk Variable", "Space Grotesk", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
 
   /* Fluid type scale: one source for display, section, and card headings. */
   --text-display: clamp(2.5rem, 1.55rem + 3.9vw, 4.5rem);
   --text-display--line-height: 1.04;
-  --text-display--letter-spacing: -0.025em;
+  --text-display--letter-spacing: -0.032em;
   --text-h2: clamp(2rem, 1.4rem + 2.3vw, 3.25rem);
   --text-h2--line-height: 1.08;
-  --text-h2--letter-spacing: -0.02em;
+  --text-h2--letter-spacing: -0.026em;
   --text-h3: clamp(1.25rem, 1.12rem + 0.45vw, 1.5rem);
   --text-h3--line-height: 1.25;
   --text-lede: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   --text-lede--line-height: 1.65;
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
-  --radius-card: 0.5rem;
+  --radius-card: 0.75rem;
 }
 
 /* Metric-matched fallback keeps text from shifting when Inter arrives. */
@@ -44,7 +46,7 @@
 
 @layer base {
   :root {
-    --site-header-height: 5rem;
+    --site-header-height: 4rem;
     --duration-fast: 160ms;
     --duration-base: 220ms;
     --duration-slow: 560ms;
@@ -53,11 +55,25 @@
     --shadow-card-light-hover: 0 1px 2px rgba(15, 23, 42, 0.05), 0 26px 56px -30px rgba(15, 23, 42, 0.45);
     --shadow-card-dark: 0 18px 44px -34px rgba(0, 0, 0, 0.85);
     --focus-ring: 2px solid rgba(255, 255, 255, 0.9);
+    --radius-control: 0.625rem;
+    --radius-window: 0.875rem;
+
+    /* Dark-first elevation: page, band, raised panel, overlay. */
+    --surface-0: #050508;
+    --surface-1: #08090e;
+    --surface-2: #0d1016;
+    --surface-3: #141821;
+    --line-subtle: rgba(255, 255, 255, 0.06);
+    --line-strong: rgba(255, 255, 255, 0.11);
+    --shadow-window:
+      0 0 0 1px rgba(0, 0, 0, 0.55),
+      0 30px 70px -30px rgba(0, 0, 0, 0.95),
+      0 10px 24px -14px rgba(0, 0, 0, 0.7);
 
     /* Surface-aware text roles. Light surfaces redefine these below, so
        text-strong / text-muted read correctly wherever they are used. */
     --surface-text: #f3f4f6;
-    --surface-text-muted: #a7b0be;
+    --surface-text-muted: #aab3c2;
     --surface-line: rgba(255, 255, 255, 0.08);
   }
 
@@ -76,6 +92,7 @@
 
   html {
     background-color: var(--color-brand-bg);
+    scroll-padding-top: calc(var(--site-header-height) + 1rem);
     min-height: 100%;
     width: 100%;
     max-width: 100%;
@@ -135,10 +152,10 @@
 
 /* The header becomes more solid once the page scrolls under it. */
 .site-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(5, 5, 8, 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(5, 5, 8, 0.66);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   transition:
     background-color var(--duration-base) ease,
     border-color var(--duration-base) ease,
@@ -146,8 +163,8 @@
 }
 
 .site-header[data-scrolled] {
-  border-bottom-color: rgba(255, 255, 255, 0.09);
-  background: rgba(5, 5, 8, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(5, 5, 8, 0.94);
   box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.9);
 }
 
@@ -271,12 +288,30 @@
   }
 
   .agi-card--dark {
-    background: rgba(17, 24, 39, 0.62);
-    box-shadow: var(--shadow-card-dark);
+    border-color: var(--line-subtle);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 55%),
+      var(--surface-2);
+    box-shadow: var(--shadow-card-dark), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   .agi-card--accent {
     border-top: 3px solid var(--accent);
+  }
+
+  /* On dark surfaces the accent is a fading hairline rather than a bar. */
+  .agi-card--dark.agi-card--accent {
+    border-top: 1px solid var(--line-subtle);
+  }
+
+  .agi-card--dark.agi-card--accent::after {
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, var(--accent) 30%, transparent 85%);
+    content: '';
+    pointer-events: none;
   }
 
   .agi-card--interactive:hover,
@@ -292,8 +327,10 @@
 
   .agi-card--dark.agi-card--interactive:hover,
   .agi-card--dark.agi-card--interactive:focus-within {
-    border-color: color-mix(in srgb, var(--accent, #ffffff) 38%, rgba(255, 255, 255, 0.12));
-    background: rgba(20, 29, 43, 0.86);
+    border-color: color-mix(in srgb, var(--accent, #ffffff) 32%, rgba(255, 255, 255, 0.1));
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--accent, #ffffff) 6%, transparent), rgba(255, 255, 255, 0) 60%),
+      var(--surface-3);
   }
 
   .agi-card-link {
@@ -328,7 +365,7 @@
     justify-content: center;
     gap: 0.5rem;
     border: 1px solid transparent;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-control);
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
     font-weight: 700;
@@ -447,7 +484,7 @@
     width: 100%;
     min-height: 3rem;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-control);
     background: rgba(255, 255, 255, 0.03);
     padding: 0.75rem 1rem;
     color: #ffffff;
@@ -517,16 +554,6 @@
 .agi-swap-in[data-delay="3"] { animation-delay: 180ms; }
 .agi-swap-in[data-delay="4"] { animation-delay: 240ms; }
 
-/* Matches ROTATION_MS in feature-carousel.tsx. */
-@keyframes feature-carousel-progress {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
-.feature-carousel-progress {
-  animation: feature-carousel-progress 6000ms linear both;
-}
-
 /* Infinite decorative animations pause while off-screen (see Layout.astro). */
 [data-motion-paused],
 [data-motion-paused] *,
@@ -568,7 +595,8 @@
   transform: translateY(-2px);
 }
 
-/* Hybrid enterprise section system */
+/* Section system. Dark-first: .section-dark-raised and .agi-band carry most
+   pages; .section-light* is reserved for forms, legal, and editorial bands. */
 .section-light,
 .section-light-muted,
 .section-dark-raised {
@@ -586,8 +614,8 @@
 }
 
 .section-dark-raised {
-  --section-background: var(--color-surface-dark);
-  --section-border: rgba(255, 255, 255, 0.075);
+  --section-background: var(--surface-1);
+  --section-border: rgba(255, 255, 255, 0.06);
 }
 
 .section-light::before,
