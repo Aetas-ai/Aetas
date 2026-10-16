@@ -1,6 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+
+const roles = [
+  { accent: 'security', area: 'Cybersecurity', title: 'Managed Extended Detection and Response Analyst', details: 'Austin, TX (Hybrid) or Manila, PH • Full-time' },
+  { accent: 'global', area: 'Managed IT', title: 'IT Systems Administrator', details: 'Manila, Philippines • Full-time (Night Shift)' },
+  { accent: 'ai', area: 'AI & Automation', title: 'Machine Learning Engineer (Workflow Automation)', details: 'Austin, TX • Full-time' },
+];
 ---
 
 <Layout title="Careers - Join Aetas Global Innovation" description="Explore open roles in cybersecurity, IT managed services, Business Processes operations, and AI systems engineering at Aetas Global Innovation.">
@@ -13,40 +20,18 @@ import PageHero from '../components/PageHero.astro';
     primaryHref="#open-roles"
   />
 
-  <section id="open-roles" class="section-light-muted scroll-mt-24 px-6 py-20 sm:py-24">
-    <div class="mx-auto max-w-4xl space-y-6">
-      <div class="glass-panel service-card-security flex flex-col items-start justify-between gap-4 rounded-lg p-5 sm:flex-row sm:items-center sm:p-6" data-reveal>
-        <div>
-          <span class="rounded border border-sky-200 bg-sky-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-700">Cybersecurity</span>
-          <h3 class="text-lg font-display font-bold text-white mt-2">Managed Extended Detection and Response Analyst</h3>
-          <p class="text-gray-500 text-xs mt-1">Austin, TX (Hybrid) or Manila, PH &bull; Full-time</p>
-        </div>
-        <a href="/contact" class="button-on-light-secondary inline-flex min-h-11 w-full items-center justify-center rounded-lg px-6 py-2.5 text-center text-xs font-semibold transition-all sm:w-auto">
-          Apply Now
-        </a>
-      </div>
-
-      <div class="glass-panel service-card-managed flex flex-col items-start justify-between gap-4 rounded-lg p-5 sm:flex-row sm:items-center sm:p-6" data-reveal>
-        <div>
-          <span class="rounded border border-amber-200 bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800">Managed IT</span>
-          <h3 class="text-lg font-display font-bold text-white mt-2">IT Systems Administrator</h3>
-          <p class="text-gray-500 text-xs mt-1">Manila, Philippines &bull; Full-time (Night Shift)</p>
-        </div>
-        <a href="/contact" class="button-on-light-secondary inline-flex min-h-11 w-full items-center justify-center rounded-lg px-6 py-2.5 text-center text-xs font-semibold transition-all sm:w-auto">
-          Apply Now
-        </a>
-      </div>
-
-      <div class="glass-panel service-card-ai flex flex-col items-start justify-between gap-4 rounded-lg p-5 sm:flex-row sm:items-center sm:p-6" data-reveal>
-        <div>
-          <span class="rounded border border-indigo-200 bg-indigo-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-indigo-700">AI &amp; Automation</span>
-          <h3 class="text-lg font-display font-bold text-white mt-2">Machine Learning Engineer (Workflow Automation)</h3>
-          <p class="text-gray-500 text-xs mt-1">Austin, TX &bull; Full-time</p>
-        </div>
-        <a href="/contact" class="button-on-light-secondary inline-flex min-h-11 w-full items-center justify-center rounded-lg px-6 py-2.5 text-center text-xs font-semibold transition-all sm:w-auto">
-          Apply Now
-        </a>
-      </div>
-    </div>
+  <section id="open-roles" class="section-light-muted agi-section scroll-mt-24">
+    <ul class="mx-auto max-w-4xl space-y-4" data-reveal-group>
+      {roles.map((role) => (
+        <li class:list={['agi-card agi-card--light agi-card--accent agi-card--interactive flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center', `accent-${role.accent}`]}>
+          <div>
+            <span class="agi-eyebrow">{role.area}</span>
+            <h3 class="mt-2 font-display text-lg font-bold text-strong">{role.title}</h3>
+            <p class="mt-1 text-sm text-muted">{role.details}</p>
+          </div>
+          <Button href="/contact" tone="light" variant="secondary" stretch class="shrink-0" aria-label={`Apply for ${role.title}`}>Apply Now</Button>
+        </li>
+      ))}
+    </ul>
   </section>
 </Layout>

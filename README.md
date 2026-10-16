@@ -37,7 +37,9 @@ The homepage network is an original Aetas component. It does not use the Acetern
 - Tailwind CSS 4
 - Shadcn-compatible `src/components/ui` organization adapted for Astro rather than Next.js
 - Native scrolling and dependency-free Intersection Observer page reveals
-- Framer Motion for React island transitions
+- CSS keyframes for React island transitions (no animation library)
+- Self-hosted Inter and Space Grotesk variable fonts via `@fontsource-variable`
+- Responsive content images through `astro:assets`
 - Lucide React icons
 
 ## Project Structure
@@ -51,7 +53,8 @@ src/
   pages/             Astro routes
   styles/            Global Tailwind theme and CSS
 scripts/             Build integrations, including production security-header generation
-public/              Optimized images, logos, icons, robots.txt
+src/assets/visuals/  Content visuals optimized into responsive WebP by astro:assets (src/lib/visuals.ts)
+public/              Logos, icons, Bob, illustrations, robots.txt
 ```
 
 Important homepage files:
@@ -76,8 +79,11 @@ The site uses a hybrid enterprise contrast system instead of a single dark surfa
 - Dark surfaces frame heroes, technical workflows, partner logos, and operational visuals.
 - Light and light-muted bands support service explanations, forms, and selected conversion content. The Work and Resources indexes intentionally use dark graphite editorial sections.
 - AI & Automation uses violet, Cybersecurity uses cyan, Managed IT uses amber, and governance states use green.
-- Shared surface, card, button, media, and form treatments live in `src/styles/global.css`. Reuse those utilities before adding page-specific colors.
-- Motion remains restrained and must respect `prefers-reduced-motion`.
+- Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, and the 8 px `--radius-card`.
+- Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
+- Service accents come from `accent-ai`, `accent-security`, `accent-global`, and `accent-governance`, which set `--accent` (brand hue), `--accent-ink` (readable on light), and `--accent-text` (readable on dark).
+- Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes. Reuse them before adding page-specific styles.
+- Motion remains restrained and must respect `prefers-reduced-motion`. Scroll reveals use `data-reveal`, `data-reveal-left`, `data-reveal-right`, and `data-reveal-group` (staggered children). Hero text animates with transform only so it paints immediately. Infinite decorative animations carry `data-motion` and pause while off-screen. The homepage carousel stops auto-advancing under reduced motion, on hover or focus, off-screen, or via its pause control.
 
 ## Navigation and Loading Behavior
 

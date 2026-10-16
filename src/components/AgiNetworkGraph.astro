@@ -180,7 +180,7 @@ const nodes = [
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     vector-effect: non-scaling-stroke;
-    animation: agi-network-connect 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: agi-network-connect 720ms var(--ease-out-expo) forwards;
   }
 
   .network-boundary path:nth-child(1) { animation-delay: 320ms; }
@@ -281,7 +281,7 @@ const nodes = [
     text-align: center;
     transform: translate(-50%, -50%);
     opacity: 0;
-    animation: agi-core-online 440ms cubic-bezier(0.22, 1, 0.36, 1) 660ms forwards;
+    animation: agi-core-online 440ms var(--ease-out-expo) 660ms forwards;
   }
 
   .agi-network-monogram {
@@ -329,7 +329,7 @@ const nodes = [
     opacity: 0;
     text-decoration: none;
     transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-    animation: agi-service-node-online 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: agi-service-node-online 420ms var(--ease-out-expo) forwards;
   }
 
   .agi-network-node:hover,
@@ -425,8 +425,8 @@ const nodes = [
   }
 
   @keyframes agi-core-online {
-    from { opacity: 0; filter: brightness(1.7); }
-    to { opacity: 1; filter: brightness(1); }
+    from { opacity: 0; scale: 0.9; }
+    to { opacity: 1; scale: 1; }
   }
 
   @keyframes agi-satellites-online {
@@ -434,8 +434,8 @@ const nodes = [
   }
 
   @keyframes agi-service-node-online {
-    from { opacity: 0; filter: brightness(1.8); }
-    to { opacity: 1; filter: brightness(1); }
+    from { opacity: 0; scale: 0.94; }
+    to { opacity: 1; scale: 1; }
   }
 
   @keyframes agi-node-pulse {

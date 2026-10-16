@@ -1,6 +1,6 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: October 13, 2026
+Last updated: October 17, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
@@ -57,7 +57,9 @@ Public service names and routes:
 - Tailwind CSS 4 through `@tailwindcss/vite`
 - Shadcn-compatible organization through `src/components/ui` and `src/lib/utils.ts`; this is not a Next.js application or a full shadcn CLI scaffold
 - Native scrolling and lightweight CSS/Intersection Observer reveal animation
-- Framer Motion for React island transitions
+- CSS keyframes (`agi-swap-in`, `agi-fade-in`) for React island transitions; Framer Motion has been removed
+- Self-hosted Inter and Space Grotesk variable fonts (`@fontsource-variable`), preloaded in `Layout.astro`
+- `astro:assets` responsive images for content visuals in `src/assets/visuals/`
 - Lucide React icons
 - Astro sitemap integration
 
@@ -73,7 +75,8 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three specialized service areas.
 - `src/components/AboutVisualGallery.astro`: lightweight animated About page visual gallery using current sample imagery.
 - `src/components/ui/feature-carousel.tsx`: Astro-compatible React island used on the homepage and hydrated with `client:visible`.
-- `src/components/ui/container-scroll-animation.tsx`: available UI component; currently not rendered by a public page.
+- `src/components/Button.astro` and `src/components/SectionHeading.astro`: shared call-to-action and section heading components used across pages.
+- `src/lib/visuals.ts`: imports the content visuals and `responsiveImage()`, which resolves `srcset` data for React islands that cannot call `getImage` themselves.
 - `src/lib/utils.ts`: lightweight `cn` class-name helper for shared UI components.
 - `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
 - `src/components/ManagedSystems.tsx`: interactive responsibility selector.
@@ -99,7 +102,11 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 - The visual system uses hybrid enterprise contrast: dark technical/immersive sections alternate with light editorial and conversion bands so the site is not dominated by one color family.
 - Service accents are intentionally scoped: violet for AI & Automation, cyan for Cybersecurity, amber for Managed IT, and green for governance or reviewed states. Do not recolor entire pages by service.
-- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `service-card-*`, `media-frame-light`, `button-on-light-*`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities.
+- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `media-frame-light`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities. `button-on-light-*` and `editorial-card` remain for the approved Partners callout.
+- Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, and the 8 px `--radius-card`.
+- Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
+- Service accents come from `accent-ai`, `accent-security`, `accent-global`, and `accent-governance`, which set `--accent` (brand hue), `--accent-ink` (readable on light), and `--accent-text` (readable on dark).
+- Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes. Reuse them before adding page-specific styles.
 - Partner-logo displays remain on dark surfaces because several approved official logos are white. Their surrounding explanatory and conversion content can use the light editorial system.
 - Light-surface cards use restrained 8 px radii, low-contrast borders, and subtle elevation. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards or decorative color effects.
 - The homepage hero uses an original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT.
@@ -125,7 +132,7 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
 - Contact, AI consultation, and Operations Readiness Brief forms have prepared Resend notifications with sender `forms@notify.aetas.ai`, confirmed recipient `info@aetas.ai`, visitor Reply-To, escaped HTML/plain text, and a shared reference/timestamp. `FORM_DELIVERY_ENABLED` defaults to false; real sending is disabled pending Sir Rob's approval, the company account, verified DNS, and Hostinger backend activation. Saved Brevo credentials do not activate sending. No visitor autoresponder, automatic retry, provider fallback, or simultaneous webhook delivery is enabled. Resend requests use reference-based idempotency and require a provider message ID for acceptance. Shared submit buttons display a reduced-motion-aware spinner and Sending… label, block duplicate clicks, remain pending through thank-you navigation, and restore fields/button state on errors or back navigation. See `EMAIL-SETUP.md`. Disabled or invalid backend configuration returns generic unavailable responses and no CSRF session; the frontend-only deployment does not serve the endpoints. Once activated, the endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint that counts only verified, well-formed submissions. The process-local limiter removes expired records and has a strict 10,000-record least-recently-used cap so rotating identifiers cannot grow server memory without bound. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.
-- Production builds keep prerendered public files at the `dist` root for compatibility with the existing Hostinger `dist` output setting. The future standalone Node bundle builds separately into `dist-server` so server code is never placed inside the public frontend output. The build generates `dist/_headers.json` and `dist/.htaccess` from one shared SHA-256 hash-based Content Security Policy. The Node adapter consumes `_headers.json` for prerendered routes, and the production startup wrapper also applies the policy before serving any response. The `.htaccess` provides LiteSpeed defense in depth when Hostinger serves the frontend output directly. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Framer Motion and Bob update element styles at runtime. Unused WebAssembly, unpkg, and Webflow permissions are not allowed. The build fails if public source maps or common secret/log artifacts are emitted.
+- Production builds keep prerendered public files at the `dist` root for compatibility with the existing Hostinger `dist` output setting. The future standalone Node bundle builds separately into `dist-server` so server code is never placed inside the public frontend output. The build generates `dist/_headers.json` and `dist/.htaccess` from one shared SHA-256 hash-based Content Security Policy. The Node adapter consumes `_headers.json` for prerendered routes, and the production startup wrapper also applies the policy before serving any response. The `.htaccess` provides LiteSpeed defense in depth when Hostinger serves the frontend output directly. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Bob and the scroll-reveal stagger update element styles at runtime. Unused WebAssembly, unpkg, and Webflow permissions are not allowed. The build fails if public source maps or common secret/log artifacts are emitted.
 - `package.json` pins the transitive PostCSS dependency to patched version `8.5.25` through npm overrides in response to `GHSA-r28c-9q8g-f849`. Hostinger provides the hosted dependency alerting; the website itself does not run a dependency-vulnerability scanner. Review and update the override when Vite's dependency chain moves beyond the affected PostCSS range.
 - Astro accepts trusted forwarded host and client-IP headers only for the configured HTTPS `aetas.ai` origin. The form API does not permit cross-origin browser access, never caches responses, and logs only event names, random request IDs, and coarse delivery failure reasons/status codes rather than submitted fields, email addresses, credentials, or provider response bodies.
 - The site has no authentication, admin UI, or CMS preview route. The only cookie is the short-lived CSRF cookie, which is `HttpOnly`, `Secure` in production, `SameSite=Strict`, host-only, and scoped to `/`. Reserved `/admin`, `/cms-preview`, and `/preview` paths receive noindex/no-store protection if introduced later.

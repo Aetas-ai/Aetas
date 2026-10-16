@@ -1,0 +1,32 @@
+---
+/**
+ * Eyebrow + section title + optional lede. Colours follow the surrounding
+ * surface (dark by default, ink inside .section-light bands).
+ */
+interface Props {
+  title: string;
+  eyebrow?: string;
+  lede?: string;
+  accent?: 'ai' | 'security' | 'global' | 'governance' | 'neutral';
+  align?: 'left' | 'center';
+  id?: string;
+  class?: string;
+}
+
+const { title, eyebrow, lede, accent = 'neutral', align = 'left', id, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    'agi-section-heading',
+    align === 'center' && 'agi-section-heading--center',
+    accent !== 'neutral' && `accent-${accent}`,
+    className,
+  ]}
+  data-reveal
+>
+  {eyebrow && <span class="agi-eyebrow">{eyebrow}</span>}
+  <h2 id={id} class="font-display font-bold">{title}</h2>
+  {lede && <p>{lede}</p>}
+  <slot />
+</div>

@@ -1,10 +1,17 @@
 ---
+import { getImage } from 'astro:assets';
+import { visuals as sources } from '../lib/visuals';
+
+// Tiles render at roughly 300px wide, so small thumbnails are plenty; the
+// duplicated loop copies reuse the same cached files.
+const thumbnail = async (image: ImageMetadata) => (await getImage({ src: image, width: 480, format: 'webp' })).src;
+
 const visuals = [
-  { src: '/visual-ai-workflows.webp', label: 'Human Led AI workflows', accent: 'ai' },
-  { src: '/visual-security-ops.webp', label: 'Cybersecurity services', accent: 'security' },
-  { src: '/visual-global-ops.webp', label: 'Managed operations', accent: 'global' },
-  { src: '/visual-about-agi.webp', label: 'Three specialized service areas', accent: 'neutral' },
-  { src: '/agi-operations-command.webp', label: 'Defined ownership and review', accent: 'mixed' },
+  { src: await thumbnail(sources.aiWorkflows), label: 'Human Led AI workflows', accent: 'ai' },
+  { src: await thumbnail(sources.securityOps), label: 'Cybersecurity services', accent: 'security' },
+  { src: await thumbnail(sources.globalOps), label: 'Managed operations', accent: 'global' },
+  { src: await thumbnail(sources.aboutAgi), label: 'Three specialized service areas', accent: 'neutral' },
+  { src: await thumbnail(sources.operationsCommand), label: 'Defined ownership and review', accent: 'mixed' },
 ] as const;
 
 const lanes = [
@@ -20,14 +27,14 @@ const services = [
 ] as const;
 ---
 
-<section id="about-visual-gallery" class="about-gallery-section scroll-mt-20 border-y border-white/5 bg-black/30 px-6 py-20 sm:py-24" aria-labelledby="about-gallery-title">
+<section id="about-visual-gallery" class="about-gallery-section agi-section scroll-mt-20 border-y border-white/5 bg-black/30" aria-labelledby="about-gallery-title">
   <div class="mx-auto grid max-w-7xl min-w-0 gap-12 lg:grid-cols-12 lg:items-center">
     <div class="min-w-0 lg:col-span-4" data-reveal>
-      <span class="text-xs font-bold uppercase tracking-widest text-sky-300">Across AGI</span>
-      <h2 id="about-gallery-title" class="mt-3 max-w-xl font-display text-3xl font-bold leading-tight text-white sm:text-5xl">
+      <span class="agi-eyebrow accent-security">Across AGI</span>
+      <h2 id="about-gallery-title" class="mt-4 max-w-xl font-display text-h2 font-bold text-white">
         Specialized expertise across three service areas.
       </h2>
-      <p class="mt-5 max-w-lg text-sm leading-relaxed text-gray-400">
+      <p class="mt-5 max-w-lg text-[0.9375rem] leading-relaxed text-muted">
         AGI coordinates AI and automation, cybersecurity, and managed IT expertise around client needs. Each service area remains easy to understand, scope, and engage.
       </p>
 
@@ -46,7 +53,7 @@ const services = [
       </nav>
     </div>
 
-    <div class="gallery-stage min-w-0 lg:col-span-8" data-reveal-right>
+    <div class="gallery-stage min-w-0 lg:col-span-8" data-reveal-right data-motion>
       <div class="gallery-frame" aria-hidden="true">
         <div class="gallery-grid"></div>
         <div class="gallery-plane">
@@ -57,7 +64,7 @@ const services = [
                   <div class="gallery-group" aria-hidden={groupIndex === 1 ? 'true' : undefined}>
                     {lane.map((visual) => (
                       <figure class:list={['gallery-tile', `gallery-tile-${visual.accent}`]}>
-                        <img src={visual.src} alt="" width="1672" height="941" loading="lazy" decoding="async" />
+                        <img src={visual.src} alt="" width="480" height="270" loading="lazy" decoding="async" />
                         <figcaption>{visual.label}</figcaption>
                       </figure>
                     ))}
@@ -109,11 +116,11 @@ const services = [
   .gallery-practice-global { --practice-color: var(--color-global); }
   .gallery-practice strong,
   .gallery-practice small { display: block; }
-  .gallery-practice strong { font-family: var(--font-display); font-size: 0.8125rem; }
+  .gallery-practice strong { font-family: var(--font-display); font-size: 0.9375rem; }
   .gallery-practice small {
     margin-top: 0.25rem;
-    color: rgb(107 114 128);
-    font-size: 0.625rem;
+    color: rgb(156 163 175);
+    font-size: 0.75rem;
     line-height: 1.35;
   }
   .gallery-practice svg {
@@ -170,7 +177,7 @@ const services = [
     transform-style: preserve-3d;
   }
   .gallery-lane { min-width: 0; overflow: hidden; }
-  .gallery-track { transform: translate3d(0, 0, 0); will-change: transform; }
+  .gallery-track { transform: translate3d(0, 0, 0); }
   .gallery-lane-1 .gallery-track { animation: gallery-up 34s linear infinite; }
   .gallery-lane-2 .gallery-track { animation: gallery-down 39s linear infinite; }
   .gallery-lane-3 .gallery-track { animation: gallery-up 43s linear infinite -13s; }

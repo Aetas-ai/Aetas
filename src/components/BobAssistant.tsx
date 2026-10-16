@@ -150,6 +150,8 @@ export default function BobAssistant() {
   const typingTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Keep the prompt still for visitors who prefer reduced motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const interval = window.setInterval(() => {
       setPromptIndex((current) => (current + 1) % promptWords.length);
     }, 3200);

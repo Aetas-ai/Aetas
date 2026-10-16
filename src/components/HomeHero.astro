@@ -1,5 +1,6 @@
 ---
 import AgiNetworkGraph from './AgiNetworkGraph.astro';
+import Button from './Button.astro';
 
 const services = [
   { number: '01', service: 'AI & Automation', outcome: 'Better workflows', scope: 'Human Led AI and Business Process AI Assimilation', href: '/ai', accent: 'ai' },
@@ -17,12 +18,9 @@ const services = [
 
     <div class="home-hero-copy relative z-10 mx-auto grid w-full min-w-0 max-w-[90rem] items-center gap-8 px-6 py-12 sm:px-8 sm:py-14 lg:grid-cols-2 lg:gap-14 lg:px-10 lg:py-16 xl:px-12">
       <div class="flex w-full min-w-0 max-w-xl flex-col items-start gap-5 sm:gap-6">
-        <div class="home-hero-enter home-hero-enter-1 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-gray-200">
-          <span class="h-2 w-2 bg-ai" aria-hidden="true"></span>
-          <span>Aetas Global Innovation</span>
-        </div>
+        <span class="home-hero-enter home-hero-enter-1 agi-eyebrow accent-ai tracking-[0.16em]">Aetas Global Innovation</span>
 
-        <h1 id="home-hero-title" class="home-hero-enter home-hero-enter-2 w-full max-w-2xl font-display text-[2.35rem] font-bold leading-[1.04] text-white [overflow-wrap:anywhere] sm:text-5xl lg:text-[4rem] xl:text-[4.6rem]">
+        <h1 id="home-hero-title" class="home-hero-enter home-hero-enter-2 w-full max-w-2xl font-display text-[2.35rem] font-bold leading-[1.04] tracking-[-0.025em] text-white [overflow-wrap:anywhere] sm:text-5xl lg:text-[4rem] xl:text-[4.6rem]">
           Make complex operations <span class="text-sky-300">easier to run.</span>
         </h1>
 
@@ -31,12 +29,8 @@ const services = [
         </p>
 
         <div class="home-hero-enter home-hero-enter-4 flex w-full min-w-0 max-w-full flex-col gap-3 pt-1 sm:w-auto sm:flex-row sm:items-center">
-          <a href="/contact" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg bg-white px-7 py-3 text-center text-sm font-bold text-black shadow-xl shadow-black/30 transition-[background-color,transform,box-shadow] duration-200 hover:bg-gray-100 hover:shadow-white/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
-            Discuss your operations
-          </a>
-          <a href="#services" class="inline-flex min-h-12 w-full max-w-full items-center justify-center rounded-lg border border-white/20 bg-black/25 px-7 py-3 text-center text-sm font-bold text-white backdrop-blur-sm transition-[background-color,border-color,transform] duration-200 hover:border-white/40 hover:bg-black/40 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg sm:w-auto">
-            Explore AGI services
-          </a>
+          <Button href="/contact" arrow stretch class="px-7">Discuss your operations</Button>
+          <Button href="#services" variant="secondary" stretch class="px-7">Explore AGI services</Button>
         </div>
 
         <p class="home-hero-enter home-hero-enter-5 w-full max-w-xl border-l border-white/20 pl-4 text-xs leading-relaxed text-gray-300 [overflow-wrap:anywhere] sm:text-sm">
@@ -44,7 +38,7 @@ const services = [
         </p>
       </div>
 
-      <div class="home-hero-network home-hero-visual-enter relative z-10 min-w-0">
+      <div class="home-hero-network home-hero-visual-enter relative z-10 min-w-0" data-motion>
         <AgiNetworkGraph />
       </div>
     </div>
@@ -91,31 +85,30 @@ const services = [
   .home-hero-copy { box-sizing: border-box; min-height: inherit; flex: 1; }
   .home-hero-network { min-height: 20rem; }
 
-  .home-hero-enter,
+  /* Hero text animates transform only, so it paints at once and LCP is not
+     delayed; the decorative network and service rail may fade in. */
   .home-hero-visual-enter,
   .hero-practice-enter {
     opacity: 0;
   }
 
   .home-hero-enter {
-    transform: translate3d(0, 1.15rem, 0);
-    animation: home-hero-content-in 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: agi-rise 680ms var(--ease-out-expo) both;
   }
 
-  .home-hero-enter-1 { animation-delay: 80ms; }
-  .home-hero-enter-2 { animation-delay: 150ms; }
-  .home-hero-enter-3 { animation-delay: 230ms; }
-  .home-hero-enter-4 { animation-delay: 310ms; }
-  .home-hero-enter-5 { animation-delay: 390ms; }
+  .home-hero-enter-2 { animation-delay: 50ms; }
+  .home-hero-enter-3 { animation-delay: 100ms; }
+  .home-hero-enter-4 { animation-delay: 150ms; }
+  .home-hero-enter-5 { animation-delay: 200ms; }
 
   .home-hero-visual-enter {
     transform: translate3d(1.5rem, 0, 0) scale(0.975);
-    animation: home-hero-visual-in 820ms cubic-bezier(0.22, 1, 0.36, 1) 210ms forwards;
+    animation: home-hero-visual-in 820ms var(--ease-out-expo) 210ms forwards;
   }
 
   .hero-practice-enter {
     transform: translate3d(0, 0.8rem, 0);
-    animation: home-hero-content-in 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: home-hero-content-in 560ms var(--ease-out-expo) forwards;
   }
 
   .hero-practice-enter:nth-child(1) { animation-delay: 500ms; }
@@ -124,7 +117,7 @@ const services = [
 
   .home-hero-image-wash {
     background:
-      radial-gradient(circle at 78% 45%, rgba(14, 165, 233, 0.09), transparent 32%),
+      radial-gradient(circle at 78% 45%, color-mix(in srgb, var(--color-security) 9%, transparent), transparent 32%),
       linear-gradient(90deg, rgba(5, 5, 8, 1) 0%, rgba(5, 5, 8, 0.96) 42%, rgba(5, 5, 8, 0.66) 72%, rgba(5, 5, 8, 0.2) 100%);
   }
 
@@ -157,12 +150,12 @@ const services = [
     transition:
       background-color 200ms ease,
       box-shadow 200ms ease,
-      transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform 200ms var(--ease-out-expo);
   }
 
-  .hero-practice-ai { background: rgba(116, 119, 245, 0.045); }
-  .hero-practice-security { background: rgba(24, 185, 237, 0.04); }
-  .hero-practice-global { background: rgba(242, 184, 75, 0.045); }
+  .hero-practice-ai { background: color-mix(in srgb, var(--color-ai) 4.5%, transparent); }
+  .hero-practice-security { background: color-mix(in srgb, var(--color-security) 4%, transparent); }
+  .hero-practice-global { background: color-mix(in srgb, var(--color-global) 4.5%, transparent); }
 
   .hero-practice::before {
     position: absolute;
@@ -193,26 +186,26 @@ const services = [
   .hero-practice-ai::before { background: var(--color-ai); }
   .hero-practice-security::before { background: var(--color-security); }
   .hero-practice-global::before { background: var(--color-global); }
-  .hero-practice-ai .hero-practice-number { color: #a5b4fc; }
-  .hero-practice-security .hero-practice-number { color: #7dd3fc; }
-  .hero-practice-global .hero-practice-number { color: #fcd34d; }
+  .hero-practice-ai .hero-practice-number { color: color-mix(in srgb, var(--color-ai) 55%, white); }
+  .hero-practice-security .hero-practice-number { color: color-mix(in srgb, var(--color-security) 55%, white); }
+  .hero-practice-global .hero-practice-number { color: color-mix(in srgb, var(--color-global) 60%, white); }
   .hero-practice-ai .hero-practice-number::after { background: var(--color-ai); }
   .hero-practice-security .hero-practice-number::after { background: var(--color-security); }
   .hero-practice-global .hero-practice-number::after { background: var(--color-global); }
   .hero-practice-ai:hover,
   .hero-practice-ai:focus-visible {
-    background: rgba(116, 119, 245, 0.075);
-    box-shadow: inset 0 0 0 1px rgba(116, 119, 245, 0.16);
+    background: color-mix(in srgb, var(--color-ai) 7.5%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ai) 16%, transparent);
   }
   .hero-practice-security:hover,
   .hero-practice-security:focus-visible {
-    background: rgba(24, 185, 237, 0.07);
-    box-shadow: inset 0 0 0 1px rgba(24, 185, 237, 0.15);
+    background: color-mix(in srgb, var(--color-security) 7%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-security) 15%, transparent);
   }
   .hero-practice-global:hover,
   .hero-practice-global:focus-visible {
-    background: rgba(242, 184, 75, 0.075);
-    box-shadow: inset 0 0 0 1px rgba(242, 184, 75, 0.15);
+    background: color-mix(in srgb, var(--color-global) 7.5%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-global) 15%, transparent);
   }
   .hero-practice:focus-visible { transform: translateY(-2px); }
   .hero-practice-ai:focus-visible { --tw-ring-color: var(--color-ai); }
@@ -236,7 +229,7 @@ const services = [
   }
   @media (max-width: 1023px) {
     .home-hero-image-wash {
-      background: radial-gradient(circle at 50% 78%, rgba(14, 165, 233, 0.08), transparent 32%);
+      background: radial-gradient(circle at 50% 78%, color-mix(in srgb, var(--color-security) 8%, transparent), transparent 32%);
     }
   }
 
