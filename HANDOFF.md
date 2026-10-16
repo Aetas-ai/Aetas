@@ -1,6 +1,6 @@
 # Aetas Global Innovation Website Handoff
 
-Last updated: July 31, 2026
+Last updated: October 17, 2026
 
 This is the primary implementation and positioning reference for developers and coding assistants working on the Aetas Global Innovation website.
 
@@ -55,9 +55,11 @@ Public service names and routes:
 - Astro 7 with prerendered public pages and standalone Node output for on-demand form endpoints
 - React 19 islands through `@astrojs/react`
 - Tailwind CSS 4 through `@tailwindcss/vite`
-- Shadcn-compatible organization through `src/components/ui` and `src/lib/utils.ts`; this is not a Next.js application or a full shadcn CLI scaffold
+- A lightweight `cn` helper in `src/lib/utils.ts` for composing class names; this is not a Next.js application or a shadcn CLI scaffold
 - Native scrolling and lightweight CSS/Intersection Observer reveal animation
-- Framer Motion for React island transitions
+- CSS keyframes (`agi-swap-in`, `agi-fade-in`) for React island transitions; Framer Motion has been removed
+- Self-hosted Inter variable font (`@fontsource-variable/inter`) for body and headings (headings at weight 600 with tight tracking), preloaded in `Layout.astro`
+- `astro:assets` available for any future real photography (no content rasters are currently used)
 - Lucide React icons
 - Astro sitemap integration
 
@@ -67,13 +69,17 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 ## Important Files
 
-- `src/layouts/Layout.astro`: metadata, structured data, header, mobile navigation, footer, slow-load overlay, animation setup, and delayed Bob hydration.
-- `src/components/HomeHero.astro`: homepage hero copy, calls to action, custom network placement, and service navigation rail.
-- `src/components/PageHero.astro`: shared dark page hero, service accents, calls to action, and fixed-header viewport sizing for full-height variants.
+- `src/layouts/Layout.astro`: metadata, structured data, slow-load overlay, animation setup, navigation script wiring, and delayed Bob hydration. It renders the header, mobile navigation, and footer components below.
+- `src/data/navigation.ts`: single source of truth for header, mobile, and footer links, including each service's capability deep links.
+- `src/components/SiteHeader.astro`, `MobileNav.astro`, `SiteFooter.astro`, and `ServiceIcon.astro`: header with the Services mega menu, the mobile navigation sheet, and the data-driven footer.
+- `src/scripts/site-nav.ts`: Services disclosure menu and mobile sheet behaviour, re-bound per page through one `AbortController`.
+- `src/components/HomeHero.astro`: homepage hero copy, calls to action, AGI network placement, and service navigation rail.
 - `src/components/AgiNetworkGraph.astro`: original AGI animated network representing the three specialized service areas.
-- `src/components/AboutVisualGallery.astro`: lightweight animated About page visual gallery using current sample imagery.
-- `src/components/ui/feature-carousel.tsx`: Astro-compatible React island used on the homepage and hydrated with `client:visible`.
-- `src/components/ui/container-scroll-animation.tsx`: available UI component; currently not rendered by a public page.
+- `src/components/PageHero.astro`: shared dark page hero, service accents, calls to action, fixed-header viewport sizing, and restrained accent light when no background image is set.
+- `src/components/demos/`: the three code-rendered service demos, one per service page (see "Code-rendered demos" below). `src/data/demos.ts` holds their simulated data.
+- `src/components/AboutVisualGallery.astro`: About page scrolling gallery of code-built tiles showing approved content only: Expert in the Loop decisions, the approved workflow and engagement steps, MXDR stages, Offensive Security lines, Managed IT tiers and responsibilities, and approved partner logos. No generated imagery.
+- `src/data/partner-logos.ts` and `src/components/PartnerLogo.astro`: approved partner names, artwork, and official links for reuse outside `/partners` (About gallery and partners strip). Mirror `src/pages/partners.astro`, which stays the source of truth and is not modified.
+- `src/components/Button.astro` and `src/components/SectionHeading.astro`: shared call-to-action and section heading components used across pages.
 - `src/lib/utils.ts`: lightweight `cn` class-name helper for shared UI components.
 - `src/components/BobAssistant.tsx`: persistent chat assistant interface and local service answers.
 - `src/components/ManagedSystems.tsx`: interactive responsibility selector.
@@ -81,6 +87,7 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - `scripts/security-headers-integration.mjs` and `scripts/security-policy.mjs`: validate generated links and artifacts, derive CSP hashes from final HTML, and generate matching Node and Hostinger/LiteSpeed security policies.
 - `scripts/start-server.mjs` and `scripts/server-runtime.mjs`: validate production secrets and generated headers, enforce the fixed canonical origin, apply security headers before serving requests, and start the hardened Node listener.
 - `DEPENDENCY-SECURITY.md`: step-by-step dependency vulnerability verification, remediation, testing, and Hostinger redeployment workflow.
+- `EMAIL-SETUP.md`: Resend account/DNS handoff, explicit activation gate, sender/recipient settings, mocked verification, and Hostinger backend activation.
 - `src/middleware.ts`: enforces the production origin for on-demand routes, applies no-store and same-origin API policy, adds noindex protection for reserved preview/admin paths, and converts unexpected API failures into generic responses with non-PII request IDs.
 - `src/lib/server/forms.ts`, `src/lib/server/form-security.ts`, `src/lib/server/csrf.ts`, and `src/lib/server/rate-limit.ts`: server-only form schemas, normalized delivery payloads, CSRF protection, bot controls, and bounded per-IP/per-endpoint rate limiting.
 - `src/pages/api/forms/`: on-demand contact, AI consultation, readiness brief, and CSRF endpoints.
@@ -96,14 +103,18 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 
 ## Current Implementation
 
-- The visual system uses hybrid enterprise contrast: dark technical/immersive sections alternate with light editorial and conversion bands so the site is not dominated by one color family.
-- Service accents are intentionally scoped: violet for AI & Automation, cyan for Cybersecurity, amber for Managed IT, and green for governance or reviewed states. Do not recolor entire pages by service.
-- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `service-card-*`, `media-frame-light`, `button-on-light-*`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities.
+- The visual system is dark-first: layered dark surfaces (`--surface-0` to `--surface-3`, `agi-band`, `section-dark-raised`) carry most pages so code-rendered product windows sit naturally on them. Light bands (`section-light`, `section-light-muted`) are reserved for forms, legal pages, and at most one deliberate editorial band per page.
+- The theme is duotone (Linear-inspired): near-black and off-white with neutral greys, plus ONE muted indigo accent (`--color-accent: #7c80f0`; `--color-accent-ink` on light, `--color-accent-text` on dark) used sparingly for eyebrow dots, active nav, focus rings, links, network lines, and faint glows. The three services are distinguished by icon, name, and 01/02/03 numbering, not by colour. The only other hues are muted status colours inside demo status chips (always paired with text) and the partners' own logo artwork. Do not reintroduce per-service colours or multi-colour gradients.
+- Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `media-frame-light`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities. `button-on-light-*` and `editorial-card` remain for the approved Partners callout.
+- Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, the 12 px `--radius-card`, `--radius-control`, `--radius-window`, `--shadow-window`, the dark elevation surfaces, `--line-subtle` / `--line-strong`, and `--font-mono` (system monospace for demo data). Navigation, band, step-strip, window, and chip classes live in `src/styles/product-ui.css`, imported by `global.css`.
+- Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
+- `accent-ai`, `accent-security`, `accent-global`, and `accent-governance` (and `--color-ai|security|global|governance`) remain as aliases of the single accent so existing markup keeps working; prefer `--color-accent` in new code. Headings on dark and light surfaces use the white-to-grey (or ink) fade from `.agi-section-heading h2` / `.agi-heading-fade`.
+- Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes. Reuse them before adding page-specific styles.
 - Partner-logo displays remain on dark surfaces because several approved official logos are white. Their surrounding explanatory and conversion content can use the light editorial system.
-- Light-surface cards use restrained 8 px radii, low-contrast borders, and subtle elevation. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards or decorative color effects.
-- The homepage hero uses an original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT.
-- The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail has persistent low-opacity violet, cyan, and amber surfaces and accents so the three practices remain distinct before hover or keyboard focus.
-- Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
+- Cards use restrained 12 px radii, low-contrast borders, and subtle elevation. On dark surfaces the accent is a fading top hairline rather than a solid bar. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards, heavy glassmorphism, or decorative glow.
+- The homepage hero uses the original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT. Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
+- The homepage service section uses three data-free service panels (icon, approved heading, scope, capabilities, link). Do not put simulated interface windows in heroes or on the homepage.
+- The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail keeps the three practices distinct through numbering, names, and scope lines, with a subtle accent hairline.
 - The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
 - The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
 - Bob loads with `client:idle` and a timeout so it does not block critical rendering.
@@ -114,7 +125,54 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - The temporary development-only loader preview, query-string activation, simulated sequence, console message, and replay button have been removed.
 - Brand imagery uses optimized WebP assets: `aetasBrand.webp`, `aetasIcon.webp`, and `bob.webp`.
 - The header uses the full Aetas Global Innovation logo on desktop and mobile. The icon is used for favicon and assistant identity contexts.
-- The homepage responsibility selector and advisor quiz are interactive React islands hydrated with `client:visible`.
+
+## Navigation
+
+- The header is 4 rem (`--site-header-height`) and translucent, becoming more solid after scrolling. Desktop (lg and up) shows: logo, **Services ▾**, Work, Partners, Resources, About, and the "Talk to AGI" CTA. The logo links home, so there is no separate Home link.
+- **Services** follows the WAI-ARIA disclosure navigation pattern (a `<button aria-expanded aria-controls>`, not `role="menu"`). Its panel has one column per service (title link, tag, one-line blurb, capability deep links) and a "Take the service finder" link to `/#service-finder`.
+  - Opens on click, Enter/Space, ArrowDown (focuses the first link), or mouse hover intent.
+  - Closes on Escape (focus returns to the trigger), outside click, focus leaving the menu, link activation, or route change.
+  - Inside the panel, Up/Down move through links, Left/Right move between columns, and Home/End jump to the ends.
+- The Services trigger is marked active on any service page (`activePillar` or the URL).
+- Below lg, the hamburger (`aria-expanded`) opens a full-height `role="dialog" aria-modal="true"` sheet with a focus trap, Escape to close, body scroll lock, focus return, a Services accordion (expanded on service pages), the primary links, and the CTA.
+- Capability deep links: `/ai#services`, `/ai#assimilation`, `/ai#expert-in-the-loop`, `/security#mxdr`, `/security#network-testing`, `/security#application-testing`, `/managed-it#help-desk`, `/managed-it#product-support`, `/managed-it#operations`. Keep these IDs on the service pages. `html` sets `scroll-padding-top` so anchors land below the fixed header.
+- All links come from `src/data/navigation.ts`. Careers (`/careers`) remains unlinked, as before.
+
+## Code-rendered demos
+
+Each service page has exactly one interactive React interface demo, placed in a body section (never in a hero, and none on the homepage). Keep it that way: repeated simulated windows were reviewed and rejected as cluttered.
+
+| Demo | Where | What it shows |
+|---|---|---|
+| `ExpertReviewQueue` | `/ai`, "A visible AI control layer" | AI classifies, retrieves an approved SOP, drafts a reply, then waits for an expert to approve, edit, or escalate |
+| `MxdrConsole` | `/security`, "Focused coverage" | Detections by severity moving through detect, triage, investigate, analyst-approved containment, and client reporting |
+| `ServiceDeskQueue` | `/managed-it`, "Operations Visibility" | Help Desk and Product Support tickets moving L1 → L2 → L3, resolved and documented |
+
+Rules for every demo:
+
+- Each window shows a quiet "Simulated" label in its title bar and a caption stating it is an illustrative example with simulated data, not a live system. Never add "live" indicators.
+- Data lives only in `src/data/demos.ts` and uses reserved values: `*.example.com` hosts, documentation IP ranges (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24), generic roles, and relative times. No vendor, tool, or client names, and no figures that read as real AGI performance results.
+- AI demos always show a human decision before customer, system, or policy impact; security containment always shows analyst approval.
+- `DemoWindow` and `useSteps` (`demo-runtime.tsx`) only advance while the window is on screen and the tab is visible. Each window has a pause/play control. Under `prefers-reduced-motion` there is no autoplay, and Previous/Next step controls replace the timer.
+- Islands are server-rendered first (the HTML is the first frame) and hydrate with `client:visible`. Styling uses classes and inline `style` attributes only; never inject `<style>` at runtime (CSP).
+- Service page and About heroes are text-led (copy, CTAs, and on service pages the focus list) with accent light. The Operations Readiness Brief hero is text-led too, and its body shows a code-built preview of the brief (a stacked document listing the topics named in the approved page description). All former generated images and every stock (undraw) illustration were removed; the site uses no content rasters or stock art.
+
+## Conversion, SEO, and site-wide blocks
+
+- **Homepage:** a partner strip directly under the hero (`PartnerStrip.astro`, all approved logos with names announced to assistive tech, plus a link to `/partners`); a "Practical thinking for modern operations" insights teaser showing the first three resources; and the Readiness Brief promo band before the closing CTA.
+- **Readiness Brief promotion:** `BriefPromo.astro` (approved brief title and description, "Get the brief" button) appears before the closing CTA on the homepage and the three service pages. `BriefPreview.astro` is the shared code-built stacked-document preview, also used on the brief page.
+- **Service-page FAQs:** `ServiceFaqSection.astro` renders answers from `src/data/service-faqs.ts` with `FAQPage` structured data. Every answer is composed from approved copy already on that service page; do not add new claims there. The About FAQ uses the same `Faq.astro` component.
+- **Breadcrumbs:** `Breadcrumbs.astro` (visible trail plus `BreadcrumbList` structured data) via the `PageHero` `breadcrumbs` prop on the service pages and Resources, and directly on resource articles and legal pages.
+- **Contact page:** dark-first; service channel cards with icons and links to each service page; the form card on the dark surface (field markup unchanged); and a "What happens next" step strip using the approved engagement steps. `?intent=` preselects the service (`global` maps to Managed IT and `partners` to General Inquiries).
+- **Resources thumbnails:** `ResourceThumb.astro` draws a code-built motif per category (AI draft → expert review; Monitor → Investigate → Respond; L1 → L2 → L3).
+- **404:** `src/pages/404.astro` is a branded, `noindex` page with the three services. The generated `.htaccess` sets `ErrorDocument 404 /404.html` for the static deployment; the Node adapter serves it automatically. The sitemap excludes `/404`.
+- **Share images:** `public/og/<key>.png` (1200×630) are generated by `npm run og:generate` (`scripts/generate-og-images.mjs`, headless Edge) from approved page titles. Pages pass `socialImage="<key>"` to `Layout`; the default is `default`. Regenerate after changing a page title. `/partners` keeps the default image because its page stays unchanged.
+
+## About page
+
+- Sections in order: text-led hero; "Why the name AGI" (the one light editorial band); the code-built gallery ("Specialized expertise across three service areas"); a need → service mapping ("Specialized expertise for different operational needs") whose needs and scopes reuse the service-finder wording; principles; a technology partners strip (approved Cloud & AI and Cybersecurity logos linking to official sites in a new tab, plus a link to `/partners`); an FAQ (`<details>` items written only from approved copy); and the closing CTA.
+- Leadership, team, company facts, and careers content are not shown; add them only with real, approved details.
+- The homepage responsibility selector and advisor quiz (section `#service-finder`) are interactive React islands hydrated with `client:visible`.
 - Site-wide page reveals use dependency-free Intersection Observer and CSS transitions; Lenis, GSAP, and ScrollTrigger are not globally bundled.
 - The Work page contains no fabricated studies; `caseStudies` remains empty.
 - The Work page presents its three explicitly provisional practice areas as equal-height dark panels with persistent service accents and an honest “In preparation” status.
@@ -122,11 +180,11 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 - Work and Resources keep their `max-w-7xl` content geometrically centered at every breakpoint. Shared bottom clearance prevents the fixed Bob assistant from obscuring final actions without applying a one-sided desktop inset that shifts the grids off center. Resource detail pages use a readable `max-w-3xl` editorial measure and the same bottom clearance. The assistant component and behavior are unchanged.
 - The homepage and Managed IT responsibility selector uses one tab column on phones, two on small tablets, and up to four on desktop so long service labels remain readable and tappable. The Advisor Quiz follows the same restrained 8 px card radius and responsive inner padding as the rest of the interface.
 - The site includes the AGI Operations Readiness Brief registration and confirmation flow.
-- Contact, AI consultation, and Operations Readiness Brief forms have prepared server-only Astro endpoints, but public form processing is intentionally deferred and those endpoints are not served by the current frontend deployment. In a backend deployment with all three form variables unset, the CSRF and submission endpoints fail closed with a generic unavailable response. Once activated, the endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint. The process-local limiter removes expired records and has a strict 10,000-record least-recently-used cap so rotating identifiers cannot grow server memory without bound. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
+- Contact, AI consultation, and Operations Readiness Brief forms have prepared Resend notifications with sender `forms@notify.aetas.ai`, confirmed recipient `info@aetas.ai`, visitor Reply-To, escaped HTML/plain text, and a shared reference/timestamp. `FORM_DELIVERY_ENABLED` defaults to false; real sending is disabled pending Sir Rob's approval, the company account, verified DNS, and Hostinger backend activation. Saved Brevo credentials do not activate sending. No visitor autoresponder, automatic retry, provider fallback, or simultaneous webhook delivery is enabled. Resend requests use reference-based idempotency and require a provider message ID for acceptance. Shared submit buttons display a reduced-motion-aware spinner and Sending… label, block duplicate clicks, remain pending through thank-you navigation, and restore fields/button state on errors or back navigation. See `EMAIL-SETUP.md`. Disabled or invalid backend configuration returns generic unavailable responses and no CSRF session; the frontend-only deployment does not serve the endpoints. Once activated, the endpoints enforce strict field schemas, body and field length limits, Unicode normalization, HTML-safe delivery output, signed CSRF sessions, honeypot and timing checks, and an eight-request-per-ten-minute in-memory limit for each IP and endpoint that counts only verified, well-formed submissions. The process-local limiter removes expired records and has a strict 10,000-record least-recently-used cap so rotating identifiers cannot grow server memory without bound. Bob remains a local, non-networked assistant; React output encoding, normalized input, and a 300-character cap protect its typed flow without collecting chat text.
 - SEO includes canonical URLs, structured data, Open Graph metadata, `robots.txt`, sitemap generation, and `noindex` confirmation pages.
-- Production builds keep prerendered public files at the `dist` root for compatibility with the existing Hostinger `dist` output setting. The future standalone Node bundle builds separately into `dist-server` so server code is never placed inside the public frontend output. The build generates `dist/_headers.json` and `dist/.htaccess` from one shared SHA-256 hash-based Content Security Policy. The Node adapter consumes `_headers.json` for prerendered routes, and the production startup wrapper also applies the policy before serving any response. The `.htaccess` provides LiteSpeed defense in depth when Hostinger serves the frontend output directly. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Framer Motion and Bob update element styles at runtime. Unused WebAssembly, unpkg, and Webflow permissions are not allowed. The build fails if public source maps or common secret/log artifacts are emitted.
+- Production builds keep prerendered public files at the `dist` root for compatibility with the existing Hostinger `dist` output setting. The future standalone Node bundle builds separately into `dist-server` so server code is never placed inside the public frontend output. The build generates `dist/_headers.json` and `dist/.htaccess` from one shared SHA-256 hash-based Content Security Policy. The Node adapter consumes `_headers.json` for prerendered routes, and the production startup wrapper also applies the policy before serving any response. The `.htaccess` provides LiteSpeed defense in depth when Hostinger serves the frontend output directly. The policy keeps inline scripts and style blocks hash-restricted; `style-src-attr 'unsafe-inline'` is narrowly retained because Bob and the scroll-reveal stagger update element styles at runtime. Unused WebAssembly, unpkg, and Webflow permissions are not allowed. The build fails if public source maps or common secret/log artifacts are emitted.
 - `package.json` pins the transitive PostCSS dependency to patched version `8.5.25` through npm overrides in response to `GHSA-r28c-9q8g-f849`. Hostinger provides the hosted dependency alerting; the website itself does not run a dependency-vulnerability scanner. Review and update the override when Vite's dependency chain moves beyond the affected PostCSS range.
-- Astro accepts trusted forwarded host and client-IP headers only for the configured HTTPS `aetas.ai` origin. The form API does not permit cross-origin browser access, never caches responses, and logs only event names and random request IDs rather than submitted fields, email addresses, credentials, or provider response bodies.
+- Astro accepts trusted forwarded host and client-IP headers only for the configured HTTPS `aetas.ai` origin. The form API does not permit cross-origin browser access, never caches responses, and logs only event names, random request IDs, and coarse delivery failure reasons/status codes rather than submitted fields, email addresses, credentials, or provider response bodies.
 - The site has no authentication, admin UI, or CMS preview route. The only cookie is the short-lived CSRF cookie, which is `HttpOnly`, `Secure` in production, `SameSite=Strict`, host-only, and scoped to `/`. Reserved `/admin`, `/cms-preview`, and `/preview` paths receive noindex/no-store protection if introduced later.
 
 ## Required Change Workflow
@@ -169,7 +227,7 @@ Current update flow:
 2. Download or prepare the latest source ZIP.
 3. Redeploy the Hostinger Web App with that ZIP.
 4. Keep the current Hostinger Web App settings at Astro, Node.js 22.x, npm, build command `npm run build`, and output directory `dist`. Public pages and assets intentionally build directly into `dist`.
-5. Form processing is currently deferred, so leave `FORM_CSRF_SECRET`, `FORM_DELIVERY_URL`, and `FORM_DELIVERY_BEARER_TOKEN` unset. The frontend deployment does not serve `/api/forms/*`. Before activating forms, switch Hostinger to a backend-supported Astro deployment, run `npm start`, and configure all three variables together. The CSRF secret must be a high-entropy value of at least 32 characters; the delivery URL must be HTTPS.
+5. The frontend deployment does not serve `/api/forms/*`. Keep `FORM_DELIVERY_ENABLED=false` until approval and DNS verification. For activation, use a backend-supported Astro deployment with `npm start`, enable the flag, and configure `FORM_CSRF_SECRET`, `RESEND_API_KEY`, `FORM_SENDER_EMAIL=forms@notify.aetas.ai`, and `CONTACT_RECIPIENT_EMAIL=info@aetas.ai`. Remove obsolete Brevo settings and leave webhook settings unset for Resend. The existing HTTPS webhook remains a mutually exclusive alternative. Follow `EMAIL-SETUP.md`; no live Resend verification or deployment has occurred.
 6. The current frontend deployment uses `dist/.htaccess` for its generated security policy. When switching to the backend deployment, leave Hostinger's managed Node proxy `.htaccess` in `public_html` unchanged; `npm start` loads `dist/_headers.json` and applies the policy in the Node application.
 7. Run `npm test`, verify the production domain and response headers, and test the changed flows.
 
@@ -179,7 +237,7 @@ Production secrets must be configured in Hostinger environment settings, not com
 
 1. Replace remaining placeholder imagery and draft copy with final approved assets and content.
 2. Add real case studies only after client and business approval.
-3. Activate the prepared form feature soon after the team selects an approved HTTPS delivery service: configure and verify all three documented Hostinger server-only environment variables, then test every public form.
+3. Obtain approval, provision the company Resend account, verify `notify.aetas.ai` DNS, and configure a restricted sending key. Activate the Hostinger backend and confirm delivery/replies to the approved `info@aetas.ai` mailbox using `EMAIL-SETUP.md`.
 4. Add analytics and consent handling after the business selects an analytics platform and privacy requirements are confirmed.
 5. Continue accessibility, performance, and real-device QA after major UI changes.
 6. Connect Hostinger to GitHub or CI/CD later if account access permits; keep the documented ZIP workflow until then.

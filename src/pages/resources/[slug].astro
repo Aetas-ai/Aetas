@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { resources } from '../../data/resources';
 
 const resourceAccents = {
@@ -19,10 +20,10 @@ const { article } = Astro.props;
 const accent = resourceAccents[article.category];
 ---
 
-<Layout title={article.title} description={article.summary}>
+<Layout socialImage="resources" title={article.title} description={article.summary}>
   <article class="section-dark-raised agi-bob-safe-section px-5 py-16 sm:px-6 sm:py-20 lg:py-24">
     <div class="mx-auto max-w-3xl">
-      <a href="/resources" class="inline-flex min-h-11 items-center rounded-md text-xs font-bold uppercase tracking-widest text-gray-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-4 focus-visible:ring-offset-brand-bg">&larr; Back to resources</a>
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Resources', href: '/resources' }, { label: article.title, href: `/resources/${article.slug}` }]} />
 
       <header class="mb-12 mt-8 border-b border-white/10 pb-10 sm:mt-10 sm:pb-12">
         <span class:list={['agi-category-label', `agi-category-label--${accent}`]}>{article.category}</span>

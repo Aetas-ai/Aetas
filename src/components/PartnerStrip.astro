@@ -1,0 +1,26 @@
+---
+/**
+ * Compact homepage row of approved partner logos. Logos are decorative here;
+ * the single visible link leads to /partners, which stays the source of truth.
+ */
+import PartnerLogo from './PartnerLogo.astro';
+import { cloudAiPartners, securityPartners } from '../data/partner-logos';
+
+const logos = [...cloudAiPartners, ...securityPartners];
+---
+
+<section class="agi-partner-strip px-6 py-10" aria-labelledby="partner-strip-title">
+  <div class="mx-auto flex max-w-7xl flex-col items-center gap-7">
+    <div class="flex flex-col items-center gap-2 text-center sm:flex-row sm:gap-4">
+      <h2 id="partner-strip-title" class="agi-label text-[0.6875rem]">Technology aligned with AGI services</h2>
+      <a href="/partners" class="agi-card-link agi-card-link--on-dark text-xs">View technology partners</a>
+    </div>
+    <ul class="agi-partner-strip-logos" aria-label="Approved technology partners">
+      {logos.map((logo) => (
+        <li>
+          <PartnerLogo logo={logo} height={logo.kind === 'svg' ? '1.75rem' : '1.25rem'} labelled />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

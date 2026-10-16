@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 import { Shield, UserCheck, Laptop, Inbox, Check } from 'lucide-react';
 
 interface SystemCategory {
@@ -73,17 +72,17 @@ const categories: SystemCategory[] = [
 const serviceStyles = {
   security: {
     label: 'Cybersecurity',
-    active: 'bg-sky-500/10 border-sky-400/30 text-white shadow-lg',
-    icon: 'bg-sky-500/10 text-sky-300',
-    check: 'bg-sky-500/10 border-sky-500/20 text-sky-300',
-    text: 'text-sky-300',
+    active: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] text-white shadow-lg',
+    icon: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]',
+    check: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_25%,transparent)] text-[var(--color-accent-text)]',
+    text: 'text-[var(--color-accent-text)]',
   },
   global: {
     label: 'Managed IT',
-    active: 'bg-amber-500/10 border-amber-400/30 text-white shadow-lg',
-    icon: 'bg-amber-500/10 text-amber-300',
-    check: 'bg-amber-500/10 border-amber-500/20 text-amber-300',
-    text: 'text-amber-300',
+    active: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] text-white shadow-lg',
+    icon: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]',
+    check: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_25%,transparent)] text-[var(--color-accent-text)]',
+    text: 'text-[var(--color-accent-text)]',
   },
 };
 
@@ -93,7 +92,8 @@ interface ManagedSystemsProps {
 
 export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
   const [activeTab, setActiveTab] = useState<string>("identity");
-  const [hasHydrated, setHasHydrated] = useState(false);
+  // The first render matches the server HTML; only later tab changes animate.
+  const [interacted, setInteracted] = useState(false);
   const visibleCategories = scope === 'global'
     ? categories.filter((category) => category.practice === 'global')
     : categories;
@@ -102,14 +102,10 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
   const IconComponent = current.icon;
   const currentStyle = serviceStyles[current.practice];
 
-  useEffect(() => {
-    setHasHydrated(true);
-  }, []);
-
   return (
     <div className="relative w-full overflow-hidden rounded-lg border-white/5 p-4 shadow-2xl glass-panel sm:p-6 lg:p-8">
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
-      
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-60"></div>
+
       {/* Category Tabs Grid - Responsive */}
       <div className={`mb-6 grid gap-3 border-b border-white/5 pb-6 ${scope === 'global' ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'}`}>
         {visibleCategories.map((cat) => {
@@ -119,20 +115,24 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
             <button
               key={cat.id}
               type="button"
-              onClick={() => setActiveTab(cat.id)}
+              onClick={() => {
+                setInteracted(true);
+                setActiveTab(cat.id);
+              }}
               aria-pressed={activeTab === cat.id}
-              className={`flex min-h-20 items-center gap-3 rounded-lg border p-4 text-left transition-all ${
+              aria-controls="managed-systems-detail"
+              className={`flex min-h-20 items-center gap-3 rounded-lg border p-4 text-left transition-[background-color,border-color,color,box-shadow] duration-200 ${
                 activeTab === cat.id
                   ? catStyle.active
-                  : 'bg-black/20 border-white/5 text-gray-400 hover:border-white/10 hover:bg-black/10'
+                  : 'bg-black/20 border-white/5 text-gray-400 hover:border-white/15 hover:bg-white/[0.03] hover:text-gray-200'
               }`}
             >
-              <div className={`p-2 rounded-lg ${activeTab === cat.id ? catStyle.icon : 'bg-white/5 text-gray-500'}`}>
+              <div className={`p-2 rounded-lg transition-colors duration-200 ${activeTab === cat.id ? catStyle.icon : 'bg-white/5 text-gray-400'}`}>
                 <CatIcon className="w-5 h-5" />
               </div>
-              <span className="text-xs font-semibold leading-tight tracking-wide">
+              <span className="text-sm font-semibold leading-tight">
                 <span className="block">{cat.name}</span>
-                <span className={`mt-1 block text-[10px] uppercase ${activeTab === cat.id ? catStyle.text : 'text-gray-500'}`}>{catStyle.label}</span>
+                <span className={`mt-1 block text-[11px] font-bold uppercase tracking-wider ${activeTab === cat.id ? catStyle.text : 'text-gray-400'}`}>{catStyle.label}</span>
               </span>
             </button>
           );
@@ -140,13 +140,10 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
       </div>
 
       {/* Details Section */}
-      <div className="min-h-[260px] flex flex-col justify-between">
-        <motion.div
+      <div id="managed-systems-detail" className="min-h-[260px] flex flex-col justify-between" aria-live="polite">
+        <div
           key={activeTab}
-          initial={hasHydrated ? { opacity: 0, y: 12 } : false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+          className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start ${interacted ? 'agi-swap-in' : ''}`}
         >
             {/* Description Column */}
             <div className="lg:col-span-5 flex flex-col gap-4">
@@ -154,17 +151,17 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
                 <IconComponent className="w-6 h-6" />
                 <h4 className="font-display font-bold text-white text-lg">{current.name}</h4>
               </div>
-              <p className="text-gray-400 text-xs leading-relaxed">
+              <p className="text-gray-300 text-[0.9375rem] leading-relaxed">
                 {current.description}
               </p>
             </div>
 
             {/* Task Checklist Column */}
             <div className="rounded-lg border border-white/5 bg-black/40 p-5 lg:col-span-7">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-4">Example responsibilities</span>
+              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest block mb-4">Example responsibilities</span>
               <ul className="space-y-3">
                 {current.tasks.map((task, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-xs text-gray-300 leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3 text-sm text-gray-300 leading-relaxed">
                     <div className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 mt-0.5 ${currentStyle.check}`}>
                       <Check className="w-3 h-3 stroke-[3]" />
                     </div>
@@ -173,7 +170,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
                 ))}
               </ul>
             </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

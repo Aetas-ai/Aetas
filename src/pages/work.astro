@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
 ---
 
-<Layout title="Work & Case Studies" description="Approved Aetas Global Innovation case studies will be published here as they become available.">
+<Layout socialImage="work" title="Work & Case Studies" description="Approved Aetas Global Innovation case studies will be published here as they become available.">
   <PageHero
     eyebrow="Client work"
     title="Case studies are being prepared for publication."
@@ -41,9 +42,7 @@ import PageHero from '../components/PageHero.astro';
       </div>
 
       <div class="mt-10 flex justify-center" data-reveal>
-        <a href="/contact" class="agi-dark-button agi-dark-button--primary inline-flex min-h-12 w-full items-center justify-center rounded-lg px-7 py-3 text-center text-sm font-bold sm:w-auto">
-          Discuss your requirements
-        </a>
+        <Button href="/contact" arrow stretch class="px-7">Discuss your requirements</Button>
       </div>
     </div>
   </section>

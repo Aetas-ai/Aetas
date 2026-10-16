@@ -1,28 +1,118 @@
 @import "tailwindcss";
+@import "./product-ui.css";
 
 @theme {
-  --color-brand-bg: #050508;
-  --color-surface-dark: #0b1118;
-  --color-surface-dark-raised: #111827;
-  --color-surface-light: #f4f7fa;
-  --color-surface-light-muted: #e9eff5;
-  --color-ink: #101722;
-  --color-ink-muted: #526174;
-  --color-ai: #7477f5;
-  --color-security: #18b9ed;
-  --color-global: #f2b84b;
-  --color-governance: #36c98f;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  --color-brand-bg: #08090a;
+  --color-surface-dark: #0c0d0e;
+  --color-surface-dark-raised: #111214;
+  --color-surface-light: #f5f5f6;
+  --color-surface-light-muted: #ececee;
+  --color-ink: #0f1011;
+  --color-ink-muted: #55585e;
+  --color-line-light: #dcdde0;
+
+  /* Duotone: neutrals plus ONE accent, used sparingly. The former service
+     accent names are aliases so existing classes keep working. */
+  --color-accent: #7c80f0;
+  --color-accent-ink: #4f53c9;
+  --color-accent-text: #a9acf7;
+  --color-ai: var(--color-accent);
+  --color-security: var(--color-accent);
+  --color-global: var(--color-accent);
+  --color-governance: var(--color-accent);
+
+  /* Neutral (not blue-tinted) greys, so existing text-gray-* classes match. */
+  --color-gray-100: #f7f8f8;
+  --color-gray-200: #e4e5e7;
+  --color-gray-300: #d0d3d8;
+  --color-gray-400: #b4b8bf;
+  --color-gray-500: #8a8f98;
+  --color-gray-600: #62666d;
+  --color-gray-700: #3e4147;
+  --color-gray-800: #23252a;
+  --color-gray-900: #141516;
+
+  --font-weight-bold: 600;
+  --font-display: "Inter Variable", "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /* Fluid type scale: one source for display, section, and card headings. */
+  --text-display: clamp(2.5rem, 1.55rem + 3.9vw, 4.5rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.04em;
+  --text-h2: clamp(2rem, 1.4rem + 2.3vw, 3.25rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.032em;
+  --text-h3: clamp(1.25rem, 1.12rem + 0.45vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
+  --text-lede: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --text-lede--line-height: 1.65;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-card: 0.75rem;
+}
+
+/* Metric-matched fallback keeps text from shifting when Inter arrives. */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
 }
 
 @layer base {
   :root {
-    --site-header-height: 5rem;
+    --site-header-height: 4rem;
+    --duration-fast: 160ms;
+    --duration-base: 220ms;
+    --duration-slow: 560ms;
+    --section-space: clamp(4.5rem, 3.25rem + 4vw, 7rem);
+    --shadow-card-light: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 45px -30px rgba(15, 23, 42, 0.34);
+    --shadow-card-light-hover: 0 1px 2px rgba(15, 23, 42, 0.05), 0 26px 56px -30px rgba(15, 23, 42, 0.45);
+    --shadow-card-dark: 0 18px 44px -34px rgba(0, 0, 0, 0.85);
+    --focus-ring: 2px solid rgba(255, 255, 255, 0.9);
+    --radius-control: 0.5rem;
+    --radius-window: 0.875rem;
+
+    /* Dark-first elevation: page, band, raised panel, overlay. */
+    --surface-0: #08090a;
+    --surface-1: #0c0d0e;
+    --surface-2: #111214;
+    --surface-3: #17181b;
+    --line-subtle: rgba(255, 255, 255, 0.06);
+    --line-strong: rgba(255, 255, 255, 0.11);
+    --shadow-window:
+      0 0 0 1px rgba(0, 0, 0, 0.55),
+      0 30px 70px -30px rgba(0, 0, 0, 0.95),
+      0 10px 24px -14px rgba(0, 0, 0, 0.7);
+
+    /* Surface-aware text roles. Light surfaces redefine these below, so
+       text-strong / text-muted read correctly wherever they are used. */
+    --surface-text: #f7f8f8;
+    --surface-text-muted: #8a8f98;
+    --surface-line: rgba(255, 255, 255, 0.08);
+  }
+
+  h1, h2 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
   }
 
   html {
     background-color: var(--color-brand-bg);
+    scroll-padding-top: calc(var(--site-header-height) + 1rem);
     min-height: 100%;
     width: 100%;
     max-width: 100%;
@@ -54,7 +144,7 @@
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
   }
 
   a,
@@ -80,14 +170,432 @@
   background-color: var(--color-brand-bg);
 }
 
-/* Custom Utilities & Animations */
+/* The header becomes more solid once the page scrolls under it. */
+.site-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(8, 9, 10, 0.66);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  transition:
+    background-color var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.site-header[data-scrolled] {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(8, 9, 10, 0.94);
+  box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.9);
+}
+
+@utility text-strong {
+  color: var(--surface-text);
+}
+
+@utility text-muted {
+  color: var(--surface-text-muted);
+}
+
+@utility border-surface {
+  border-color: var(--surface-line);
+}
+
+/* Shared components. Kept in the components layer so page utilities can
+   still override them deliberately. */
+@layer components {
+  .section-light,
+  .section-light-muted,
+  .agi-card--light,
+  .editorial-card,
+  .media-frame-light {
+    --surface-text: var(--color-ink);
+    --surface-text-muted: var(--color-ink-muted);
+    --surface-line: var(--color-line-light);
+  }
+
+  .section-light,
+  .section-light-muted {
+    color: var(--surface-text);
+  }
+
+  .section-light :focus-visible,
+  .section-light-muted :focus-visible {
+    outline-color: var(--color-ink);
+  }
+
+  /* Service accents. --accent is the brand hue, --accent-ink is the readable
+     variant on light surfaces, --accent-text the readable variant on dark. */
+  .accent-ai,
+  .accent-security,
+  .accent-global,
+  .accent-governance {
+    --accent: var(--color-accent);
+    --accent-ink: var(--color-accent-ink);
+    --accent-text: var(--color-accent-text);
+  }
+
+  .agi-section {
+    padding-block: var(--section-space);
+    padding-inline: 1.5rem;
+  }
+
+  .agi-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--color-gray-500);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .agi-eyebrow::before {
+    width: 0.4rem;
+    height: 0.4rem;
+    flex: none;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    content: '';
+  }
+
+  :where(.section-light, .section-light-muted, .agi-card--light) .agi-eyebrow {
+    color: var(--color-ink-muted);
+  }
+
+  .agi-section-heading {
+    display: flex;
+    max-width: 48rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .agi-section-heading--center {
+    margin-inline: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .agi-section-heading h2,
+  .agi-heading-fade {
+    background: linear-gradient(180deg, var(--surface-text) 40%, color-mix(in srgb, var(--surface-text) 64%, transparent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .agi-section-heading h2 {
+    font-size: var(--text-h2);
+    letter-spacing: var(--text-h2--letter-spacing);
+    line-height: var(--text-h2--line-height);
+  }
+
+  .agi-section-heading p {
+    max-width: 42rem;
+    color: var(--surface-text-muted);
+    font-size: var(--text-lede);
+    line-height: var(--text-lede--line-height);
+  }
+
+  /* Cards share one radius, border, and motion language on both surfaces. */
+  .agi-card {
+    position: relative;
+    border: 1px solid var(--surface-line);
+    border-radius: var(--radius-card);
+    padding: clamp(1.5rem, 1.25rem + 0.8vw, 2rem);
+    transition:
+      transform var(--duration-base) var(--ease-out-expo),
+      box-shadow var(--duration-base) ease,
+      border-color var(--duration-base) ease,
+      background-color var(--duration-base) ease;
+  }
+
+  .agi-card--light {
+    background: #ffffff;
+    box-shadow: var(--shadow-card-light);
+    color: var(--surface-text);
+  }
+
+  .agi-card--dark {
+    border-color: var(--line-subtle);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 55%),
+      var(--surface-2);
+    box-shadow: var(--shadow-card-dark), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .agi-card--accent {
+    border-top: 3px solid var(--accent);
+  }
+
+  /* On dark surfaces the accent is a fading hairline rather than a bar. */
+  .agi-card--dark.agi-card--accent {
+    border-top: 1px solid var(--line-subtle);
+  }
+
+  .agi-card--dark.agi-card--accent::after {
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, var(--accent) 30%, transparent 85%);
+    content: '';
+    pointer-events: none;
+  }
+
+  .agi-card--interactive:hover,
+  .agi-card--interactive:focus-within {
+    transform: translateY(-3px);
+  }
+
+  .agi-card--light.agi-card--interactive:hover,
+  .agi-card--light.agi-card--interactive:focus-within {
+    border-color: #b9c7d5;
+    box-shadow: var(--shadow-card-light-hover);
+  }
+
+  .agi-card--dark.agi-card--interactive:hover,
+  .agi-card--dark.agi-card--interactive:focus-within {
+    border-color: color-mix(in srgb, var(--accent, #ffffff) 32%, rgba(255, 255, 255, 0.1));
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--accent, #ffffff) 6%, transparent), rgba(255, 255, 255, 0) 60%),
+      var(--surface-3);
+  }
+
+  .agi-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--accent-ink, var(--surface-text));
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .agi-card--dark .agi-card-link,
+  .agi-card-link--on-dark {
+    color: var(--accent-text, var(--surface-text));
+  }
+
+  .agi-card-link::after {
+    content: '→';
+    transition: transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .agi-card-link:hover::after,
+  .agi-card--interactive:hover .agi-card-link::after {
+    transform: translateX(3px);
+  }
+
+  /* Buttons: one shape and motion; tone picks the surface, accent the hue. */
+  .agi-btn {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    transition:
+      background-color var(--duration-base) ease,
+      border-color var(--duration-base) ease,
+      color var(--duration-base) ease,
+      box-shadow var(--duration-base) ease,
+      transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .agi-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .agi-btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .agi-btn-arrow {
+    transition: transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .agi-btn:hover .agi-btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .agi-btn--dark-primary {
+    background: #e6e6e6;
+    color: #08090a;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  .agi-btn--dark-primary:hover {
+    background: #ffffff;
+  }
+
+  .agi-btn--dark-secondary {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+  }
+
+  .agi-btn--dark-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .agi-btn--light-primary {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #ffffff;
+    box-shadow: 0 12px 28px -18px rgba(16, 23, 34, 0.7);
+  }
+
+  .agi-btn--light-primary:hover {
+    border-color: #263447;
+    background: #263447;
+  }
+
+  .agi-btn--light-secondary {
+    border-color: #b9c6d3;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--color-ink);
+  }
+
+  .agi-btn--light-secondary:hover {
+    border-color: #8fa0b2;
+    background: #ffffff;
+  }
+
+  .agi-btn--light-primary:focus-visible,
+  .agi-btn--light-secondary:focus-visible {
+    outline-color: var(--color-ink);
+  }
+
+  /* Numbered or labelled steps used for workflows and engagement stages. */
+  .agi-step-index {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--accent, #ffffff) 35%, transparent);
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--accent, #ffffff) 12%, transparent);
+    color: var(--accent-text, #ffffff);
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  :where(.section-light, .section-light-muted, .agi-card--light) .agi-step-index {
+    color: var(--accent-ink, var(--color-ink));
+  }
+
+  /* Form fields: readable sentence-case labels and one input treatment.
+     .form-on-light (below) adapts these to light surfaces. */
+  .agi-field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #d0d3d8;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .agi-input {
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-control);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    font-size: 0.9375rem;
+    transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease, background-color var(--duration-fast) ease;
+  }
+
+  .agi-input::placeholder {
+    color: #8b95a5;
+  }
+
+  .agi-input:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .agi-input:focus {
+    border-color: var(--accent, var(--color-ai));
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent, var(--color-ai)) 22%, transparent);
+    outline: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agi-card--interactive:hover,
+  .agi-card--interactive:focus-within,
+  .agi-btn:hover,
+  .agi-btn:active {
+    transform: none;
+  }
+}
+
+/* Gentle one-time entrance for above-the-fold hero content. It animates
+   transform only, so text paints immediately and LCP is not delayed. */
+@keyframes agi-rise {
+  from { transform: translate3d(0, 14px, 0); }
+}
+
+.agi-hero-enter > * {
+  animation: agi-rise 640ms var(--ease-out-expo) both;
+}
+
+.agi-hero-enter > :nth-child(2) { animation-delay: 50ms; }
+.agi-hero-enter > :nth-child(3) { animation-delay: 100ms; }
+.agi-hero-enter > :nth-child(n + 4) { animation-delay: 150ms; }
+
+/* Content swaps inside React islands: the keyed element remounts and this
+   replays, replacing the former animation library. */
+@keyframes agi-swap-in {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+}
+
+@keyframes agi-fade-in {
+  from { opacity: 0; }
+}
+
+.agi-swap-in {
+  animation: agi-swap-in 300ms var(--ease-out-expo) both;
+}
+
+.agi-fade-in {
+  animation: agi-fade-in 420ms ease both;
+}
+
+.agi-swap-in[data-delay="1"] { animation-delay: 60ms; }
+.agi-swap-in[data-delay="2"] { animation-delay: 120ms; }
+.agi-swap-in[data-delay="3"] { animation-delay: 180ms; }
+.agi-swap-in[data-delay="4"] { animation-delay: 240ms; }
+
+/* Infinite decorative animations pause while off-screen (see Layout.astro). */
+[data-motion-paused],
+[data-motion-paused] *,
+[data-motion-paused] *::before,
+[data-motion-paused] *::after {
+  animation-play-state: paused !important;
+}
+
+/* Scroll reveals */
 .agi-reveal {
   --agi-reveal-delay: 0ms;
   opacity: 0;
   transition:
-    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--agi-reveal-delay),
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--agi-reveal-delay);
-  will-change: opacity, transform;
+    opacity var(--duration-slow) var(--ease-out-expo) var(--agi-reveal-delay),
+    transform var(--duration-slow) var(--ease-out-expo) var(--agi-reveal-delay);
 }
 
 .agi-reveal-up { transform: translate3d(0, 1.25rem, 0); }
@@ -114,7 +622,8 @@
   transform: translateY(-2px);
 }
 
-/* Hybrid enterprise section system */
+/* Section system. Dark-first: .section-dark-raised and .agi-band carry most
+   pages; .section-light* is reserved for forms, legal, and editorial bands. */
 .section-light,
 .section-light-muted,
 .section-dark-raised {
@@ -122,8 +631,8 @@
   --section-border: #d9e2eb;
   position: relative;
   isolation: isolate;
-  background: transparent !important;
-  border-color: var(--section-border) !important;
+  background: transparent;
+  border-color: var(--section-border);
 }
 
 .section-light-muted {
@@ -132,8 +641,8 @@
 }
 
 .section-dark-raised {
-  --section-background: var(--color-surface-dark);
-  --section-border: rgba(255, 255, 255, 0.075);
+  --section-background: var(--surface-1);
+  --section-border: rgba(255, 255, 255, 0.06);
 }
 
 .section-light::before,
@@ -152,7 +661,7 @@
 
 .page-hero + .section-light,
 .page-hero + .section-light-muted {
-  border-top-width: 0 !important;
+  border-top-width: 0;
 }
 
 .page-hero + .section-light::before,
@@ -160,64 +669,31 @@
   border-top-width: 0;
 }
 
-.section-light,
-.section-light-muted {
-  color: var(--color-ink);
-}
-
-.section-light :where(h1, h2, h3, h4, h5, h6),
-.section-light-muted :where(h1, h2, h3, h4, h5, h6) {
-  color: var(--color-ink) !important;
-}
-
-.section-light :where(p),
-.section-light-muted :where(p) {
-  color: var(--color-ink-muted) !important;
-}
-
-.section-light .glass-panel,
-.section-light-muted .glass-panel,
+/* Light card used by the approved Partners callout and readiness brief. The
+   Partners markup keeps its original dark-theme text classes, so these
+   unlayered rules intentionally set its heading and paragraph colors. */
 .editorial-card {
-  border: 1px solid #d6e0e9;
-  border-radius: 0.5rem;
+  border: 1px solid var(--color-line-light);
+  border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 18px 45px -30px rgba(15, 23, 42, 0.34);
+  box-shadow: var(--shadow-card-light);
   color: var(--color-ink);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
-.section-light .glass-panel-hover:hover,
-.section-light-muted .glass-panel-hover:hover,
+.editorial-card :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-ink);
+}
+
+.editorial-card :where(p) {
+  color: var(--color-ink-muted);
+}
+
 .editorial-card:hover {
   border-color: #b9c7d5;
   background: #ffffff;
-  box-shadow: 0 24px 52px -30px rgba(15, 23, 42, 0.42);
+  box-shadow: var(--shadow-card-light-hover);
   transform: translateY(-3px);
 }
-
-.section-light .glass-panel :where(h1, h2, h3, h4, h5, h6),
-.section-light-muted .glass-panel :where(h1, h2, h3, h4, h5, h6),
-.editorial-card :where(h1, h2, h3, h4, h5, h6) {
-  color: var(--color-ink) !important;
-}
-
-.section-light .glass-panel :where(p),
-.section-light-muted .glass-panel :where(p),
-.editorial-card :where(p) {
-  color: var(--color-ink-muted) !important;
-}
-
-.service-card-ai,
-.service-card-security,
-.service-card-managed {
-  position: relative;
-  overflow: hidden;
-}
-
-.service-card-ai { border-top: 3px solid var(--color-ai) !important; }
-.service-card-security { border-top: 3px solid var(--color-security) !important; }
-.service-card-managed { border-top: 3px solid var(--color-global) !important; }
 
 .section-spectrum::after {
   position: absolute;
@@ -229,6 +705,15 @@
   background: linear-gradient(90deg, var(--color-ai) 0 33.333%, var(--color-security) 33.333% 66.666%, var(--color-global) 66.666% 100%);
   content: '';
   transform: translateX(-50%);
+}
+
+/* Three-service spectrum line along the top edge of a card. */
+.section-spectrum-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-ai) 0 33.333%, var(--color-security) 33.333% 66.666%, var(--color-global) 66.666% 100%);
+  content: '';
 }
 
 .media-frame-light {
@@ -337,7 +822,7 @@
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.035);
   padding: 0.35rem 0.55rem;
-  color: rgb(156 163 175);
+  color: #9a9ea6;
   white-space: nowrap;
 }
 
@@ -373,7 +858,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--agi-thumbnail-accent) 6%, transparent), transparent 65%),
-    rgba(5, 5, 8, 0.62);
+    rgba(8, 9, 10, 0.62);
   padding: 1.25rem 2rem;
 }
 
@@ -417,7 +902,7 @@
 .agi-dark-button--primary {
   border-color: rgba(255, 255, 255, 0.82);
   background: #ffffff;
-  color: #050508;
+  color: #08090a;
 }
 
 .agi-dark-button--primary:hover {
@@ -443,26 +928,29 @@
   }
 }
 
-.form-on-light :where(label) {
-  color: #526174 !important;
+.form-on-light .agi-field-label {
+  color: #3b4a5c;
 }
 
-.form-on-light :where(input, select, textarea) {
-  min-height: 3rem;
-  border-color: #c7d3df !important;
-  background: #f8fafc !important;
-  color: var(--color-ink) !important;
+.form-on-light .agi-input {
+  border-color: #c7d3df;
+  background: #f8fafc;
+  color: var(--color-ink);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.form-on-light :where(input, select, textarea)::placeholder {
-  color: #8492a3;
+.form-on-light .agi-input::placeholder {
+  color: #7a8899;
 }
 
-.form-on-light :where(input, select, textarea):focus {
-  border-color: var(--color-ai) !important;
-  box-shadow: 0 0 0 3px rgba(116, 119, 245, 0.14);
-  outline: none;
+.form-on-light .agi-input:hover {
+  border-color: #a9b8c7;
+}
+
+.form-on-light .agi-input:focus {
+  border-color: var(--color-ai);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 
 .form-on-light :where(option) {
@@ -478,14 +966,56 @@
   overflow: hidden !important;
 }
 
+.form-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+}
+
+.form-submit-button [data-submit-pending]:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.form-submit-button:disabled {
+  cursor: wait;
+  opacity: 0.8;
+  transform: none;
+}
+
+.form-submit-spinner {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  animation: form-submit-spin 0.8s linear infinite;
+}
+
+@keyframes form-submit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-submit-spinner { animation: none; }
+}
+
 .form-status {
-  border: 1px solid rgba(125, 211, 252, 0.3);
+  border: 1px solid rgba(169, 172, 247, 0.3);
   border-radius: 0.5rem;
-  background: rgba(14, 165, 233, 0.08);
+  background: rgba(124, 128, 240, 0.08);
   padding: 0.75rem 1rem;
-  color: #bae6fd;
-  font-size: 0.75rem;
+  color: #d4d6fb;
+  font-size: 0.875rem;
   line-height: 1.5;
+}
+
+/* The live region stays in the accessibility tree so announcements are not lost. */
+.form-status:empty {
+  border: 0;
+  padding: 0;
+  background: none;
 }
 
 .form-status[data-kind="error"] {
@@ -495,7 +1025,7 @@
 }
 
 .form-on-light .form-status {
-  color: #075985;
+  color: var(--color-accent-ink);
 }
 
 .form-on-light .form-status[data-kind="error"] {
@@ -514,29 +1044,8 @@
 }
 
 form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
-  border-color: #f87171 !important;
+  border-color: #f87171;
   box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.14);
-}
-
-/* Custom marquee styling */
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 30s linear infinite;
-}
-
-.partnership-marquee:hover .animate-marquee,
-.partnership-marquee:focus-within .animate-marquee {
-  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -549,27 +1058,10 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
     transition-duration: 0.001ms !important;
   }
 
-  .animate-marquee {
-    animation: none;
-  }
-
   .agi-reveal {
     opacity: 1;
     transform: none;
   }
-}
-
-/* Glowing element accents */
-.glow-ai {
-  box-shadow: 0 0 40px -5px rgba(99, 102, 241, 0.15);
-}
-
-.glow-security {
-  box-shadow: 0 0 40px -5px rgba(14, 165, 233, 0.15);
-}
-
-.glow-global {
-  box-shadow: 0 0 40px -5px rgba(245, 158, 11, 0.15);
 }
 
 /* Delayed global loading feedback for slow initial loads and page transitions. */
@@ -581,7 +1073,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   place-items: center;
   padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
   overflow: hidden;
-  background: rgba(5, 5, 8, 0.96);
+  background: rgba(8, 9, 10, 0.96);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   opacity: 0;
@@ -661,7 +1153,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
 
 .site-loading-content > span {
   margin-top: 0.6rem;
-  color: rgb(156 163 175);
+  color: #9a9ea6;
   font-size: 0.8125rem;
   line-height: 1.5;
 }
@@ -675,7 +1167,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.04), 0 0 18px rgba(14, 165, 233, 0.08);
+  box-shadow: 0 0 0 1px rgba(124, 128, 240, 0.04), 0 0 18px rgba(124, 128, 240, 0.08);
 }
 
 .site-loading-progress-fill {
@@ -683,7 +1175,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--color-ai) 0%, var(--color-security) 62%, var(--color-global) 100%);
-  box-shadow: 0 0 12px rgba(14, 165, 233, 0.55);
+  box-shadow: 0 0 12px rgba(124, 128, 240, 0.55);
   transform: scaleX(0.06);
   transform-origin: left center;
   transition: transform 8s cubic-bezier(0.12, 0.7, 0.18, 1);
@@ -814,7 +1306,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
 
 .bob-launcher:hover {
   transform: translateY(-4px);
-  filter: drop-shadow(0 18px 28px rgba(99, 102, 241, 0.28));
+  filter: drop-shadow(0 18px 28px rgba(124, 128, 240, 0.28));
 }
 
 .bob-launcher:active {

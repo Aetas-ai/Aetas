@@ -1,0 +1,43 @@
+---
+/**
+ * Shared call-to-action link. `tone` matches the surface the button sits on;
+ * `accent` tints dark primary buttons with a service colour.
+ */
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  tone?: 'dark' | 'light';
+  accent?: 'ai' | 'security' | 'global' | 'neutral';
+  arrow?: boolean;
+  /** Full width on phones, natural width from the sm breakpoint. */
+  stretch?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  tone = 'dark',
+  accent = 'neutral',
+  arrow = false,
+  stretch = false,
+  class: className,
+  ...attributes
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'agi-btn',
+    `agi-btn--${tone}-${variant}`,
+    accent !== 'neutral' && `accent-${accent}`,
+    stretch && 'w-full sm:w-auto',
+    className,
+  ]}
+  {...attributes}
+>
+  <slot />
+  {arrow && <span class="agi-btn-arrow" aria-hidden="true">→</span>}
+</a>

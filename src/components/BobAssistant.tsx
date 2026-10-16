@@ -91,8 +91,8 @@ function TypingDots() {
   return (
     <div className="flex items-center gap-1 px-1 py-1" aria-label="Bob is typing">
       <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-indigo-300 [animation-delay:-0.24s]"></span>
-      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-sky-300 [animation-delay:-0.12s]"></span>
-      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-amber-300"></span>
+      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[var(--color-accent-text)] [animation-delay:-0.12s]"></span>
+      <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[var(--color-accent-text)]"></span>
     </div>
   );
 }
@@ -150,6 +150,8 @@ export default function BobAssistant() {
   const typingTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Keep the prompt still for visitors who prefer reduced motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const interval = window.setInterval(() => {
       setPromptIndex((current) => (current + 1) % promptWords.length);
     }, 3200);
@@ -279,7 +281,7 @@ export default function BobAssistant() {
         inert={!isOpen}
       >
         <div className="relative shrink-0 border-b border-white/10 px-3 py-3 sm:px-5 sm:py-4">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-indigo-500 via-sky-400 to-amber-300"></div>
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent"></div>
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
@@ -376,7 +378,7 @@ export default function BobAssistant() {
                   ))}
                 </div>
 
-                <span className="mb-2 mt-4 block px-1 text-[10px] font-bold uppercase tracking-wider text-sky-300">Suggested questions</span>
+                <span className="mb-2 mt-4 block px-1 text-[10px] font-bold uppercase tracking-wider text-[var(--color-accent-text)]">Suggested questions</span>
                 <div className="grid gap-2">
                   {suggestedQuestions.slice(0, 2).map((question) => (
                     <button
@@ -388,7 +390,7 @@ export default function BobAssistant() {
                         submitMessage(question);
                       }}
                       disabled={isTyping}
-                      className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left text-xs leading-relaxed text-gray-200 transition-colors hover:border-sky-400/40 hover:bg-sky-500/10 focus:outline-none focus:ring-2 focus:ring-sky-400/40 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 px-3 py-2.5 text-left text-xs leading-relaxed text-gray-200 transition-colors hover:border-indigo-400/40 hover:bg-indigo-500/10 focus:outline-none focus:ring-2 focus:ring-indigo-400/40 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <span>{question}</span>
                       <span className="shrink-0 text-base text-gray-500" aria-hidden="true">&rarr;</span>

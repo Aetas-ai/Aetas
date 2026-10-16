@@ -1,0 +1,19 @@
+---
+/** Slim promotion band for the AGI Operations Readiness Brief (approved copy). */
+import BriefPreview from './BriefPreview.astro';
+import Button from './Button.astro';
+---
+
+<section class="agi-section" aria-labelledby="brief-promo-title">
+  <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
+    <div data-reveal>
+      <span class="agi-eyebrow accent-governance">AGI Operations Readiness Brief</span>
+      <h2 id="brief-promo-title" class="mt-4 font-display text-h2 font-bold text-white">A practical starting point for your next operations decision.</h2>
+      <p class="mt-4 max-w-lg text-lede text-muted">
+        Register for a concise guide to evaluating AGI services across Business Process AI Assimilation, MXDR, Offensive Security, managed IT, and Business Processes operations.
+      </p>
+      <Button href="/operations-readiness-brief" arrow class="mt-7">Get the brief</Button>
+    </div>
+    <BriefPreview size="small" />
+  </div>
+</section>

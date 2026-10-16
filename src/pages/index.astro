@@ -2,163 +2,254 @@
 import Layout from '../layouts/Layout.astro';
 import HomeHero from '../components/HomeHero.astro';
 import AdvisorQuiz from '../components/AdvisorQuiz';
-import FeatureCarousel from '../components/ui/feature-carousel';
 import ManagedSystems from '../components/ManagedSystems';
-import OperationsVisual from '../components/OperationsVisual';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import PartnerStrip from '../components/PartnerStrip.astro';
+import BriefPromo from '../components/BriefPromo.astro';
+import ResourceThumb from '../components/ResourceThumb.astro';
+import { resources } from '../data/resources';
+
+const resourceAccents = { 'AI Research': 'ai', 'Threat Intel': 'security', 'MSP Operations': 'managed' } as const;
+
+const showcase = [
+  {
+    key: 'ai',
+    accent: 'ai',
+    label: 'AI & Automation',
+    title: 'Put Human Led AI to work inside your Business Processes.',
+    body: 'Human Led AI and Business Process AI Assimilation for operational teams, with Expert Human Oversight of AI (Expert in the Loop).',
+    points: ['AI classifies, retrieves approved SOPs, and drafts the next step', 'Experts approve, edit, or escalate before customer or system impact', 'Validation gates, escalation paths, and audit trails by design'],
+    href: '/ai',
+    link: 'Explore AI & Automation',
+  },
+  {
+    key: 'security',
+    accent: 'security',
+    label: 'Cybersecurity',
+    title: 'Detect threats. Test defenses. Strengthen resilience.',
+    body: 'MSSP expertise for Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).',
+    points: ['Managed Extended Detection and Response (MXDR)', 'Network Security Testing', 'Application Security Testing (Pen Testing)'],
+    href: '/security',
+    link: 'Explore Cybersecurity',
+  },
+  {
+    key: 'managed-it',
+    accent: 'global',
+    label: 'Managed IT',
+    title: 'Keep IT support and outsourced operations moving.',
+    body: 'MSP expertise for Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.',
+    points: ['Help Desk as a Service with L1-L3 escalation', 'Product Support as a Service', 'Business Processes operations and reporting'],
+    href: '/managed-it',
+    link: 'Explore Managed IT',
+  },
+] as const;
+
+const examples = [
+  {
+    accent: 'ai',
+    label: 'AI & Automation example',
+    title: 'Business Process AI Assimilation',
+    steps: ['Work intake', 'Human Led AI assistance', 'Expert Human Oversight of AI', 'Approved next step'],
+  },
+  {
+    accent: 'security',
+    label: 'Cybersecurity example',
+    title: 'Managed Extended Detection and Response',
+    steps: ['Security detection', 'Investigation', 'Expert review', 'Response and escalation'],
+  },
+  {
+    accent: 'global',
+    label: 'Managed IT example',
+    title: 'Managed support request',
+    steps: ['User request', 'Assigned support queue', 'Specialist handling', 'Documented resolution or escalation'],
+  },
+];
+
+const engagement = [
+  {
+    accent: 'ai',
+    step: 'Identify',
+    title: 'Identify the service area',
+    body: 'Determine whether the requirement is AI workflow automation, cybersecurity, or managed IT and Business Processes operations.',
+  },
+  {
+    accent: 'security',
+    step: 'Scope',
+    title: 'Define the work and boundaries',
+    body: 'Document systems, responsibilities, dependencies, exclusions, and expected handoffs for the selected service.',
+  },
+  {
+    accent: 'global',
+    step: 'Assign',
+    title: 'Set ownership and escalation',
+    body: 'Establish who handles routine work, who reviews exceptions, and where high-impact decisions are escalated.',
+  },
+  {
+    accent: 'governance',
+    step: 'Review',
+    title: 'Review delivery within scope',
+    body: 'Evaluate the agreed workflow, address recurring blockers, and define any changes with the responsible AGI specialists.',
+  },
+];
 ---
 
-<Layout title="Aetas Global Innovation | AI, Cybersecurity & Managed IT" description="Aetas.ai is the digital home of Aetas Global Innovation (AGI), providing AI and automation, cybersecurity, and managed IT services.">
+<Layout socialImage="home" title="Aetas Global Innovation | AI, Cybersecurity & Managed IT" description="Aetas.ai is the digital home of Aetas Global Innovation (AGI), providing AI and automation, cybersecurity, and managed IT services.">
   <HomeHero />
 
-  <section id="services" class="section-light section-spectrum py-24 px-6 max-w-7xl mx-auto scroll-mt-24">
-    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Specialized expertise. Coordinated around your business.</h2>
-      <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
-        Engage AGI for the service your business needs: practical AI and automation, managed cybersecurity, or dependable managed IT and business operations.
-      </p>
-    </div>
+  <PartnerStrip />
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-reveal-group>
-      <article class="glass-panel glass-panel-hover service-card-ai p-8 flex flex-col justify-between">
-        <div>
-          <span class="px-3 py-1 rounded bg-indigo-100 text-indigo-700 border border-indigo-200 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">AI Services</span>
-          <h3 class="text-2xl font-display font-bold text-white mb-4">AI &amp; Automation</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">Human Led AI and Business Process AI Assimilation for operational teams, with Expert Human Oversight of AI (Expert in the Loop).</p>
-        </div>
-        <a href="/ai" class="text-xs font-semibold text-indigo-700 hover:text-indigo-900">Explore AI services &rarr;</a>
-      </article>
-
-      <article class="glass-panel glass-panel-hover service-card-security p-8 flex flex-col justify-between">
-        <div>
-          <span class="px-3 py-1 rounded bg-sky-100 text-sky-700 border border-sky-200 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Cybersecurity Services</span>
-          <h3 class="text-2xl font-display font-bold text-white mb-4">Cybersecurity</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">MSSP expertise for Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).</p>
-        </div>
-        <a href="/security" class="text-xs font-semibold text-sky-700 hover:text-sky-900">Explore security &rarr;</a>
-      </article>
-
-      <article class="glass-panel glass-panel-hover service-card-managed p-8 flex flex-col justify-between">
-        <div>
-          <span class="px-3 py-1 rounded bg-amber-100 text-amber-800 border border-amber-200 text-[10px] font-bold uppercase tracking-wider mb-6 inline-block">Managed IT / Business Processes</span>
-          <h3 class="text-2xl font-display font-bold text-white mb-4">Managed IT</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-6">MSP expertise for Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.</p>
-        </div>
-        <a href="/managed-it" class="text-xs font-semibold text-amber-800 hover:text-amber-950">Explore managed IT &rarr;</a>
-      </article>
-    </div>
-  </section>
-
-  <section class="section-dark-raised py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
-    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest">Why Aetas Global Innovation</span>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mt-3">Specialized expertise for three critical areas of work.</h2>
-      <p class="text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
-        AGI gives organizations a clear place to start. Our AI and automation, cybersecurity, and managed IT services each have a defined purpose and are coordinated around your operational requirements.
-      </p>
-    </div>
-    <FeatureCarousel client:visible />
-  </section>
-
-  <div class="border-y border-white/5 bg-black/20">
-    <OperationsVisual />
-  </div>
-
-  <section class="border-y border-white/5 bg-black/40 px-6 py-16" aria-labelledby="example-workflows-title">
+  <section id="services" class="agi-band agi-section">
+    <div class="agi-grid-mask" aria-hidden="true"></div>
     <div class="mx-auto max-w-7xl">
-      <div class="max-w-3xl" data-reveal>
-        <span class="text-xs font-bold uppercase text-gray-500">Example workflows</span>
-        <h2 id="example-workflows-title" class="mt-3 text-3xl font-display font-bold text-white sm:text-4xl">Different needs, supported by the right AGI expertise.</h2>
-        <p class="mt-4 text-sm leading-relaxed text-gray-400">These examples illustrate service scope. The exact workflow is defined around the client environment and agreed responsibilities.</p>
-      </div>
+      <SectionHeading
+        align="center"
+        eyebrow="AGI services"
+        title="Specialized expertise. Coordinated around your business."
+        lede="Engage AGI for the service your business needs: practical AI and automation, managed cybersecurity, or dependable managed IT and business operations."
+      />
 
-      <div class="mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 lg:grid-cols-3" data-reveal-group>
-        <div class="bg-brand-bg p-6">
-          <span class="text-[10px] font-bold uppercase text-indigo-400">AI &amp; Automation example</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-white">Business Process AI Assimilation</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-400">Work intake &rarr; Human Led AI assistance &rarr; Expert Human Oversight of AI &rarr; approved next step</p>
-        </div>
-        <div class="bg-brand-bg p-6">
-          <span class="text-[10px] font-bold uppercase text-sky-400">Cybersecurity example</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-white">Managed Extended Detection and Response</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-400">Security detection &rarr; investigation &rarr; expert review &rarr; response and escalation</p>
-        </div>
-        <div class="bg-brand-bg p-6">
-          <span class="text-[10px] font-bold uppercase text-amber-400">Managed IT example</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-white">Managed support request</h3>
-          <p class="mt-4 text-sm leading-relaxed text-gray-400">User request &rarr; assigned support queue &rarr; specialist handling &rarr; documented resolution or escalation</p>
-        </div>
+      <div class="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-3" data-reveal-group>
+        {showcase.map((service, index) => (
+          <article class:list={['agi-card agi-card--dark agi-card--accent agi-card--interactive home-service flex flex-col', `accent-${service.accent}`]}>
+            <div class="flex items-center justify-between">
+              <span class="nav-service-icon h-11 w-11 rounded-xl">
+                <ServiceIcon service={service.key} class="h-5 w-5" />
+              </span>
+              <span class="agi-mono text-gray-500">0{index + 1}</span>
+            </div>
+            <span class="agi-eyebrow mt-8">{service.label}</span>
+            <h3 class="mt-3 font-display text-[1.375rem] font-bold leading-snug tracking-[-0.015em] text-white">{service.title}</h3>
+            <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{service.body}</p>
+            <ul class="agi-check-list mt-6 border-t border-white/[0.06] pt-6">{service.points.map((point) => <li class="text-sm">{point}</li>)}</ul>
+            <a href={service.href} class="agi-card-link agi-card-link--on-dark mt-auto pt-8">{service.link}</a>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="section-light-muted py-24 px-6 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
-        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">How engagement starts</span>
-        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white leading-tight">Start with one need. AGI will help define the right service.</h2>
-        <p class="text-gray-400 text-sm leading-relaxed">
-          AGI begins with your operational requirement, then brings in the appropriate AI, cybersecurity, or managed IT specialists to define scope, responsibilities, review points, and escalation before delivery begins.
-        </p>
-      </div>
-      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4" data-reveal-group>
-        <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-indigo-700 uppercase tracking-widest">1. Identify</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Identify the service area</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Determine whether the requirement is AI workflow automation, cybersecurity, or managed IT and Business Processes operations.</p>
-        </article>
-        <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-sky-700 uppercase tracking-widest">2. Scope</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Define the work and boundaries</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Document systems, responsibilities, dependencies, exclusions, and expected handoffs for the selected service.</p>
-        </article>
-        <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-amber-800 uppercase tracking-widest">3. Assign</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Set ownership and escalation</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Establish who handles routine work, who reviews exceptions, and where high-impact decisions are escalated.</p>
-        </article>
-        <article class="glass-panel rounded-2xl p-6">
-          <span class="text-[10px] font-bold text-emerald-700 uppercase tracking-widest">4. Review</span>
-          <h3 class="text-xl font-display font-bold text-white mt-3 mb-3">Review delivery within scope</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">Evaluate the agreed workflow, address recurring blockers, and define any changes with the responsible AGI specialists.</p>
-        </article>
+  <section class="agi-section" aria-labelledby="example-workflows-title">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading
+        id="example-workflows-title"
+        eyebrow="Example workflows"
+        title="Different needs, supported by the right AGI expertise."
+        lede="These examples illustrate service scope. The exact workflow is defined around the client environment and agreed responsibilities."
+      />
+
+      <div class="mt-14 grid grid-cols-1 gap-12" data-reveal-group>
+        {examples.map((example) => (
+          <article class:list={['grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-12', `accent-${example.accent}`]}>
+            <div>
+              <span class="agi-eyebrow">{example.label}</span>
+              <h3 class="mt-3 font-display text-lg font-semibold text-white">{example.title}</h3>
+            </div>
+            <ol class="agi-steps" style="--steps: 4">
+              {example.steps.map((step) => (
+                <li class="agi-step text-[0.9375rem] font-medium text-gray-200">{step}</li>
+              ))}
+            </ol>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <section id="systems-we-manage" class="section-dark-raised py-24 px-6 max-w-7xl mx-auto scroll-mt-24 border-t border-white/5">
-    <div class="text-center max-w-3xl mx-auto mb-16" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white mb-4">Technology responsibilities by service.</h2>
-      <p class="text-gray-400 text-sm sm:text-base leading-relaxed">AGI cybersecurity and managed IT specialists support different responsibilities within a client environment. These examples help clarify the service that fits each need.</p>
+  <section class="section-light-muted agi-section">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading
+        accent="governance"
+        eyebrow="How engagement starts"
+        title="Start with one need. AGI will help define the right service."
+        lede="AGI begins with your operational requirement, then brings in the appropriate AI, cybersecurity, or managed IT specialists to define scope, responsibilities, review points, and escalation before delivery begins."
+      />
+      <ol class="agi-steps mt-14" style="--steps: 4" data-reveal-group>
+        {engagement.map((item) => (
+          <li class:list={['agi-step', `accent-${item.accent}`]}>
+            <span class="agi-eyebrow">{item.step}</span>
+            <h3 class="mt-2 font-display text-lg font-bold text-strong">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{item.body}</p>
+          </li>
+        ))}
+      </ol>
     </div>
-    <ManagedSystems client:visible />
   </section>
 
-  <section class="py-24 px-6 bg-black/20 border-y border-white/5 relative">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <div class="lg:col-span-5 flex flex-col gap-6" data-reveal>
-        <h2 class="text-3xl sm:text-5xl font-display font-bold text-white leading-tight">Which AGI service fits your need?</h2>
-        <p class="text-gray-400 text-sm leading-relaxed">Answer a few questions to identify whether AI and automation, cybersecurity, or managed IT best matches your requirement. This is service guidance, not an automated assessment.</p>
-      </div>
+  <section id="systems-we-manage" class="agi-band agi-section">
+    <div class="mx-auto max-w-7xl">
+      <SectionHeading
+        align="center"
+        eyebrow="Responsibilities"
+        title="Technology responsibilities by service."
+        lede="AGI cybersecurity and managed IT specialists support different responsibilities within a client environment. These examples help clarify the service that fits each need."
+        class="mb-14"
+      />
+      <ManagedSystems client:visible />
+    </div>
+  </section>
+
+  <section id="service-finder" class="agi-section">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-12">
+      <SectionHeading
+        class="lg:col-span-5"
+        eyebrow="Service finder"
+        title="Which AGI service fits your need?"
+        lede="Answer a few questions to identify whether AI and automation, cybersecurity, or managed IT best matches your requirement. This is service guidance, not an automated assessment."
+      />
       <div class="lg:col-span-7" data-reveal>
         <AdvisorQuiz client:visible />
       </div>
     </div>
   </section>
 
-  <section class="section-light section-spectrum py-24 px-6 border-t border-white/5">
-    <div class="max-w-4xl mx-auto text-center flex flex-col gap-6 items-center" data-reveal>
-      <h2 class="text-3xl sm:text-5xl font-display font-bold text-white">Start with the AGI service that matches your need.</h2>
-      <p class="text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl">
-        Tell us whether you are exploring Business Processes workflow automation, cybersecurity services, or managed IT and outsourced operations. AGI will connect you with the right specialists.
-      </p>
-      <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-        <a href="/contact" class="button-on-light-primary inline-flex min-h-12 items-center justify-center rounded-lg px-8 py-3 text-sm font-bold transition-colors">
-          Talk to AGI
-        </a>
-        <a href="/operations-readiness-brief" class="button-on-light-secondary inline-flex min-h-12 items-center justify-center rounded-lg px-8 py-3 text-sm font-bold transition-colors">
-          Download the AGI brief
-        </a>
+  <section class="agi-band agi-section" aria-labelledby="insights-title">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeading
+          id="insights-title"
+          eyebrow="Insights"
+          title="Practical thinking for modern operations."
+          lede="Read technical perspectives on cybersecurity, managed IT and support operations, and Human Led AI."
+        />
+        <a href="/resources" class="agi-card-link agi-card-link--on-dark flex-none" data-reveal>View all resources</a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3" data-reveal-group>
+        {resources.slice(0, 3).map((article) => {
+          const accent = resourceAccents[article.category];
+          return (
+            <article class:list={['agi-resource-card', `agi-resource-card--${accent}`]}>
+              <div class:list={['agi-resource-thumbnail', `agi-resource-thumbnail--${accent}`]}>
+                <ResourceThumb category={article.category} />
+              </div>
+              <div class="flex flex-1 flex-col p-6">
+                <span class:list={['agi-category-label self-start', `agi-category-label--${accent}`]}>{article.category}</span>
+                <h3 class="mt-4 font-display text-lg font-bold leading-snug text-white">
+                  <a class="agi-resource-link" href={`/resources/${article.slug}`}>{article.title}</a>
+                </h3>
+                <p class="mt-3 flex-1 text-sm leading-relaxed text-gray-300">{article.summary}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
+  </section>
+
+  <BriefPromo />
+
+  <section class="agi-band agi-glow agi-section accent-ai">
+    <SectionHeading
+      align="center"
+      title="Start with the AGI service that matches your need."
+      lede="Tell us whether you are exploring Business Processes workflow automation, cybersecurity services, or managed IT and outsourced operations. AGI will connect you with the right specialists."
+    >
+      <div class="mt-4 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <Button href="/contact" arrow stretch>Talk to AGI</Button>
+        <Button href="/operations-readiness-brief" variant="secondary" stretch>Download the AGI brief</Button>
+      </div>
+    </SectionHeading>
   </section>
 </Layout>

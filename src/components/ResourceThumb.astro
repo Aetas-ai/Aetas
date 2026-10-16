@@ -1,0 +1,60 @@
+---
+/**
+ * Decorative, code-built thumbnail for a resource category. Each motif shows
+ * an approved AGI workflow, replacing the former stock illustrations.
+ */
+import type { ResourceArticle } from '../data/resources';
+
+interface Props {
+  category: ResourceArticle['category'];
+}
+
+const { category } = Astro.props;
+
+const motifColor = {
+  'AI Research': 'var(--color-ai)',
+  'Threat Intel': 'var(--color-security)',
+  'MSP Operations': 'var(--color-global)',
+}[category];
+---
+
+<div class="agi-motif" style={`--agi-motif: ${motifColor}`} aria-hidden="true">
+  {category === 'AI Research' && (
+    <>
+      <div class="agi-motif-row">
+        <span class="agi-motif-pill">AI draft</span>
+        <span class="agi-motif-arrow">→</span>
+        <span class="agi-motif-pill agi-motif-pill--strong">Expert review</span>
+      </div>
+      <div class="agi-motif-row">
+        <span class="agi-motif-pill">Approve</span>
+        <span class="agi-motif-pill">Edit</span>
+        <span class="agi-motif-pill">Escalate</span>
+      </div>
+    </>
+  )}
+  {category === 'Threat Intel' && (
+    <>
+      <div class="agi-motif-row">
+        <span class="agi-motif-pill">Monitor</span>
+        <span class="agi-motif-arrow">→</span>
+        <span class="agi-motif-pill">Investigate</span>
+        <span class="agi-motif-arrow">→</span>
+        <span class="agi-motif-pill agi-motif-pill--strong">Respond</span>
+      </div>
+      <span class="agi-motif-note">Managed Extended Detection and Response</span>
+    </>
+  )}
+  {category === 'MSP Operations' && (
+    <>
+      <div class="agi-motif-row">
+        <span class="agi-motif-pill">L1</span>
+        <span class="agi-motif-arrow">→</span>
+        <span class="agi-motif-pill">L2</span>
+        <span class="agi-motif-arrow">→</span>
+        <span class="agi-motif-pill agi-motif-pill--strong">L3</span>
+      </div>
+      <span class="agi-motif-note">Documented resolution or escalation</span>
+    </>
+  )}
+</div>

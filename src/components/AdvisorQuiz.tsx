@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Brain, Users, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Shield, Brain, Users, ArrowRight, RotateCcw } from 'lucide-react';
 
 interface Question {
   id: number;
@@ -81,15 +80,18 @@ const questions: Question[] = [
 export default function AdvisorQuiz() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<('ai' | 'security' | 'global')[]>([]);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<'ai' | 'security' | 'global' | 'mixed' | null>(null);
-  const [hasHydrated, setHasHydrated] = useState(false);
+  // The first render matches the server HTML; later steps animate in and
+  // receive focus so keyboard and screen reader users follow the change.
+  const [interacted, setInteracted] = useState(false);
+  const heading = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    setHasHydrated(true);
-  }, []);
+    if (interacted) heading.current?.focus({ preventScroll: true });
+  }, [currentStep, result, interacted]);
 
   const handleSelect = (value: 'ai' | 'security' | 'global') => {
+    setInteracted(true);
     const newAnswers = [...answers, value];
     setAnswers(newAnswers);
 
@@ -100,10 +102,9 @@ export default function AdvisorQuiz() {
     }
   };
 
+  // The result is a simple tally, shown immediately rather than behind an
+  // artificial "analyzing" delay.
   const calculateResult = (finalAnswers: ('ai' | 'security' | 'global')[]) => {
-    setIsAnalyzing(true);
-    setTimeout(() => {
-      setIsAnalyzing(false);
       // Tally answers
       const counts = finalAnswers.reduce((acc, curr) => {
         acc[curr] = (acc[curr] || 0) + 1;
@@ -124,7 +125,6 @@ export default function AdvisorQuiz() {
       });
 
       setResult(topPillar);
-    }, 2000);
   };
 
   const resetQuiz = () => {
@@ -136,24 +136,18 @@ export default function AdvisorQuiz() {
   return (
     <div className="relative mx-auto w-full max-w-2xl overflow-hidden rounded-lg p-5 shadow-2xl glass-panel sm:p-8">
       {/* Decorative gradient glowing lines */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-70"></div>
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-70"></div>
 
       {result ? (
-          <motion.div
-            key="result"
-            initial={hasHydrated ? { opacity: 0, scale: 0.97 } : false}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.2 }}
-            className="text-center py-6"
-          >
+          <div key="result" className="agi-swap-in text-center py-6">
             <div className="inline-flex p-4 rounded-full bg-white/5 border border-white/10 mb-6">
-              {result === 'security' && <Shield className="w-12 h-12 text-sky-400" />}
-              {result === 'global' && <Users className="w-12 h-12 text-amber-500" />}
-              {result === 'ai' && <Brain className="w-12 h-12 text-indigo-400" />}
-              {result === 'mixed' && <Brain className="w-12 h-12 text-purple-400" />}
+              {result === 'security' && <Shield className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'global' && <Users className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'ai' && <Brain className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'mixed' && <Brain className="w-12 h-12 text-[var(--color-accent-text)]" />}
             </div>
 
-            <h3 className="text-3xl font-display font-bold text-white mb-3">
+            <h3 ref={heading} tabIndex={-1} className="text-3xl font-display font-bold text-white mb-3 focus:outline-none">
               {result === 'security' && 'AGI Cybersecurity'}
               {result === 'global' && 'AGI Managed IT'}
               {result === 'ai' && 'AGI AI & Automation'}
@@ -170,59 +164,40 @@ export default function AdvisorQuiz() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
                 href={`/contact?intent=${result === 'mixed' ? 'general' : result === 'global' ? 'managed-it' : result}`}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-semibold bg-white text-black hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                className="agi-btn agi-btn--dark-primary w-full sm:w-auto px-8"
               >
                 <span>{result === 'ai' ? 'Discuss AI Services' : 'Schedule Scoping Call'}</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
               <button
+                type="button"
                 onClick={resetQuiz}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm font-semibold bg-white/5 hover:bg-white/10 text-white transition-all flex items-center justify-center gap-2 border border-white/10"
+                className="agi-btn agi-btn--dark-secondary w-full sm:w-auto px-8"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Start Over</span>
               </button>
             </div>
-          </motion.div>
-        ) : isAnalyzing ? (
-          <motion.div
-            key="analyzing"
-            initial={hasHydrated ? { opacity: 0 } : false}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            className="flex flex-col items-center justify-center py-12"
-          >
-            <div className="relative w-20 h-20 mb-8">
-              <div className="absolute inset-0 rounded-full border-4 border-white/5"></div>
-              <div className="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin"></div>
-            </div>
-            <h4 className="text-xl font-display font-semibold text-white mb-2">Reviewing Your Answers</h4>
-            <p className="text-gray-400 text-sm">Matching the request to the appropriate AGI service...</p>
-          </motion.div>
+          </div>
         ) : (
-          <motion.div
-            key={currentStep}
-            initial={hasHydrated ? { opacity: 0, x: 16 } : false}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div key={currentStep} className={interacted ? 'agi-swap-in' : undefined}>
             <div className="flex justify-between items-center mb-6">
-              <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                 Question {currentStep + 1} of {questions.length}
               </span>
               <div className="flex gap-1.5">
                 {questions.map((_, idx) => (
                   <div
                     key={idx}
-                    className={`w-8 h-1 rounded-full transition-all duration-300 ${
-                      idx <= currentStep ? 'bg-indigo-500' : 'bg-white/10'
+                    className={`w-8 h-1 rounded-full transition-colors duration-300 ${
+                      idx <= currentStep ? 'bg-[var(--color-accent)]' : 'bg-white/10'
                     }`}
                   />
                 ))}
               </div>
             </div>
 
-            <h3 className="text-2xl font-display font-bold text-white mb-8 leading-tight">
+            <h3 ref={heading} tabIndex={-1} className="text-2xl font-display font-bold text-white mb-8 leading-tight focus:outline-none">
               {questions[currentStep].text}
             </h3>
 
@@ -230,24 +205,25 @@ export default function AdvisorQuiz() {
               {questions[currentStep].options.map((opt, oIdx) => (
                 <button
                   key={oIdx}
+                  type="button"
                   onClick={() => handleSelect(opt.value)}
-                  className="group flex min-h-12 w-full items-start gap-4 rounded-lg border border-white/5 bg-white/2 p-4 text-left transition-all hover:border-white/20 hover:bg-white/5 sm:p-5"
+                  className="group flex min-h-12 w-full items-start gap-4 rounded-lg border border-white/8 bg-white/[0.02] p-4 text-left transition-[background-color,border-color,transform] duration-200 hover:-translate-y-px hover:border-white/20 hover:bg-white/5 motion-reduce:hover:translate-y-0 sm:p-5"
                 >
-                  <div className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center mt-0.5 group-hover:border-indigo-400 group-hover:bg-indigo-400/10 transition-all shrink-0">
-                    <div className="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-indigo-400 transition-all" />
+                  <div className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center mt-0.5 group-hover:border-[var(--color-accent)] group-hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)] group-focus-visible:border-[var(--color-accent)] transition-colors shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-[var(--color-accent)] group-focus-visible:bg-[var(--color-accent)] transition-colors" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                    <h4 className="font-semibold text-white group-hover:text-[var(--color-accent-text)] transition-colors">
                       {opt.text}
                     </h4>
-                    <p className="text-gray-400 text-xs mt-1 leading-relaxed">
+                    <p className="text-gray-400 text-sm mt-1 leading-relaxed">
                       {opt.description}
                     </p>
                   </div>
                 </button>
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
     </div>
   );

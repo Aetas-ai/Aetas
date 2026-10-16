@@ -16,8 +16,9 @@ test('CSP authorizes only the external resources currently used by the site', ()
   );
 
   assert.match(policy, /script-src 'self' 'sha256-script'/);
-  assert.match(policy, /style-src 'self' https:\/\/fonts\.googleapis\.com 'sha256-style'/);
-  assert.match(policy, /font-src 'self' data: https:\/\/fonts\.gstatic\.com/);
+  assert.match(policy, /style-src 'self' 'sha256-style'/);
+  assert.match(policy, /font-src 'self' data:;/);
+  assert.doesNotMatch(policy, /googleapis|gstatic/); // Fonts are self-hosted.
   assert.match(policy, /frame-ancestors 'none'/);
   assert.match(policy, /frame-src 'none'/);
   assert.doesNotMatch(policy, /wasm-unsafe-eval|unsafe-eval|unpkg|webflow/);
@@ -41,6 +42,7 @@ test('Node static route headers and LiteSpeed rules use the same policy', () => 
 
   const htaccess = createHtaccess(policy);
   assert.ok(htaccess.includes(`Content-Security-Policy "${policy}"`));
+  assert.ok(htaccess.includes('ErrorDocument 404 /404.html'));
 });
 
 test('the shared policy exposes all required response headers', () => {

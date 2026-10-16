@@ -1,4 +1,8 @@
-# Claude Project Instructions
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+Astro 7 website for **Aetas Global Innovation (AGI)**, served at `aetas.ai`.
 
 ## Required Project Context
 
@@ -8,6 +12,8 @@ Before modifying website code or content, read:
 - `README.md` for the current project structure and visual system
 - `COLLABORATION.md` for verification and deployment workflow
 - `SEO-DEPLOYMENT.md` when changing routes, metadata, public copy, indexing, or deployment behavior
+- `EMAIL-SETUP.md` when changing forms, form endpoints, or email delivery
+- `DEPENDENCY-SECURITY.md` when a dependency vulnerability is reported
 
 Treat `HANDOFF.md` as the primary context source. Do not invent services, partners, client results, certifications, metrics, testimonials, or internal delivery details. When positioning or architecture changes, update the relevant documentation in the same change.
 
@@ -21,6 +27,33 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Commands
+
+- `npm test`: Node's built-in test runner (`--experimental-strip-types`) over `tests/*.test.mjs`. Tests import TypeScript from `src/lib/server/` directly; there is no separate test framework.
+- Single test file: `node --experimental-strip-types --test tests/csrf.test.mjs`. Filter by name with `--test-name-pattern "<regex>"`.
+- `npm run build`: runs the test suite first, then `astro build`. A failing test fails the build.
+- `npm start`: runs `scripts/start-server.mjs`. It requires a prior build, because it loads `dist/_headers.json` and `dist-server/entry.mjs`, and it exits on missing headers or invalid form environment variables.
+- `node scripts/check-form-security.mjs`: mocked checks against the built backend.
+- `node scripts/check-form-browser.mjs`: real-browser form checks through headless Edge and CDP. It requires the background dev server and sends no email.
+- `npm run og:generate`: regenerates the `public/og/*.png` share images from approved page titles through headless Edge. Run it after changing a page title and commit the PNGs.
+- There is no lint script.
+
+## Architecture
+
+- **Hybrid output.** Pages are prerendered. Only `src/pages/api/forms/*` set `prerender = false`. `astro.config.mjs` writes public files to `dist/`, which is the current Hostinger frontend-only deployment, and the Node server bundle to `dist-server/`. The production site currently serves static `dist/` only, so form APIs are unavailable there.
+- **Build-time security headers and CSP.** `scripts/security-headers-integration.mjs` runs after the build. It SHA-256-hashes the final inline scripts and style blocks, rejects `target="_blank"` links without `rel="noopener noreferrer"`, fails on public source maps, logs, env files, or credential artifacts, and writes `dist/_headers.json` and `dist/.htaccess`. The policy itself lives in `scripts/security-policy.mjs`. `scripts/server-runtime.mjs` applies the same headers under `npm start`. New external origins must be added to the policy. Never edit the generated `.htaccess` by hand, and never rewrite HTML after the build.
+- **Forms pipeline.**
+  - On the client, `src/scripts/secure-forms.ts` and `src/components/FormSubmitButton.astro` fetch a token from `/api/forms/csrf` and submit.
+  - Each endpoint is `createFormEndpoint(definition)` from `src/lib/server/forms.ts`. It handles zod form schemas, same-origin checks, signed CSRF tokens (`csrf.ts`, `form-security.ts`), and a process-local bounded rate limit (`rate-limit.ts`).
+  - `email.ts` selects delivery through either Resend (`email-delivery.ts`) or the legacy webhook. The two channels are mutually exclusive.
+- **Environment.** Server secrets are typed in `astro.config.mjs` `env.schema`. `FORM_DELIVERY_ENABLED` defaults to `false`. Partial or mixed channel configuration fails enabled startup. See `.env.example` and `EMAIL-SETUP.md`.
+- **Middleware.** `src/middleware.ts` hardens API responses, enforces trusted origins, sets `noindex` on reserved routes, and keeps logs privacy-preserving.
+- **UI.** `src/layouts/Layout.astro` is the shared shell: ClientRouter, SEO and structured data, the loader, and the delayed Bob island. It renders `SiteHeader.astro`, `MobileNav.astro`, and `SiteFooter.astro`, all driven by `src/data/navigation.ts`; menu behaviour lives in `src/scripts/site-nav.ts` (Services disclosure menu and mobile dialog sheet, re-bound per page via one `AbortController`). React islands live in `src/components/`, with the `cn` helper in `src/lib/utils.ts`. This is not a Next.js app, so do not use Next.js APIs. Navigation, demo, resource, and case-study data live in `src/data/`.
+- **Code-rendered demos.** Each service page has exactly one React demo island in a body section (`ExpertReviewQueue`, `MxdrConsole`, `ServiceDeskQueue` in `src/components/demos/`), built on `DemoWindow` / `useSteps` (`demo-runtime.tsx`) with simulated data in `src/data/demos.ts`. Never put demo windows in heroes or on the homepage; the homepage hero uses `AgiNetworkGraph.astro`. Every window shows a quiet "Simulated" label; use only reserved example domains and documentation IP ranges, no vendor or client names, and no live indicators. Demos advance only on screen, have a pause control, and use manual steps under reduced motion. Never inject `<style>` at runtime (CSP). See HANDOFF.md "Code-rendered demos".
+- **Design system.** Dark-first duotone: neutral greys plus one muted indigo accent (`--color-accent`); `accent-ai|security|global|governance` and `--color-ai|…` are aliases of it, and headings use Inter at weight 600 with a white-to-grey fade. Never reintroduce per-service colours; status hues exist only in demo chips. Tokens, surface-aware text (`text-strong`, `text-muted`), accents, and the `agi-*` section, card, eyebrow, and form classes live in `src/styles/global.css`; navigation, band, step-strip, window, and chip classes live in `src/styles/product-ui.css` (imported by `global.css`). `Button.astro` and `SectionHeading.astro` are the shared building blocks. Light bands are reserved for forms, legal, and one editorial band per page. See README "Visual System". No animation library is installed: React islands use the `agi-swap-in` / `agi-fade-in` / `agi-row-in` keyframes on keyed elements, and infinite animations carry `data-motion` so they pause off-screen.
+- **Images.** There are no content rasters: the homepage, service pages, About, and the Operations Readiness Brief use code-built visuals built from approved content, and the former `src/assets/visuals/` folder and `src/lib/visuals.ts` were removed. Do not reintroduce AI-generated or stock imagery; use real photos only when the business supplies them (optimize them with `astro:assets` `<Image>`). Approved partner logos for reuse outside `/partners` live in `src/data/partner-logos.ts` (rendered by `PartnerLogo.astro`); the Partners page itself stays unchanged. `public/` holds only assets that need stable URLs (logos, icons, Bob, share images in `public/og/`); there are no stock illustrations.
+- **Sitemap.** The sitemap filter in `astro.config.mjs` excludes the thanks pages and `/global`. Update it, and `SEO-DEPLOYMENT.md`, when adding non-indexed routes.
+
 ## Current Shared Experience Safeguards
 
 - `src/layouts/Layout.astro` uses Astro `ClientRouter` and the original delayed loading overlay. Preserve its singleton guard, 650 ms delayed appearance, minimum visibility, fade cleanup, and `aria-busy` handling.
@@ -30,7 +63,7 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - The Work and Resources indexes use dark editorial surfaces. The approved Partners implementation, partner list, links, logo proportions, and marquee behavior must remain unchanged unless specifically scoped.
 - There is no development loader preview mode. Do not restore query-string preview controls or replay markup without an explicit temporary testing request.
 
-Before handoff, inspect `npm run`, run `npm test`, run `npm run build`, and run `git diff --check`. Report test results accurately.
+Before handoff, inspect `npm run`, run `npm test`, run `npm run build`, and run `git diff --check`. Report test results accurately. Keep `AGENTS.md` and `CLAUDE.md` aligned when shared safeguards, commands, or architecture notes change.
 
 ## Documentation
 

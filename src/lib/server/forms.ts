@@ -2,6 +2,8 @@ import { randomUUID } from 'node:crypto';
 import type { APIContext, APIRoute } from 'astro';
 import { FORM_DELIVERY_BEARER_TOKEN, FORM_DELIVERY_URL } from 'astro:env/server';
 import { z } from 'zod';
+import { formDeliveryChannel, sendFormEmail } from './email';
+import { escapeHtml, type DeliveryResult } from './email-delivery';
 import {
   csrfCookieName,
   isSameOriginRequest,
@@ -198,17 +200,7 @@ function fieldErrorsFromZod(error: z.ZodError, labels: Record<string, string>) {
   return errors;
 }
 
-function escapeHtml(value: string) {
-  return value.replace(/[&<>'"]/g, (character) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    "'": '&#39;',
-    '"': '&quot;',
-  })[character] ?? character);
-}
-
-function buildDeliveryMessage(definition: FormDefinition, values: FormValues) {
+function buildDeliveryMessage(definition: FormDefinition, values: FormValues, reference: string, receivedAt: string) {
   const lines = Object.entries(definition.labels).map(([key, label]) => `${label}: ${values[key]}`);
   const htmlRows = Object.entries(definition.labels).map(([key, label]) => (
     `<tr><th scope="row" style="text-align:left;vertical-align:top;padding:6px 12px 6px 0">${escapeHtml(label)}</th>`
@@ -220,7 +212,8 @@ function buildDeliveryMessage(definition: FormDefinition, values: FormValues) {
     version: 1,
     submission: {
       type: definition.formType,
-      receivedAt: new Date().toISOString(),
+      receivedAt,
+      reference,
       subject: definition.subject,
       replyTo: values.email,
       text: lines.join('\n'),
@@ -229,32 +222,61 @@ function buildDeliveryMessage(definition: FormDefinition, values: FormValues) {
   };
 }
 
-async function deliverSubmission(definition: FormDefinition, values: FormValues) {
-  if (!FORM_DELIVERY_URL || !FORM_DELIVERY_BEARER_TOKEN) return false;
-
-  let deliveryUrl: URL;
-  try {
-    deliveryUrl = new URL(FORM_DELIVERY_URL);
-  } catch {
-    return false;
+async function deliverSubmission(
+  definition: FormDefinition,
+  values: FormValues,
+  reference: string,
+  receivedAt: string,
+): Promise<DeliveryResult> {
+  const channel = formDeliveryChannel();
+  if (channel === 'resend') {
+    return sendFormEmail({
+      formType: definition.formType,
+      subject: definition.subject,
+      labels: definition.labels,
+      values,
+      reference,
+      receivedAt,
+    });
   }
 
-  if (deliveryUrl.protocol !== 'https:' || deliveryUrl.username || deliveryUrl.password) return false;
+  if (channel === 'webhook' && FORM_DELIVERY_URL && FORM_DELIVERY_BEARER_TOKEN) {
+    try {
+      const deliveryUrl = new URL(FORM_DELIVERY_URL);
+      if (deliveryUrl.protocol === 'https:' && !deliveryUrl.username && !deliveryUrl.password) {
+        const response = await fetch(deliveryUrl, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${FORM_DELIVERY_BEARER_TOKEN}`,
+            'Content-Type': 'application/json; charset=utf-8',
+            'User-Agent': 'Aetas-Website-Forms/1.0',
+          },
+          body: JSON.stringify(buildDeliveryMessage(definition, values, reference, receivedAt)),
+          redirect: 'error',
+          signal: AbortSignal.timeout(8_000),
+        });
 
-  const response = await fetch(deliveryUrl, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${FORM_DELIVERY_BEARER_TOKEN}`,
-      'Content-Type': 'application/json; charset=utf-8',
-      'User-Agent': 'Aetas-Website-Forms/1.0',
-    },
-    body: JSON.stringify(buildDeliveryMessage(definition, values)),
-    redirect: 'error',
-    signal: AbortSignal.timeout(8_000),
-  });
+        return response.ok ? { ok: true } : { ok: false, reason: 'http', status: response.status };
+      }
+    } catch (error) {
+      return { ok: false, reason: error instanceof DOMException && error.name === 'TimeoutError' ? 'timeout' : 'network' };
+    }
+  }
 
-  return response.ok;
+  return { ok: false, reason: 'config' };
+}
+
+const unavailableMessage = 'We could not send your request right now. Please try again later or email info@aetas.ai.';
+
+// Log event names, the request ID, and safe diagnostics only; never form data.
+function logDelivery(event: string, requestId: string, result?: DeliveryResult) {
+  const details = result && !result.ok
+    ? ` reason=${result.reason}${result.status ? ` status=${result.status}` : ''}`
+    : '';
+  const line = `[forms] ${event} request=${requestId}${details}`;
+  if (event === 'delivery_accepted') console.info(line);
+  else console.error(line);
 }
 
 function getClientIdentifier(context: APIContext) {
@@ -268,26 +290,16 @@ function getClientIdentifier(context: APIContext) {
 export function createFormEndpoint(definition: FormDefinition): APIRoute {
   return async (context) => {
     const { request, cookies } = context;
-    const rateLimit = takeRateLimit({
-      endpoint: definition.endpoint,
-      identifier: getClientIdentifier(context),
-      limit: SUBMISSION_LIMIT,
-      windowMs: SUBMISSION_WINDOW_MS,
-    });
-    const limitHeaders = rateLimitHeaders(rateLimit);
-
-    if (!rateLimit.allowed) {
-      return jsonResponse({
-        ok: false,
-        message: 'Too many requests were sent. Please wait a few minutes and try again.',
-      }, 429, limitHeaders);
-    }
 
     if (!isSameOriginRequest(request)) {
       return jsonResponse({
         ok: false,
         message: 'Your secure form session could not be verified. Refresh the page and try again.',
-      }, 403, limitHeaders);
+      }, 403);
+    }
+
+    if (!formDeliveryChannel()) {
+      return jsonResponse({ ok: false, message: unavailableMessage }, 503);
     }
 
     let payload: Awaited<ReturnType<typeof readPayload>>;
@@ -297,7 +309,7 @@ export function createFormEndpoint(definition: FormDefinition): APIRoute {
       return jsonResponse({
         ok: false,
         message: 'The request could not be processed. Check the form and try again.',
-      }, 400, limitHeaders);
+      }, 400);
     }
 
     if ('error' in payload) {
@@ -307,7 +319,7 @@ export function createFormEndpoint(definition: FormDefinition): APIRoute {
         message: status === 413
           ? 'The request is too large. Shorten the form entries and try again.'
           : 'The request could not be processed. Check the form and try again.',
-      }, status, limitHeaders);
+      }, status);
     }
 
     const csrfToken = payload.values['csrf-token'] ?? '';
@@ -317,18 +329,18 @@ export function createFormEndpoint(definition: FormDefinition): APIRoute {
         return jsonResponse({
           ok: false,
           message: 'Please wait a moment, then submit the form again.',
-        }, 400, { ...limitHeaders, 'Retry-After': String(csrfResult.retryAfterSeconds) });
+        }, 400, { 'Retry-After': String(csrfResult.retryAfterSeconds) });
       }
 
       return jsonResponse({
         ok: false,
         message: 'Your secure form session expired. Refresh the page and try again.',
         refreshCsrf: true,
-      }, 403, limitHeaders);
+      }, 403);
     }
 
     if ((payload.values.website ?? '').trim()) {
-      return jsonResponse({ ok: true, redirect: definition.successUrl }, 200, limitHeaders);
+      return jsonResponse({ ok: true, redirect: definition.successUrl }, 200);
     }
 
     const formValues = { ...payload.values };
@@ -344,27 +356,40 @@ export function createFormEndpoint(definition: FormDefinition): APIRoute {
           ? 'Check the highlighted fields and try again.'
           : 'The request could not be processed. Check the form and try again.',
         fieldErrors,
-      }, 400, limitHeaders);
+      }, 400);
     }
 
-    const requestId = randomUUID();
-    try {
-      const delivered = await deliverSubmission(definition, parsed.data);
-      if (!delivered) {
-        console.error(`[forms] delivery_unavailable request=${requestId}`);
-        return jsonResponse({
-          ok: false,
-          message: 'We could not send your request right now. Please try again later or email info@aetasglobal.com.',
-        }, 503, limitHeaders);
-      }
-    } catch {
-      console.error(`[forms] delivery_failed request=${requestId}`);
+    // Count only verified, well-formed submissions so a visitor correcting
+    // validation errors is not locked out before anything is sent.
+    const rateLimit = takeRateLimit({
+      endpoint: definition.endpoint,
+      identifier: getClientIdentifier(context),
+      limit: SUBMISSION_LIMIT,
+      windowMs: SUBMISSION_WINDOW_MS,
+    });
+    const limitHeaders = rateLimitHeaders(rateLimit);
+    if (!rateLimit.allowed) {
       return jsonResponse({
         ok: false,
-        message: 'We could not send your request right now. Please try again later or email info@aetasglobal.com.',
-      }, 503, limitHeaders);
+        message: 'Too many requests were sent. Please wait a few minutes and try again.',
+      }, 429, limitHeaders);
     }
 
-    return jsonResponse({ ok: true, redirect: definition.successUrl }, 200, limitHeaders);
+    // Reuse the middleware request ID so the email, logs, and X-Request-ID match.
+    const requestId = context.locals.requestId ?? randomUUID();
+    const failure = () => jsonResponse({ ok: false, message: unavailableMessage, reference: requestId }, 503, limitHeaders);
+    try {
+      const result = await deliverSubmission(definition, parsed.data, requestId, new Date().toISOString());
+      if (!result.ok) {
+        logDelivery('delivery_unavailable', requestId, result);
+        return failure();
+      }
+    } catch {
+      logDelivery('delivery_failed', requestId);
+      return failure();
+    }
+
+    logDelivery('delivery_accepted', requestId);
+    return jsonResponse({ ok: true, redirect: definition.successUrl, reference: requestId }, 200, limitHeaders);
   };
 }

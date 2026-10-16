@@ -1,9 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FormSubmitButton from '../components/FormSubmitButton.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+
+const channels = [
+  { accent: 'security', key: 'security', href: '/security', title: 'Cybersecurity', body: 'Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).' },
+  { accent: 'global', key: 'managed-it', href: '/managed-it', title: 'Managed IT', body: 'Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.' },
+  { accent: 'ai', key: 'ai', href: '/ai', title: 'AI & Automation', body: 'Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).' },
+] as const;
+
+// Approved engagement steps (same wording as the homepage).
+const nextSteps = [
+  ['Identify the service area', 'Determine whether the requirement is AI workflow automation, cybersecurity, or managed IT and Business Processes operations.'],
+  ['Define the work and boundaries', 'Document systems, responsibilities, dependencies, exclusions, and expected handoffs for the selected service.'],
+  ['Set ownership and escalation', 'Establish who handles routine work, who reviews exceptions, and where high-impact decisions are escalated.'],
+  ['Review delivery within scope', 'Evaluate the agreed workflow, address recurring blockers, and define any changes with the responsible AGI specialists.'],
+];
 ---
 
-<Layout title="Contact Aetas Global Innovation" description="Contact Aetas Global Innovation about MXDR, Offensive Security, Help Desk as a Service, Product Support as a Service, or Business Process AI Assimilation.">
+<Layout socialImage="contact" title="Contact Aetas Global Innovation" description="Contact Aetas Global Innovation about MXDR, Offensive Security, Help Desk as a Service, Product Support as a Service, or Business Process AI Assimilation.">
   <PageHero
     eyebrow="Contact AGI"
     title="Start with the AGI service that fits your need."
@@ -11,76 +27,69 @@ import PageHero from '../components/PageHero.astro';
     compact
   />
 
-  <section class="section-light mx-auto max-w-7xl px-5 py-20 sm:px-6 sm:py-24">
-    <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-      <div class="lg:col-span-5 flex flex-col gap-8">
-        <div class="media-frame-light p-5">
-          <img src="/undraw-chatting.svg" alt="Support conversation illustration" class="mx-auto aspect-[16/10] w-full max-w-sm object-contain" loading="eager" />
-        </div>
-
-        <div class="space-y-6">
-          <div>
-            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Cybersecurity</h4>
-            <p class="text-gray-400 text-xs mt-1">Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).</p>
-          </div>
-
-          <div>
-            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Managed IT</h4>
-            <p class="text-gray-400 text-xs mt-1">Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations.</p>
-          </div>
-
-          <div>
-            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">AI &amp; Automation</h4>
-            <p class="text-gray-400 text-xs mt-1">Human Led AI and Business Process AI Assimilation with Expert Human Oversight of AI (Expert in the Loop).</p>
-          </div>
-
-          <div>
-            <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Direct Channels</h4>
-            <p class="text-gray-400 text-xs mt-1">General inquiries: info@aetasglobal.com</p>
-          </div>
-        </div>
+  <section class="agi-band agi-section">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+      <div class="flex flex-col gap-8 lg:col-span-5">
+        <ul class="space-y-3">
+          {channels.map((channel) => (
+            <li class:list={['agi-card agi-card--dark agi-card--accent agi-card--interactive p-5', `accent-${channel.accent}`]}>
+              <div class="flex items-start gap-4">
+                <span class="nav-service-icon h-10 w-10 rounded-xl">
+                  <ServiceIcon service={channel.key} class="h-[1.125rem] w-[1.125rem]" />
+                </span>
+                <div class="min-w-0">
+                  <h2 class="font-display text-base font-bold text-white">{channel.title}</h2>
+                  <p class="mt-1.5 text-sm leading-relaxed text-muted">{channel.body}</p>
+                  <a href={channel.href} class="agi-card-link agi-card-link--on-dark mt-3 text-[0.8125rem]">Explore {channel.title}</a>
+                </div>
+              </div>
+            </li>
+          ))}
+          <li class="agi-card agi-card--dark p-5">
+            <h2 class="font-display text-base font-bold text-white">Direct Channels</h2>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted">General inquiries: <a href="mailto:info@aetas.ai" class="font-semibold text-[var(--color-accent-text)] underline-offset-4 hover:underline">info@aetas.ai</a></p>
+          </li>
+        </ul>
       </div>
 
       <div class="lg:col-span-7">
-        <div class="glass-panel relative overflow-hidden rounded-lg p-6 sm:p-8">
-          <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
-
-          <form class="form-on-light space-y-6" name="aetas-contact" method="post" action="/api/forms/contact" data-secure-form novalidate>
+        <div class="agi-card agi-card--dark section-spectrum-card relative overflow-hidden p-6 sm:p-8 lg:p-10">
+          <form class="space-y-6" name="aetas-contact" method="post" action="/api/forms/contact" data-secure-form novalidate>
             <input type="hidden" name="csrf-token" value="" />
             <p class="form-honeypot" aria-hidden="true">
               <label for="contact-website">Leave this field empty</label>
               <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
-            <p class="form-status" data-form-status tabindex="-1" hidden></p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label for="contact-first-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
-                <input id="contact-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="contact-first-name-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-first-name" class="agi-field-label">First name</label>
+                <input id="contact-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="contact-first-name-error" class="agi-input" />
                 <p id="contact-first-name-error" class="form-field-error" data-field-error="first-name" hidden></p>
               </div>
               <div>
-                <label for="contact-last-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Last Name</label>
-                <input id="contact-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="contact-last-name-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-last-name" class="agi-field-label">Last name</label>
+                <input id="contact-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="contact-last-name-error" class="agi-input" />
                 <p id="contact-last-name-error" class="form-field-error" data-field-error="last-name" hidden></p>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label for="contact-email" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Work Email</label>
-                <input id="contact-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="contact-email-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-email" class="agi-field-label">Work email</label>
+                <input id="contact-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="contact-email-error" class="agi-input" />
                 <p id="contact-email-error" class="form-field-error" data-field-error="email" hidden></p>
               </div>
               <div>
-                <label for="contact-company" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Company Name</label>
-                <input id="contact-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="contact-company-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500" />
+                <label for="contact-company" class="agi-field-label">Company name</label>
+                <input id="contact-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="contact-company-error" class="agi-input" />
                 <p id="contact-company-error" class="form-field-error" data-field-error="company" hidden></p>
               </div>
             </div>
 
             <div>
-              <label for="intent-select" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Operational Focus Area</label>
-              <select id="intent-select" name="intent" required aria-describedby="contact-intent-error" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500">
+              <label for="intent-select" class="agi-field-label">Operational focus area</label>
+              <select id="intent-select" name="intent" required aria-describedby="contact-intent-error" class="agi-input">
                 <option value="security">Cybersecurity (MSSP / MXDR / Offensive Security)</option>
                 <option value="managed-it">Managed IT (MSP / Help Desk / Product Support)</option>
                 <option value="ai">AI &amp; Automation (Business Process AI Assimilation)</option>
@@ -90,27 +99,39 @@ import PageHero from '../components/PageHero.astro';
             </div>
 
             <div>
-              <label for="contact-message" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">Briefly describe your requirements</label>
-              <textarea id="contact-message" name="message" rows="4" required minlength="20" maxlength="3000" aria-describedby="contact-message-error" class="w-full px-4 py-3 rounded-lg bg-white/2 border border-white/10 text-white text-sm focus:outline-none focus:border-indigo-500"></textarea>
+              <label for="contact-message" class="agi-field-label">Briefly describe your requirements</label>
+              <textarea id="contact-message" name="message" rows="5" required minlength="20" maxlength="3000" aria-describedby="contact-message-error" class="agi-input"></textarea>
               <p id="contact-message-error" class="form-field-error" data-field-error="message" hidden></p>
             </div>
 
-            <button type="submit" class="button-on-light-primary w-full py-4 rounded-lg font-bold text-sm transition-all shadow-lg active:scale-[0.98]">
-              Send Request to AGI
-            </button>
+            <FormSubmitButton label="Send Request to AGI" class="agi-btn agi-btn--dark-primary w-full" />
           </form>
         </div>
       </div>
+    </div>
+
+    <div class="mx-auto mt-20 max-w-7xl" aria-labelledby="contact-next-title">
+      <span class="agi-eyebrow accent-governance">What happens next</span>
+      <h2 id="contact-next-title" class="mt-3 font-display text-2xl font-bold text-white sm:text-3xl">How AGI takes your request forward.</h2>
+      <ol class="agi-steps mt-10" style="--steps: 4" data-reveal-group>
+        {nextSteps.map(([title, body]) => (
+          <li class="agi-step accent-governance">
+            <h3 class="font-display text-base font-bold text-white">{title}</h3>
+            <p class="mt-2 max-w-xs text-sm leading-relaxed text-muted">{body}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <script>
     document.addEventListener('astro:page-load', () => {
-      const select = document.getElementById('intent-select') as HTMLSelectElement;
+      const select = document.getElementById('intent-select') as HTMLSelectElement | null;
       if (select) {
         const urlParams = new URLSearchParams(window.location.search);
         const intent = urlParams.get('intent');
-        const normalizedIntent = intent === 'global' ? 'managed-it' : intent;
+        // Partner inquiries arrive as a general conversation; global is the legacy Managed IT route.
+        const normalizedIntent = intent === 'global' ? 'managed-it' : intent === 'partners' ? 'general' : intent;
         if (normalizedIntent && ['security', 'managed-it', 'ai', 'general'].includes(normalizedIntent)) {
           select.value = normalizedIntent;
         }

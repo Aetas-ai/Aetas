@@ -1,82 +1,81 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FormSubmitButton from '../components/FormSubmitButton.astro';
+import BriefPreview from '../components/BriefPreview.astro';
 ---
 
-<Layout title="Download the AGI Operations Readiness Brief" description="Register to download the Aetas Global Innovation brief on Human Led AI, cybersecurity, managed IT, and Business Processes operations.">
+<Layout socialImage="brief" title="Download the AGI Operations Readiness Brief" description="Register to download the Aetas Global Innovation brief on Human Led AI, cybersecurity, managed IT, and Business Processes operations.">
   <PageHero
     eyebrow="AGI operations readiness brief"
     title="A practical starting point for your next operations decision."
     description="Register for a concise guide to evaluating AGI services across Business Process AI Assimilation, MXDR, Offensive Security, managed IT, and Business Processes operations."
     accent="security"
-    image="/agi-operations-command.webp"
-    imageAlt="AGI operations readiness visualization"
     compact
   />
 
-  <section class="section-light px-6 py-20 sm:py-24">
+  <section class="section-light agi-section">
     <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12 lg:items-start">
       <div class="lg:col-span-6">
-        <h2 class="text-3xl font-display font-bold text-white sm:text-4xl">What the brief helps you evaluate</h2>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        <h2 class="font-display text-h2 font-bold text-strong" data-reveal>What the brief helps you evaluate</h2>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2" data-reveal-group>
           {[
             'Identify automation-ready workflows',
             'Evaluate Expert Human Oversight of AI',
             'Map security and IT operations signals',
             'Prepare a practical AGI implementation conversation',
           ].map((item) => (
-            <div class="editorial-card p-4 text-sm font-semibold text-ink">
-              {item}
-            </div>
+            <li class="agi-card agi-card--light accent-governance flex items-start gap-3 p-4 text-[0.9375rem] font-semibold text-strong">
+              <span class="agi-step-index h-6 w-6 text-xs" aria-hidden="true">✓</span>
+              <span>{item}</span>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div class="media-frame-light mt-8 p-5">
-          <img src="/undraw-contract-signed.svg" alt="Download registration illustration" class="mx-auto aspect-[16/9] w-full max-w-md object-contain" loading="lazy" />
-        </div>
+        <BriefPreview class="mt-10" />
       </div>
 
       <div class="lg:col-span-6">
-        <div class="glass-panel rounded-lg p-6 sm:p-8">
+        <div class="agi-card agi-card--light section-spectrum-card relative overflow-hidden p-6 sm:p-8 lg:p-10" data-reveal>
           <div class="mb-6">
-            <h2 class="text-2xl font-display font-bold text-white">Register to download</h2>
-            <p class="mt-2 text-sm leading-relaxed text-gray-400">
+            <h2 class="font-display text-2xl font-bold text-strong">Register to download</h2>
+            <p class="mt-2 text-[0.9375rem] leading-relaxed text-muted">
               Share your details and AGI will connect you with the appropriate specialists if your organization wants to discuss implementation.
             </p>
           </div>
 
-          <form class="form-on-light space-y-4" name="agi-readiness-brief" method="post" action="/api/forms/readiness-brief" data-secure-form novalidate>
+          <form class="form-on-light space-y-5" name="agi-readiness-brief" method="post" action="/api/forms/readiness-brief" data-secure-form novalidate>
             <input type="hidden" name="csrf-token" value="" />
             <p class="form-honeypot" aria-hidden="true">
               <label for="brief-website">Leave this field empty</label>
               <input id="brief-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
-            <p class="form-status" data-form-status tabindex="-1" hidden></p>
+            <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="brief-first-name" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">First Name</label>
-                <input id="brief-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="brief-first-name-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <label for="brief-first-name" class="agi-field-label">First name</label>
+                <input id="brief-first-name" name="first-name" type="text" required autocomplete="given-name" maxlength="80" aria-describedby="brief-first-name-error" class="agi-input" />
                 <p id="brief-first-name-error" class="form-field-error" data-field-error="first-name" hidden></p>
               </div>
               <div>
-                <label for="brief-last-name" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Last Name</label>
-                <input id="brief-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="brief-last-name-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+                <label for="brief-last-name" class="agi-field-label">Last name</label>
+                <input id="brief-last-name" name="last-name" type="text" required autocomplete="family-name" maxlength="80" aria-describedby="brief-last-name-error" class="agi-input" />
                 <p id="brief-last-name-error" class="form-field-error" data-field-error="last-name" hidden></p>
               </div>
             </div>
             <div>
-              <label for="brief-email" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Work Email</label>
-              <input id="brief-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="brief-email-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <label for="brief-email" class="agi-field-label">Work email</label>
+              <input id="brief-email" name="email" type="email" required autocomplete="email" inputmode="email" maxlength="254" aria-describedby="brief-email-error" class="agi-input" />
               <p id="brief-email-error" class="form-field-error" data-field-error="email" hidden></p>
             </div>
             <div>
-              <label for="brief-company" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Company</label>
-              <input id="brief-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="brief-company-error" class="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none" />
+              <label for="brief-company" class="agi-field-label">Company</label>
+              <input id="brief-company" name="company" type="text" required autocomplete="organization" maxlength="120" aria-describedby="brief-company-error" class="agi-input" />
               <p id="brief-company-error" class="form-field-error" data-field-error="company" hidden></p>
             </div>
             <div>
-              <label for="brief-interest" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">Primary Interest</label>
-              <select id="brief-interest" name="interest" required aria-describedby="brief-interest-error" class="w-full rounded-xl border border-white/10 bg-brand-bg px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none">
+              <label for="brief-interest" class="agi-field-label">Primary interest</label>
+              <select id="brief-interest" name="interest" required aria-describedby="brief-interest-error" class="agi-input">
                 <option value="ai">AI workflow automation</option>
                 <option value="security">MXDR / Offensive Security</option>
                 <option value="global">Managed IT / Business Processes / Help Desk</option>
@@ -84,9 +83,7 @@ import PageHero from '../components/PageHero.astro';
               </select>
               <p id="brief-interest-error" class="form-field-error" data-field-error="interest" hidden></p>
             </div>
-            <button type="submit" class="button-on-light-primary w-full rounded-lg px-5 py-4 text-sm font-bold transition-all active:scale-[0.98]">
-              Get the brief
-            </button>
+            <FormSubmitButton label="Get the brief" class="agi-btn agi-btn--light-primary w-full" />
           </form>
         </div>
       </div>

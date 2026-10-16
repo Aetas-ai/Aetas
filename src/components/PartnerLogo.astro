@@ -1,0 +1,44 @@
+---
+/**
+ * Renders one approved partner mark at a given height, keeping its
+ * proportions. Decorative by default; pass `labelled` when the logo is the
+ * only content of a link so assistive tech gets the partner name.
+ */
+import type { PartnerLogo } from '../data/partner-logos';
+
+interface Props {
+  logo: PartnerLogo;
+  /** CSS height, e.g. "1.75rem". */
+  height: string;
+  labelled?: boolean;
+  class?: string;
+}
+
+const { logo, height, labelled = false, class: className } = Astro.props;
+---
+
+{logo.kind === 'svg' ? (
+  <svg
+    class={className}
+    viewBox={logo.viewBox}
+    preserveAspectRatio="xMidYMid meet"
+    style={`height: ${height}; width: calc(${height} * ${logo.width / logo.height})`}
+    role={labelled ? 'img' : undefined}
+    aria-label={labelled ? logo.name : undefined}
+    aria-hidden={labelled ? undefined : 'true'}
+    focusable="false"
+  >
+    {logo.paths.map((path) => <path fill={path.fill} d={path.d} />)}
+  </svg>
+) : (
+  <img
+    class={className}
+    src={logo.src}
+    alt={labelled ? logo.name : ''}
+    width={logo.width}
+    height={logo.height}
+    style={`height: ${height}; width: auto`}
+    loading="lazy"
+    decoding="async"
+  />
+)}

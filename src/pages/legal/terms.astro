@@ -1,9 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 ---
 
 <Layout title="Terms of Service" description="Read the Aetas Global Innovation terms of service.">
   <section class="agi-bob-safe-section mx-auto max-w-4xl px-5 py-20 sm:px-6 sm:py-24">
+    <Breadcrumbs class="mb-6" items={[{ label: 'Home', href: '/' }, { label: 'Terms of Service', href: '/legal/terms' }]} />
     <h1 class="text-3xl sm:text-4xl font-display font-bold text-white mb-8">Terms of Service</h1>
     <div class="space-y-6 text-base leading-8 text-gray-300">
       <p>Last updated: July 11, 2026</p>
