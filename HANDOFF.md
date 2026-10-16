@@ -58,7 +58,7 @@ Public service names and routes:
 - A lightweight `cn` helper in `src/lib/utils.ts` for composing class names; this is not a Next.js application or a shadcn CLI scaffold
 - Native scrolling and lightweight CSS/Intersection Observer reveal animation
 - CSS keyframes (`agi-swap-in`, `agi-fade-in`) for React island transitions; Framer Motion has been removed
-- Self-hosted Inter and Space Grotesk variable fonts (`@fontsource-variable`), preloaded in `Layout.astro`
+- Self-hosted Inter variable font (`@fontsource-variable/inter`) for body and headings (headings at weight 600 with tight tracking), preloaded in `Layout.astro`
 - `astro:assets` available for any future real photography (no content rasters are currently used)
 - Lucide React icons
 - Astro sitemap integration
@@ -104,17 +104,17 @@ When adapting external React UI examples, keep them Astro-compatible React islan
 ## Current Implementation
 
 - The visual system is dark-first: layered dark surfaces (`--surface-0` to `--surface-3`, `agi-band`, `section-dark-raised`) carry most pages so code-rendered product windows sit naturally on them. Light bands (`section-light`, `section-light-muted`) are reserved for forms, legal pages, and at most one deliberate editorial band per page.
-- Service accents are intentionally scoped: violet for AI & Automation, cyan for Cybersecurity, amber for Managed IT, and green for governance or reviewed states. Do not recolor entire pages by service.
+- The theme is duotone (Linear-inspired): near-black and off-white with neutral greys, plus ONE muted indigo accent (`--color-accent: #7c80f0`; `--color-accent-ink` on light, `--color-accent-text` on dark) used sparingly for eyebrow dots, active nav, focus rings, links, network lines, and faint glows. The three services are distinguished by icon, name, and 01/02/03 numbering, not by colour. The only other hues are muted status colours inside demo status chips (always paired with text) and the partners' own logo artwork. Do not reintroduce per-service colours or multi-colour gradients.
 - Reusable theme utilities are defined in `src/styles/global.css`: `section-light`, `section-light-muted`, `section-dark-raised`, `section-spectrum`, `media-frame-light`, `form-on-light`, and the scoped dark editorial `agi-*` card, label, button, and Bob-clearance utilities. `button-on-light-*` and `editorial-card` remain for the approved Partners callout.
 - Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, the 12 px `--radius-card`, `--radius-control`, `--radius-window`, `--shadow-window`, the dark elevation surfaces, `--line-subtle` / `--line-strong`, and `--font-mono` (system monospace for demo data). Navigation, band, step-strip, window, and chip classes live in `src/styles/product-ui.css`, imported by `global.css`.
 - Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
-- Service accents come from `accent-ai`, `accent-security`, `accent-global`, and `accent-governance`, which set `--accent` (brand hue), `--accent-ink` (readable on light), and `--accent-text` (readable on dark).
+- `accent-ai`, `accent-security`, `accent-global`, and `accent-governance` (and `--color-ai|security|global|governance`) remain as aliases of the single accent so existing markup keeps working; prefer `--color-accent` in new code. Headings on dark and light surfaces use the white-to-grey (or ink) fade from `.agi-section-heading h2` / `.agi-heading-fade`.
 - Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes. Reuse them before adding page-specific styles.
 - Partner-logo displays remain on dark surfaces because several approved official logos are white. Their surrounding explanatory and conversion content can use the light editorial system.
 - Cards use restrained 12 px radii, low-contrast borders, and subtle elevation. On dark surfaces the accent is a fading top hairline rather than a solid bar. Preserve this operational, enterprise-focused treatment instead of introducing oversized rounded cards, heavy glassmorphism, or decorative glow.
 - The homepage hero uses the original inline SVG and CSS AGI service network. The three labeled nodes link to AI & Automation, Cybersecurity, and Managed IT. Network motion uses lightweight stroke, pulse, and rotation animation and respects `prefers-reduced-motion`.
 - The homepage service section uses three data-free service panels (icon, approved heading, scope, capabilities, link). Do not put simulated interface windows in heroes or on the homepage.
-- The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail has persistent low-opacity violet, cyan, and amber surfaces and accents so the three practices remain distinct before hover or keyboard focus.
+- The homepage hero fills at least the visible viewport below the fixed header. Its service-navigation rail keeps the three practices distinct through numbering, names, and scope lines, with a subtle accent hairline.
 - The hero was verified at desktop and true 390 px mobile emulation without horizontal overflow.
 - The former 3D globe dependency chain was removed. The production build no longer generates the previous multi-megabyte globe bundle.
 - Bob loads with `client:idle` and a timeout so it does not block critical rendering.
@@ -155,7 +155,18 @@ Rules for every demo:
 - AI demos always show a human decision before customer, system, or policy impact; security containment always shows analyst approval.
 - `DemoWindow` and `useSteps` (`demo-runtime.tsx`) only advance while the window is on screen and the tab is visible. Each window has a pause/play control. Under `prefers-reduced-motion` there is no autoplay, and Previous/Next step controls replace the timer.
 - Islands are server-rendered first (the HTML is the first frame) and hydrate with `client:visible`. Styling uses classes and inline `style` attributes only; never inject `<style>` at runtime (CSP).
-- Service page and About heroes are text-led (copy, CTAs, and on service pages the focus list) with accent light. The Operations Readiness Brief hero is text-led too, and its body shows a code-built preview of the brief (a stacked document listing the topics named in the approved page description). All former generated images and the brief's stock illustration were removed; the site uses no content rasters. Contact and Resources still use undraw illustrations from `public/`.
+- Service page and About heroes are text-led (copy, CTAs, and on service pages the focus list) with accent light. The Operations Readiness Brief hero is text-led too, and its body shows a code-built preview of the brief (a stacked document listing the topics named in the approved page description). All former generated images and every stock (undraw) illustration were removed; the site uses no content rasters or stock art.
+
+## Conversion, SEO, and site-wide blocks
+
+- **Homepage:** a partner strip directly under the hero (`PartnerStrip.astro`, all approved logos with names announced to assistive tech, plus a link to `/partners`); a "Practical thinking for modern operations" insights teaser showing the first three resources; and the Readiness Brief promo band before the closing CTA.
+- **Readiness Brief promotion:** `BriefPromo.astro` (approved brief title and description, "Get the brief" button) appears before the closing CTA on the homepage and the three service pages. `BriefPreview.astro` is the shared code-built stacked-document preview, also used on the brief page.
+- **Service-page FAQs:** `ServiceFaqSection.astro` renders answers from `src/data/service-faqs.ts` with `FAQPage` structured data. Every answer is composed from approved copy already on that service page; do not add new claims there. The About FAQ uses the same `Faq.astro` component.
+- **Breadcrumbs:** `Breadcrumbs.astro` (visible trail plus `BreadcrumbList` structured data) via the `PageHero` `breadcrumbs` prop on the service pages and Resources, and directly on resource articles and legal pages.
+- **Contact page:** dark-first; service channel cards with icons and links to each service page; the form card on the dark surface (field markup unchanged); and a "What happens next" step strip using the approved engagement steps. `?intent=` preselects the service (`global` maps to Managed IT and `partners` to General Inquiries).
+- **Resources thumbnails:** `ResourceThumb.astro` draws a code-built motif per category (AI draft → expert review; Monitor → Investigate → Respond; L1 → L2 → L3).
+- **404:** `src/pages/404.astro` is a branded, `noindex` page with the three services. The generated `.htaccess` sets `ErrorDocument 404 /404.html` for the static deployment; the Node adapter serves it automatically. The sitemap excludes `/404`.
+- **Share images:** `public/og/<key>.png` (1200×630) are generated by `npm run og:generate` (`scripts/generate-og-images.mjs`, headless Edge) from approved page titles. Pages pass `socialImage="<key>"` to `Layout`; the default is `default`. Regenerate after changing a page title. `/partners` keeps the default image because its page stays unchanged.
 
 ## About page
 

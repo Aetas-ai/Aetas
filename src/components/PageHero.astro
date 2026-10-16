@@ -2,8 +2,11 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Button from './Button.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
 
 interface Props {
+  /** Optional trail rendered above the eyebrow (current page last). */
+  breadcrumbs?: { label: string; href: string }[];
   eyebrow: string;
   title: string;
   description: string;
@@ -20,6 +23,7 @@ interface Props {
 }
 
 const {
+  breadcrumbs,
   eyebrow,
   title,
   description,
@@ -55,13 +59,14 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
   )}
 
   <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.032)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.032)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_94%)]" aria-hidden="true"></div>
-  <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(100deg,#050508_0%,rgba(5,5,8,0.97)_43%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.48)_100%)] max-xl:bg-[linear-gradient(180deg,rgba(5,5,8,0.82)_0%,#050508_96%)]" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(100deg,#08090a_0%,rgba(5,5,8,0.97)_43%,rgba(5,5,8,0.72)_70%,rgba(5,5,8,0.48)_100%)] max-xl:bg-[linear-gradient(180deg,rgba(5,5,8,0.82)_0%,#08090a_96%)]" aria-hidden="true"></div>
 
   <div class:list={['page-hero-shell mx-auto grid min-w-0 w-full max-w-7xl items-center gap-12', focusItems.length > 0 ? 'xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] xl:gap-16' : '']}>
     <div class:list={['agi-hero-enter flex min-w-0 max-w-3xl flex-col items-start gap-5 sm:gap-6', accentClass]}>
+      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} class="-mb-1" />}
       <span class="agi-eyebrow">{eyebrow}</span>
 
-      <h1 id={heroId} class="page-hero-title max-w-full font-display text-display font-bold text-white [overflow-wrap:anywhere]">
+      <h1 id={heroId} class="page-hero-title agi-heading-fade max-w-full font-display text-display font-semibold [overflow-wrap:anywhere]">
         {title}
       </h1>
 
@@ -90,7 +95,7 @@ const heroId = `page-hero-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').repl
           <ol class="mt-6 space-y-0">
             {focusItems.map((item, index) => (
               <li class="flex min-h-16 items-center gap-5 border-t border-white/10 py-4 last:border-b">
-                <span class="font-display text-xs font-bold text-[var(--accent-text,#d1d5db)]">0{index + 1}</span>
+                <span class="font-display text-xs font-bold text-[var(--accent-text,#d0d3d8)]">0{index + 1}</span>
                 <span class="text-sm font-semibold text-white">{item}</span>
               </li>
             ))}

@@ -163,7 +163,7 @@ const services = [
   .gallery-practice strong { font-family: var(--font-display); font-size: 0.9375rem; }
   .gallery-practice small {
     margin-top: 0.25rem;
-    color: rgb(156 163 175);
+    color: #9a9ea6;
     font-size: 0.75rem;
     line-height: 1.35;
   }
@@ -251,13 +251,13 @@ const services = [
     flex-direction: column;
     /* Own padding cannot use cqi (it would resolve against the viewport). */
     padding: clamp(0.6rem, 1.2vw, 1rem) clamp(0.65rem, 1.3vw, 1.1rem);
-    color: #e5e7eb;
+    color: #e4e5e7;
   }
   .gallery-tile-ai { --tile-color: var(--color-ai); }
   .gallery-tile-security { --tile-color: var(--color-security); }
   .gallery-tile-global { --tile-color: var(--color-global); }
   .gallery-tile-governance { --tile-color: var(--color-governance); }
-  .gallery-tile-mixed { --tile-color: #a5b4fc; }
+  .gallery-tile-mixed { --tile-color: var(--color-accent); }
 
   .tile-service {
     color: color-mix(in srgb, var(--tile-color) 70%, white);
@@ -295,7 +295,7 @@ const services = [
     gap: 3cqi;
     font-size: 4.4cqi;
     line-height: 1.15;
-    color: #d1d5db;
+    color: #d0d3d8;
   }
   .tile-flow li span {
     display: inline-grid;
@@ -321,7 +321,7 @@ const services = [
     border-radius: 1.6cqi;
     background: color-mix(in srgb, var(--tile-color) 9%, transparent);
     padding: 1.3cqi 2.6cqi;
-    color: #e5e7eb;
+    color: #e4e5e7;
     font-size: 4cqi;
     line-height: 1.2;
   }
@@ -339,10 +339,10 @@ const services = [
     background: rgba(0, 0, 0, 0.25);
     padding: 2.6cqi 3.2cqi;
     font-size: 4.2cqi;
-    color: #d1d5db;
+    color: #d0d3d8;
   }
   .tile-draft span {
-    color: #a5b4fc;
+    color: var(--color-accent-text);
     font-size: 3.2cqi;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -357,7 +357,7 @@ const services = [
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 1.6cqi;
     padding: 1.6cqi 0;
-    color: #e5e7eb;
+    color: #e4e5e7;
     font-size: 3.8cqi;
     font-weight: 600;
     text-align: center;
@@ -390,7 +390,7 @@ const services = [
     text-align: center;
   }
   .tile-tiers small {
-    color: #9aa3b2;
+    color: #9a9ea6;
     font-size: 3.8cqi;
   }
 

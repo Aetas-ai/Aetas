@@ -136,15 +136,15 @@ export default function AdvisorQuiz() {
   return (
     <div className="relative mx-auto w-full max-w-2xl overflow-hidden rounded-lg p-5 shadow-2xl glass-panel sm:p-8">
       {/* Decorative gradient glowing lines */}
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-70"></div>
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-70"></div>
 
       {result ? (
           <div key="result" className="agi-swap-in text-center py-6">
             <div className="inline-flex p-4 rounded-full bg-white/5 border border-white/10 mb-6">
-              {result === 'security' && <Shield className="w-12 h-12 text-sky-400" />}
-              {result === 'global' && <Users className="w-12 h-12 text-amber-500" />}
-              {result === 'ai' && <Brain className="w-12 h-12 text-indigo-400" />}
-              {result === 'mixed' && <Brain className="w-12 h-12 text-purple-400" />}
+              {result === 'security' && <Shield className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'global' && <Users className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'ai' && <Brain className="w-12 h-12 text-[var(--color-accent-text)]" />}
+              {result === 'mixed' && <Brain className="w-12 h-12 text-[var(--color-accent-text)]" />}
             </div>
 
             <h3 ref={heading} tabIndex={-1} className="text-3xl font-display font-bold text-white mb-3 focus:outline-none">
@@ -190,7 +190,7 @@ export default function AdvisorQuiz() {
                   <div
                     key={idx}
                     className={`w-8 h-1 rounded-full transition-colors duration-300 ${
-                      idx <= currentStep ? 'bg-indigo-500' : 'bg-white/10'
+                      idx <= currentStep ? 'bg-[var(--color-accent)]' : 'bg-white/10'
                     }`}
                   />
                 ))}
@@ -209,11 +209,11 @@ export default function AdvisorQuiz() {
                   onClick={() => handleSelect(opt.value)}
                   className="group flex min-h-12 w-full items-start gap-4 rounded-lg border border-white/8 bg-white/[0.02] p-4 text-left transition-[background-color,border-color,transform] duration-200 hover:-translate-y-px hover:border-white/20 hover:bg-white/5 motion-reduce:hover:translate-y-0 sm:p-5"
                 >
-                  <div className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center mt-0.5 group-hover:border-indigo-400 group-hover:bg-indigo-400/10 group-focus-visible:border-indigo-400 transition-colors shrink-0">
-                    <div className="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-indigo-400 group-focus-visible:bg-indigo-400 transition-colors" />
+                  <div className="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center mt-0.5 group-hover:border-[var(--color-accent)] group-hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)] group-focus-visible:border-[var(--color-accent)] transition-colors shrink-0">
+                    <div className="w-2.5 h-2.5 rounded-full bg-transparent group-hover:bg-[var(--color-accent)] group-focus-visible:bg-[var(--color-accent)] transition-colors" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                    <h4 className="font-semibold text-white group-hover:text-[var(--color-accent-text)] transition-colors">
                       {opt.text}
                     </h4>
                     <p className="text-gray-400 text-sm mt-1 leading-relaxed">

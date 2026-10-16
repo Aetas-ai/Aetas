@@ -72,17 +72,17 @@ const categories: SystemCategory[] = [
 const serviceStyles = {
   security: {
     label: 'Cybersecurity',
-    active: 'bg-sky-500/10 border-sky-400/30 text-white shadow-lg',
-    icon: 'bg-sky-500/10 text-sky-300',
-    check: 'bg-sky-500/10 border-sky-500/20 text-sky-300',
-    text: 'text-sky-300',
+    active: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] text-white shadow-lg',
+    icon: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]',
+    check: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_25%,transparent)] text-[var(--color-accent-text)]',
+    text: 'text-[var(--color-accent-text)]',
   },
   global: {
     label: 'Managed IT',
-    active: 'bg-amber-500/10 border-amber-400/30 text-white shadow-lg',
-    icon: 'bg-amber-500/10 text-amber-300',
-    check: 'bg-amber-500/10 border-amber-500/20 text-amber-300',
-    text: 'text-amber-300',
+    active: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] text-white shadow-lg',
+    icon: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]',
+    check: 'bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] border-[color-mix(in_srgb,var(--color-accent)_25%,transparent)] text-[var(--color-accent-text)]',
+    text: 'text-[var(--color-accent-text)]',
   },
 };
 
@@ -104,7 +104,7 @@ export default function ManagedSystems({ scope = 'all' }: ManagedSystemsProps) {
 
   return (
     <div className="relative w-full overflow-hidden rounded-lg border-white/5 p-4 shadow-2xl glass-panel sm:p-6 lg:p-8">
-      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-indigo-500 via-sky-500 to-amber-500 opacity-60"></div>
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--color-accent)] to-transparent opacity-60"></div>
 
       {/* Category Tabs Grid - Responsive */}
       <div className={`mb-6 grid gap-3 border-b border-white/5 pb-6 ${scope === 'global' ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'}`}>

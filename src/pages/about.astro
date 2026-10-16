@@ -6,6 +6,7 @@ import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import PartnerLogo from '../components/PartnerLogo.astro';
+import Faq from '../components/Faq.astro';
 import { cloudAiPartners, securityPartners } from '../data/partner-logos';
 
 // Needs and scopes reuse the approved service-finder wording (AdvisorQuiz).
@@ -85,7 +86,7 @@ const faqs = [
 ];
 ---
 
-<Layout
+<Layout socialImage="about"
   title="About Aetas Global Innovation | AI, Cybersecurity & Managed IT"
   description="Learn how Aetas Global Innovation coordinates specialized AI and automation, cybersecurity, and managed IT services around client requirements."
 >
@@ -215,20 +216,7 @@ const faqs = [
         title="Questions about AGI."
       />
       <div class="lg:col-span-8" data-reveal>
-        {faqs.map((faq) => (
-          <details class="about-faq">
-            <summary>
-              <span>{faq.question}</span>
-              <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-                <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </summary>
-            <div class="about-faq-answer">
-              <p>{faq.answer}</p>
-              {faq.link && <a href={faq.link.href} class="agi-card-link agi-card-link--on-dark mt-4">{faq.link.label}</a>}
-            </div>
-          </details>
-        ))}
+        <Faq items={faqs} />
       </div>
     </div>
   </section>
@@ -346,54 +334,6 @@ const faqs = [
   .about-logo-link :global(svg) {
     max-width: 100%;
     object-fit: contain;
-  }
-
-  .about-faq {
-    border-top: 1px solid var(--line-subtle);
-  }
-
-  .about-faq:last-child {
-    border-bottom: 1px solid var(--line-subtle);
-  }
-
-  .about-faq summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding-block: 1.25rem;
-    color: #ffffff;
-    font-family: var(--font-display);
-    font-size: 1.0625rem;
-    font-weight: 600;
-    list-style: none;
-  }
-
-  .about-faq summary::-webkit-details-marker { display: none; }
-
-  .about-faq summary svg {
-    width: 0.875rem;
-    height: 0.875rem;
-    flex: none;
-    color: #9aa3b2;
-    transition: transform var(--duration-fast) ease;
-  }
-
-  .about-faq[open] summary svg { transform: rotate(180deg); }
-
-  .about-faq summary:hover { color: #e5e7eb; }
-
-  .about-faq summary:focus-visible {
-    border-radius: 0.375rem;
-    outline-offset: 2px;
-  }
-
-  .about-faq-answer {
-    max-width: 44rem;
-    padding-bottom: 1.5rem;
-    color: var(--surface-text-muted);
-    font-size: 0.9375rem;
-    line-height: 1.7;
   }
 
   @media (prefers-reduced-motion: reduce) {

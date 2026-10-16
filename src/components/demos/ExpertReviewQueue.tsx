@@ -131,7 +131,7 @@ function ExpertReviewBody() {
             </Stage>
             <Stage reached={step >= 4} current={step >= 4} label="Expert Human Oversight of AI" icon={<UserRoundCheck className="h-3.5 w-3.5" />}>
               {step === 4 && !decision ? (
-                <p className="flex items-center gap-2 text-[0.8125rem] text-amber-200">
+                <p className="flex items-center gap-2 text-[0.8125rem] text-gray-200">
                   <span className="agi-chip agi-chip--pending agi-chip--dot agi-pulse">Awaiting expert review</span>
                   <span className="text-gray-400">Nothing is sent until a reviewer decides.</span>
                 </p>

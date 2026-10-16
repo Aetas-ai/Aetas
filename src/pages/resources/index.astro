@@ -1,13 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
+import ResourceThumb from '../../components/ResourceThumb.astro';
 import { resources } from '../../data/resources';
-
-const resourceIllustrations = [
-  '/undraw-motion-alert.svg',
-  '/undraw-data-transfer.svg',
-  '/undraw-growth-analytics.svg',
-];
 
 const resourceAccents = {
   'AI Research': 'ai',
@@ -16,8 +11,9 @@ const resourceAccents = {
 } as const;
 ---
 
-<Layout title="Intel & Blog — AGI Resources" description="Read perspectives on cyber threat intelligence, IT operations, and AI workflows from Aetas Global Innovation specialists.">
+<Layout socialImage="resources" title="Intel & Blog — AGI Resources" description="Read perspectives on cyber threat intelligence, IT operations, and AI workflows from Aetas Global Innovation specialists.">
   <PageHero
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Resources', href: '/resources' }]}
     eyebrow="Insights and resources"
     title="Practical thinking for modern operations."
     description="Read technical perspectives on cybersecurity, managed IT and support operations, and Human Led AI."
@@ -29,21 +25,13 @@ const resourceAccents = {
   <section class="section-dark-raised agi-bob-safe-section px-5 py-20 sm:px-6 sm:py-24">
     <div class="agi-bob-safe-content mx-auto max-w-7xl">
       <div class="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {resources.map((article, index) => {
+        {resources.map((article) => {
           const accent = resourceAccents[article.category];
 
           return (
             <article class:list={['agi-resource-card', `agi-resource-card--${accent}`]} data-reveal>
               <div class:list={['agi-resource-thumbnail', `agi-resource-thumbnail--${accent}`]}>
-                <img
-                  src={resourceIllustrations[index % resourceIllustrations.length]}
-                  alt=""
-                  class="h-full w-full object-contain"
-                  width="240"
-                  height="150"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <ResourceThumb category={article.category} />
               </div>
 
               <div class="flex flex-1 flex-col p-6 sm:p-7">

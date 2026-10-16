@@ -42,6 +42,7 @@ test('Node static route headers and LiteSpeed rules use the same policy', () => 
 
   const htaccess = createHtaccess(policy);
   assert.ok(htaccess.includes(`Content-Security-Policy "${policy}"`));
+  assert.ok(htaccess.includes('ErrorDocument 404 /404.html'));
 });
 
 test('the shared policy exposes all required response headers', () => {

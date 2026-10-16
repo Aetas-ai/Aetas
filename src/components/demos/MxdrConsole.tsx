@@ -75,7 +75,7 @@ function MxdrBody() {
                       className={cn(
                         'relative z-10 inline-grid h-[1.375rem] w-[1.375rem] flex-none place-items-center rounded-full border transition-colors duration-300',
                         current
-                          ? 'border-sky-300/60 bg-sky-400/20 text-sky-100'
+                          ? 'border-[color-mix(in_srgb,var(--color-accent)_60%,transparent)] bg-[color-mix(in_srgb,var(--color-accent)_20%,transparent)] text-white'
                           : reached
                             ? 'border-white/15 bg-[var(--surface-3)] text-gray-300'
                             : 'border-white/10 bg-[var(--surface-2)] text-gray-500',

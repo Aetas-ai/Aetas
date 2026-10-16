@@ -1,0 +1,48 @@
+---
+/**
+ * Accessible FAQ list (native <details>, no JS) with optional FAQPage
+ * structured data. Answers must come from approved copy (HANDOFF.md).
+ */
+interface Item {
+  question: string;
+  answer: string;
+  link?: { href: string; label: string };
+}
+
+interface Props {
+  items: Item[];
+  /** Emit FAQPage JSON-LD for search rich results. */
+  schema?: boolean;
+}
+
+const { items, schema = true } = Astro.props;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<div class="agi-faq-list">
+  {items.map((item) => (
+    <details class="agi-faq">
+      <summary>
+        <span>{item.question}</span>
+        <svg viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M3 4.5 6 7.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </summary>
+      <div class="agi-faq-answer">
+        <p>{item.answer}</p>
+        {item.link && <a href={item.link.href} class="agi-card-link agi-card-link--on-dark mt-4">{item.link.label}</a>}
+      </div>
+    </details>
+  ))}
+</div>
+
+{schema && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}

@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import { serviceNav } from '../data/navigation';
+---
+
+<Layout title="Page not found" description="The page you're looking for has moved or doesn't exist." noIndex>
+  <PageHero
+    eyebrow="404"
+    title="Page not found."
+    description="The page you're looking for has moved or doesn't exist. Start from one of the AGI services below, or go back to the homepage."
+    compact
+    primaryLabel="Back to home"
+    primaryHref="/"
+    secondaryLabel="Talk to AGI"
+    secondaryHref="/contact"
+  />
+
+  <section class="agi-band agi-section" aria-labelledby="not-found-services">
+    <div class="mx-auto max-w-7xl">
+      <h2 id="not-found-services" class="agi-label">AGI services</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
+        {serviceNav.map((service) => (
+          <li class:list={['agi-card agi-card--dark agi-card--accent agi-card--interactive', `accent-${service.accent}`]}>
+            <span class="nav-service-icon h-10 w-10 rounded-xl">
+              <ServiceIcon service={service.key} class="h-[1.125rem] w-[1.125rem]" />
+            </span>
+            <h3 class="mt-5 font-display text-lg font-bold text-white">{service.label}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{service.blurb}</p>
+            <a href={service.href} class="agi-card-link agi-card-link--on-dark mt-5">Explore {service.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Layout>

@@ -92,7 +92,8 @@ export default defineConfig({
       filter: (page) =>
         !page.includes('/contact/thanks') &&
         !page.includes('/operations-readiness-brief/thanks') &&
-        !page.includes('/global')
+        !page.includes('/global') &&
+        !page.includes('/404')
     }),
     securityHeaders()
   ],

@@ -5,9 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import MobileNav from '../components/MobileNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '@fontsource-variable/inter';
-import '@fontsource-variable/space-grotesk';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import spaceGroteskLatin from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 
 interface Props {
@@ -15,6 +13,8 @@ interface Props {
   description?: string;
   activePillar?: 'ai' | 'security' | 'managed-it' | 'none';
   noIndex?: boolean;
+  /** Key of a generated share image in public/og/ (see scripts/generate-og-images.mjs). */
+  socialImage?: string;
 }
 
 const {
@@ -22,6 +22,7 @@ const {
   description = 'Aetas Global Innovation - Human Led AI, MXDR, Offensive Security, managed IT, and Business Processes services.',
   activePillar = 'none',
   noIndex = false,
+  socialImage = 'default',
 } = Astro.props;
 
 const brandName = 'Aetas Global Innovation';
@@ -31,7 +32,7 @@ const siteUrl = Astro.site ?? Astro.url.origin;
 const canonicalUrl = new URL(currentPath, siteUrl);
 const organizationUrl = new URL('/', siteUrl);
 const logoUrl = new URL('/aetasIcon.webp', siteUrl);
-const socialImageUrl = new URL('/aetasBrand.webp', siteUrl);
+const socialImageUrl = new URL(`/og/${socialImage}.png`, siteUrl);
 const robotsContent = noIndex
   ? 'noindex, nofollow'
   : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
@@ -110,7 +111,9 @@ const structuredData = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImageUrl} />
-    <meta property="og:image:alt" content={brandName} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={pageTitle} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
@@ -118,13 +121,12 @@ const structuredData = {
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
-    <!-- Self-hosted variable fonts; preload the Latin subsets used above the fold. -->
+    <!-- Self-hosted variable font (Inter for body and headings); preload the Latin subset used above the fold. -->
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={spaceGroteskLatin} as="font" type="font/woff2" crossorigin />
 
     <ClientRouter />
   </head>
-  <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-indigo-500/30 selection:text-white">
+  <body class="bg-brand-bg text-gray-100 font-sans antialiased overflow-x-hidden min-h-screen flex flex-col selection:bg-[var(--color-accent)]/30 selection:text-white">
     <div id="site-loading-overlay" class="site-loading-overlay" hidden aria-hidden="true">
       <div class="site-loading-content" role="status" aria-live="polite" aria-atomic="true">
         <div class="site-loading-mark" aria-hidden="true">

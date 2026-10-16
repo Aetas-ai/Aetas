@@ -2,31 +2,51 @@
 @import "./product-ui.css";
 
 @theme {
-  --color-brand-bg: #050508;
-  --color-surface-dark: #0b1118;
-  --color-surface-dark-raised: #111827;
-  --color-surface-light: #f4f7fa;
-  --color-surface-light-muted: #e9eff5;
-  --color-ink: #101722;
-  --color-ink-muted: #526174;
-  --color-ai: #7477f5;
-  --color-security: #18b9ed;
-  --color-global: #f2b84b;
-  --color-governance: #36c98f;
-  --color-line-light: #d6e0e9;
-  --font-display: "Space Grotesk Variable", "Space Grotesk", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-bg: #08090a;
+  --color-surface-dark: #0c0d0e;
+  --color-surface-dark-raised: #111214;
+  --color-surface-light: #f5f5f6;
+  --color-surface-light-muted: #ececee;
+  --color-ink: #0f1011;
+  --color-ink-muted: #55585e;
+  --color-line-light: #dcdde0;
+
+  /* Duotone: neutrals plus ONE accent, used sparingly. The former service
+     accent names are aliases so existing classes keep working. */
+  --color-accent: #7c80f0;
+  --color-accent-ink: #4f53c9;
+  --color-accent-text: #a9acf7;
+  --color-ai: var(--color-accent);
+  --color-security: var(--color-accent);
+  --color-global: var(--color-accent);
+  --color-governance: var(--color-accent);
+
+  /* Neutral (not blue-tinted) greys, so existing text-gray-* classes match. */
+  --color-gray-100: #f7f8f8;
+  --color-gray-200: #e4e5e7;
+  --color-gray-300: #d0d3d8;
+  --color-gray-400: #b4b8bf;
+  --color-gray-500: #8a8f98;
+  --color-gray-600: #62666d;
+  --color-gray-700: #3e4147;
+  --color-gray-800: #23252a;
+  --color-gray-900: #141516;
+
+  --font-weight-bold: 600;
+  --font-display: "Inter Variable", "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", "Inter", "Inter Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, monospace;
 
   /* Fluid type scale: one source for display, section, and card headings. */
   --text-display: clamp(2.5rem, 1.55rem + 3.9vw, 4.5rem);
   --text-display--line-height: 1.04;
-  --text-display--letter-spacing: -0.032em;
+  --text-display--letter-spacing: -0.04em;
   --text-h2: clamp(2rem, 1.4rem + 2.3vw, 3.25rem);
   --text-h2--line-height: 1.08;
-  --text-h2--letter-spacing: -0.026em;
+  --text-h2--letter-spacing: -0.032em;
   --text-h3: clamp(1.25rem, 1.12rem + 0.45vw, 1.5rem);
   --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
   --text-lede: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   --text-lede--line-height: 1.65;
 
@@ -55,14 +75,14 @@
     --shadow-card-light-hover: 0 1px 2px rgba(15, 23, 42, 0.05), 0 26px 56px -30px rgba(15, 23, 42, 0.45);
     --shadow-card-dark: 0 18px 44px -34px rgba(0, 0, 0, 0.85);
     --focus-ring: 2px solid rgba(255, 255, 255, 0.9);
-    --radius-control: 0.625rem;
+    --radius-control: 0.5rem;
     --radius-window: 0.875rem;
 
     /* Dark-first elevation: page, band, raised panel, overlay. */
-    --surface-0: #050508;
-    --surface-1: #08090e;
-    --surface-2: #0d1016;
-    --surface-3: #141821;
+    --surface-0: #08090a;
+    --surface-1: #0c0d0e;
+    --surface-2: #111214;
+    --surface-3: #17181b;
     --line-subtle: rgba(255, 255, 255, 0.06);
     --line-strong: rgba(255, 255, 255, 0.11);
     --shadow-window:
@@ -72,8 +92,8 @@
 
     /* Surface-aware text roles. Light surfaces redefine these below, so
        text-strong / text-muted read correctly wherever they are used. */
-    --surface-text: #f3f4f6;
-    --surface-text-muted: #aab3c2;
+    --surface-text: #f7f8f8;
+    --surface-text-muted: #8a8f98;
     --surface-line: rgba(255, 255, 255, 0.08);
   }
 
@@ -124,7 +144,7 @@
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
   }
 
   a,
@@ -153,7 +173,7 @@
 /* The header becomes more solid once the page scrolls under it. */
 .site-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  background: rgba(5, 5, 8, 0.66);
+  background: rgba(8, 9, 10, 0.66);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
   transition:
@@ -164,7 +184,7 @@
 
 .site-header[data-scrolled] {
   border-bottom-color: rgba(255, 255, 255, 0.08);
-  background: rgba(5, 5, 8, 0.94);
+  background: rgba(8, 9, 10, 0.94);
   box-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.9);
 }
 
@@ -205,10 +225,14 @@
 
   /* Service accents. --accent is the brand hue, --accent-ink is the readable
      variant on light surfaces, --accent-text the readable variant on dark. */
-  .accent-ai { --accent: var(--color-ai); --accent-ink: #4338ca; --accent-text: #a5b4fc; }
-  .accent-security { --accent: var(--color-security); --accent-ink: #0369a1; --accent-text: #7dd3fc; }
-  .accent-global { --accent: var(--color-global); --accent-ink: #92400e; --accent-text: #fcd34d; }
-  .accent-governance { --accent: var(--color-governance); --accent-ink: #047857; --accent-text: #6ee7b7; }
+  .accent-ai,
+  .accent-security,
+  .accent-global,
+  .accent-governance {
+    --accent: var(--color-accent);
+    --accent-ink: var(--color-accent-ink);
+    --accent-text: var(--color-accent-text);
+  }
 
   .agi-section {
     padding-block: var(--section-space);
@@ -219,10 +243,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
-    color: var(--accent-text, #d1d5db);
+    color: var(--color-gray-500);
     font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     line-height: 1.3;
     text-transform: uppercase;
   }
@@ -232,12 +256,12 @@
     height: 0.4rem;
     flex: none;
     border-radius: 9999px;
-    background: var(--accent, currentColor);
+    background: var(--color-accent);
     content: '';
   }
 
   :where(.section-light, .section-light-muted, .agi-card--light) .agi-eyebrow {
-    color: var(--accent-ink, var(--color-ink-muted));
+    color: var(--color-ink-muted);
   }
 
   .agi-section-heading {
@@ -254,8 +278,15 @@
     text-align: center;
   }
 
+  .agi-section-heading h2,
+  .agi-heading-fade {
+    background: linear-gradient(180deg, var(--surface-text) 40%, color-mix(in srgb, var(--surface-text) 64%, transparent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .agi-section-heading h2 {
-    color: var(--surface-text);
     font-size: var(--text-h2);
     letter-spacing: var(--text-h2--letter-spacing);
     line-height: var(--text-h2--line-height);
@@ -396,18 +427,14 @@
   }
 
   .agi-btn--dark-primary {
-    background: var(--btn-bg, #ffffff);
-    color: var(--btn-fg, #050508);
-    box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.7);
+    background: #e6e6e6;
+    color: #08090a;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
   .agi-btn--dark-primary:hover {
-    background: var(--btn-bg-hover, #e5e7eb);
+    background: #ffffff;
   }
-
-  .agi-btn--dark-primary.accent-ai { --btn-bg: #5458e8; --btn-bg-hover: #4346d4; --btn-fg: #ffffff; }
-  .agi-btn--dark-primary.accent-security { --btn-bg: #0369a1; --btn-bg-hover: #075985; --btn-fg: #ffffff; }
-  .agi-btn--dark-primary.accent-global { --btn-bg: var(--color-global); --btn-bg-hover: #fbbf24; --btn-fg: #050508; }
 
   .agi-btn--dark-secondary {
     border-color: rgba(255, 255, 255, 0.16);
@@ -474,7 +501,7 @@
   .agi-field-label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #d1d5db;
+    color: #d0d3d8;
     font-size: 0.8125rem;
     font-weight: 600;
     line-height: 1.3;
@@ -795,7 +822,7 @@
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.035);
   padding: 0.35rem 0.55rem;
-  color: rgb(156 163 175);
+  color: #9a9ea6;
   white-space: nowrap;
 }
 
@@ -831,7 +858,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--agi-thumbnail-accent) 6%, transparent), transparent 65%),
-    rgba(5, 5, 8, 0.62);
+    rgba(8, 9, 10, 0.62);
   padding: 1.25rem 2rem;
 }
 
@@ -875,7 +902,7 @@
 .agi-dark-button--primary {
   border-color: rgba(255, 255, 255, 0.82);
   background: #ffffff;
-  color: #050508;
+  color: #08090a;
 }
 
 .agi-dark-button--primary:hover {
@@ -923,7 +950,7 @@
 .form-on-light .agi-input:focus {
   border-color: var(--color-ai);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(116, 119, 245, 0.16);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
 }
 
 .form-on-light :where(option) {
@@ -975,11 +1002,11 @@
 }
 
 .form-status {
-  border: 1px solid rgba(125, 211, 252, 0.3);
+  border: 1px solid rgba(169, 172, 247, 0.3);
   border-radius: 0.5rem;
-  background: rgba(14, 165, 233, 0.08);
+  background: rgba(124, 128, 240, 0.08);
   padding: 0.75rem 1rem;
-  color: #bae6fd;
+  color: #d4d6fb;
   font-size: 0.875rem;
   line-height: 1.5;
 }
@@ -998,7 +1025,7 @@
 }
 
 .form-on-light .form-status {
-  color: #075985;
+  color: var(--color-accent-ink);
 }
 
 .form-on-light .form-status[data-kind="error"] {
@@ -1046,7 +1073,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   place-items: center;
   padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
   overflow: hidden;
-  background: rgba(5, 5, 8, 0.96);
+  background: rgba(8, 9, 10, 0.96);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   opacity: 0;
@@ -1126,7 +1153,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
 
 .site-loading-content > span {
   margin-top: 0.6rem;
-  color: rgb(156 163 175);
+  color: #9a9ea6;
   font-size: 0.8125rem;
   line-height: 1.5;
 }
@@ -1140,7 +1167,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.04), 0 0 18px rgba(14, 165, 233, 0.08);
+  box-shadow: 0 0 0 1px rgba(124, 128, 240, 0.04), 0 0 18px rgba(124, 128, 240, 0.08);
 }
 
 .site-loading-progress-fill {
@@ -1148,7 +1175,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--color-ai) 0%, var(--color-security) 62%, var(--color-global) 100%);
-  box-shadow: 0 0 12px rgba(14, 165, 233, 0.55);
+  box-shadow: 0 0 12px rgba(124, 128, 240, 0.55);
   transform: scaleX(0.06);
   transform-origin: left center;
   transition: transform 8s cubic-bezier(0.12, 0.7, 0.18, 1);
@@ -1279,7 +1306,7 @@ form[data-secure-form] :where(input, select, textarea)[aria-invalid="true"] {
 
 .bob-launcher:hover {
   transform: translateY(-4px);
-  filter: drop-shadow(0 18px 28px rgba(99, 102, 241, 0.28));
+  filter: drop-shadow(0 18px 28px rgba(124, 128, 240, 0.28));
 }
 
 .bob-launcher:active {

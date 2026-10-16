@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServiceFaqSection from '../components/ServiceFaqSection.astro';
+import BriefPromo from '../components/BriefPromo.astro';
 import PageHero from '../components/PageHero.astro';
 import ManagedSystems from '../components/ManagedSystems';
 import Button from '../components/Button.astro';
@@ -39,8 +41,9 @@ const steps = [
 ];
 ---
 
-<Layout title="Managed IT Services - MSP, Help Desk & Product Support" activePillar="managed-it" description="AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, identity operations, device management, and Business Processes support.">
+<Layout socialImage="managed-it" title="Managed IT Services - MSP, Help Desk & Product Support" activePillar="managed-it" description="AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, identity operations, device management, and Business Processes support.">
   <PageHero
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/#services' }, { label: 'Managed IT', href: '/managed-it' }]}
     eyebrow="AGI / Managed IT"
     title="Keep IT support and outsourced operations moving."
     description="AGI provides MSP expertise through Help Desk as a Service, Product Support as a Service, managed IT, and Business Processes operations with clear ownership and escalation."
@@ -117,6 +120,10 @@ const steps = [
       </ol>
     </div>
   </section>
+
+  <ServiceFaqSection service="managed-it" label="Managed IT" accent="global" />
+
+  <BriefPromo />
 
   <section class="agi-band agi-glow agi-section accent-global">
     <SectionHeading

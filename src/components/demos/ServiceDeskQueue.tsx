@@ -47,7 +47,7 @@ function ServiceDeskBody({ queueKey }: { queueKey: DeskQueue['key'] }) {
                       key={`${ticket.id}-${tier}`}
                       className={cn(
                         'agi-row-in rounded-md border p-1.5 sm:p-2',
-                        moved ? 'border-amber-300/40 bg-amber-300/[0.07]' : 'border-white/[0.07] bg-[var(--surface-3)]',
+                        moved ? 'border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--color-accent)_7%,transparent)]' : 'border-white/[0.07] bg-[var(--surface-3)]',
                       )}
                     >
                       <span className="flex items-center justify-between gap-1">
@@ -67,7 +67,7 @@ function ServiceDeskBody({ queueKey }: { queueKey: DeskQueue['key'] }) {
 
       <div className="grid grid-cols-1 gap-2 border-t border-white/[0.06] px-3 py-3 sm:px-4 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-center">
         <p key={clock.step} className="agi-fade-in flex min-w-0 items-center gap-2 text-[0.8125rem] text-gray-200">
-          <CornerDownRight className="h-3.5 w-3.5 flex-none text-amber-300" aria-hidden="true" />
+          <CornerDownRight className="h-3.5 w-3.5 flex-none text-[var(--color-accent-text)]" aria-hidden="true" />
           <span className="truncate">{last ? last.note : 'Queue snapshot · start of shift'}</span>
         </p>
         <div className="flex min-w-0 items-center gap-1.5 md:justify-end">

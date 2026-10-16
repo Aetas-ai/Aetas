@@ -25,7 +25,7 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
 - Protected contact, consultation, and readiness-brief endpoints prepared for Resend notifications, explicit sender/recipient, visitor Reply-To, safe templates, reference IDs, and a shared submit spinner. Real delivery defaults to disabled while approval, DNS, and backend activation are pending; see [EMAIL-SETUP.md](./EMAIL-SETUP.md).
-- Canonical metadata, structured data, robots instructions, and generated sitemap
+- Canonical metadata, structured data (including FAQ and breadcrumb schema), per-page social share images, robots instructions, a branded 404 page, and generated sitemap
 - Application-controlled Node and Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
 - Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
 - A patched dependency baseline (Astro 7.3.5) and PostCSS transitive dependency override; hosted dependency alerts are provided by Hostinger rather than by website runtime code
@@ -40,7 +40,7 @@ The homepage network and the service demonstrations are original Aetas component
 - Astro-compatible React islands (not Next.js) with a lightweight `cn` class helper
 - Native scrolling and dependency-free Intersection Observer page reveals
 - CSS keyframes for React island transitions (no animation library)
-- Self-hosted Inter and Space Grotesk variable fonts via `@fontsource-variable`
+- Self-hosted Inter variable font via `@fontsource-variable/inter` (body and headings)
 - Code-built visuals in place of content imagery; `astro:assets` remains available for real photography
 - Lucide React icons
 
@@ -61,6 +61,10 @@ public/              Logos, icons, Bob, illustrations, robots.txt
 Important homepage files:
 
 - `src/components/HomeHero.astro`: homepage hero structure and service rail
+- `src/components/PartnerStrip.astro`, `BriefPromo.astro`, `BriefPreview.astro`: homepage trust strip and Readiness Brief promotion
+- `src/components/Faq.astro`, `ServiceFaqSection.astro`, `Breadcrumbs.astro`: FAQ and breadcrumb blocks with structured data (service FAQ answers live in `src/data/service-faqs.ts`)
+- `src/components/ResourceThumb.astro`: code-built resource thumbnails
+- `scripts/generate-og-images.mjs`: generates `public/og/*.png` share images (`npm run og:generate`)
 - `src/components/AgiNetworkGraph.astro`: custom animated AGI service network
 - `src/components/PageHero.astro`: shared dark page hero, fixed-header viewport sizing, service accents, and optional calls to action
 - `src/components/demos/`: the three code-rendered service demos (one per service page); `demo-runtime.tsx` provides `DemoWindow`, `useSteps`, and `StepTimer`, and `src/data/demos.ts` holds the simulated data
@@ -82,10 +86,10 @@ The site is dark-first, so code-rendered product windows sit naturally on the pa
 
 - Layered dark surfaces (`--surface-0` page, `--surface-1` bands via `agi-band` / `section-dark-raised`, `--surface-2` panels and windows, `--surface-3` raised states) with hairline borders (`--line-subtle`, `--line-strong`) carry heroes, services, demos, and partner logos. `agi-glow` adds restrained accent light from a section's top edge; `agi-grid-mask` adds a faint fading grid.
 - Light and light-muted bands are reserved for forms, legal pages, and at most one deliberate editorial band per page. The Work and Resources indexes intentionally use dark graphite editorial sections.
-- AI & Automation uses violet, Cybersecurity uses cyan, Managed IT uses amber, and governance states use green.
+- The theme is duotone (Linear-inspired): near-black and off-white with neutral greys, plus ONE muted indigo accent (`--color-accent: #7c80f0`; `--color-accent-ink` on light, `--color-accent-text` on dark) used sparingly for eyebrow dots, active nav, focus rings, links, network lines, and faint glows. The three services are distinguished by icon, name, and 01/02/03 numbering, not by colour. The only other hues are muted status colours inside demo status chips (always paired with text) and the partners' own logo artwork. Do not reintroduce per-service colours or multi-colour gradients.
 - Shared design tokens live in `src/styles/global.css`: the fluid type scale (`text-display`, `text-h2`, `text-h3`, `text-lede`), `--section-space`, `--ease-out-expo`, durations, card shadows, the 12 px `--radius-card`, `--radius-control` (buttons, inputs), `--radius-window`, `--shadow-window`, and `--font-mono`. Navigation, band, step-strip, window, segment, and chip classes live in `src/styles/product-ui.css`.
 - Text colors are surface-aware: use `text-strong` and `text-muted`, which resolve to light text on dark surfaces and ink inside `section-light`, `section-light-muted`, and `agi-card--light`. Do not put `text-white` or `text-gray-*` inside light bands.
-- Service accents come from `accent-ai`, `accent-security`, `accent-global`, and `accent-governance`, which set `--accent` (brand hue), `--accent-ink` (readable on light), and `--accent-text` (readable on dark).
+- `accent-ai|security|global|governance` remain as aliases of the single accent (`--accent`, `--accent-ink`, `--accent-text`); prefer `--color-accent` in new code.
 - Shared components: `Button.astro` (`tone` dark/light, `variant` primary/secondary, optional `accent` and `arrow`), `SectionHeading.astro` (eyebrow, title, lede), plus the `agi-section`, `agi-card` (`--light`/`--dark`/`--accent`/`--interactive`), `agi-eyebrow`, `agi-step-index`, `agi-field-label`, and `agi-input` classes, and from `product-ui.css` `agi-band`, `agi-steps` / `agi-step`, `agi-check-list`, `agi-window`, `agi-chip` (severity and status variants), `agi-segment`, and `agi-row`. Reuse them before adding page-specific styles.
 - Use at most one demo window per service page, never in a hero or on the homepage. Each window shows a quiet "Simulated" label and a caption that the content is illustrative. Demo data uses only reserved example domains and documentation IP ranges, generic roles, and relative times; see HANDOFF.md "Code-rendered demos".
 - Motion remains restrained and must respect `prefers-reduced-motion`. Scroll reveals use `data-reveal`, `data-reveal-left`, `data-reveal-right`, and `data-reveal-group` (staggered children). Hero text animates with transform only so it paints immediately. Infinite animations carry `data-motion` and pause while off-screen. Demo windows advance only while on screen and the tab is visible, have a pause/play control, and under reduced motion show Previous/Next step controls instead of autoplay.

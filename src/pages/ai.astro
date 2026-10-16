@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServiceFaqSection from '../components/ServiceFaqSection.astro';
+import BriefPromo from '../components/BriefPromo.astro';
 import PageHero from '../components/PageHero.astro';
 import FormSubmitButton from '../components/FormSubmitButton.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -44,8 +46,9 @@ const useCases = [
 ];
 ---
 
-<Layout title="AI & Automation Services - Human Led AI" activePillar="ai" description="AGI provides Business Process AI Assimilation through Human Led AI and Expert Human Oversight of AI (Expert in the Loop).">
+<Layout socialImage="ai" title="AI & Automation Services - Human Led AI" activePillar="ai" description="AGI provides Business Process AI Assimilation through Human Led AI and Expert Human Oversight of AI (Expert in the Loop).">
   <PageHero
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/#services' }, { label: 'AI & Automation', href: '/ai' }]}
     eyebrow="AGI / AI & Automation"
     title="Put Human Led AI to work inside your Business Processes."
     description="AGI assimilates AI into intake, routing, drafting, summarization, knowledge retrieval, and quality review with Expert Human Oversight of AI (Expert in the Loop)."
@@ -173,7 +176,7 @@ const useCases = [
       <ul class="mt-14 grid grid-cols-1 gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
         {useCases.map(({ icon: Icon, title, body }) => (
           <li class="flex gap-4 border-t border-surface pt-6">
-            <span class="inline-grid h-9 w-9 flex-none place-items-center rounded-lg bg-[#eef0ff] text-[#4338ca]" aria-hidden="true">
+            <span class="inline-grid h-9 w-9 flex-none place-items-center rounded-lg bg-[color-mix(in_srgb,var(--color-accent)_14%,white)] text-[var(--color-accent-ink)]" aria-hidden="true">
               <Icon className="h-[1.125rem] w-[1.125rem]" strokeWidth={1.75} />
             </span>
             <div>
@@ -185,6 +188,10 @@ const useCases = [
       </ul>
     </div>
   </section>
+
+  <ServiceFaqSection service="ai" label="AI & Automation" accent="ai" />
+
+  <BriefPromo />
 
   <section class="agi-band px-6 py-16 text-center">
     <div class="mx-auto max-w-4xl" data-reveal>

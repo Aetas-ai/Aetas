@@ -96,6 +96,9 @@ export function createHtaccess(contentSecurityPolicy) {
 # Do not edit the generated .htaccess directly; update the integration instead.
 Options -Indexes
 
+# Serve the branded, noindex Astro 404 page for unknown paths.
+ErrorDocument 404 /404.html
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 

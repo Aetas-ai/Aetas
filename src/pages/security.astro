@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServiceFaqSection from '../components/ServiceFaqSection.astro';
+import BriefPromo from '../components/BriefPromo.astro';
 import PageHero from '../components/PageHero.astro';
 import Button from '../components/Button.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -18,8 +20,9 @@ const offensive = [
 ];
 ---
 
-<Layout title="Cybersecurity Services - MXDR and Offensive Security" activePillar="security" description="AGI provides MSSP expertise through Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).">
+<Layout socialImage="security" title="Cybersecurity Services - MXDR and Offensive Security" activePillar="security" description="AGI provides MSSP expertise through Managed Extended Detection and Response (MXDR), Network Security Testing, and Application Security Testing (Pen Testing).">
   <PageHero
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/#services' }, { label: 'Cybersecurity', href: '/security' }]}
     eyebrow="AGI / Cybersecurity"
     title="Detect threats. Test defenses. Strengthen resilience."
     description="AGI provides MSSP expertise through Managed Extended Detection and Response (MXDR) and Offensive Security services for monitoring, investigation, response, and security testing."
@@ -88,6 +91,10 @@ const offensive = [
       </div>
     </div>
   </section>
+
+  <ServiceFaqSection service="security" label="Cybersecurity" accent="security" />
+
+  <BriefPromo />
 
   <section class="agi-band agi-glow agi-section accent-security">
     <SectionHeading
