@@ -22,7 +22,7 @@ Current messaging anchors are maintained in `HANDOFF.md`. Public copy should pre
 - Centered dark editorial Work and Resources indexes with scoped service accents, readable article detail pages, and fixed-assistant bottom clearance
 - Partner logo experiences for approved cloud, AI, and cybersecurity partners
 - AGI Operations Readiness Brief registration and download flow
-- Prepared server-side contact and consultation endpoints with validation, CSRF and bot controls, rate limiting, and server-only delivery credentials; public form processing remains deferred until its complete environment configuration is enabled
+- Protected contact, consultation, and readiness-brief endpoints prepared for Resend notifications, explicit sender/recipient, visitor Reply-To, safe templates, reference IDs, and a shared submit spinner. Real delivery defaults to disabled while approval, DNS, and backend activation are pending; see [EMAIL-SETUP.md](./EMAIL-SETUP.md).
 - Canonical metadata, structured data, robots instructions, and generated sitemap
 - Application-controlled Node and Hostinger/LiteSpeed security headers with a build-generated, SHA-256 hash-based Content Security Policy
 - Canonical HTTPS enforcement, private API caching/CORS policy, public artifact checks, and a published security contact
@@ -101,6 +101,10 @@ The site uses a hybrid enterprise contrast system instead of a single dark surfa
 The Work page intentionally contains no fabricated case studies or performance results. Publish case studies only after client and business approval.
 
 `/global` is a legacy redirect to `/managed-it` and is excluded from the sitemap.
+
+## Form email setup
+
+Follow [EMAIL-SETUP.md](./EMAIL-SETUP.md) for company Resend account access, `notify.aetas.ai` DNS, private configuration, mocked tests, and Hostinger's Node backend activation. The prepared sender is `forms@notify.aetas.ai`; the confirmed recipient is `info@aetas.ai`, with visitor email as Reply-To. `FORM_DELIVERY_ENABLED=false` keeps real delivery off even when credentials exist. No visitor receipt or provider fallback is enabled. The legacy webhook is a mutually exclusive alternative. Submit buttons show Sending… and a spinner until success/navigation, then recover on errors without clearing fields.
 
 ## Commands
 

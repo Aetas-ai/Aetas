@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FormSubmitButton from '../components/FormSubmitButton.astro';
 ---
 
 <Layout title="Download the AGI Operations Readiness Brief" description="Register to download the Aetas Global Innovation brief on Human Led AI, cybersecurity, managed IT, and Business Processes operations.">
@@ -51,7 +52,7 @@ import PageHero from '../components/PageHero.astro';
               <label for="brief-website">Leave this field empty</label>
               <input id="brief-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
-            <p class="form-status" data-form-status tabindex="-1" hidden></p>
+            <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
                 <label for="brief-first-name" class="mb-2 block text-[10px] font-bold uppercase tracking-wider text-gray-500">First Name</label>
@@ -84,9 +85,7 @@ import PageHero from '../components/PageHero.astro';
               </select>
               <p id="brief-interest-error" class="form-field-error" data-field-error="interest" hidden></p>
             </div>
-            <button type="submit" class="button-on-light-primary w-full rounded-lg px-5 py-4 text-sm font-bold transition-all active:scale-[0.98]">
-              Get the brief
-            </button>
+            <FormSubmitButton label="Get the brief" class="button-on-light-primary w-full rounded-lg px-5 py-4 text-sm font-bold transition-all active:scale-[0.98]" />
           </form>
         </div>
       </div>

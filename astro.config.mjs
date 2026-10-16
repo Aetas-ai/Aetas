@@ -36,24 +36,52 @@ export default defineConfig({
 
   env: {
     schema: {
+      FORM_DELIVERY_ENABLED: envField.boolean({
+        context: 'server',
+        access: 'secret',
+        default: false
+      }),
       FORM_CSRF_SECRET: envField.string({
         context: 'server',
         access: 'secret',
-        optional: true,
-        min: 32
+        optional: true
       }),
       FORM_DELIVERY_URL: envField.string({
         context: 'server',
         access: 'secret',
-        optional: true,
-        url: true,
-        startsWith: 'https://'
+        optional: true
       }),
       FORM_DELIVERY_BEARER_TOKEN: envField.string({
         context: 'server',
         access: 'secret',
-        optional: true,
-        min: 20
+        optional: true
+      }),
+      RESEND_API_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true
+      }),
+      FORM_SENDER_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true
+      }),
+      CONTACT_RECIPIENT_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true
+      }),
+      // Obsolete provider settings, declared only so dev/preview reject them
+      // the same way npm start does. Never used for delivery.
+      BREVO_API_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true
+      }),
+      BREVO_SENDER_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true
       })
     }
   },

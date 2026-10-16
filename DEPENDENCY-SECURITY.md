@@ -133,7 +133,7 @@ Confirm all of the following:
 
 - No affected package version remains in `npm ls`. (If the package was eliminated by upstream changes, `npm ls PACKAGE_NAME` will report `(empty)`, confirming complete removal).
 - `npm audit` reports zero vulnerabilities.
-- All 16 repository security tests pass (`npm test`).
+- All repository tests pass (`npm test`; currently 26 tests, including email delivery and form interaction).
 - The production build completes without errors (`npm run build`).
 - `git diff --check` reports no trailing whitespace or merge marker issues.
 - `dist/index.html`, `dist/.htaccess`, and `dist/_headers.json` exist.

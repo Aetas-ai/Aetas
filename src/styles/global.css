@@ -478,14 +478,56 @@
   overflow: hidden !important;
 }
 
+.form-submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+}
+
+.form-submit-button [data-submit-pending]:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.form-submit-button:disabled {
+  cursor: wait;
+  opacity: 0.8;
+  transform: none;
+}
+
+.form-submit-spinner {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  animation: form-submit-spin 0.8s linear infinite;
+}
+
+@keyframes form-submit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-submit-spinner { animation: none; }
+}
+
 .form-status {
   border: 1px solid rgba(125, 211, 252, 0.3);
   border-radius: 0.5rem;
   background: rgba(14, 165, 233, 0.08);
   padding: 0.75rem 1rem;
   color: #bae6fd;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.5;
+}
+
+/* The live region stays in the accessibility tree so announcements are not lost. */
+.form-status:empty {
+  border: 0;
+  padding: 0;
+  background: none;
 }
 
 .form-status[data-kind="error"] {

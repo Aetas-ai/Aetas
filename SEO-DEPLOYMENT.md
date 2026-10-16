@@ -112,14 +112,14 @@ For the current Hostinger file-upload workflow:
 2. Download or prepare the latest project files.
 3. Deploy the updated source package through the Hostinger Web App deployment.
 4. Keep the Hostinger build settings at Astro, Node.js 22.x, npm, build command `npm run build`, and output directory `dist` while forms are deferred.
-5. Confirm public pages load and security headers are present. The frontend deployment does not serve `/api/forms/*`. After switching to the backend deployment and activating forms, confirm `/api/forms/csrf` returns a secure session and all form-delivery secrets exist only in Hostinger environment settings.
+5. Confirm public pages load and security headers are present. The frontend deployment does not serve `/api/forms/*`. Follow [EMAIL-SETUP.md](./EMAIL-SETUP.md) for Resend account/DNS and backend activation. Keep delivery disabled until approved; after activation confirm secure CSRF sessions and delivery/replies to `info@aetas.ai`. Credentials must remain in Hostinger settings, never public copy or metadata.
 6. Confirm the deployment completed successfully.
 7. Test the changed pages and all form flows on the production domain.
 8. Recheck the sitemap when pages were added, renamed, or removed.
 9. Request indexing in Search Console only for important new or substantially updated pages. It is not necessary for every small UI change.
 10. After shared visual or transition changes, check for white flashes, horizontal overflow, focus regressions, and reduced-motion behavior on the production origin.
 
-The three form environment variables may remain entirely unset while form processing is deferred. Before activating forms, configure the complete group in Hostinger's application settings rather than committing values to Git or including them in uploaded ZIP files. Review this guide when form processing is activated or the deployment workflow changes to Git-based deployment or CI/CD.
+Keep `FORM_DELIVERY_ENABLED=false` during preparation. After approval and verified `notify.aetas.ai` DNS, enable delivery with `FORM_CSRF_SECRET`, `RESEND_API_KEY`, `FORM_SENDER_EMAIL=forms@notify.aetas.ai`, and `CONTACT_RECIPIENT_EMAIL=info@aetas.ai` in Hostinger. Remove obsolete Brevo settings and keep webhook settings absent for Resend; the legacy webhook remains an alternative. See `EMAIL-SETUP.md`. Never commit credentials or include them in ZIPs. Review this guide after activation or a deployment workflow change.
 
 ## Ongoing SEO Work
 

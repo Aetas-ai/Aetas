@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FormSubmitButton from '../components/FormSubmitButton.astro';
 ---
 
 <Layout title="Contact Aetas Global Innovation" description="Contact Aetas Global Innovation about MXDR, Offensive Security, Help Desk as a Service, Product Support as a Service, or Business Process AI Assimilation.">
@@ -36,7 +37,7 @@ import PageHero from '../components/PageHero.astro';
 
           <div>
             <h4 class="font-display font-bold text-white text-sm uppercase tracking-wider">Direct Channels</h4>
-            <p class="text-gray-400 text-xs mt-1">General inquiries: info@aetasglobal.com</p>
+            <p class="text-gray-400 text-xs mt-1">General inquiries: <a href="mailto:info@aetas.ai" class="text-indigo-400 hover:underline">info@aetas.ai</a></p>
           </div>
         </div>
       </div>
@@ -51,7 +52,7 @@ import PageHero from '../components/PageHero.astro';
               <label for="contact-website">Leave this field empty</label>
               <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
             </p>
-            <p class="form-status" data-form-status tabindex="-1" hidden></p>
+            <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="contact-first-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
@@ -95,9 +96,7 @@ import PageHero from '../components/PageHero.astro';
               <p id="contact-message-error" class="form-field-error" data-field-error="message" hidden></p>
             </div>
 
-            <button type="submit" class="button-on-light-primary w-full py-4 rounded-lg font-bold text-sm transition-all shadow-lg active:scale-[0.98]">
-              Send Request to AGI
-            </button>
+            <FormSubmitButton label="Send Request to AGI" class="button-on-light-primary w-full py-4 rounded-lg font-bold text-sm transition-all shadow-lg active:scale-[0.98]" />
           </form>
         </div>
       </div>
@@ -106,11 +105,12 @@ import PageHero from '../components/PageHero.astro';
 
   <script>
     document.addEventListener('astro:page-load', () => {
-      const select = document.getElementById('intent-select') as HTMLSelectElement;
+      const select = document.getElementById('intent-select') as HTMLSelectElement | null;
       if (select) {
         const urlParams = new URLSearchParams(window.location.search);
         const intent = urlParams.get('intent');
-        const normalizedIntent = intent === 'global' ? 'managed-it' : intent;
+        // Partner inquiries arrive as a general conversation; global is the legacy Managed IT route.
+        const normalizedIntent = intent === 'global' ? 'managed-it' : intent === 'partners' ? 'general' : intent;
         if (normalizedIntent && ['security', 'managed-it', 'ai', 'general'].includes(normalizedIntent)) {
           select.value = normalizedIntent;
         }

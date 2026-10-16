@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { formDeliveryChannel } from '../../../lib/server/email';
 import type { APIRoute } from 'astro';
 import {
   csrfCookieName,
@@ -45,7 +46,7 @@ export const GET: APIRoute = ({ clientAddress, cookies, request }) => {
     });
   }
 
-  const token = issueCsrfToken();
+  const token = formDeliveryChannel() ? issueCsrfToken() : null;
   if (!token) {
     console.error(`[forms] csrf_configuration_unavailable request=${randomUUID()}`);
     return new Response(JSON.stringify({

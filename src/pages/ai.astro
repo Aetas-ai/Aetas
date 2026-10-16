@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import FormSubmitButton from '../components/FormSubmitButton.astro';
 ---
 
 <Layout title="AI & Automation Services - Human Led AI" activePillar="ai" description="AGI provides Business Process AI Assimilation through Human Led AI and Expert Human Oversight of AI (Expert in the Loop).">
@@ -201,7 +202,7 @@ import PageHero from '../components/PageHero.astro';
           <label for="ai-website">Leave this field empty</label>
           <input id="ai-website" name="website" type="text" tabindex="-1" autocomplete="off" maxlength="200" />
         </p>
-        <p class="form-status" data-form-status tabindex="-1" hidden></p>
+        <p class="form-status" data-form-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label for="ai-first-name" class="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">First Name</label>
@@ -227,9 +228,7 @@ import PageHero from '../components/PageHero.astro';
           <p id="ai-workflow-error" class="form-field-error" data-field-error="workflow-bottleneck" hidden></p>
         </div>
 
-        <button type="submit" class="w-full py-4 rounded-lg font-bold text-sm bg-indigo-500 hover:bg-indigo-600 text-white transition-all shadow-lg shadow-indigo-500/10">
-          Submit AI Services Request
-        </button>
+        <FormSubmitButton label="Submit AI Services Request" class="w-full py-4 rounded-lg font-bold text-sm bg-indigo-500 hover:bg-indigo-600 text-white transition-all shadow-lg shadow-indigo-500/10" />
       </form>
     </div>
   </section>

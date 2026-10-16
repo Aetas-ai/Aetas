@@ -32,31 +32,45 @@ function createResponse() {
   };
 }
 
-test('allows form delivery to remain unconfigured', () => {
+const validResendEnvironment = {
+  FORM_DELIVERY_ENABLED: 'true',
+  FORM_CSRF_SECRET: 'c'.repeat(32),
+  RESEND_API_KEY: 're_test_not_a_real_key',
+  FORM_SENDER_EMAIL: 'forms@notify.aetas.ai',
+  CONTACT_RECIPIENT_EMAIL: 'info@aetas.ai',
+};
+
+test('delivery is disabled by default even when old credentials are saved', () => {
   assert.deepEqual(invalidEnvironmentVariables({}), []);
-  assert.deepEqual(invalidEnvironmentVariables({
-    FORM_CSRF_SECRET: '',
-    FORM_DELIVERY_URL: '',
-    FORM_DELIVERY_BEARER_TOKEN: '',
-  }), []);
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, FORM_DELIVERY_ENABLED: 'false', BREVO_API_KEY: 'old-secret' }), []);
+  assert.deepEqual(invalidEnvironmentVariables({ FORM_DELIVERY_ENABLED: false, RESEND_API_KEY: 'incomplete' }), []);
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, FORM_DELIVERY_ENABLED: 'yes' }), ['FORM_DELIVERY_ENABLED']);
 });
 
-test('requires a complete valid configuration once form delivery is enabled', () => {
-  assert.deepEqual(invalidEnvironmentVariables(validEnvironment), []);
-  assert.deepEqual(
-    invalidEnvironmentVariables({
-      FORM_CSRF_SECRET: 'short',
-      FORM_DELIVERY_URL: 'http://forms.example.com',
-      FORM_DELIVERY_BEARER_TOKEN: '',
-    }),
-    ['FORM_CSRF_SECRET', 'FORM_DELIVERY_URL', 'FORM_DELIVERY_BEARER_TOKEN'],
-  );
-  assert.deepEqual(
-    invalidEnvironmentVariables({
-      FORM_CSRF_SECRET: 'c'.repeat(32),
-    }),
-    ['FORM_DELIVERY_URL', 'FORM_DELIVERY_BEARER_TOKEN'],
-  );
+test('requires a complete valid webhook configuration when enabled', () => {
+  assert.deepEqual(invalidEnvironmentVariables({ ...validEnvironment, FORM_DELIVERY_ENABLED: 'true' }), []);
+  assert.deepEqual(invalidEnvironmentVariables({
+    FORM_DELIVERY_ENABLED: 'true', FORM_CSRF_SECRET: 'short',
+    FORM_DELIVERY_URL: 'http://forms.example.com', FORM_DELIVERY_BEARER_TOKEN: '',
+  }), ['FORM_CSRF_SECRET', 'FORM_DELIVERY_URL', 'FORM_DELIVERY_BEARER_TOKEN']);
+});
+
+test('requires an explicit sender, recipient, key and CSRF secret for Resend', () => {
+  assert.deepEqual(invalidEnvironmentVariables(validResendEnvironment), []);
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, FORM_DELIVERY_ENABLED: true }), []);
+  for (const name of ['RESEND_API_KEY', 'FORM_SENDER_EMAIL', 'CONTACT_RECIPIENT_EMAIL', 'FORM_CSRF_SECRET']) {
+    assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, [name]: '' }), [name]);
+  }
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, RESEND_API_KEY: 'wrong-provider-key' }), ['RESEND_API_KEY']);
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, CONTACT_RECIPIENT_EMAIL: 'info@aetas.ai\r\nBcc: attacker@example.com' }), ['CONTACT_RECIPIENT_EMAIL']);
+  assert.deepEqual(invalidEnvironmentVariables({ FORM_DELIVERY_ENABLED: 'true' }), ['FORM_CSRF_SECRET', 'RESEND_API_KEY', 'FORM_SENDER_EMAIL', 'CONTACT_RECIPIENT_EMAIL']);
+});
+
+test('rejects mixed channels and obsolete Brevo settings when enabled', () => {
+  assert.deepEqual(invalidEnvironmentVariables({ ...validEnvironment, ...validResendEnvironment }), [
+    'RESEND_API_KEY', 'FORM_DELIVERY_URL', 'FORM_DELIVERY_BEARER_TOKEN',
+  ]);
+  assert.deepEqual(invalidEnvironmentVariables({ ...validResendEnvironment, BREVO_API_KEY: 'old-secret', BREVO_SENDER_EMAIL: 'old@example.com' }), ['BREVO_API_KEY', 'BREVO_SENDER_EMAIL']);
 });
 
 test('accepts only the canonical HTTPS host', () => {

@@ -1,49 +1,61 @@
 import { readFile } from 'node:fs/promises';
 import { CANONICAL_ORIGIN } from './security-policy.mjs';
 
-export const requiredEnvironment = [
-  {
-    name: 'FORM_CSRF_SECRET',
-    valid: (value) => typeof value === 'string' && value.length >= 32,
-  },
-  {
-    name: 'FORM_DELIVERY_URL',
-    valid: (value) => {
-      if (typeof value !== 'string') return false;
-
-      try {
-        const url = new URL(value);
-        return url.protocol === 'https:' && !url.username && !url.password;
-      } catch {
-        return false;
-      }
-    },
-  },
-  {
-    name: 'FORM_DELIVERY_BEARER_TOKEN',
-    valid: (value) => typeof value === 'string' && value.length >= 20,
-  },
-];
-
 const REQUIRED_SECURITY_HEADERS = [
-  'Content-Security-Policy',
-  'Strict-Transport-Security',
-  'X-Content-Type-Options',
-  'Referrer-Policy',
-  'Permissions-Policy',
-  'X-Frame-Options',
+  'Content-Security-Policy', 'Strict-Transport-Security', 'X-Content-Type-Options',
+  'Referrer-Policy', 'Permissions-Policy', 'X-Frame-Options',
 ];
+
+export function formDeliveryEnabled(value) {
+  return value === true || value === 'true';
+}
 
 export function invalidEnvironmentVariables(environment) {
-  const hasFormConfiguration = requiredEnvironment.some(({ name }) => (
-    typeof environment[name] === 'string' && environment[name].trim().length > 0
-  ));
+  const flag = environment.FORM_DELIVERY_ENABLED;
+  if (flag !== undefined && flag !== '' && flag !== true && flag !== false && flag !== 'true' && flag !== 'false') {
+    return ['FORM_DELIVERY_ENABLED'];
+  }
+  // Preparation is intentionally allowed without credentials. Never infer
+  // activation from saved credentials or the presence of a recipient.
+  if (!formDeliveryEnabled(flag)) return [];
 
-  if (!hasFormConfiguration) return [];
+  const present = (name) => typeof environment[name] === 'string' && environment[name].trim().length > 0;
+  const invalid = new Set();
+  if (typeof environment.FORM_CSRF_SECRET !== 'string' || environment.FORM_CSRF_SECRET.trim().length < 32) {
+    invalid.add('FORM_CSRF_SECRET');
+  }
+  for (const name of ['BREVO_API_KEY', 'BREVO_SENDER_EMAIL']) {
+    if (present(name)) invalid.add(name);
+  }
+  const resend = ['RESEND_API_KEY', 'FORM_SENDER_EMAIL'].some(present);
+  const webhook = ['FORM_DELIVERY_URL', 'FORM_DELIVERY_BEARER_TOKEN'].some(present);
 
-  return requiredEnvironment
-    .filter(({ name, valid }) => !valid(environment[name]))
-    .map(({ name }) => name);
+  if (resend || !webhook) {
+    if (typeof environment.RESEND_API_KEY !== 'string' || !/^re_[^\s]+$/.test(environment.RESEND_API_KEY)) {
+      invalid.add('RESEND_API_KEY');
+    }
+    for (const name of ['FORM_SENDER_EMAIL', 'CONTACT_RECIPIENT_EMAIL']) {
+      const value = environment[name];
+      if (typeof value !== 'string' || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(value)) invalid.add(name);
+    }
+  }
+  if (webhook) {
+    try {
+      const url = new URL(environment.FORM_DELIVERY_URL);
+      if (url.protocol !== 'https:' || url.username || url.password) invalid.add('FORM_DELIVERY_URL');
+    } catch {
+      invalid.add('FORM_DELIVERY_URL');
+    }
+    if (typeof environment.FORM_DELIVERY_BEARER_TOKEN !== 'string' || environment.FORM_DELIVERY_BEARER_TOKEN.trim().length < 20) {
+      invalid.add('FORM_DELIVERY_BEARER_TOKEN');
+    }
+  }
+  if (resend && webhook) {
+    invalid.add('RESEND_API_KEY');
+    invalid.add('FORM_DELIVERY_URL');
+    invalid.add('FORM_DELIVERY_BEARER_TOKEN');
+  }
+  return [...invalid];
 }
 
 function firstHeaderValue(value) {

@@ -1,0 +1,216 @@
+# Website form email setup with Resend
+
+The Resend implementation is ready for configuration. Real delivery is disabled while Sir Rob's approval, the company Resend account, verified DNS, and the Hostinger backend deployment are pending. No live Resend email has been sent.
+
+## Current state
+
+- Verification on October 13, 2026: all 26 repository tests and the production build passed. Isolated built-backend checks passed using a mocked provider; real Edge checks passed at 390, 768, and 1440 px, including reduced motion and thank-you navigation. The public build scan found no configured secrets or private legacy sender address. No live Resend sending or production deployment was performed.
+- Contact, AI consultation, and Operations Readiness Brief forms share the protected server-side delivery flow.
+- Production sender: `AGI Website <forms@notify.aetas.ai>`.
+- Confirmed inquiry recipient: `info@aetas.ai`.
+- Reply-To: the visitor's validated email; ownership of that address is not verified.
+- Notifications include submitted fields, the same choice wording visitors saw in each form, one reference ID, and a UTC timestamp in escaped HTML and plain text. The reference is the API request's `X-Request-ID`, so the email, server log, and response header share one ID; it is returned to the browser and shown with any delivery failure message for support.
+- No autoresponder, newsletter enrollment, automatic retry, or cross-provider fallback is enabled.
+- `FORM_DELIVERY_ENABLED=false` explicitly prevents delivery even if old credentials are saved. Disabled backend endpoints return generic 503 responses without issuing a CSRF cookie.
+- Local Brevo secrets have been preserved privately. They cannot activate sending; remove or securely archive obsolete `BREVO_API_KEY` and `BREVO_SENDER_EMAIL` settings before enabling Resend. The earlier Brevo test arrived in spam; it is not evidence of Resend deliverability.
+
+## Setup responsibilities
+
+Sir Rob owns the company account, approves the service, and controls DNS changes. Mark prepares the domain records, configures the website, and verifies the flow. Sir Rob creates the API key if Mark's Resend permissions do not allow it.
+
+The login address, notification sender, and recipient are separate:
+
+| Purpose | Address |
+| --- | --- |
+| Company Resend account login | `info@aetas.ai`, controlled by Sir Rob |
+| Mark's separate team login | `mark.tabotabo@aetas.ai` |
+| Website notification sender | `AGI Website <forms@notify.aetas.ai>` |
+| Company inquiry recipient | `info@aetas.ai` |
+| Reply-To | Visitor's validated form email |
+
+The sending subdomain needs no new domain purchase, website hosting, or A record. `forms@notify.aetas.ai` does not need a separate mailbox for this outgoing-only flow. The existing company inbox handles receipt and human replies.
+
+## Step 1 — Sir Rob: create the company account
+
+1. Open [Resend signup](https://resend.com/signup).
+2. Register using `info@aetas.ai` and complete the account verification prompts.
+3. Name the team **Aetas Global Innovation**.
+4. Enable multi-factor authentication and store recovery codes securely.
+5. Start with the free transactional-email plan. Review [current pricing](https://resend.com/pricing) before selecting a paid plan.
+
+Sir Rob does not need to share the password for `info@aetas.ai` with Mark.
+
+## Step 2 — Sir Rob and Mark: set up separate team access
+
+1. Sir Rob opens **Settings > Team** in Resend.
+2. Click **Invite** and enter `mark.tabotabo@aetas.ai`.
+3. Select **Member** and send the invitation.
+4. Mark accepts the invitation from his own mailbox and signs in using his own account.
+5. Mark selects the **Aetas Global Innovation** team and enables MFA for his login.
+
+Members can manage emails, domains, and webhooks. Sir Rob retains administrative control. See [team access instructions](https://resend.com/docs/dashboard/settings/team).
+
+## Step 3 — Mark: prepare the sending domain
+
+1. Inside the company Resend team, open **Domains > Add Domain**.
+2. Enter `notify.aetas.ai`.
+3. Choose the sending region offered in the dashboard.
+4. Keep **Receiving disabled** and open/click tracking off.
+5. Copy the generated sending DNS records into a handoff table with **Type, Name, Value, Priority, and TTL**.
+6. Send that table to Sir Rob for review and addition to the active DNS provider.
+
+Only Resend can generate the actual DNS values. Do not copy example DKIM values from documentation, and do not send the API key with the DNS handoff. See [verified domains](https://resend.com/docs/dashboard/domains/introduction).
+
+## Step 4 — Sir Rob or DNS administrator: add Cloudflare records
+
+These records go in the authoritative DNS provider. If Cloudflare manages the domain's nameservers, add them in Cloudflare even though Hostinger hosts the website.
+
+1. Sign in to Cloudflare and select the **aetas.ai** zone.
+2. Open **DNS > Records > Add record**.
+3. Add each sending-authentication record exactly as generated by Resend:
+   - **DKIM TXT:** verifies email signatures.
+   - **SPF TXT:** authorizes sending for the designated return-path domain.
+   - **Return-path MX:** handles delivery feedback on the designated subdomain.
+4. Use the generated values and MX priority. TTL can normally be **Auto**.
+5. If an authentication record has a proxy option, use **DNS only**. TXT and MX records do not have a proxy toggle.
+6. Preserve existing website DNS records and root company-mail MX records. Do not replace the existing mailbox routing with Resend's return-path MX.
+7. Review the existing DMARC policy before adding or changing a subdomain policy. Do not weaken or replace the company's policy without review.
+
+Cloudflare may display a zone-relative name such as `send.notify` rather than `send.notify.aetas.ai`; check that the resulting full hostname matches Resend. Follow the [Cloudflare DNS instructions](https://resend.com/docs/guides/dns/cloudflare).
+
+## Step 5 — Mark: verify the sending domain
+
+1. Return to **Resend > Domains > notify.aetas.ai**.
+2. Click **Verify DNS Records**.
+3. Wait for the sending domain to show **Verified**; DNS changes can take time to propagate.
+4. If it stays pending, compare the published records with Resend's required names and values, then ask the DNS administrator to correct any mismatch.
+
+Keep real delivery disabled until verification succeeds. Authentication improves legitimacy and deliverability but cannot guarantee inbox placement.
+
+## Step 6 — Sir Rob, or Mark if permitted: create the API key
+
+1. Open **API Keys** in the company Resend team.
+2. Click **Create API Key**.
+3. Name it **AGI Website**.
+4. Select **Sending access**, not Full access.
+5. Restrict it to **notify.aetas.ai**.
+6. Create the key and immediately save it in the company's password manager or secret store.
+7. Give Mark access through an approved secure method so he can configure the server.
+
+The key begins with `re_`. Resend displays the complete key only once; if it is lost, create a replacement. Never paste it into chat, include it in a screenshot, commit it, or put it in the deployment ZIP. See [API-key creation instructions](https://resend.com/docs/create-an-api-key).
+
+This integration does not need a Cloudflare API key, SMTP password, webhook signing key, or password for `info@aetas.ai`.
+
+## Step 7 — Mark: configure the private website settings
+
+There are two secret values and three ordinary settings:
+
+| Variable | What it does | Where it comes from |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Secret authorizing outgoing notifications | Resend API Keys, created in step 6 |
+| `FORM_CSRF_SECRET` | Secret signing protected form sessions | Generated privately by Mark; not provided by Resend |
+| `FORM_SENDER_EMAIL` | Website notification sender | Set to `forms@notify.aetas.ai` |
+| `CONTACT_RECIPIENT_EMAIL` | Company inquiry inbox | Set to `info@aetas.ai` |
+| `FORM_DELIVERY_ENABLED` | Explicit activation switch | Keep `false` during preparation; enable after approval and verification |
+
+`.env.example` is safe to share and contains no secrets. In local `.env`, prepare the following, replacing placeholders with private values. Add the same settings separately to Hostinger during deployment:
+
+```text
+FORM_DELIVERY_ENABLED=false
+FORM_CSRF_SECRET=<random secret with at least 32 characters>
+RESEND_API_KEY=<domain-restricted Sending API key; leave absent until available>
+FORM_SENDER_EMAIL=forms@notify.aetas.ai
+CONTACT_RECIPIENT_EMAIL=info@aetas.ai
+```
+
+The local project already has a CSRF secret, which can be retained. Generate a new secret privately when needed; use at least 32 characters and store it securely:
+
+```sh
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+```
+
+Before activation, remove or securely archive `BREVO_API_KEY` and `BREVO_SENDER_EMAIL` from active local/Hostinger environment settings. Leave `FORM_DELIVERY_URL` and `FORM_DELIVERY_BEARER_TOKEN` absent for Resend. The legacy authenticated HTTPS webhook remains an alternative: clear Resend-specific settings and configure its original CSRF/URL/token group. Never enable both channels together. The activation flag is required for either channel.
+
+When disabled, startup permits staged/incomplete credentials. When enabled, startup validates all required settings and rejects mixed channels or obsolete Brevo configuration. Astro dev/preview also validates the active channel, including rejecting obsolete Brevo settings (declared in the `astro:env` schema only for that check), before issuing a session or sending. Enabling the flag does not itself verify DNS: complete the Resend dashboard verification first.
+
+## Submission and loading behavior
+
+The button immediately switches to a small spinner and Sending…, disables repeat submission, and announces Sending your request… accessibly. A successful API response keeps the button pending until navigation to the existing thank-you page completes. Returning from browser history restores a usable form.
+
+Validation, session, network, provider, or timeout errors restore the normal button and preserve entered fields. Each form's status element is a persistent polite live region; errors that need attention move focus to it or to the first invalid field. When the session endpoint is unavailable (delivery disabled, or the frontend-only deployment), the form shows a calm note directing visitors to info@aetas.ai instead of an error alert on load. If a submission arrives before the minimum form time, the browser waits for the short `Retry-After` and resends once automatically. The spinner stops rotating for reduced-motion users while the text remains visible. No artificial delay, percentage, or simulated progress is used. The site-wide Bob loader remains separate and unchanged.
+
+The Resend request has an eight-second timeout and a reference-based Idempotency-Key. The browser session/submission requests are bounded at fifteen seconds. Success requires HTTP 200 and a nonempty provider message ID; this means acceptance for sending, not inbox delivery. A timeout may occur after provider acceptance, so check delivery logs before manually resubmitting. A new form attempt generates a new reference; this is not a persistent duplicate-submission store.
+
+The eight-per-ten-minute limit for each IP and endpoint counts only submissions that pass the origin, CSRF, honeypot, and schema checks, so a visitor correcting validation errors is not locked out.
+
+## Verification without sending email
+
+```sh
+npm run
+npm test
+npm run build
+node scripts/check-form-security.mjs
+git diff --check
+```
+
+The endpoint script starts an isolated built Node backend with fake credentials and an intercepted Resend API. It tests success/failure, all three forms, disabled configuration, validation, CSRF, secure cookies, no-store/CORS policy, honeypots, and rate limits. It does not load local secrets or send real email.
+
+For real-browser layout/interaction checks on Windows with Edge installed:
+
+```sh
+npx astro dev --background
+node scripts/check-form-browser.mjs
+npx astro dev stop
+```
+
+The script opens `http://localhost:4321` by default. Set `SITE_ORIGIN` for another address and `BROWSER_PATH` for another Chromium-based browser. Its temporary browser profile is removed afterward.
+
+The browser script intercepts form responses in its isolated browser session only. It checks 390 px, 768 px, and 1440 px widths, spinner/button states, double-submit prevention, retained entries after an error, reduced motion, and thank-you navigation. Screenshots are generated under ignored `.astro/form-checks`; no preview flag, fake-success endpoint, or mock is added to the public application.
+
+Use `npx astro dev status` and `npx astro dev logs` to manage the background server.
+
+## Step 8 — Mark and Sir Rob: test the complete email flow
+
+After approval, verified DNS, and complete private configuration:
+
+1. Change local `FORM_DELIVERY_ENABLED` to `true`.
+2. Start the development server:
+
+   ```powershell
+   npx astro dev --background --host 127.0.0.1
+   ```
+
+3. Submit through the contact page or run this controlled real-send command:
+
+   ```sh
+   node scripts/test-form-delivery.mjs --send --recipient=info@aetas.ai --reply-to=mark.tabotabo@aetas.ai
+   ```
+
+   The command sends one real notification to `info@aetas.ai`. The explicit recipient argument must match the server's configured recipient; it does not override routing. It loads local `.env`, requires enabled valid Resend settings, submits through localhost port 4321, and never retries.
+
+4. Verify the button displays **Sending…** and then opens the thank-you page.
+5. Sir Rob checks `info@aetas.ai` and confirms inbox or spam placement.
+6. Mark checks the corresponding Resend delivery status. API acceptance alone is not proof of inbox delivery.
+7. Sir Rob clicks **Reply** and confirms that the recipient is `mark.tabotabo@aetas.ai` for this test.
+8. Sir Rob sends the reply; Mark confirms that it reaches his mailbox.
+9. Verify the consultation and readiness-brief flows, then stop the local server with `npx astro dev stop`.
+
+## Step 9 — Mark, with Hostinger administrator if needed: activate production
+
+1. Complete the verification commands above and confirm approval, domain verification, and successful receipt/replies.
+2. Prepare the source deployment ZIP without `.env`, `.git`, `node_modules`, or other secrets.
+3. Use a backend-supported Hostinger Node application with Node 22.12+ (22.x), build command `npm run build`, and start command `npm start`.
+4. Keep both public `dist` and private `dist-server` output. A frontend-only `dist` deployment cannot serve the form endpoints.
+5. Add the same five configuration variables in Hostinger's **application environment settings**, including `FORM_DELIVERY_ENABLED=true`. Do not upload local `.env`. Remove obsolete Brevo variables and keep webhook settings absent.
+6. Leave Hostinger's managed proxy `.htaccess` unchanged; the Node wrapper loads generated security headers.
+7. Deploy and restart the application so it reads the environment settings.
+8. Submit one controlled request on the live website and confirm loading/thank-you behavior, Resend delivery status, receipt at `info@aetas.ai`, and replies. Check consultation and readiness-brief registration too.
+9. If configuration or delivery fails, set `FORM_DELIVERY_ENABLED=false` and restart. Visitors retain direct email access through `info@aetas.ai`.
+
+Production `npm start` reads Hostinger's injected environment settings; it does not automatically load local `.env`. Astro development and the local test script handle local `.env` separately.
+
+## Operations
+
+Review Resend's delivery/bounce logs; application acceptance logs are not delivery confirmations. Logs must remain limited to safe events and random reference IDs. Failed deliveries also log a coarse reason (`config`, `timeout`, `network`, `http`, or `invalid-response`) and the provider's HTTP status code, for example `[forms] delivery_unavailable request=<id> reason=http status=401`. No provider bodies, keys, submitted fields, or raw exceptions should be logged.
+
+Webhook ingestion, persistent lead storage, and durable retries are outside this release. The existing limiter is process-local; use shared limits before scaling to multiple Node instances.

@@ -25,7 +25,7 @@ function genericApiError(requestId: string) {
   });
 }
 
-export const onRequest = defineMiddleware(async ({ request, url }, next) => {
+export const onRequest = defineMiddleware(async ({ request, url, locals }, next) => {
   const isApiRequest = isWithin(url.pathname, '/api');
   const isSensitiveRoute = isApiRequest || isReservedNoIndexPath(url.pathname);
 
@@ -48,6 +48,7 @@ export const onRequest = defineMiddleware(async ({ request, url }, next) => {
 
   if (isApiRequest) {
     requestId = randomUUID();
+    locals.requestId = requestId;
     const origin = request.headers.get('origin');
     if (origin && origin !== url.origin) {
       response = new Response(JSON.stringify({
